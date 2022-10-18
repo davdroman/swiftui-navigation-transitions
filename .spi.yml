@@ -1,0 +1,11 @@
+version: 1
+builder:
+  configs:
+  - platform: ios
+    scheme: NavigationTransitions
+  - platform: macos-xcodebuild
+    scheme: NavigationTransitions
+  - platform: tvos
+    scheme: NavigationTransitions
+  - platform: watchos
+    scheme: NavigationTransitions
