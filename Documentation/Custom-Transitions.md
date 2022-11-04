@@ -18,7 +18,9 @@ As a first time reader, it is highly recommended that you read **Core Concepts**
 
 ### `NavigationTransition`
 
-The main construct the library builds upon is called `NavigationTransition`. You may have seen some instances of this type in the code samples (e.g. `.slide`).
+The main construct the library leverages is called `NavigationTransition`. You may have seen some instances of this type in the code samples (e.g. `.slide`).
+
+ `NavigationTransition` instances describe both `push` and `pop` transitions for both *origin* and *destination* views.
 
 Drawing from this previous example, if we dive into the implementation of `NavigationTransition.slide`, we'll find this:
 
@@ -80,8 +82,6 @@ extension NavigationTransition {
 Ah, this is a lot more interesting!
 
 Observe how the implementation body follows a very specific symmetrical shape. Funnily enough however, transitions themselves are built by using the term `asymmetric`, which we'll get to know in depth later in this read.
-
-`NavigationTransition` instances describe both `push` and `pop` transitions for both *origin* and *destination* views.
 
 Notice how the entire transition is implemented concisely in around 25 lines of code, yet there's **no explicit `UIView` animation** code to be seen anywhere at this point. I'd like to direct your attention instead to what's actually describing the transition on each `.asymmetric` call: `.move(edge: ...)`.
 
