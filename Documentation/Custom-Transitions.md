@@ -288,20 +288,20 @@ public static func custom(withTransientViews handler: @escaping TransientViewsHa
 
 Alongside them, `Operation` defines whether the operation being performed is a `push` or a `pop`. The concept of insertions or removals is entirely removed from this abstraction, since you can directly modify the property values for the views without needing atomic transitions.
 
-This approach is often a simple one to take in case you're working on an app that only requires one custom navigation transition. However, if you're working on app that features multiple custom transitions, it is recommended that you model your navigation transitions via atomic transitions as described earlier on. In the long term, this will be beneficial to your development and iteration speed, by promoting code reusability amongst your team.
+This approach is often a simple one to take in case you're working on an app that only requires one custom navigation transition. However, if you're working on an app that features multiple custom transitions, it is recommended that you model your navigation transitions via atomic transitions as described earlier. In the long term, this will be beneficial to your development and iteration speed, by promoting code reusability amongst your team.
 
 ### Advanced
 
 We're now exploring the edges of the API surface of this library. Anything past this point entails a level of granularity that should be rarely needed in any team, unless:
 
 - You intend to migrate one of your existing [`UIViewControllerAnimatedTransitioning`](https://developer.apple.com/documentation/uikit/uiviewcontrolleranimatedtransitioning) implementations over to SwiftUI.
-- You're well versed in UIKit Custom Navigation Transitions and are willing to dive straight into raw UIKit territory, including view snapshotting, hierarchy set-up, and animation lifecycle management. Even then, I highly encourage you to consider using one of the formerly discussed abstractions in order to accomplish the desired effect.
+- You're well versed in *Custom UINavigationController Transitions* and are willing to dive straight into raw UIKit territory, including view snapshotting, hierarchy set-up, lifecycle management, and animator configuration. Even then, I highly encourage you to consider using one of the formerly discussed abstractions in order to accomplish the desired effect instead.
 
-Before we get started, I'd like to ask that if you're reaching for these abstractions because there's something missing in the previous customization mechanisms that you believe should be there to make your transition work the way you need, **please** [**open an issue**](https://github.com/davdroman/swiftui-navigation-transitions/issues/new) in order to let me know, so I can close the capability gap between abstraction and make everyone's development experience richer.
+Before we get started, I'd like to ask that if you're reaching for these abstractions because there's something missing in the previously discussed customization mechanisms that you believe should be there to build your transition the way you need, **please** [**open an issue**](https://github.com/davdroman/swiftui-navigation-transitions/issues/new) in order to let me know, so I can close the capability gap between abstractions and make everyone's development experience richer.
 
-Let's delve into the two final customization mechanisms, which as mentioned interact with UIKit abstractions directly.
+Let's delve into the two final customization entry points, which as mentioned interact with UIKit abstractions directly.
 
-The entire concept around advanced custom transitions revolves around an `Animator` object. This `Animator` is a protocol which exposes a subset of functions in the UIKit protocol [`UIViewImplicitlyAnimating`](https://developer.apple.com/documentation/uikit/uiviewimplicitlyanimating).
+The entire concept of advanced custom transitions revolves around an `Animator` object. This `Animator` is a protocol which exposes a subset of functions in the UIKit protocol [`UIViewImplicitlyAnimating`](https://developer.apple.com/documentation/uikit/uiviewimplicitlyanimating).
 
 The interface looks as follows:
 
