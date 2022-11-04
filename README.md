@@ -92,7 +92,7 @@ The library ships with some **standard transitions** out of the box:
 - [`move(axis:)`](Sources/NavigationTransition/Move.swift)
 - [`slide`](Sources/NavigationTransition/Slide.swift)
 
-In addition to these, you can create fully **custom transitions** in just a few lines of code with the following:
+In addition to these, you can create fully [**custom transitions**](Documentation/Custom-Transitions.md) in just a few lines of code with the following:
 
 - [`asymmetric(push:pop:)`](Sources/NavigationTransition/Asymmetric.swift)
 - [`combined(with:)`](Sources/NavigationTransition/Combined.swift)
