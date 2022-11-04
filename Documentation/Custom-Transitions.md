@@ -18,7 +18,9 @@ As a first time reader, it is highly recommended that you read **Core Concepts**
 
 ### `NavigationTransition`
 
-The main construct the library builds upon is called `NavigationTransition`. You may have seen some instances of this type in the code samples (e.g. `.slide`).
+The main construct the library leverages is called `NavigationTransition`. You may have seen some instances of this type in the code samples (e.g. `.slide`).
+
+ `NavigationTransition` instances describe both `push` and `pop` transitions for both *origin* and *destination* views.
 
 Drawing from this previous example, if we dive into the implementation of `NavigationTransition.slide`, we'll find this:
 
@@ -80,8 +82,6 @@ extension NavigationTransition {
 Ah, this is a lot more interesting!
 
 Observe how the implementation body follows a very specific symmetrical shape. Funnily enough however, transitions themselves are built by using the term `asymmetric`, which we'll get to know in depth later in this read.
-
-`NavigationTransition` instances describe both `push` and `pop` transitions for both *origin* and *destination* views.
 
 Notice how the entire transition is implemented concisely in around 25 lines of code, yet there's **no explicit `UIView` animation** code to be seen anywhere at this point. I'd like to direct your attention instead to what's actually describing the transition on each `.asymmetric` call: `.move(edge: ...)`.
 
@@ -170,7 +170,7 @@ Regardless, it's still allowed for cases like `slide` + `fade(in:)`, which affec
 
 This second, more interesting entry point is one reminiscent of SwiftUI's asymmetric transition API. As the name suggest, this transition splits the `push` transition from the `pop` transition, to make them as different as you wish.
 
-You can use this method with a pair of `NavigationTransition` values or, more importantly, a pair of `AtomicTransition` values. Most transitions will utilize the latter due to its superior granularity for customization.
+You can use this method with a pair of `NavigationTransition` values or, more importantly, a pair of `AtomicTransition` values. Most transitions will utilize the latter due to its superior granularity.
 
 ---
 
@@ -197,7 +197,7 @@ It's important to understand the **nuance** this entails: regardless of whether 
 
 Just like `AnyTransition.asymmetric`, this transition uses a different transition for insertion vs removal, and acts as a cornerstone for custom transitions along with its `NavigationTransition.asymmetric(push:pop:)` counterpart.
 
-Now that you understand the 4 basic customization entry points the library has to offer, you should be able to refer back to [**the example**](#NavigationTransition) from earlier on and understand a bit more about how the entire implementation works.
+Now that you understand the 4 basic customization entry points the library has to offer, you should be able to refer back to the earlier [**example**](#NavigationTransition) and understand a bit more about how the entire implementation works.
 
 ### Intermediate
 
@@ -275,7 +275,7 @@ Finally, container is a direct typealias to `UIView`, and it represents the cont
 
 ---
 
-Whilst composing `AtomicTransition`s is the recommended of building up to a `NavigationTransition`, there is actually an **alternative** option for those who'd like to reach for a more wholistic API:
+Whilst composing `AtomicTransition`s is the recommended way of building up to a `NavigationTransition`, there is actually an **alternative** option for those who'd like to reach for a more wholistic API:
 
 ```swift
 // NavigationTransition.swift
@@ -288,20 +288,20 @@ public static func custom(withTransientViews handler: @escaping TransientViewsHa
 
 Alongside them, `Operation` defines whether the operation being performed is a `push` or a `pop`. The concept of insertions or removals is entirely removed from this abstraction, since you can directly modify the property values for the views without needing atomic transitions.
 
-This approach is often a simple one to take in case you're working on an app that only requires one custom navigation transition. However, if you're working on app that features multiple custom transitions, it is recommended that you model your navigation transitions via atomic transitions as described earlier on. In the long term, this will be beneficial to your development and iteration speed, by promoting code reusability amongst your team.
+This approach is often a simple one to take in case you're working on an app that only requires one custom navigation transition. However, if you're working on an app that features multiple custom transitions, it is recommended that you model your navigation transitions via atomic transitions as described earlier. In the long term, this will be beneficial to your development and iteration speed, by promoting code reusability amongst your team.
 
 ### Advanced
 
 We're now exploring the edges of the API surface of this library. Anything past this point entails a level of granularity that should be rarely needed in any team, unless:
 
 - You intend to migrate one of your existing [`UIViewControllerAnimatedTransitioning`](https://developer.apple.com/documentation/uikit/uiviewcontrolleranimatedtransitioning) implementations over to SwiftUI.
-- You're well versed in UIKit Custom Navigation Transitions and are willing to dive straight into raw UIKit territory, including view snapshotting, hierarchy set-up, and animation lifecycle management. Even then, I highly encourage you to consider using one of the formerly discussed abstractions in order to accomplish the desired effect.
+- You're well versed in *Custom UINavigationController Transitions* and are willing to dive straight into raw UIKit territory, including view snapshotting, hierarchy set-up, lifecycle management, and animator configuration. Even then, I highly encourage you to consider using one of the formerly discussed abstractions in order to accomplish the desired effect instead.
 
-Before we get started, I'd like to ask that if you're reaching for these abstractions because there's something missing in the previous customization mechanisms that you believe should be there to make your transition work the way you need, **please** [**open an issue**](https://github.com/davdroman/swiftui-navigation-transitions/issues/new) in order to let me know, so I can close the capability gap between abstraction and make everyone's development experience richer.
+Before we get started, I'd like to ask that if you're reaching for these abstractions because there's something missing in the previously discussed customization mechanisms that you believe should be there to build your transition the way you need, **please** [**open an issue**](https://github.com/davdroman/swiftui-navigation-transitions/issues/new) in order to let me know, so I can close the capability gap between abstractions and make everyone's development experience richer.
 
-Let's delve into the two final customization mechanisms, which as mentioned interact with UIKit abstractions directly.
+Let's delve into the two final customization entry points, which as mentioned interact with UIKit abstractions directly.
 
-The entire concept around advanced custom transitions revolves around an `Animator` object. This `Animator` is a protocol which exposes a subset of functions in the UIKit protocol [`UIViewImplicitlyAnimating`](https://developer.apple.com/documentation/uikit/uiviewimplicitlyanimating).
+The entire concept of advanced custom transitions revolves around an `Animator` object. This `Animator` is a protocol which exposes a subset of functions in the UIKit protocol [`UIViewImplicitlyAnimating`](https://developer.apple.com/documentation/uikit/uiviewimplicitlyanimating).
 
 The interface looks as follows:
 
