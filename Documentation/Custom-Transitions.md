@@ -170,7 +170,7 @@ Regardless, it's still allowed for cases like `slide` + `fade(in:)`, which affec
 
 This second, more interesting entry point is one reminiscent of SwiftUI's asymmetric transition API. As the name suggest, this transition splits the `push` transition from the `pop` transition, to make them as different as you wish.
 
-You can use this method with a pair of `NavigationTransition` values or, more importantly, a pair of `AtomicTransition` values. Most transitions will utilize the latter due to its superior granularity for customization.
+You can use this method with a pair of `NavigationTransition` values or, more importantly, a pair of `AtomicTransition` values. Most transitions will utilize the latter due to its superior granularity.
 
 ---
 
@@ -197,7 +197,7 @@ It's important to understand the **nuance** this entails: regardless of whether 
 
 Just like `AnyTransition.asymmetric`, this transition uses a different transition for insertion vs removal, and acts as a cornerstone for custom transitions along with its `NavigationTransition.asymmetric(push:pop:)` counterpart.
 
-Now that you understand the 4 basic customization entry points the library has to offer, you should be able to refer back to [**the example**](#NavigationTransition) from earlier on and understand a bit more about how the entire implementation works.
+Now that you understand the 4 basic customization entry points the library has to offer, you should be able to refer back to the earlier [**example**](#NavigationTransition) and understand a bit more about how the entire implementation works.
 
 ### Intermediate
 
@@ -275,7 +275,7 @@ Finally, container is a direct typealias to `UIView`, and it represents the cont
 
 ---
 
-Whilst composing `AtomicTransition`s is the recommended of building up to a `NavigationTransition`, there is actually an **alternative** option for those who'd like to reach for a more wholistic API:
+Whilst composing `AtomicTransition`s is the recommended way of building up to a `NavigationTransition`, there is actually an **alternative** option for those who'd like to reach for a more wholistic API:
 
 ```swift
 // NavigationTransition.swift
