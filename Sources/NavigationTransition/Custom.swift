@@ -22,16 +22,6 @@ extension NavigationTransition {
     }
 }
 
-// IDEA: extend AnimationTransientView to extract specific subviews by accessibility identifier in order to tailor
-// more specific animations
-// note: might require converting fromView into a snapshot first
-//
-// rough API idea:
-// fromView.subview(withAccessibilityIdentifier: "logo") // specific subview as AnimationTransientView that can now be animated
-// fromView["logo"] // theoretical shorthand syntax for the above
-//
-// identifiers could be made to be strongly typed and specifically applied to views via a modifier like:
-// .navigationTransitionID(.logo) // .logo could be a user-defined enum case conforming to some vended protocol
 extension NavigationTransition {
     /// Typealias for `UIView`.
     public typealias Container = UIView
