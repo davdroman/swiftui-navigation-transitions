@@ -2,11 +2,11 @@
 import UIKit
 import XCTest
 
-final class AnimationTransientViewPropertiesTests: XCTestCase {}
+final class AnimatorTransientViewPropertiesTests: XCTestCase {}
 
-extension AnimationTransientViewPropertiesTests {
+extension AnimatorTransientViewPropertiesTests {
     func testInitAndSet() {
-        var sut = AnimationTransientView.Properties(alpha: 0.5, transform: .identity)
+        var sut = AnimatorTransientView.Properties(alpha: 0.5, transform: .identity)
         XCTAssertEqual(sut.$alpha, nil)
         XCTAssertEqual(sut.alpha, 0.5)
         XCTAssertEqual(sut.$transform, nil)
@@ -21,9 +21,9 @@ extension AnimationTransientViewPropertiesTests {
     }
 }
 
-extension AnimationTransientViewPropertiesTests {
+extension AnimatorTransientViewPropertiesTests {
     func testTransformComponents() {
-        var sut = AnimationTransientView.Properties(alpha: 0.5, transform: .identity)
+        var sut = AnimatorTransientView.Properties(alpha: 0.5, transform: .identity)
 
         sut.translation = .init(dx: 10, dy: 20)
         sut.scale = .init(width: 30, height: 40)
@@ -40,9 +40,9 @@ extension AnimationTransientViewPropertiesTests {
     }
 }
 
-extension AnimationTransientViewTests {
+extension AnimatorTransientViewTests {
     func testTransformComponents_negativeX() {
-        var sut = AnimationTransientView.Properties(alpha: 0.5, transform: .identity)
+        var sut = AnimatorTransientView.Properties(alpha: 0.5, transform: .identity)
 
         sut.translation = .init(dx: -10, dy: 20)
         sut.scale = .init(width: 30, height: 40)
@@ -59,7 +59,7 @@ extension AnimationTransientViewTests {
     }
 
     func testTransformComponents_negativeY() {
-        var sut = AnimationTransientView.Properties(alpha: 0.5, transform: .identity)
+        var sut = AnimatorTransientView.Properties(alpha: 0.5, transform: .identity)
 
         sut.translation = .init(dx: 10, dy: -20)
         sut.scale = .init(width: 30, height: 40)
@@ -76,7 +76,7 @@ extension AnimationTransientViewTests {
     }
 
     func testTransformComponents_negativeRotation() {
-        var sut = AnimationTransientView.Properties(alpha: 0.5, transform: .identity)
+        var sut = AnimatorTransientView.Properties(alpha: 0.5, transform: .identity)
 
         sut.translation = .init(dx: 10, dy: 20)
         sut.scale = .init(width: 30, height: 40)
@@ -93,9 +93,9 @@ extension AnimationTransientViewTests {
     }
 }
 
-extension AnimationTransientViewTests {
+extension AnimatorTransientViewTests {
     func testTransformComponents_negativeXNegativeY() {
-        var sut = AnimationTransientView.Properties(alpha: 0.5, transform: .identity)
+        var sut = AnimatorTransientView.Properties(alpha: 0.5, transform: .identity)
 
         sut.translation = .init(dx: -10, dy: -20)
         sut.scale = .init(width: 30, height: 40)
@@ -112,7 +112,7 @@ extension AnimationTransientViewTests {
     }
 
     func testTransformComponents_negativeXNegativeRotation() {
-        var sut = AnimationTransientView.Properties(alpha: 0.5, transform: .identity)
+        var sut = AnimatorTransientView.Properties(alpha: 0.5, transform: .identity)
 
         sut.translation = .init(dx: -10, dy: 20)
         sut.scale = .init(width: 30, height: 40)
@@ -129,7 +129,7 @@ extension AnimationTransientViewTests {
     }
 
     func testTransformComponents_negativeYNegativeRotation() {
-        var sut = AnimationTransientView.Properties(alpha: 0.5, transform: .identity)
+        var sut = AnimatorTransientView.Properties(alpha: 0.5, transform: .identity)
 
         sut.translation = .init(dx: 10, dy: -20)
         sut.scale = .init(width: 30, height: 40)
@@ -146,9 +146,9 @@ extension AnimationTransientViewTests {
     }
 }
 
-extension AnimationTransientViewTests {
+extension AnimatorTransientViewTests {
     func testTransformComponents_negativeXNegativeYNegativeRotation() {
-        var sut = AnimationTransientView.Properties(alpha: 0.5, transform: .identity)
+        var sut = AnimatorTransientView.Properties(alpha: 0.5, transform: .identity)
 
         sut.translation = .init(dx: -10, dy: -20)
         sut.scale = .init(width: 30, height: 40)

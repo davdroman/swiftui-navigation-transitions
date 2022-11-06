@@ -64,10 +64,10 @@ public struct NavigationTransition {
 }
 
 extension NavigationTransition {
-    /// Typealias for ``AnimationTransientView``.
-    public typealias FromView = AnimationTransientView
-    /// Typealias for ``AnimationTransientView``.
-    public typealias ToView = AnimationTransientView
+    /// Typealias for ``AnimatorTransientView``.
+    public typealias FromView = AnimatorTransientView
+    /// Typealias for ``AnimatorTransientView``.
+    public typealias ToView = AnimatorTransientView
 
     typealias _TransientViewsHandler = (Animator, FromView, ToView, Operation, Context) -> Void
 

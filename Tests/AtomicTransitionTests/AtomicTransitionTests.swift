@@ -5,7 +5,7 @@ import XCTest
 final class AtomicTransitionTests: XCTestCase {
     func testPrepare() {
         let animatorUsed = UnimplementedAnimator()
-        let viewUsed = UnimplementedTransientView()
+        let viewUsed = UnimplementedAnimatorTransientView()
         let operationUsed = AtomicTransition.Operation.random()
         let contextUsed = UnimplementedContext()
 

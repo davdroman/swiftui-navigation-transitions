@@ -25,7 +25,7 @@ final class CustomTests: XCTestCase {
 
     func testWithTransientView() {
         let animatorUsed = UnimplementedAnimator()
-        let viewUsed = UnimplementedTransientView()
+        let viewUsed = UnimplementedAnimatorTransientView()
         let operationUsed = AtomicTransition.Operation.random()
         let containerViewUsed = UIView()
         let contextUsed = MockedContext(containerView: containerViewUsed)

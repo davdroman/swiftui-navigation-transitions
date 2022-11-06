@@ -4,7 +4,7 @@ import XCTest
 
 final class AsymmetricTests: XCTestCase {
     let animatorUsed = UnimplementedAnimator()
-    let viewUsed = UnimplementedTransientView()
+    let viewUsed = UnimplementedAnimatorTransientView()
     let contextUsed = UnimplementedContext()
 
     func testInsertion() {

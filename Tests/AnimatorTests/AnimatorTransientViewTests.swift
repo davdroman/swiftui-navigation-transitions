@@ -2,15 +2,15 @@
 import UIKit
 import XCTest
 
-final class AnimationTransientViewTests: XCTestCase {}
+final class AnimatorTransientViewTests: XCTestCase {}
 
-extension AnimationTransientViewTests {
+extension AnimatorTransientViewTests {
     func testInit() {
         let uiView = UIView()
         uiView.alpha = 0.5
         uiView.frame = .init(x: 10, y: 20, width: 30, height: 40)
 
-        let sut = AnimationTransientView(uiView)
+        let sut = AnimatorTransientView(uiView)
 
         XCTAssertEqual(sut.alpha, 0.5)
         XCTAssertEqual(sut.bounds, .init(x: 0, y: 0, width: 30, height: 40))
@@ -28,7 +28,7 @@ extension AnimationTransientViewTests {
         uiView.frame = .init(x: 10, y: 20, width: 30, height: 40)
         uiView.transform = .identity.translatedBy(x: 50, y: 60).scaledBy(x: 4, y: 4).rotated(by: .pi)
 
-        let sut = AnimationTransientView(uiView)
+        let sut = AnimatorTransientView(uiView)
 
         XCTAssertEqual(sut.alpha, 0.5)
         XCTAssertEqual(sut.bounds, .init(x: 0, y: 0, width: 30, height: 40))
