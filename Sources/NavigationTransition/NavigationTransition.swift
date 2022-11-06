@@ -32,7 +32,7 @@ public struct NavigationTransition {
         }
     }
 
-    @_spi(package)public final class _Context {
+    @_spi(package)public class _Context {
         public let uiKitContext: UIViewControllerContextTransitioning
         public var transientViews: (NavigationTransition.FromView, NavigationTransition.ToView)?
 
@@ -47,8 +47,8 @@ public struct NavigationTransition {
     @_spi(package)public var animation: Animation = .default
     @_spi(package)public var isDefault = false
 
-    init(withAnimator animatorHandler: @escaping _Handler) {
-        self.handler = animatorHandler
+    init(handler: @escaping _Handler) {
+        self.handler = handler
     }
 
     @_spi(package)public func prepare(_ animator: Animator, for operation: Operation, in context: _Context) {
