@@ -1,8 +1,7 @@
-#if DEBUG
 import UIKit
 import XCTestDynamicOverlay
 
-@_spi(package)public class UnimplementedUIKitContext: NSObject, UIViewControllerContextTransitioning {
+public class UnimplementedUIKitContext: NSObject, UIViewControllerContextTransitioning {
     public var containerView: UIView {
         XCTFail("\(Self.self).\(#function) is unimplemented")
         return .init()
@@ -74,7 +73,7 @@ import XCTestDynamicOverlay
     }
 }
 
-@_spi(package)public final class MockedUIKitContext: UnimplementedUIKitContext {
+public final class MockedUIKitContext: UnimplementedUIKitContext {
     public init(containerView: UIView) {
         self._containerView = containerView
     }
@@ -84,4 +83,3 @@ import XCTestDynamicOverlay
         _containerView
     }
 }
-#endif

@@ -1,8 +1,8 @@
-#if DEBUG
+@_spi(package) @testable import Animator
 import UIKit
 import XCTestDynamicOverlay
 
-@_spi(package)public final class UnimplementedAnimatorTransientView: AnimatorTransientView {
+public final class UnimplementedAnimatorTransientView: AnimatorTransientView {
     public override var initial: AnimatorTransientView.Properties {
         get {
             XCTFail("\(Self.self).\(#function) is unimplemented")
@@ -46,4 +46,3 @@ import XCTestDynamicOverlay
         XCTFail("\(Self.self).\(#function) is unimplemented")
     }
 }
-#endif

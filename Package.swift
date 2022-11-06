@@ -15,7 +15,7 @@ let package = Package(
 package.dependencies = [
     .package(url: "https://github.com/siteline/SwiftUI-Introspect", from: "0.1.4"),
     .package(url: "https://github.com/pointfreeco/swift-custom-dump", from: "0.6.0"), // dev
-    .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "0.5.0"),
+    .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "0.5.0"), // dev
 ]
 
 let Introspect: Target.Dependency = .product(
@@ -38,20 +38,17 @@ let XCTestDynamicOverlay: Target.Dependency = .product(
 package.targets += [
     .target(name: "Animation"),
 
-    .target(name: "Animator", dependencies: [
-        XCTestDynamicOverlay,
-    ]),
+    .target(name: "Animator"),
     .testTarget(name: "AnimatorTests", dependencies: [
         "Animator",
     ]),
 
     .target(name: "AtomicTransition", dependencies: [
         "Animator",
-        XCTestDynamicOverlay,
     ]),
     .testTarget(name: "AtomicTransitionTests", dependencies: [
         "AtomicTransition",
-        CustomDump,
+        "TestUtils",
     ]),
 
     .target(name: "NavigationTransition", dependencies: [
@@ -65,6 +62,12 @@ package.targets += [
 
     .target(name: "NavigationTransitions", dependencies: [
         "NavigationTransition",
+    ]),
+
+    .target(name: "TestUtils", dependencies: [
+        CustomDump,
+        "NavigationTransitions",
+        XCTestDynamicOverlay,
     ]),
 ]
 

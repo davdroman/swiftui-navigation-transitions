@@ -1,6 +1,6 @@
 @_spi(package) @testable import Animator
 @_spi(package) import AtomicTransition
-import CustomDump
+import TestUtils
 import SwiftUI
 import XCTest
 

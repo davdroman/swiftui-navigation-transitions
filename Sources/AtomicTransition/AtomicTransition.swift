@@ -22,7 +22,7 @@ public struct AtomicTransition {
     /// Typealias for `UIViewControllerContextTransitioning`.
     public typealias Context = UIViewControllerContextTransitioning
 
-    @_spi(package)public typealias _Handler = (Animator, TransientView, Operation, Context) -> Void
+    typealias _Handler = (Animator, TransientView, Operation, Context) -> Void
 
     private var handler: _Handler
 

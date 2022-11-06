@@ -1,8 +1,8 @@
-#if DEBUG
+import Animator
 import UIKit
 import XCTestDynamicOverlay
 
-@_spi(package)public final class UnimplementedAnimator: Animator {
+public final class UnimplementedAnimator: Animator {
     public init() {}
 
     public func addAnimations(_ animation: @escaping () -> Void) {
@@ -13,4 +13,3 @@ import XCTestDynamicOverlay
         XCTFail("\(Self.self).\(#function) is unimplemented")
     }
 }
-#endif
