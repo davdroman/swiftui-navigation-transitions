@@ -34,6 +34,9 @@ package.targets += [
     .target(name: "AtomicTransition", dependencies: [
         "Animator"
     ]),
+    .testTarget(name: "AtomicTransitionTests", dependencies: [
+        "AtomicTransition",
+    ]),
 
     .target(name: "NavigationTransition", dependencies: [
         "Animation",
