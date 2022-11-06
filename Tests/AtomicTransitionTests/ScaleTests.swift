@@ -4,7 +4,7 @@ import CustomDump
 import SwiftUI
 import XCTest
 
-final class RotateTests: XCTestCase {
+final class ScaleTests: XCTestCase {
     let animatorUsed = UnimplementedAnimator()
     let uiViewUsed = UIView()
     lazy var viewUsed = AnimatorTransientView(uiViewUsed)
@@ -12,10 +12,10 @@ final class RotateTests: XCTestCase {
     lazy var contextUsed = MockedContext(containerView: UIView())
 
     func testInsertion() {
-        AtomicTransition.rotate(.radians(.pi)).prepare(animatorUsed, or: viewUsed, for: .insertion, in: contextUsed)
+        AtomicTransition.scale(0.5).prepare(animatorUsed, or: viewUsed, for: .insertion, in: contextUsed)
 
         var initial = properties
-        initial.transform = .identity.rotated(by: .pi)
+        initial.transform = .identity.scaledBy(x: 0.5, y: 0.5)
         XCTAssertNoDifference(viewUsed.initial, initial)
 
         var animation = properties
@@ -27,17 +27,21 @@ final class RotateTests: XCTestCase {
     }
 
     func testRemoval() {
-        AtomicTransition.rotate(.radians(.pi)).prepare(animatorUsed, or: viewUsed, for: .removal, in: contextUsed)
+        AtomicTransition.scale(0.5).prepare(animatorUsed, or: viewUsed, for: .removal, in: contextUsed)
 
         let initial = properties
         XCTAssertNoDifference(viewUsed.initial, initial)
 
         var animation = properties
-        animation.transform = .identity.rotated(by: .pi)
+        animation.transform = .identity.scaledBy(x: 0.5, y: 0.5)
         XCTAssertNoDifference(viewUsed.animation, animation)
 
         var completion = properties
         completion.transform = .identity.rotated(by: 0)
         XCTAssertNoDifference(viewUsed.completion, completion)
     }
+
+    // TODO: assert for (x, y | x | y) conveniences equality when this is done:
+    // https://github.com/davdroman/swiftui-navigation-transitions/discussions/6
+    // func testConveniences() {}
 }
