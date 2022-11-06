@@ -1,16 +1,46 @@
+@_spi(package) import Animator
 @_spi(package) import AtomicTransition
 import XCTest
 
 final class CombinedTests: XCTestCase {
     func test() {
+        let animatorUsed = UnimplementedAnimator()
+        let viewUsed = UnimplementedTransientView()
+        let operationUsed = AtomicTransition.Operation.random()
+        let contextUsed = UnimplementedContext()
+
         var sequence: [Character] = []
         let sut = AtomicTransition
-            .spy { sequence.append("a") }
-            .combined(with: .spy { sequence.append("b") })
-            .combined(with: .spy { sequence.append("c") })
-            .combined(with: .spy { sequence.append("d") })
+            .spy { animator, view, operation, context in
+                XCTAssertIdentical(animator, animatorUsed)
+                XCTAssertIdentical(view, viewUsed)
+                XCTAssertEqual(operation, operationUsed)
+                XCTAssertIdentical(context, contextUsed)
+                sequence.append("a")
+            }
+            .combined(with: .spy { animator, view, operation, context in
+                XCTAssertIdentical(animator, animatorUsed)
+                XCTAssertIdentical(view, viewUsed)
+                XCTAssertEqual(operation, operationUsed)
+                XCTAssertIdentical(context, contextUsed)
+                sequence.append("b")
+            })
+            .combined(with: .spy { animator, view, operation, context in
+                XCTAssertIdentical(animator, animatorUsed)
+                XCTAssertIdentical(view, viewUsed)
+                XCTAssertEqual(operation, operationUsed)
+                XCTAssertIdentical(context, contextUsed)
+                sequence.append("c")
+            })
+            .combined(with: .spy { animator, view, operation, context in
+                XCTAssertIdentical(animator, animatorUsed)
+                XCTAssertIdentical(view, viewUsed)
+                XCTAssertEqual(operation, operationUsed)
+                XCTAssertIdentical(context, contextUsed)
+                sequence.append("d")
+            })
         XCTAssertEqual(sequence, [])
-        sut.prepare(.unimplemented, or: .unimplemented, for: .insertion, in: .unimplemented)
+        sut.prepare(animatorUsed, or: viewUsed, for: operationUsed, in: contextUsed)
         XCTAssertEqual(sequence, ["a", "b", "c", "d"])
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 /// different defined transitions before actually submitting them
 /// to the animator. This helps ensure no jumpy behavior in animations occurs.
 @dynamicMemberLookup
-public final class AnimationTransientView {
+public class AnimationTransientView {
     /// Typealias for `AnimationTransientViewProperties`.
     public typealias Properties = AnimationTransientViewProperties
 
@@ -53,5 +53,17 @@ public final class AnimationTransientView {
 
     @_spi(package)public func setUIViewProperties(to properties: KeyPath<AnimationTransientView, Properties>) {
         self[keyPath: properties].assignToUIView(uiView)
+    }
+}
+
+import XCTestDynamicOverlay
+
+@_spi(package)public final class UnimplementedTransientView: AnimationTransientView {
+    public init() {
+        super.init(UIView())
+    }
+
+    public override func setUIViewProperties(to properties: KeyPath<AnimationTransientView, AnimationTransientView.Properties>) {
+        XCTFail("\(Self.self).\(#function) is unimplemented")
     }
 }

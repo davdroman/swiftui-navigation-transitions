@@ -14,6 +14,7 @@ let package = Package(
 
 package.dependencies = [
     .package(url: "https://github.com/siteline/SwiftUI-Introspect", from: "0.1.4"),
+    .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "0.5.0"),
 ]
 
 let introspect: Target.Dependency = .product(
@@ -21,18 +22,25 @@ let introspect: Target.Dependency = .product(
     package: "SwiftUI-Introspect"
 )
 
+let xcTestDynamicOverlay: Target.Dependency = .product(
+    name: "XCTestDynamicOverlay",
+    package: "xctest-dynamic-overlay"
+)
+
 // MARK: Targets
 
 package.targets += [
     .target(name: "Animation"),
 
-    .target(name: "Animator"),
+    .target(name: "Animator", dependencies: [
+        xcTestDynamicOverlay,
+    ]),
     .testTarget(name: "AnimatorTests", dependencies: [
-        "Animator"
+        "Animator",
     ]),
 
     .target(name: "AtomicTransition", dependencies: [
-        "Animator"
+        "Animator",
     ]),
     .testTarget(name: "AtomicTransitionTests", dependencies: [
         "AtomicTransition",

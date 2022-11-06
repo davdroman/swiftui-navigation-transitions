@@ -2,13 +2,7 @@
 import AtomicTransition
 import XCTest
 
-extension AtomicTransition.TransientView {
-    static var unimplemented: Self {
-        .init(UIView())
-    }
-}
-
-final class UnimplementedContext: NSObject, AtomicTransition.Context {
+class UnimplementedContext: NSObject, AtomicTransition.Context {
     var containerView: UIView {
         XCTFail("\(Self.self).\(#function) is unimplemented")
         return .init()
@@ -80,10 +74,6 @@ final class UnimplementedContext: NSObject, AtomicTransition.Context {
     }
 }
 
-extension AtomicTransition.Context where Self == UnimplementedContext {
-    static var unimplemented: Self { .init() }
-}
-
 final class UnimplementedAnimator: AtomicTransition.Animator {
     func addAnimations(_ animation: @escaping () -> Void) {
         XCTFail("\(Self.self).\(#function) is unimplemented")
@@ -92,8 +82,4 @@ final class UnimplementedAnimator: AtomicTransition.Animator {
     func addCompletion(_ completion: @escaping (UIViewAnimatingPosition) -> Void) {
         XCTFail("\(Self.self).\(#function) is unimplemented")
     }
-}
-
-extension AtomicTransition.Animator where Self == UnimplementedAnimator {
-    static var unimplemented: Self { .init() }
 }

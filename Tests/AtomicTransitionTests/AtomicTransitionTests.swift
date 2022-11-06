@@ -1,14 +1,25 @@
+@_spi(package) import Animator
 @_spi(package) @testable import AtomicTransition
 import XCTest
 
 final class AtomicTransitionTests: XCTestCase {
     func testPrepare() {
-        var handlerCalled = false
-        let sut = AtomicTransition.spy {
-            handlerCalled = true
+        let animatorUsed = UnimplementedAnimator()
+        let viewUsed = UnimplementedTransientView()
+        let operationUsed = AtomicTransition.Operation.random()
+        let contextUsed = UnimplementedContext()
+
+        var handlerCalls = 0
+        let sut = AtomicTransition.spy { animator, view, operation, context in
+            XCTAssertIdentical(animator, animatorUsed)
+            XCTAssertIdentical(view, viewUsed)
+            XCTAssertEqual(operation, operationUsed)
+            XCTAssertIdentical(context, contextUsed)
+            handlerCalls += 1
         }
-        XCTAssertFalse(handlerCalled)
-        sut.prepare(.unimplemented, or: .unimplemented, for: .insertion, in: .unimplemented)
-        XCTAssertTrue(handlerCalled)
+
+        XCTAssertEqual(handlerCalls, 0)
+        sut.prepare(animatorUsed, or: viewUsed, for: operationUsed, in: contextUsed)
+        XCTAssertEqual(handlerCalls, 1)
     }
 }
