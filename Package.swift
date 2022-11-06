@@ -14,12 +14,18 @@ let package = Package(
 
 package.dependencies = [
     .package(url: "https://github.com/siteline/SwiftUI-Introspect", from: "0.1.4"),
+    .package(url: "https://github.com/pointfreeco/swift-custom-dump", from: "0.6.0"),
     .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "0.5.0"),
 ]
 
 let Introspect: Target.Dependency = .product(
     name: "Introspect",
     package: "SwiftUI-Introspect"
+)
+
+let CustomDump: Target.Dependency = .product(
+    name: "CustomDump",
+    package: "swift-custom-dump"
 )
 
 let XCTestDynamicOverlay: Target.Dependency = .product(
@@ -44,6 +50,7 @@ package.targets += [
     ]),
     .testTarget(name: "AtomicTransitionTests", dependencies: [
         "AtomicTransition",
+        CustomDump,
     ]),
 
     .target(name: "NavigationTransition", dependencies: [
