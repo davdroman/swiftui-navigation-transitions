@@ -10,9 +10,9 @@ import UIKit
 /// different defined transitions before actually submitting them
 /// to the animator. This helps ensure no jumpy behavior in animations occurs.
 @dynamicMemberLookup
-public final class AnimationTransientView {
-    /// Typealias for `AnimationTransientViewProperties`.
-    public typealias Properties = AnimationTransientViewProperties
+public class AnimatorTransientView {
+    /// Typealias for `AnimatorTransientViewProperties`.
+    public typealias Properties = AnimatorTransientViewProperties
 
     /// The initial set of properties that sets up the animation's initial state.
     ///
@@ -51,7 +51,7 @@ public final class AnimationTransientView {
         self.uiView = uiView
     }
 
-    @_spi(package)public func setUIViewProperties(to properties: KeyPath<AnimationTransientView, Properties>) {
+    @_spi(package)public func setUIViewProperties(to properties: KeyPath<AnimatorTransientView, Properties>) {
         self[keyPath: properties].assignToUIView(uiView)
     }
 }

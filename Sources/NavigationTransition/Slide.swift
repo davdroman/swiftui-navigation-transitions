@@ -1,3 +1,5 @@
+import enum SwiftUI.Axis
+
 extension NavigationTransition {
     /// Equivalent to `move(axis: .horizontal)`.
     @inlinable

@@ -1,7 +1,7 @@
 import UIKit
 
 /// Defines the allowed mutable properties in a transient view throughout each stage of the transition.
-public struct AnimationTransientViewProperties: Equatable {
+public struct AnimatorTransientViewProperties: Equatable {
     @OptionalWithDefault
     public var alpha: CGFloat
     @OptionalWithDefault
@@ -21,7 +21,7 @@ private extension Optional {
     }
 }
 
-extension AnimationTransientViewProperties {
+extension AnimatorTransientViewProperties {
     /// Convenience property for `CGAffineTransform` translation component.
     public var translation: CGVector {
         get { transform.translation }

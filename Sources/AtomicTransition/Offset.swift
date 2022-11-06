@@ -2,8 +2,8 @@ import UIKit
 
 extension AtomicTransition {
     /// A transition that translates the view from `offset` to zero on insertion, and from zero to `offset` on removal.
-    public static func offset(x: CGFloat = 0, y: CGFloat = 0) -> Self {
-        .custom { view, operation, container in
+    public static func offset(x: CGFloat, y: CGFloat) -> Self {
+        .custom { view, operation, _ in
             switch operation {
             case .insertion:
                 view.initial.translation.dx += x
@@ -18,6 +18,19 @@ extension AtomicTransition {
     }
 
     /// A transition that translates the view from `offset` to zero on insertion, and from zero to `offset` on removal.
+    @inlinable
+    public static func offset(x: CGFloat) -> Self {
+        .offset(x: x, y: 0)
+    }
+
+    /// A transition that translates the view from `offset` to zero on insertion, and from zero to `offset` on removal.
+    @inlinable
+    public static func offset(y: CGFloat) -> Self {
+        .offset(x: 0, y: y)
+    }
+
+    /// A transition that translates the view from `offset` to zero on insertion, and from zero to `offset` on removal.
+    @inlinable
     public static func offset(_ offset: CGSize) -> Self {
         .offset(x: offset.width, y: offset.height)
     }

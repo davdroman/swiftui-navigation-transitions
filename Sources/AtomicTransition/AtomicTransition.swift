@@ -17,8 +17,8 @@ public struct AtomicTransition {
         case removal
     }
 
-    /// Typealias for `AnimationTransientView`.
-    public typealias TransientView = AnimationTransientView
+    /// Typealias for `AnimatorTransientView`.
+    public typealias TransientView = AnimatorTransientView
     /// Typealias for `UIViewControllerContextTransitioning`.
     public typealias Context = UIViewControllerContextTransitioning
 

@@ -14,11 +14,23 @@ let package = Package(
 
 package.dependencies = [
     .package(url: "https://github.com/siteline/SwiftUI-Introspect", from: "0.1.4"),
+    .package(url: "https://github.com/pointfreeco/swift-custom-dump", from: "0.6.0"),
+    .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "0.5.0"),
 ]
 
-let introspect: Target.Dependency = .product(
+let Introspect: Target.Dependency = .product(
     name: "Introspect",
     package: "SwiftUI-Introspect"
+)
+
+let CustomDump: Target.Dependency = .product(
+    name: "CustomDump",
+    package: "swift-custom-dump"
+)
+
+let XCTestDynamicOverlay: Target.Dependency = .product(
+    name: "XCTestDynamicOverlay",
+    package: "xctest-dynamic-overlay"
 )
 
 // MARK: Targets
@@ -26,19 +38,25 @@ let introspect: Target.Dependency = .product(
 package.targets += [
     .target(name: "Animation"),
 
-    .target(name: "Animator"),
+    .target(name: "Animator", dependencies: [
+        XCTestDynamicOverlay,
+    ]),
     .testTarget(name: "AnimatorTests", dependencies: [
-        "Animator"
+        "Animator",
     ]),
 
     .target(name: "AtomicTransition", dependencies: [
-        "Animator"
+        "Animator",
+    ]),
+    .testTarget(name: "AtomicTransitionTests", dependencies: [
+        "AtomicTransition",
+        CustomDump,
     ]),
 
     .target(name: "NavigationTransition", dependencies: [
         "Animation",
         "AtomicTransition",
-        introspect,
+        Introspect,
     ]),
 
     .target(name: "NavigationTransitions", dependencies: [
