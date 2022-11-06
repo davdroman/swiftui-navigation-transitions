@@ -6,7 +6,7 @@ final class AsymmetricTests: XCTestCase {
         var flag = false
         let sut = AtomicTransition.asymmetric(
             insertion: .spy { flag = true },
-            removal: .spy {}
+            removal: .spy { XCTFail() }
         )
         XCTAssertFalse(flag)
         sut.prepare(.unimplemented, or: .unimplemented, for: .insertion, in: .unimplemented)
@@ -16,7 +16,7 @@ final class AsymmetricTests: XCTestCase {
     func testRemoval() {
         var flag = false
         let sut = AtomicTransition.asymmetric(
-            insertion: .spy {},
+            insertion: .spy { XCTFail() },
             removal: .spy { flag = true }
         )
         XCTAssertFalse(flag)
