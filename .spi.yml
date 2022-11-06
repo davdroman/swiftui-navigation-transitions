@@ -3,6 +3,7 @@ builder:
   configs:
   - platform: ios
     scheme: NavigationTransitions
+    documentation_targets: [NavigationTransitions]
   - platform: macos-xcodebuild
     scheme: NavigationTransitions
   - platform: tvos
