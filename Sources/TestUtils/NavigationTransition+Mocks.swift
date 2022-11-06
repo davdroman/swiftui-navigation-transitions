@@ -12,6 +12,12 @@ extension NavigationTransition {
     }
 }
 
+extension NavigationTransition {
+    public static var noop: Self {
+        .init { _, _, _ in }
+    }
+}
+
 extension NavigationTransition.Operation {
     public static func random() -> Self {
         [.push, .pop].randomElement()!

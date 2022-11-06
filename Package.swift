@@ -57,10 +57,6 @@ package.targets += [
         "AtomicTransition",
         Introspect,
     ]),
-    .testTarget(name: "NavigationTransitionTests", dependencies: [
-        "NavigationTransition",
-        "TestUtils",
-    ]),
 
     .target(name: "NavigationTransitions", dependencies: [
         "NavigationTransition",
