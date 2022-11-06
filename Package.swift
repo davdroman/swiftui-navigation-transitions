@@ -58,6 +58,7 @@ package.targets += [
     ]),
     .testTarget(name: "NavigationTransitionTests", dependencies: [
         "NavigationTransition",
+        "TestUtils",
     ]),
 
     .target(name: "NavigationTransitions", dependencies: [

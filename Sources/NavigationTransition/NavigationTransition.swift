@@ -18,8 +18,7 @@ public struct NavigationTransition {
         case push
         case pop
 
-        @_spi(package)public
-        init?(_ operation: UINavigationController.Operation) {
+        @_spi(package)public init?(_ operation: UINavigationController.Operation) {
             switch operation {
             case .push:
                 self = .push
