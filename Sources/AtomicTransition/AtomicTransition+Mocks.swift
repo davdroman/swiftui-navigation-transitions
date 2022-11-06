@@ -1,6 +1,5 @@
-@_spi(package) @testable import AtomicTransition
-
-extension AtomicTransition {
+#if DEBUG
+@_spi(package)public extension AtomicTransition {
     static func spy(_ handler: @escaping () -> Void) -> Self {
         .init { _, _, _, _ in
             handler()
@@ -11,3 +10,11 @@ extension AtomicTransition {
         .init(handler: handler)
     }
 }
+
+@_spi(package)public extension AtomicTransition.Operation {
+    static func random() -> Self {
+        [.insertion, .removal].randomElement()!
+    }
+}
+
+#endif

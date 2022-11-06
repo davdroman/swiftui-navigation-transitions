@@ -7,7 +7,7 @@ final class AtomicTransitionTests: XCTestCase {
         let animatorUsed = UnimplementedAnimator()
         let viewUsed = UnimplementedAnimatorTransientView()
         let operationUsed = AtomicTransition.Operation.random()
-        let contextUsed = UnimplementedContext()
+        let contextUsed = UnimplementedUIKitContext()
 
         var handlerCalls = 0
         let sut = AtomicTransition.spy { animator, view, operation, context in

@@ -7,7 +7,7 @@ final class CombinedTests: XCTestCase {
         let animatorUsed = UnimplementedAnimator()
         let viewUsed = UnimplementedAnimatorTransientView()
         let operationUsed = AtomicTransition.Operation.random()
-        let contextUsed = UnimplementedContext()
+        let contextUsed = UnimplementedUIKitContext()
 
         var sequence: [Character] = []
         let sut = AtomicTransition

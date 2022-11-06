@@ -5,7 +5,7 @@ import XCTest
 final class IdentityTests: XCTestCase {
     let animatorUsed = UnimplementedAnimator()
     let viewUsed = UnimplementedAnimatorTransientView()
-    let contextUsed = UnimplementedContext()
+    let contextUsed = UnimplementedUIKitContext()
 
     func testInsertion() {
         AtomicTransition.identity.prepare(animatorUsed, or: viewUsed, for: .insertion, in: contextUsed)

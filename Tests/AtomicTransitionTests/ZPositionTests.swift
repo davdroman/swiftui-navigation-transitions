@@ -17,7 +17,7 @@ final class ZPositionTests: XCTestCase {
         _containerView.addSubview(anotherUIViewB)
         return _containerView
     }()
-    lazy var contextUsed = MockedContext(containerView: containerView)
+    lazy var contextUsed = MockedUIKitContext(containerView: containerView)
 
     func testInitialState() {
         XCTAssertIdentical(containerView.subviews[0], anotherUIViewA)

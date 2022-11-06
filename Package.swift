@@ -47,6 +47,7 @@ package.targets += [
 
     .target(name: "AtomicTransition", dependencies: [
         "Animator",
+        XCTestDynamicOverlay,
     ]),
     .testTarget(name: "AtomicTransitionTests", dependencies: [
         "AtomicTransition",
@@ -57,6 +58,9 @@ package.targets += [
         "Animation",
         "AtomicTransition",
         Introspect,
+    ]),
+    .testTarget(name: "NavigationTransitionTests", dependencies: [
+        "NavigationTransition",
     ]),
 
     .target(name: "NavigationTransitions", dependencies: [

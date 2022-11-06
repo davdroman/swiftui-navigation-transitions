@@ -5,7 +5,7 @@ import XCTest
 final class AsymmetricTests: XCTestCase {
     let animatorUsed = UnimplementedAnimator()
     let viewUsed = UnimplementedAnimatorTransientView()
-    let contextUsed = UnimplementedContext()
+    let contextUsed = UnimplementedUIKitContext()
 
     func testInsertion() {
         var handlerCalls = 0

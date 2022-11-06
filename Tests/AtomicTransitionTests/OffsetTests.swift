@@ -7,7 +7,7 @@ final class OffsetTests: XCTestCase {
     let animatorUsed = UnimplementedAnimator()
     let viewUsed = AnimatorTransientView(UIView())
     let properties = AnimatorTransientViewProperties(alpha: 1, transform: .identity)
-    let contextUsed = MockedContext(containerView: UIView())
+    let contextUsed = MockedUIKitContext(containerView: UIView())
 
     func testInsertion() {
         AtomicTransition.offset(x: 100, y: 200).prepare(animatorUsed, or: viewUsed, for: .insertion, in: contextUsed)
