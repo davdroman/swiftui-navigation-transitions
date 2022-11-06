@@ -1,7 +1,7 @@
 import UIKit
 
 public struct Animation {
-    @_spi(package)public static var defaultDuration: Double { 0.35 }
+    static var defaultDuration: Double { 0.35 }
 
     @_spi(package)public var duration: Double
     @_spi(package)public let timingParameters: UITimingCurveProvider
