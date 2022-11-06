@@ -1,7 +1,6 @@
 @_spi(package) import class Animator.AnimatorTransientView
 @_spi(package) import AtomicTransition
 import TestUtils
-import XCTest
 
 final class CustomTests: XCTestCase {
     func testWithAnimator() {

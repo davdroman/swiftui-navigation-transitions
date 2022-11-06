@@ -1,7 +1,6 @@
 @_spi(package) @testable import Animator
 @_spi(package) import AtomicTransition
 import TestUtils
-import XCTest
 
 final class OpacityTests: XCTestCase {
     let animatorUsed = UnimplementedAnimator()

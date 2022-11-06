@@ -1,6 +1,5 @@
 @_spi(package) import AtomicTransition
 import TestUtils
-import XCTest
 
 final class IdentityTests: XCTestCase {
     let animatorUsed = UnimplementedAnimator()

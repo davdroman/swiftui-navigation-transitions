@@ -1,6 +1,5 @@
 @_spi(package) import AtomicTransition
 import TestUtils
-import XCTest
 
 final class AtomicTransitionTests: XCTestCase {
     func testPrepare() {

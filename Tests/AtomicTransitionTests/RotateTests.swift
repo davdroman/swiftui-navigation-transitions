@@ -1,7 +1,6 @@
 @_spi(package) @testable import Animator
 @_spi(package) import AtomicTransition
 import TestUtils
-import XCTest
 
 final class RotateTests: XCTestCase {
     let animatorUsed = UnimplementedAnimator()
