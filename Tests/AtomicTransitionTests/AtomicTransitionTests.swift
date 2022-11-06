@@ -1,5 +1,5 @@
 @_spi(package) import Animator
-@_spi(package) @testable import AtomicTransition
+@_spi(package) import AtomicTransition
 import XCTest
 
 final class AtomicTransitionTests: XCTestCase {
