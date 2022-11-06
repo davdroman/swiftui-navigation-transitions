@@ -4,7 +4,7 @@ import XCTest
 final class AtomicTransitionTests: XCTestCase {
     func testPrepare() {
         var handlerCalled = false
-        let sut = AtomicTransition { _, _, _, _ in
+        let sut = AtomicTransition.spy {
             handlerCalled = true
         }
         XCTAssertFalse(handlerCalled)
