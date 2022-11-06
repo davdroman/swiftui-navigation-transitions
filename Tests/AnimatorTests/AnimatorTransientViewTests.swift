@@ -1,6 +1,5 @@
 @_spi(package) @testable import Animator
-import UIKit
-import XCTest
+import TestUtils
 
 final class AnimatorTransientViewTests: XCTestCase {}
 

@@ -1,7 +1,6 @@
 @_spi(package) @testable import Animator
 @_spi(package) import AtomicTransition
-import CustomDump
-import XCTest
+import TestUtils
 
 final class MoveTests: XCTestCase {
     let animatorUsed = UnimplementedAnimator()
@@ -12,7 +11,7 @@ final class MoveTests: XCTestCase {
         _containerUsed.frame.size = .init(width: 100, height: 200)
         return _containerUsed
     }()
-    lazy var contextUsed = MockedContext(containerView: containerUsed)
+    lazy var contextUsed = MockedUIKitContext(containerView: containerUsed)
 }
 
 extension MoveTests {

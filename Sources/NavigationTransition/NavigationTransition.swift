@@ -18,8 +18,7 @@ public struct NavigationTransition {
         case push
         case pop
 
-        @_spi(package)public
-        init?(_ operation: UINavigationController.Operation) {
+        @_spi(package)public init?(_ operation: UINavigationController.Operation) {
             switch operation {
             case .push:
                 self = .push
@@ -33,15 +32,11 @@ public struct NavigationTransition {
         }
     }
 
-    @_spi(package)public
-    final class _Context {
-        @_spi(package)public
-        let uiKitContext: UIViewControllerContextTransitioning
-        @_spi(package)public
-        var transientViews: (NavigationTransition.FromView, NavigationTransition.ToView)?
+    @_spi(package)public class _Context {
+        public let uiKitContext: UIViewControllerContextTransitioning
+        public var transientViews: (NavigationTransition.FromView, NavigationTransition.ToView)?
 
-        @_spi(package)public
-        init(uiKitContext: UIViewControllerContextTransitioning) {
+        public init(uiKitContext: UIViewControllerContextTransitioning) {
             self.uiKitContext = uiKitContext
         }
     }
@@ -49,16 +44,14 @@ public struct NavigationTransition {
     typealias _Handler = (Animator, Operation, _Context) -> Void
 
     private var handler: _Handler
-    @_spi(package)public
-    var animation: Animation = .default
+    @_spi(package)public var animation: Animation = .default
     @_spi(package)public var isDefault = false
 
-    init(withAnimator animatorHandler: @escaping _Handler) {
-        self.handler = animatorHandler
+    init(handler: @escaping _Handler) {
+        self.handler = handler
     }
 
-    @_spi(package)public
-    func prepare(_ animator: Animator, for operation: Operation, in context: _Context) {
+    @_spi(package)public func prepare(_ animator: Animator, for operation: Operation, in context: _Context) {
         self.handler(animator, operation, context)
     }
 }

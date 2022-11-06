@@ -1,14 +1,14 @@
-@_spi(package) import Animator
+@_spi(package) import class Animator.AnimatorTransientView
 @_spi(package) import AtomicTransition
-import XCTest
+import TestUtils
 
 final class CustomTests: XCTestCase {
     func testWithAnimator() {
         let animatorUsed = UnimplementedAnimator()
         let uiViewUsed = UIView()
-        let viewUsed = AtomicTransition.TransientView(uiViewUsed)
+        let viewUsed = AnimatorTransientView(uiViewUsed)
         let operationUsed = AtomicTransition.Operation.random()
-        let contextUsed = UnimplementedContext()
+        let contextUsed = UnimplementedUIKitContext()
 
         var handlerCalls = 0
         let sut = AtomicTransition.custom(withAnimator: { animator, uiView, operation, context in
@@ -28,7 +28,7 @@ final class CustomTests: XCTestCase {
         let viewUsed = UnimplementedAnimatorTransientView()
         let operationUsed = AtomicTransition.Operation.random()
         let containerViewUsed = UIView()
-        let contextUsed = MockedContext(containerView: containerViewUsed)
+        let contextUsed = MockedUIKitContext(containerView: containerViewUsed)
 
         var handlerCalls = 0
         let sut = AtomicTransition.custom(withTransientView: { view, operation, container in

@@ -1,85 +1,85 @@
-@_spi(package) import Animator
-import AtomicTransition
-import XCTest
+import UIKit
+import XCTestDynamicOverlay
 
-class UnimplementedContext: NSObject, AtomicTransition.Context {
-    var containerView: UIView {
+public class UnimplementedUIKitContext: NSObject, UIViewControllerContextTransitioning {
+    public var containerView: UIView {
         XCTFail("\(Self.self).\(#function) is unimplemented")
         return .init()
     }
 
-    var isAnimated: Bool {
+    public var isAnimated: Bool {
         XCTFail("\(Self.self).\(#function) is unimplemented")
         return false
     }
 
-    var isInteractive: Bool {
+    public var isInteractive: Bool {
         XCTFail("\(Self.self).\(#function) is unimplemented")
         return false
     }
 
-    var transitionWasCancelled: Bool {
+    public var transitionWasCancelled: Bool {
         XCTFail("\(Self.self).\(#function) is unimplemented")
         return false
     }
 
-    var presentationStyle: UIModalPresentationStyle {
+    public var presentationStyle: UIModalPresentationStyle {
         XCTFail("\(Self.self).\(#function) is unimplemented")
         return .none
     }
 
-    func updateInteractiveTransition(_ percentComplete: CGFloat) {
+    public func updateInteractiveTransition(_ percentComplete: CGFloat) {
         XCTFail("\(Self.self).\(#function) is unimplemented")
     }
 
-    func finishInteractiveTransition() {
+    public func finishInteractiveTransition() {
         XCTFail("\(Self.self).\(#function) is unimplemented")
     }
 
-    func cancelInteractiveTransition() {
+    public func cancelInteractiveTransition() {
         XCTFail("\(Self.self).\(#function) is unimplemented")
     }
 
-    func pauseInteractiveTransition() {
+    public func pauseInteractiveTransition() {
         XCTFail("\(Self.self).\(#function) is unimplemented")
     }
 
-    func completeTransition(_ didComplete: Bool) {
+    public func completeTransition(_ didComplete: Bool) {
         XCTFail("\(Self.self).\(#function) is unimplemented")
     }
 
-    func viewController(forKey key: UITransitionContextViewControllerKey) -> UIViewController? {
-        XCTFail("\(Self.self).\(#function) is unimplemented")
-        return nil
-    }
-
-    func view(forKey key: UITransitionContextViewKey) -> UIView? {
+    public func viewController(forKey key: UITransitionContextViewControllerKey) -> UIViewController? {
         XCTFail("\(Self.self).\(#function) is unimplemented")
         return nil
     }
 
-    var targetTransform: CGAffineTransform {
+    public func view(forKey key: UITransitionContextViewKey) -> UIView? {
+        XCTFail("\(Self.self).\(#function) is unimplemented")
+        return nil
+    }
+
+    public var targetTransform: CGAffineTransform {
         XCTFail("\(Self.self).\(#function) is unimplemented")
         return .init()
     }
 
-    func initialFrame(for vc: UIViewController) -> CGRect {
+    public func initialFrame(for vc: UIViewController) -> CGRect {
         XCTFail("\(Self.self).\(#function) is unimplemented")
         return .zero
     }
 
-    func finalFrame(for vc: UIViewController) -> CGRect {
+    public func finalFrame(for vc: UIViewController) -> CGRect {
         XCTFail("\(Self.self).\(#function) is unimplemented")
         return .zero
     }
 }
 
-final class UnimplementedAnimator: AtomicTransition.Animator {
-    func addAnimations(_ animation: @escaping () -> Void) {
-        XCTFail("\(Self.self).\(#function) is unimplemented")
+public final class MockedUIKitContext: UnimplementedUIKitContext {
+    public init(containerView: UIView) {
+        self._containerView = containerView
     }
 
-    func addCompletion(_ completion: @escaping (UIViewAnimatingPosition) -> Void) {
-        XCTFail("\(Self.self).\(#function) is unimplemented")
+    private var _containerView: UIView
+    public override var containerView: UIView {
+        _containerView
     }
 }

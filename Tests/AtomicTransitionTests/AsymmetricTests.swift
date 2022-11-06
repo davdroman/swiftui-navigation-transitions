@@ -1,11 +1,10 @@
-@_spi(package) import Animator
 @_spi(package) import AtomicTransition
-import XCTest
+import TestUtils
 
 final class AsymmetricTests: XCTestCase {
     let animatorUsed = UnimplementedAnimator()
     let viewUsed = UnimplementedAnimatorTransientView()
-    let contextUsed = UnimplementedContext()
+    let contextUsed = UnimplementedUIKitContext()
 
     func testInsertion() {
         var handlerCalls = 0

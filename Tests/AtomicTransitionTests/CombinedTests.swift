@@ -1,13 +1,12 @@
-@_spi(package) import Animator
 @_spi(package) import AtomicTransition
-import XCTest
+import TestUtils
 
 final class CombinedTests: XCTestCase {
     func test() {
         let animatorUsed = UnimplementedAnimator()
         let viewUsed = UnimplementedAnimatorTransientView()
         let operationUsed = AtomicTransition.Operation.random()
-        let contextUsed = UnimplementedContext()
+        let contextUsed = UnimplementedUIKitContext()
 
         var sequence: [Character] = []
         let sut = AtomicTransition
