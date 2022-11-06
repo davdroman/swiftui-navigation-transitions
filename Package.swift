@@ -17,12 +17,12 @@ package.dependencies = [
     .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "0.5.0"),
 ]
 
-let introspect: Target.Dependency = .product(
+let Introspect: Target.Dependency = .product(
     name: "Introspect",
     package: "SwiftUI-Introspect"
 )
 
-let xcTestDynamicOverlay: Target.Dependency = .product(
+let XCTestDynamicOverlay: Target.Dependency = .product(
     name: "XCTestDynamicOverlay",
     package: "xctest-dynamic-overlay"
 )
@@ -33,7 +33,7 @@ package.targets += [
     .target(name: "Animation"),
 
     .target(name: "Animator", dependencies: [
-        xcTestDynamicOverlay,
+        XCTestDynamicOverlay,
     ]),
     .testTarget(name: "AnimatorTests", dependencies: [
         "Animator",
@@ -49,7 +49,7 @@ package.targets += [
     .target(name: "NavigationTransition", dependencies: [
         "Animation",
         "AtomicTransition",
-        introspect,
+        Introspect,
     ]),
 
     .target(name: "NavigationTransitions", dependencies: [
