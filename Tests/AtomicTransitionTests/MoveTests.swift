@@ -5,8 +5,7 @@ import XCTest
 
 final class MoveTests: XCTestCase {
     let animatorUsed = UnimplementedAnimator()
-    let uiViewUsed = UIView()
-    lazy var viewUsed = AnimatorTransientView(uiViewUsed)
+    let viewUsed = AnimatorTransientView(UIView())
     let properties = AnimatorTransientViewProperties(alpha: 1, transform: .identity)
     let containerUsed: UIView = {
         let _containerUsed = UIView()

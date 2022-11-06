@@ -6,10 +6,9 @@ import XCTest
 
 final class RotateTests: XCTestCase {
     let animatorUsed = UnimplementedAnimator()
-    let uiViewUsed = UIView()
-    lazy var viewUsed = AnimatorTransientView(uiViewUsed)
+    let viewUsed = AnimatorTransientView(UIView())
     let properties = AnimatorTransientViewProperties(alpha: 1, transform: .identity)
-    lazy var contextUsed = MockedContext(containerView: UIView())
+    let contextUsed = MockedContext(containerView: UIView())
 
     func testInsertion() {
         AtomicTransition.rotate(.radians(.pi)).prepare(animatorUsed, or: viewUsed, for: .insertion, in: contextUsed)
