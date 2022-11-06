@@ -1,7 +1,6 @@
 @_spi(package) @testable import Animator
 @_spi(package) import AtomicTransition
 import TestUtils
-import SwiftUI
 import XCTest
 
 final class ScaleTests: XCTestCase {

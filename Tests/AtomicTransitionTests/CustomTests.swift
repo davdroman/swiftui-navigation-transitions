@@ -1,4 +1,4 @@
-@_spi(package) import Animator
+@_spi(package) import class Animator.AnimatorTransientView
 @_spi(package) import AtomicTransition
 import TestUtils
 import XCTest
@@ -7,7 +7,7 @@ final class CustomTests: XCTestCase {
     func testWithAnimator() {
         let animatorUsed = UnimplementedAnimator()
         let uiViewUsed = UIView()
-        let viewUsed = AtomicTransition.TransientView(uiViewUsed)
+        let viewUsed = AnimatorTransientView(uiViewUsed)
         let operationUsed = AtomicTransition.Operation.random()
         let contextUsed = UnimplementedUIKitContext()
 
