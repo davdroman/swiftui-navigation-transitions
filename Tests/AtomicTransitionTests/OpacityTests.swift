@@ -3,7 +3,7 @@
 import CustomDump
 import XCTest
 
-final class OffsetTests: XCTestCase {
+final class OpacityTests: XCTestCase {
     let animatorUsed = UnimplementedAnimator()
     let uiViewUsed = UIView()
     lazy var viewUsed = AnimatorTransientView(uiViewUsed)
@@ -11,14 +11,14 @@ final class OffsetTests: XCTestCase {
     lazy var contextUsed = MockedContext(containerView: UIView())
 
     func testInsertion() {
-        AtomicTransition.offset(x: 100, y: 200).prepare(animatorUsed, or: viewUsed, for: .insertion, in: contextUsed)
+        AtomicTransition.opacity.prepare(animatorUsed, or: viewUsed, for: .insertion, in: contextUsed)
 
         var initial = properties
-        initial.transform = .identity.translatedBy(x: 100, y: 200)
+        initial.alpha = 0
         XCTAssertNoDifference(viewUsed.initial, initial)
 
         var animation = properties
-        animation.transform = .identity.translatedBy(x: 0, y: 0)
+        animation.alpha = 1
         XCTAssertNoDifference(viewUsed.animation, animation)
 
         let completion = properties
@@ -26,21 +26,17 @@ final class OffsetTests: XCTestCase {
     }
 
     func testRemoval() {
-        AtomicTransition.offset(x: 100, y: 200).prepare(animatorUsed, or: viewUsed, for: .removal, in: contextUsed)
+        AtomicTransition.opacity.prepare(animatorUsed, or: viewUsed, for: .removal, in: contextUsed)
 
         let initial = properties
         XCTAssertNoDifference(viewUsed.initial, initial)
 
         var animation = properties
-        animation.transform = .identity.translatedBy(x: 100, y: 200)
+        animation.alpha = 0
         XCTAssertNoDifference(viewUsed.animation, animation)
 
         var completion = properties
-        completion.transform = .identity.translatedBy(x: 0, y: 0)
+        completion.alpha = 1
         XCTAssertNoDifference(viewUsed.completion, completion)
     }
-
-    // TODO: assert for (x, y | x | y) conveniences equality when this is done:
-    // https://github.com/davdroman/swiftui-navigation-transitions/discussions/6
-    // func testConveniences() {}
 }
