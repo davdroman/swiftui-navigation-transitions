@@ -1,7 +1,6 @@
-import Animator
-import UIKit
-
-public typealias _Animator = Animator
+import class Animator.AnimatorTransientView
+import class UIKit.UIView
+import protocol UIKit.UIViewControllerContextTransitioning
 
 /// Represents an atomic transition which applies to a single view. It is the building block of `NavigationTransition`.
 ///
@@ -10,8 +9,6 @@ public typealias _Animator = Animator
 /// the overarching operation (push vs pop) is. This design allows great flexibility when defining fully-fledged
 /// navigation transitions. In other words, a `NavigationTransition` is the aggregate of two or more `AtomicTransition`s.
 public struct AtomicTransition {
-    public typealias Animator = _Animator
-
     public enum Operation {
         case insertion
         case removal
@@ -33,4 +30,17 @@ public struct AtomicTransition {
     @_spi(package)public func prepare(_ view: TransientView, for operation: Operation, in context: Context) {
         self.handler(view, operation, context)
     }
+}
+
+public enum AtomicTransitionOperation {
+    case insertion
+    case removal
+}
+
+public protocol AtomicTransitionProtocol {
+    typealias TransitionOperation = AtomicTransitionOperation
+    typealias TransientView = AnimatorTransientView
+    typealias Container = UIView
+
+    func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container)
 }
