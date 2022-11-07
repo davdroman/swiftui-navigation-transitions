@@ -1,7 +1,10 @@
 @resultBuilder
 public struct AtomicTransitionBuilder {
+    public static func buildBlock() -> Identity {
+        Identity()
+    }
     #if compiler(>=5.7)
-    public static func buildPartialBlock(first: some AtomicTransitionProtocol) -> some AtomicTransitionProtocol {
+    public static func buildPartialBlock<T1: AtomicTransitionProtocol>(first: T1) -> T1 {
         first
     }
 
@@ -9,10 +12,6 @@ public struct AtomicTransitionBuilder {
         Combined(accumulated, next)
     }
     #else
-    public static func buildBlock() -> Identity {
-        Identity()
-    }
-
     public static func buildBlock<
         T1: AtomicTransitionProtocol
     >(

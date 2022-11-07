@@ -1,5 +1,17 @@
 @testable import AtomicTransition
 
+extension AtomicTransition.Operation {
+    public static func random() -> Self {
+        [.insertion, .removal].randomElement()!
+    }
+}
+
+extension AtomicTransitionOperation {
+    public static func random() -> Self {
+        [.insertion, .removal].randomElement()!
+    }
+}
+
 extension AtomicTransition {
     public static func spy(_ handler: @escaping () -> Void) -> Self {
         .init { _, _, _ in
@@ -26,14 +38,12 @@ public struct Spy: AtomicTransitionProtocol {
     }
 }
 
-extension AtomicTransition.Operation {
-    public static func random() -> Self {
-        [.insertion, .removal].randomElement()!
+public struct Noop<Tag>: AtomicTransitionProtocol {
+    public init() {}
+
+    public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
+        // NO-OP
     }
 }
 
-extension AtomicTransitionOperation {
-    public static func random() -> Self {
-        [.insertion, .removal].randomElement()!
-    }
-}
+extension Noop: Hashable {}

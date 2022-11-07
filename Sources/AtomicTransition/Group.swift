@@ -3,7 +3,7 @@ import class UIKit.UIView
 public struct Group<Transitions: AtomicTransitionProtocol>: AtomicTransitionProtocol {
     private let transitions: Transitions
 
-    init(@AtomicTransitionBuilder _ transitions: () -> Transitions) {
+    public init(@AtomicTransitionBuilder _ transitions: () -> Transitions) {
         self.transitions = transitions()
     }
 
@@ -11,3 +11,6 @@ public struct Group<Transitions: AtomicTransitionProtocol>: AtomicTransitionProt
         transitions.transition(view, for: operation, in: container)
     }
 }
+
+extension Group: Equatable where Transitions: Equatable {}
+extension Group: Hashable where Transitions: Hashable {}
