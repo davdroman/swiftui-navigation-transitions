@@ -13,10 +13,10 @@ final class CombinedTests: XCTestCase {
     }
 
     func testExecutionOrder() {
-        let expectation1 = self.expectation(description: "Transition 1")
-        let expectation2 = self.expectation(description: "Transition 2")
-        let expectation3 = self.expectation(description: "Transition 3")
-        let expectation4 = self.expectation(description: "Transition 4")
+        let expectation1 = expectation(description: "Transition 1")
+        let expectation2 = expectation(description: "Transition 2")
+        let expectation3 = expectation(description: "Transition 3")
+        let expectation4 = expectation(description: "Transition 4")
 
         let sut = Combined {
             Spy { expectation1.fulfill() }
