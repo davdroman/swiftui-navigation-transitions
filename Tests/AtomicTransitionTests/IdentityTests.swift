@@ -2,14 +2,11 @@
 import TestUtils
 
 final class IdentityTests: XCTestCase {
-    let viewUsed = UnimplementedAnimatorTransientView()
-    let contextUsed = UnimplementedUIKitContext()
-
     func testInsertion() {
-        AtomicTransition.identity.prepare(viewUsed, for: .insertion, in: contextUsed)
+        Identity().transition(.unimplemented, for: .insertion, in: .unimplemented)
     }
 
     func testRemoval() {
-        AtomicTransition.identity.prepare(viewUsed, for: .removal, in: contextUsed)
+        Identity().transition(.unimplemented, for: .removal, in: .unimplemented)
     }
 }

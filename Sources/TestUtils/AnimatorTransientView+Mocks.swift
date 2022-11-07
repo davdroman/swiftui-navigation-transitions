@@ -2,7 +2,13 @@
 import UIKit
 import XCTestDynamicOverlay
 
-public final class UnimplementedAnimatorTransientView: AnimatorTransientView {
+extension AnimatorTransientView {
+    public static var unimplemented: AnimatorTransientView {
+        UnimplementedAnimatorTransientView()
+    }
+}
+
+final class UnimplementedAnimatorTransientView: AnimatorTransientView {
     public override var initial: AnimatorTransientView.Properties {
         get {
             XCTFail("\(Self.self).\(#function) is unimplemented")

@@ -2,16 +2,13 @@
 import TestUtils
 
 final class AsymmetricTests: XCTestCase {
-    let viewUsed = UnimplementedAnimatorTransientView()
-    let containerUsed = UIView()
-
     func testInsertion() {
         let expectation = expectation(description: "Handler called")
         let sut = Asymmetric(
             insertion: { Spy { expectation.fulfill() } },
             removal: { Spy { XCTFail() } }
         )
-        sut.transition(viewUsed, for: .insertion, in: containerUsed)
+        sut.transition(.unimplemented, for: .insertion, in: .unimplemented)
         wait(for: [expectation], timeout: 0)
     }
 
@@ -21,11 +18,21 @@ final class AsymmetricTests: XCTestCase {
             insertion: { Spy { XCTFail() } },
             removal: { Spy { expectation.fulfill() } }
         )
-        sut.transition(viewUsed, for: .removal, in: containerUsed)
+        sut.transition(.unimplemented, for: .removal, in: .unimplemented)
         wait(for: [expectation], timeout: 0)
     }
 }
 
 final class OnInsertionTests: XCTestCase {
-    
+    func testInsertion() {
+        let expectation = expectation(description: "Handler called")
+        let sut = OnInsertion { Spy { expectation.fulfill() } }
+        sut.transition(.unimplemented, for: .insertion, in: .unimplemented)
+        wait(for: [expectation], timeout: 0)
+    }
+
+    func testRemoval() {
+        let sut = OnInsertion { Spy { XCTFail() } }
+        sut.transition(.unimplemented, for: .removal, in: .unimplemented)
+    }
 }
