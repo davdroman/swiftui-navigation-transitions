@@ -7,12 +7,14 @@ final class GroupTests: XCTestCase {
     }
 
     func testOne() {
-        XCTAssert(Group { Identity() } is Group<Identity>)
+        enum A {}
+        XCTAssert(Group { Noop<A>() } is Group<Noop<A>>)
     }
 
     func testEquality() {
         XCTAssertEqual(Group {}, Group { Identity() })
-        XCTAssertEqual(Group { Identity() }, Group { Identity() })
+        enum A {}
+        XCTAssertEqual(Group { Noop<A>() }, Group { Noop<A>() })
     }
 
     func testExecutionOrder() {

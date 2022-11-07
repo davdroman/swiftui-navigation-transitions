@@ -18,7 +18,7 @@ public struct Asymmetric<InsertionTransition: AtomicTransitionProtocol, RemovalT
     private let insertion: InsertionTransition
     private let removal: RemovalTransition
 
-    init(insertion: InsertionTransition, removal: RemovalTransition) {
+    public init(insertion: InsertionTransition, removal: RemovalTransition) {
         self.insertion = insertion
         self.removal = removal
     }
@@ -33,10 +33,13 @@ public struct Asymmetric<InsertionTransition: AtomicTransitionProtocol, RemovalT
     }
 }
 
+extension Asymmetric: Equatable where InsertionTransition: Equatable, RemovalTransition: Equatable {}
+extension Asymmetric: Hashable where InsertionTransition: Hashable, RemovalTransition: Hashable {}
+
 public struct OnInsertion<Transition: AtomicTransitionProtocol>: AtomicTransitionProtocol {
     private let transition: Transition
 
-    init(@AtomicTransitionBuilder transition: () -> Transition) {
+    public init(@AtomicTransitionBuilder transition: () -> Transition) {
         self.transition = transition()
     }
 
@@ -49,11 +52,14 @@ public struct OnInsertion<Transition: AtomicTransitionProtocol>: AtomicTransitio
         }
     }
 }
+
+extension OnInsertion: Equatable where Transition: Equatable {}
+extension OnInsertion: Hashable where Transition: Hashable {}
 
 public struct OnRemoval<Transition: AtomicTransitionProtocol>: AtomicTransitionProtocol {
     private let transition: Transition
 
-    init(@AtomicTransitionBuilder transition: () -> Transition) {
+    public init(@AtomicTransitionBuilder transition: () -> Transition) {
         self.transition = transition()
     }
 
@@ -66,3 +72,6 @@ public struct OnRemoval<Transition: AtomicTransitionProtocol>: AtomicTransitionP
         }
     }
 }
+
+extension OnRemoval: Equatable where Transition: Equatable {}
+extension OnRemoval: Hashable where Transition: Hashable {}
