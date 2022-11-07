@@ -33,6 +33,10 @@ public struct Spy: AtomicTransitionProtocol {
         self.handler = handler
     }
 
+    public init(handler: @escaping () -> Void) {
+        self.handler = { _, _, _ in handler() }
+    }
+
     public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
         handler(view, operation, container)
     }

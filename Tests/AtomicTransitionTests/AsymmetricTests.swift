@@ -3,35 +3,29 @@ import TestUtils
 
 final class AsymmetricTests: XCTestCase {
     let viewUsed = UnimplementedAnimatorTransientView()
-    let contextUsed = UnimplementedUIKitContext()
+    let containerUsed = UIView()
 
     func testInsertion() {
         let expectation = expectation(description: "Handler called")
-        let sut = AtomicTransition.asymmetric(
-            insertion: .spy { [self] view, operation, context in
-                XCTAssertIdentical(view, viewUsed)
-                XCTAssertEqual(operation, .insertion)
-                XCTAssertIdentical(context, contextUsed)
-                expectation.fulfill()
-            },
-            removal: .spy { XCTFail() }
+        let sut = Asymmetric(
+            insertion: { Spy { expectation.fulfill() } },
+            removal: { Spy { XCTFail() } }
         )
-        sut.prepare(viewUsed, for: .insertion, in: contextUsed)
+        sut.transition(viewUsed, for: .insertion, in: containerUsed)
         wait(for: [expectation], timeout: 0)
     }
 
     func testRemoval() {
         let expectation = expectation(description: "Handler called")
-        let sut = AtomicTransition.asymmetric(
-            insertion: .spy { XCTFail() },
-            removal: .spy { [self] view, operation, context in
-                XCTAssertIdentical(view, viewUsed)
-                XCTAssertEqual(operation, .removal)
-                XCTAssertIdentical(context, contextUsed)
-                expectation.fulfill()
-            }
+        let sut = Asymmetric(
+            insertion: { Spy { XCTFail() } },
+            removal: { Spy { expectation.fulfill() } }
         )
-        sut.prepare(viewUsed, for: .removal, in: contextUsed)
+        sut.transition(viewUsed, for: .removal, in: containerUsed)
         wait(for: [expectation], timeout: 0)
     }
+}
+
+final class OnInsertionTests: XCTestCase {
+    
 }
