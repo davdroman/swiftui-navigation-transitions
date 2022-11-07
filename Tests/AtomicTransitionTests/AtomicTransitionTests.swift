@@ -8,17 +8,16 @@ final class AtomicTransitionTests: XCTestCase {
         let operationUsed = AtomicTransition.Operation.random()
         let contextUsed = UnimplementedUIKitContext()
 
-        var handlerCalls = 0
+        let expectation = expectation(description: "Handler called")
         let sut = AtomicTransition.spy { animator, view, operation, context in
             XCTAssertIdentical(animator, animatorUsed)
             XCTAssertIdentical(view, viewUsed)
             XCTAssertEqual(operation, operationUsed)
             XCTAssertIdentical(context, contextUsed)
-            handlerCalls += 1
+            expectation.fulfill()
         }
 
-        XCTAssertEqual(handlerCalls, 0)
         sut.prepare(animatorUsed, or: viewUsed, for: operationUsed, in: contextUsed)
-        XCTAssertEqual(handlerCalls, 1)
+        wait(for: [expectation], timeout: 0)
     }
 }
