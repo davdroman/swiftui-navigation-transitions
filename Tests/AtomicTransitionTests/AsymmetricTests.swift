@@ -7,24 +7,23 @@ final class AsymmetricTests: XCTestCase {
     let contextUsed = UnimplementedUIKitContext()
 
     func testInsertion() {
-        var handlerCalls = 0
+        let expectation = expectation(description: "Handler called")
         let sut = AtomicTransition.asymmetric(
             insertion: .spy { [self] animator, view, operation, context in
                 XCTAssertIdentical(animator, animatorUsed)
                 XCTAssertIdentical(view, viewUsed)
                 XCTAssertEqual(operation, .insertion)
                 XCTAssertIdentical(context, contextUsed)
-                handlerCalls += 1
+                expectation.fulfill()
             },
             removal: .spy { XCTFail() }
         )
-        XCTAssertEqual(handlerCalls, 0)
         sut.prepare(animatorUsed, or: viewUsed, for: .insertion, in: contextUsed)
-        XCTAssertEqual(handlerCalls, 1)
+        wait(for: [expectation], timeout: 0)
     }
 
     func testRemoval() {
-        var handlerCalls = 0
+        let expectation = expectation(description: "Handler called")
         let sut = AtomicTransition.asymmetric(
             insertion: .spy { XCTFail() },
             removal: .spy { [self] animator, view, operation, context in
@@ -32,11 +31,10 @@ final class AsymmetricTests: XCTestCase {
                 XCTAssertIdentical(view, viewUsed)
                 XCTAssertEqual(operation, .removal)
                 XCTAssertIdentical(context, contextUsed)
-                handlerCalls += 1
+                expectation.fulfill()
             }
         )
-        XCTAssertEqual(handlerCalls, 0)
         sut.prepare(animatorUsed, or: viewUsed, for: .removal, in: contextUsed)
-        XCTAssertEqual(handlerCalls, 1)
+        wait(for: [expectation], timeout: 0)
     }
 }
