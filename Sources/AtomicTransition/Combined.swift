@@ -34,7 +34,7 @@ public struct Combined<TransitionA: AtomicTransitionProtocol, TransitionB: Atomi
     }
     #else
     public init(@AtomicTransitionBuilder _ builder: () -> TransitionA) where TransitionB == Identity {
-        self.init(transitionA: builder(), transitionB: Identity())
+        self.init(builder(), Identity())
     }
     #endif
 

@@ -5,7 +5,7 @@ public struct AtomicTransitionBuilder {
         first
     }
 
-    public static func buildPartialBlock(accumulated: some AtomicTransitionProtocol, next: some AtomicTransitionProtocol) -> some AtomicTransitionProtocol {
+    public static func buildPartialBlock<T1: AtomicTransitionProtocol, T2: AtomicTransitionProtocol>(accumulated: T1, next: T2) -> Combined<T1, T2> {
         Combined(accumulated, next)
     }
     #else

@@ -12,7 +12,27 @@ extension AtomicTransition {
     }
 }
 
+public struct Spy: AtomicTransitionProtocol {
+    public typealias Handler = (TransientView, TransitionOperation, Container) -> Void
+
+    private let handler: Handler
+
+    public init(handler: @escaping Handler) {
+        self.handler = handler
+    }
+
+    public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
+        handler(view, operation, container)
+    }
+}
+
 extension AtomicTransition.Operation {
+    public static func random() -> Self {
+        [.insertion, .removal].randomElement()!
+    }
+}
+
+extension AtomicTransitionOperation {
     public static func random() -> Self {
         [.insertion, .removal].randomElement()!
     }
