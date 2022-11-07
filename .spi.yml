@@ -4,9 +4,3 @@ builder:
   - platform: ios
     scheme: NavigationTransitions
     documentation_targets: [NavigationTransitions]
-  - platform: macos-xcodebuild
-    scheme: NavigationTransitions
-  - platform: tvos
-    scheme: NavigationTransitions
-  - platform: watchos
-    scheme: NavigationTransitions
