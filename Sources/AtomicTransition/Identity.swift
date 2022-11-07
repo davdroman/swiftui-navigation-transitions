@@ -14,3 +14,5 @@ public struct Identity: AtomicTransitionProtocol {
         // NO-OP
     }
 }
+
+extension Identity: Hashable {}

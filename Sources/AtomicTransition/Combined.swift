@@ -23,17 +23,26 @@ public struct Combined<TransitionA: AtomicTransitionProtocol, TransitionB: Atomi
     private let transitionA: TransitionA
     private let transitionB: TransitionB
 
-    init(transitionA: TransitionA, transitionB: TransitionB) {
+    init(_ transitionA: TransitionA, _ transitionB: TransitionB) {
         self.transitionA = transitionA
         self.transitionB = transitionB
     }
 
+    #if compiler(>=5.7)
+    public init(@AtomicTransitionBuilder _ builder: () -> Self) {
+        self = builder()
+    }
+    #else
     public init(@AtomicTransitionBuilder _ builder: () -> TransitionA) where TransitionB == Identity {
         self.init(transitionA: builder(), transitionB: Identity())
     }
+    #endif
 
     public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
         transitionA.transition(view, for: operation, in: container)
         transitionB.transition(view, for: operation, in: container)
     }
 }
+
+extension Combined: Equatable where TransitionA: Equatable, TransitionB: Equatable {}
+extension Combined: Hashable where TransitionA: Hashable, TransitionB: Hashable {}

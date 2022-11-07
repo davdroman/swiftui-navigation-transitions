@@ -23,3 +23,24 @@ extension AtomicTransition {
         .scale(.leastNonzeroMagnitude)
     }
 }
+
+public struct Scale: AtomicTransitionProtocol {
+    private let scale: CGFloat
+
+    public init(_ scale: CGFloat) {
+        self.scale = scale
+    }
+
+    public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
+        switch operation {
+        case .insertion:
+            view.initial.scale = .init(width: scale, height: scale)
+            view.animation.transform = .identity
+        case .removal:
+            view.animation.scale = .init(width: scale, height: scale)
+            view.completion.transform = .identity
+        }
+    }
+}
+
+extension Scale: Hashable {}

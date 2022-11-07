@@ -1,4 +1,5 @@
 @_spi(package) import Animator
+import class UIKit.UIView
 
 extension AtomicTransition {
     public enum ZPosition {
@@ -30,3 +31,19 @@ extension AtomicTransition {
         .zPosition(.back)
     }
 }
+
+public struct BringToFront: AtomicTransitionProtocol {
+    public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
+        container.bringSubviewToFront(view.uiView)
+    }
+}
+
+extension BringToFront: Hashable {}
+
+public struct SendToBack: AtomicTransitionProtocol {
+    public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
+        container.sendSubviewToBack(view.uiView)
+    }
+}
+
+extension SendToBack: Hashable {}

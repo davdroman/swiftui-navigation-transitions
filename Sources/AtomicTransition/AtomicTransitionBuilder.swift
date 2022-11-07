@@ -1,5 +1,14 @@
 @resultBuilder
 public struct AtomicTransitionBuilder {
+    #if compiler(>=5.7)
+    public static func buildPartialBlock(first: some AtomicTransitionProtocol) -> some AtomicTransitionProtocol {
+        first
+    }
+
+    public static func buildPartialBlock(accumulated: some AtomicTransitionProtocol, next: some AtomicTransitionProtocol) -> some AtomicTransitionProtocol {
+        Combined(accumulated, next)
+    }
+    #else
     public static func buildBlock() -> Identity {
         Identity()
     }
@@ -101,4 +110,5 @@ public struct AtomicTransitionBuilder {
     ) -> Tuple<(T1, T2, T3, T4, T5, T6, T7)> {
         Tuple((t1, t2, t3, t4, t5, t6, t7))
     }
+    #endif
 }

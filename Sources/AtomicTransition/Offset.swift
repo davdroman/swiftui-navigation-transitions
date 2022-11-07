@@ -35,3 +35,28 @@ extension AtomicTransition {
         .offset(x: offset.width, y: offset.height)
     }
 }
+
+public struct Offset: AtomicTransitionProtocol {
+    private let x: CGFloat
+    private let y: CGFloat
+
+    public init(x: CGFloat, y: CGFloat) {
+        self.x = x
+        self.y = y
+    }
+
+    public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
+        switch operation {
+        case .insertion:
+            view.initial.translation.dx += x
+            view.initial.translation.dy += y
+            view.animation.transform = .identity
+        case .removal:
+            view.animation.translation.dx += x
+            view.animation.translation.dy += y
+            view.completion.transform = .identity
+        }
+    }
+}
+
+extension Offset: Hashable {}
