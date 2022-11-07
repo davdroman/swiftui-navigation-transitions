@@ -2,7 +2,7 @@
 
 extension AtomicTransition {
     public static func spy(_ handler: @escaping () -> Void) -> Self {
-        .init { _, _, _, _ in
+        .init { _, _, _ in
             handler()
         }
     }

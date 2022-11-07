@@ -3,7 +3,6 @@
 import TestUtils
 
 final class ZPositionTests: XCTestCase {
-    let animatorUsed = UnimplementedAnimator()
     let uiViewUsed = UIView()
     lazy var viewUsed = AnimatorTransientView(uiViewUsed)
     let properties = AnimatorTransientViewProperties(alpha: 1, transform: .identity)
@@ -26,7 +25,7 @@ final class ZPositionTests: XCTestCase {
     }
 
     func testFront() {
-        AtomicTransition.zPosition(.front).prepare(animatorUsed, or: viewUsed, for: operation, in: contextUsed)
+        AtomicTransition.zPosition(.front).prepare(viewUsed, for: operation, in: contextUsed)
 
         XCTAssertIdentical(containerView.subviews[0], anotherUIViewA)
         XCTAssertIdentical(containerView.subviews[1], anotherUIViewB)
@@ -34,7 +33,7 @@ final class ZPositionTests: XCTestCase {
     }
 
     func testBack() {
-        AtomicTransition.zPosition(.back).prepare(animatorUsed, or: viewUsed, for: operation, in: contextUsed)
+        AtomicTransition.zPosition(.back).prepare(viewUsed, for: operation, in: contextUsed)
 
         XCTAssertIdentical(containerView.subviews[0], uiViewUsed)
         XCTAssertIdentical(containerView.subviews[1], anotherUIViewA)

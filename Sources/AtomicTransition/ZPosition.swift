@@ -1,3 +1,5 @@
+@_spi(package) import Animator
+
 extension AtomicTransition {
     public enum ZPosition {
         case front
@@ -6,12 +8,12 @@ extension AtomicTransition {
 
     /// A transition that shifts the view's z axis to the given value, regardless of insertion or removal.
     public static func zPosition(_ position: ZPosition) -> Self {
-        .custom { _, view, _, context in
+        .custom { view, _, container in
             switch position {
             case .front:
-                context.containerView.bringSubviewToFront(view)
+                container.bringSubviewToFront(view.uiView)
             case .back:
-                context.containerView.sendSubviewToBack(view)
+                container.sendSubviewToBack(view.uiView)
             }
         }
     }

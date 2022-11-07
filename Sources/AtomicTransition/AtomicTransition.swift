@@ -22,7 +22,7 @@ public struct AtomicTransition {
     /// Typealias for `UIViewControllerContextTransitioning`.
     public typealias Context = UIViewControllerContextTransitioning
 
-    typealias _Handler = (Animator, TransientView, Operation, Context) -> Void
+    typealias _Handler = (TransientView, Operation, Context) -> Void
 
     private var handler: _Handler
 
@@ -30,7 +30,7 @@ public struct AtomicTransition {
         self.handler = handler
     }
 
-    @_spi(package)public func prepare(_ animator: Animator, or view: TransientView, for operation: Operation, in context: Context) {
-        self.handler(animator, view, operation, context)
+    @_spi(package)public func prepare(_ view: TransientView, for operation: Operation, in context: Context) {
+        self.handler(view, operation, context)
     }
 }

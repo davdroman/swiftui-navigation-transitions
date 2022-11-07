@@ -3,13 +3,12 @@
 import TestUtils
 
 final class OffsetTests: XCTestCase {
-    let animatorUsed = UnimplementedAnimator()
     let viewUsed = AnimatorTransientView(UIView())
     let properties = AnimatorTransientViewProperties(alpha: 1, transform: .identity)
     let contextUsed = MockedUIKitContext(containerView: UIView())
 
     func testInsertion() {
-        AtomicTransition.offset(x: 100, y: 200).prepare(animatorUsed, or: viewUsed, for: .insertion, in: contextUsed)
+        AtomicTransition.offset(x: 100, y: 200).prepare(viewUsed, for: .insertion, in: contextUsed)
 
         var initial = properties
         initial.transform = .identity.translatedBy(x: 100, y: 200)
@@ -24,7 +23,7 @@ final class OffsetTests: XCTestCase {
     }
 
     func testRemoval() {
-        AtomicTransition.offset(x: 100, y: 200).prepare(animatorUsed, or: viewUsed, for: .removal, in: contextUsed)
+        AtomicTransition.offset(x: 100, y: 200).prepare(viewUsed, for: .removal, in: contextUsed)
 
         let initial = properties
         XCTAssertNoDifference(viewUsed.initial, initial)

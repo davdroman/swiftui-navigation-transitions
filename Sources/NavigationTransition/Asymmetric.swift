@@ -20,11 +20,11 @@ extension NavigationTransition {
         .init { animator, fromView, toView, operation, context in
             switch operation {
             case .push:
-                push.prepare(animator, or: fromView, for: .removal, in: context)
-                push.prepare(animator, or: toView, for: .insertion, in: context)
+                push.prepare(fromView, for: .removal, in: context)
+                push.prepare(toView, for: .insertion, in: context)
             case .pop:
-                pop.prepare(animator, or: fromView, for: .removal, in: context)
-                pop.prepare(animator, or: toView, for: .insertion, in: context)
+                pop.prepare(fromView, for: .removal, in: context)
+                pop.prepare(toView, for: .insertion, in: context)
             }
         }
     }

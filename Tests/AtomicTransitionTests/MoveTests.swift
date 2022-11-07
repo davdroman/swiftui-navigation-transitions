@@ -3,7 +3,6 @@
 import TestUtils
 
 final class MoveTests: XCTestCase {
-    let animatorUsed = UnimplementedAnimator()
     let viewUsed = AnimatorTransientView(UIView())
     let properties = AnimatorTransientViewProperties(alpha: 1, transform: .identity)
     let containerUsed: UIView = {
@@ -24,7 +23,7 @@ extension MoveTests {
 
 extension MoveTests {
     func testTopInsertion() {
-        AtomicTransition.move(edge: .top).prepare(animatorUsed, or: viewUsed, for: .insertion, in: contextUsed)
+        AtomicTransition.move(edge: .top).prepare(viewUsed, for: .insertion, in: contextUsed)
 
         var initial = properties
         initial.transform = .identity.translatedBy(x: 0, y: -200)
@@ -39,7 +38,7 @@ extension MoveTests {
     }
 
     func testLeadingInsertion() {
-        AtomicTransition.move(edge: .leading).prepare(animatorUsed, or: viewUsed, for: .insertion, in: contextUsed)
+        AtomicTransition.move(edge: .leading).prepare(viewUsed, for: .insertion, in: contextUsed)
 
         var initial = properties
         initial.transform = .identity.translatedBy(x: -100, y: 0)
@@ -54,7 +53,7 @@ extension MoveTests {
     }
 
     func testTrailingInsertion() {
-        AtomicTransition.move(edge: .trailing).prepare(animatorUsed, or: viewUsed, for: .insertion, in: contextUsed)
+        AtomicTransition.move(edge: .trailing).prepare(viewUsed, for: .insertion, in: contextUsed)
 
         var initial = properties
         initial.transform = .identity.translatedBy(x: 100, y: 0)
@@ -69,7 +68,7 @@ extension MoveTests {
     }
 
     func testBottomInsertion() {
-        AtomicTransition.move(edge: .bottom).prepare(animatorUsed, or: viewUsed, for: .insertion, in: contextUsed)
+        AtomicTransition.move(edge: .bottom).prepare(viewUsed, for: .insertion, in: contextUsed)
 
         var initial = properties
         initial.transform = .identity.translatedBy(x: 0, y: 200)
@@ -86,7 +85,7 @@ extension MoveTests {
 
 extension MoveTests {
     func testTopRemoval() {
-        AtomicTransition.move(edge: .top).prepare(animatorUsed, or: viewUsed, for: .removal, in: contextUsed)
+        AtomicTransition.move(edge: .top).prepare(viewUsed, for: .removal, in: contextUsed)
 
         let initial = properties
         XCTAssertNoDifference(viewUsed.initial, initial)
@@ -101,7 +100,7 @@ extension MoveTests {
     }
 
     func testLeadingRemoval() {
-        AtomicTransition.move(edge: .leading).prepare(animatorUsed, or: viewUsed, for: .removal, in: contextUsed)
+        AtomicTransition.move(edge: .leading).prepare(viewUsed, for: .removal, in: contextUsed)
 
         let initial = properties
         XCTAssertNoDifference(viewUsed.initial, initial)
@@ -116,7 +115,7 @@ extension MoveTests {
     }
 
     func testTrailingRemoval() {
-        AtomicTransition.move(edge: .trailing).prepare(animatorUsed, or: viewUsed, for: .removal, in: contextUsed)
+        AtomicTransition.move(edge: .trailing).prepare(viewUsed, for: .removal, in: contextUsed)
 
         let initial = properties
         XCTAssertNoDifference(viewUsed.initial, initial)
@@ -131,7 +130,7 @@ extension MoveTests {
     }
 
     func testBottomRemoval() {
-        AtomicTransition.move(edge: .bottom).prepare(animatorUsed, or: viewUsed, for: .removal, in: contextUsed)
+        AtomicTransition.move(edge: .bottom).prepare(viewUsed, for: .removal, in: contextUsed)
 
         let initial = properties
         XCTAssertNoDifference(viewUsed.initial, initial)

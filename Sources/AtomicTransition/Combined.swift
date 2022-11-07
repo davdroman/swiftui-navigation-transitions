@@ -2,9 +2,9 @@ extension AtomicTransition {
     /// Combines this transition with another, returning a new transition that is the result of both transitions
     /// being applied.
     public func combined(with other: Self) -> Self {
-        .init { animator, view, operation, container in
-            self.prepare(animator, or: view, for: operation, in: container)
-            other.prepare(animator, or: view, for: operation, in: container)
+        .init { view, operation, container in
+            self.prepare(view, for: operation, in: container)
+            other.prepare(view, for: operation, in: container)
         }
     }
 }
