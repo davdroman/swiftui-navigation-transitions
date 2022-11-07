@@ -1,4 +1,4 @@
-import Introspect
+@_implementationOnly import Introspect
 import SwiftUI
 
 // MARK: iOS 16
