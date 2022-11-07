@@ -28,15 +28,9 @@ public struct Combined<TransitionA: AtomicTransitionProtocol, TransitionB: Atomi
         self.transitionB = transitionB
     }
 
-    #if compiler(>=5.7)
     public init(@AtomicTransitionBuilder _ builder: () -> Self) {
         self = builder()
     }
-    #else
-    public init(@AtomicTransitionBuilder _ builder: () -> TransitionA) where TransitionB == Identity {
-        self.init(builder(), Identity())
-    }
-    #endif
 
     public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
         transitionA.transition(view, for: operation, in: container)
