@@ -13,7 +13,7 @@ extension AtomicTransition {
     }
 }
 
-/// Provides a composite transition that uses a different transition for insertion versus removal.
+/// A composite transition that uses a different transition for insertion versus removal.
 public struct Asymmetric<InsertionTransition: AtomicTransitionProtocol, RemovalTransition: AtomicTransitionProtocol>: AtomicTransitionProtocol {
     private let insertion: InsertionTransition
     private let removal: RemovalTransition
@@ -39,7 +39,7 @@ public struct Asymmetric<InsertionTransition: AtomicTransitionProtocol, RemovalT
 extension Asymmetric: Equatable where InsertionTransition: Equatable, RemovalTransition: Equatable {}
 extension Asymmetric: Hashable where InsertionTransition: Hashable, RemovalTransition: Hashable {}
 
-/// Provides a transition that executes only on insertion.
+/// A transition that executes only on insertion.
 public struct OnInsertion<Transition: AtomicTransitionProtocol>: AtomicTransitionProtocol {
     private let transition: Transition
 
@@ -60,7 +60,7 @@ public struct OnInsertion<Transition: AtomicTransitionProtocol>: AtomicTransitio
 extension OnInsertion: Equatable where Transition: Equatable {}
 extension OnInsertion: Hashable where Transition: Hashable {}
 
-/// Provides a transition that executes only on removal.
+/// A transition that executes only on removal.
 public struct OnRemoval<Transition: AtomicTransitionProtocol>: AtomicTransitionProtocol {
     private let transition: Transition
 

@@ -19,11 +19,12 @@ extension Collection where Element == AtomicTransition {
     }
 }
 
+/// A composite transition that is the result of both specified transitions being applied.
 public struct Combined<TransitionA: AtomicTransitionProtocol, TransitionB: AtomicTransitionProtocol>: AtomicTransitionProtocol {
     private let transitionA: TransitionA
     private let transitionB: TransitionB
 
-    init(_ transitionA: TransitionA, _ transitionB: TransitionB) {
+    public init(_ transitionA: TransitionA, _ transitionB: TransitionB) {
         self.transitionA = transitionA
         self.transitionB = transitionB
     }
