@@ -65,25 +65,24 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
         if let cached = cachedAnimators[ObjectIdentifier(transitionContext)] {
             return cached
         }
-
         let animator = UIViewPropertyAnimator(
             duration: transitionDuration(using: transitionContext),
             timingParameters: transition.animation.timingParameters
         )
+        cachedAnimators[ObjectIdentifier(transitionContext)] = animator
 
-        // Handle NavigationTransition setup
-        if let (fromView, toView) = transientViews(for: transition, animator: animator, context: transitionContext) {
-            fromView.setUIViewProperties(to: \.initial)
-            animator.addAnimations { fromView.setUIViewProperties(to: \.animation) }
-            animator.addCompletion { _ in fromView.setUIViewProperties(to: \.completion) }
+        switch transition.handler {
+        case .transient(let handler):
+            if let (fromView, toView) = transientViews(for: handler, animator: animator, context: transitionContext) {
+                fromView.setUIViewProperties(to: \.initial)
+                animator.addAnimations { fromView.setUIViewProperties(to: \.animation) }
+                animator.addCompletion { _ in fromView.setUIViewProperties(to: \.completion) }
 
-            toView.setUIViewProperties(to: \.initial)
-            animator.addAnimations { toView.setUIViewProperties(to: \.animation) }
-            animator.addCompletion { _ in toView.setUIViewProperties(to: \.completion) }
-        }
-
-        // Handle PrimitiveNavigationTransition setup
-        if let handler = transition.primitiveHandler {
+                toView.setUIViewProperties(to: \.initial)
+                animator.addAnimations { toView.setUIViewProperties(to: \.animation) }
+                animator.addCompletion { _ in toView.setUIViewProperties(to: \.completion) }
+            }
+        case .primitive(let handler):
             handler(animator, operation, transitionContext)
         }
 
@@ -91,17 +90,15 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         }
 
-        cachedAnimators[ObjectIdentifier(transitionContext)] = animator
         return animator
     }
 
     private func transientViews(
-        for transition: AnyNavigationTransition,
+        for handler: AnyNavigationTransition.TransientHandler,
         animator: Animator,
         context: UIViewControllerContextTransitioning
     ) -> (fromView: AnimatorTransientView, toView: AnimatorTransientView)? {
         guard
-            let handler = transition.handler,
             let fromUIView = context.view(forKey: .from),
             let fromUIViewSnapshot = fromUIView.snapshotView(afterScreenUpdates: false),
             let toUIView = context.view(forKey: .to),

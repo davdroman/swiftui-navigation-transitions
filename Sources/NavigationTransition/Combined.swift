@@ -2,17 +2,23 @@ extension AnyNavigationTransition {
     /// Combines this transition with another, returning a new transition that is the result of both transitions
     /// being applied.
     public func combined(with other: Self) -> Self {
-        guard let lhsHandler = self.handler, let rhsHandler = other.handler else {
+        switch (self.handler, other.handler) {
+        case (.transient(let lhsHandler), .transient(let rhsHandler)):
+            return AnyNavigationTransition(
+                Combined(Erased(handler: lhsHandler), Erased(handler: rhsHandler))
+            )
+        case (.transient, .primitive),
+             (.primitive, .transient),
+             (.primitive, .primitive):
             runtimeWarn(
                 """
-                Combining primitive and non-primitive transitions via 'combine(with:)' is not allowed.
+                Combining primitive and non-primitive or two primitive transitions via 'combine(with:)' is not allowed.
+
+                The left-hand side transition will be left unmodified and the right-hand side transition will be discarded.
                 """
             )
             return self
         }
-        return .init(
-            Combined(Erased(handler: lhsHandler), Erased(handler: rhsHandler))
-        )
     }
 }
 
