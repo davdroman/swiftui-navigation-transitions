@@ -135,7 +135,7 @@ final class AppState: ObservableObject {
     }
 
     @Published var transition: Transition = .slide
-    @Published var animation: Animation = .init(curve: .easeInOut, duration: .medium)
+    @Published var animation: Animation = .init(curve: .easeInOut, duration: .fast)
     @Published var interactivity: Interactivity = .edgePan
 
     @Published var isPresentingSettings: Bool = false
