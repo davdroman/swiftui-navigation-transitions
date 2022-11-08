@@ -1,14 +1,16 @@
 @_spi(package) import NavigationTransition
 import UIKit
 
-public enum NavigationTransitionInteractivity {
-    case disabled
-    case edgePan
-    case pan
+extension AnyNavigationTransition {
+    public enum Interactivity {
+        case disabled
+        case edgePan
+        case pan
 
-    @inlinable
-    public static var `default`: Self {
-        .edgePan
+        @inlinable
+        public static var `default`: Self {
+            .edgePan
+        }
     }
 }
 
@@ -32,7 +34,7 @@ extension UISplitViewController {
     public func setNavigationTransition(
         _ transition: AnyNavigationTransition,
         forColumns columns: UISplitViewControllerColumns,
-        interactivity: NavigationTransitionInteractivity = .default
+        interactivity: AnyNavigationTransition.Interactivity = .default
     ) {
         if columns.contains(.compact), let compact = compactViewController as? UINavigationController {
             compact.setNavigationTransition(transition, interactivity: interactivity)
@@ -134,7 +136,7 @@ extension UINavigationController {
 
     public func setNavigationTransition(
         _ transition: AnyNavigationTransition,
-        interactivity: NavigationTransitionInteractivity = .default
+        interactivity: AnyNavigationTransition.Interactivity = .default
     ) {
         if defaultDelegate == nil {
             defaultDelegate = delegate

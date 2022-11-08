@@ -122,7 +122,7 @@ final class AppState: ObservableObject {
             }
         }
 
-        func callAsFunction() -> NavigationTransitionInteractivity {
+        func callAsFunction() -> AnyNavigationTransition.Interactivity {
             switch self {
             case .disabled:
                 return .disabled

@@ -46,7 +46,7 @@ extension View {
     public func navigationSplitViewTransition(
         _ transition: AnyNavigationTransition,
         forColumns columns: NavigationSplitViewColumns,
-        interactivity: NavigationTransitionInteractivity = .default
+        interactivity: AnyNavigationTransition.Interactivity = .default
     ) -> some View {
         self.modifier(
             NavigationSplitOrStackTransitionModifier(
@@ -61,7 +61,7 @@ extension View {
     @ViewBuilder
     public func navigationStackTransition(
         _ transition: AnyNavigationTransition,
-        interactivity: NavigationTransitionInteractivity = .default
+        interactivity: AnyNavigationTransition.Interactivity = .default
     ) -> some View {
         self.modifier(
             NavigationSplitOrStackTransitionModifier(
@@ -82,7 +82,7 @@ struct NavigationSplitOrStackTransitionModifier: ViewModifier {
 
     let transition: AnyNavigationTransition
     let target: Target
-    let interactivity: NavigationTransitionInteractivity
+    let interactivity: AnyNavigationTransition.Interactivity
 
     func body(content: Content) -> some View {
         switch target {
@@ -193,7 +193,7 @@ extension View {
     public func navigationViewColumnTransition(
         _ transition: AnyNavigationTransition,
         forColumns columns: NavigationViewColumns,
-        interactivity: NavigationTransitionInteractivity = .default
+        interactivity: AnyNavigationTransition.Interactivity = .default
     ) -> some View {
         self.modifier(
             NavigationViewTransitionModifier(
@@ -212,7 +212,7 @@ extension View {
     @ViewBuilder
     public func navigationViewStackTransition(
         _ transition: AnyNavigationTransition,
-        interactivity: NavigationTransitionInteractivity = .default
+        interactivity: AnyNavigationTransition.Interactivity = .default
     ) -> some View {
         self.modifier(
             NavigationViewTransitionModifier(
@@ -232,7 +232,7 @@ struct NavigationViewTransitionModifier: ViewModifier {
 
     let transition: AnyNavigationTransition
     let style: Style
-    let interactivity: NavigationTransitionInteractivity
+    let interactivity: AnyNavigationTransition.Interactivity
 
     func body(content: Content) -> some View {
         switch style {
