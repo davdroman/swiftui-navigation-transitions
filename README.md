@@ -150,7 +150,12 @@ This even works to override its behavior while maintaining the **default system 
 
 ## Documentation
 
-The repository contains [**documentation**](Documentation) covering how to set up your own custom transitions.
+The documentation for releases and `main` are available here:
+
+- [`main`](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/main/documentation/navigationtransitions)
+- [0.2.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.2.0/documentation/navigationtransitions)
+
+The repository also contains [**documentation**](Documentation/Custom-Transitions.md) covering how to set up your own **custom transitions**.
 
 ## Community
 
