@@ -82,3 +82,5 @@ public struct Fade: NavigationTransitionProtocol {
         }
     }
 }
+
+extension Fade: Hashable {}
