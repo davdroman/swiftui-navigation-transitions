@@ -16,7 +16,7 @@ The library is fully compatible with:
 
 ## Overview
 
-As opposed reinventing entire navigation components in order to customize its transitions, `NavigationTransitions` ships as a simple set of 2 modifiers that can be applied directly to SwiftUI's very own first-party navigation components.
+Instead of reinventing entire navigation components in order to customize its transitions, `NavigationTransitions` ships as a simple set of 2 modifiers that can be applied directly to SwiftUI's very own first-party navigation components.
 
 ### The Basics
 
@@ -78,7 +78,7 @@ And you can **dynamically** choose between transitions based on logic:
 
 ```swift
 .navigationViewStackTransition(
-    reduceMotion ? .fade(.in).animation(.linear) : .move(.vertically)
+    reduceMotion ? .fade(.in).animation(.linear) : .slide(.vertical)
 )
 ```
 
