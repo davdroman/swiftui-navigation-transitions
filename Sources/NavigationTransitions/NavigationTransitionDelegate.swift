@@ -71,6 +71,7 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
             timingParameters: transition.animation.timingParameters
         )
 
+        // Handle NavigationTransition setup
         if let (fromView, toView) = transientViews(for: transition, animator: animator, context: transitionContext) {
             fromView.setUIViewProperties(to: \.initial)
             animator.addAnimations { fromView.setUIViewProperties(to: \.animation) }
@@ -81,7 +82,10 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
             animator.addCompletion { _ in toView.setUIViewProperties(to: \.completion) }
         }
 
-        if let handler = transition.
+        // Handle PrimitiveNavigationTransition setup
+        if let handler = transition.primitiveHandler {
+            handler(animator, operation, transitionContext)
+        }
 
         animator.addCompletion { _ in
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)

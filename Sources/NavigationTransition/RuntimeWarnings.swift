@@ -5,7 +5,7 @@ import Foundation
 @inline(__always)
 func runtimeWarn(
   _ message: @autoclosure () -> String,
-  category: String? = "NavigationTransition"
+  category: String? = "NavigationTransitions"
 ) {
   #if DEBUG
     let message = message()
