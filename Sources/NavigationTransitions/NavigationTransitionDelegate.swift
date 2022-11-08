@@ -81,6 +81,8 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
             animator.addCompletion { _ in toView.setUIViewProperties(to: \.completion) }
         }
 
+        if let handler = transition.
+
         animator.addCompletion { _ in
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         }
