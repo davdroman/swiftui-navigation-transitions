@@ -24,7 +24,7 @@ public struct Fade: NavigationTransition {
     public var body: some NavigationTransition {
         switch style {
         case .in:
-            Mirror {
+            MirrorPush {
                 OnInsertion {
                     Opacity()
                 }
@@ -35,7 +35,7 @@ public struct Fade: NavigationTransition {
                 }
             }
         case .out:
-            Mirror {
+            MirrorPush {
                 OnRemoval {
                     Opacity()
                 }
@@ -46,7 +46,7 @@ public struct Fade: NavigationTransition {
                 }
             }
         case .cross:
-            Mirror {
+            MirrorPush {
                 Opacity()
             }
         }

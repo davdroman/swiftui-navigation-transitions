@@ -13,7 +13,7 @@ struct Swing: NavigationTransition {
         let offset: CGFloat = 150
 
         Slide(axis: .horizontal)
-        Mirror {
+        MirrorPush {
             OnInsertion {
                 Rotate(-angle)
                 Offset(x: offset)

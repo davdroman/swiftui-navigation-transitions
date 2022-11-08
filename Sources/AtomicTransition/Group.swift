@@ -4,7 +4,7 @@ import class UIKit.UIView
 public struct Group<Transitions: AtomicTransition>: AtomicTransition {
     private let transitions: Transitions
 
-    init(_ transitions: Transitions) {
+    private init(_ transitions: Transitions) {
         self.transitions = transitions
     }
 

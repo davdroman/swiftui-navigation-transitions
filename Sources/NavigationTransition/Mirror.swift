@@ -1,8 +1,5 @@
 import AtomicTransition
 
-/// Typealias for `MirrorPush`.
-public typealias Mirror<Transition: MirrorableAtomicTransition> = MirrorPush<Transition>
-
 public struct MirrorPush<Transition: MirrorableAtomicTransition>: NavigationTransition {
     private let transition: Transition
 
