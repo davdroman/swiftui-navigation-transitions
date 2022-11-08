@@ -151,7 +151,6 @@ extension _OptionalTransition: Hashable where Transition: Hashable {}
 
 public struct _ConditionalTransition<TrueTransition: AtomicTransition, FalseTransition: AtomicTransition>: AtomicTransition {
     private typealias Transition = _Either<TrueTransition, FalseTransition>
-
     private let transition: Transition
 
     init(trueTransition: TrueTransition) {
