@@ -65,11 +65,11 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
         if let cached = cachedAnimators[ObjectIdentifier(transitionContext)] {
             return cached
         }
-
         let animator = UIViewPropertyAnimator(
             duration: transitionDuration(using: transitionContext),
             timingParameters: transition.animation.timingParameters
         )
+        cachedAnimators[ObjectIdentifier(transitionContext)] = animator
 
         switch transition.handler {
         case .transient(let handler):
@@ -90,7 +90,6 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         }
 
-        cachedAnimators[ObjectIdentifier(transitionContext)] = animator
         return animator
     }
 
