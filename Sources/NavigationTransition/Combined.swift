@@ -14,7 +14,7 @@ extension AnyNavigationTransition {
                 """
                 Combining primitive and non-primitive or two primitive transitions via 'combine(with:)' is not allowed.
 
-                The left-hand side transition will be left unmodified and the other transition will be discarded.
+                The left-hand side transition will be left unmodified and the right-hand side transition will be discarded.
                 """
             )
             return self
