@@ -4,7 +4,7 @@ import class UIKit.UIView
 public struct OnInsertion<Transition: AtomicTransition>: AtomicTransition {
     private let transition: Transition
 
-    init(_ transition: Transition) {
+    private init(_ transition: Transition) {
         self.transition = transition
     }
 

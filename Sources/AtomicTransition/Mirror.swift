@@ -2,7 +2,7 @@
 public struct MirrorInsertion<Transition: AtomicTransition>: AtomicTransition {
     private let transition: Transition
 
-    init(_ transition: Transition) {
+    fileprivate init(_ transition: Transition) {
         self.transition = transition
     }
 
@@ -33,7 +33,7 @@ extension MirrorInsertion: Hashable where Transition: Hashable {}
 public struct MirrorRemoval<Transition: AtomicTransition>: AtomicTransition {
     private let transition: Transition
 
-    init(_ transition: Transition) {
+    fileprivate init(_ transition: Transition) {
         self.transition = transition
     }
 
