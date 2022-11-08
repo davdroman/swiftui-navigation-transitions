@@ -1,29 +1,5 @@
 @testable import AtomicTransition
 
-extension AtomicTransition.Operation {
-    public static func random() -> Self {
-        [.insertion, .removal].randomElement()!
-    }
-}
-
-extension AtomicTransitionOperation {
-    public static func random() -> Self {
-        [.insertion, .removal].randomElement()!
-    }
-}
-
-extension AtomicTransition {
-    public static func spy(_ handler: @escaping () -> Void) -> Self {
-        .init { _, _, _ in
-            handler()
-        }
-    }
-
-    public static func spy(_ handler: @escaping _Handler) -> Self {
-        .init(handler: handler)
-    }
-}
-
 public struct Spy: AtomicTransitionProtocol {
     public typealias Handler = (TransientView, TransitionOperation, Container) -> Void
 
@@ -51,3 +27,9 @@ public struct Noop<Tag>: AtomicTransitionProtocol {
 }
 
 extension Noop: Hashable {}
+
+extension AtomicTransitionOperation {
+    public static func random() -> Self {
+        [.insertion, .removal].randomElement()!
+    }
+}
