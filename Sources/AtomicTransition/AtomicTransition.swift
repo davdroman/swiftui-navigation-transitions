@@ -31,8 +31,20 @@ public enum AtomicTransitionOperation {
     case removal
 }
 
+/// Defines an `AtomicTransition` that can be mirrored. It is a specialized building block of `NavigationTransition`.
+///
+/// A transition that conform to these protocol expose a `Mirrored` associated type expressing the type resulting
+/// from mirroring the transition.
 public protocol MirrorableAtomicTransition: AtomicTransition {
     associatedtype Mirrored: AtomicTransition
 
+    /// The mirrored transition.
+    ///
+    /// > Note: A good indicator of a proper implementation for this function is that it should round-trip
+    /// > to its original value when called twice:
+    /// >
+    /// > ```swift
+    /// > Offset(x: 10).mirrored().mirrored() == Offset(x: 10)
+    /// > ```
     func mirrored() -> Mirrored
 }

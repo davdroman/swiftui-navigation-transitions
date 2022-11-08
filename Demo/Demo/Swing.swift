@@ -9,19 +9,19 @@ extension AnyNavigationTransition {
 
 struct Swing: NavigationTransition {
     var body: some NavigationTransition {
-        let angle = Angle(degrees: 70)
-        let offset: CGFloat = 150
+        let angle = 70.0
+        let offset = 150.0
 
         Slide(axis: .horizontal)
         MirrorPush {
             OnInsertion {
-                Rotate(-angle)
+                Rotate(.degrees(-angle))
                 Offset(x: offset)
                 Opacity()
                 Scale(0.5)
             }
             OnRemoval {
-                Rotate(angle)
+                Rotate(.degrees(angle))
                 Offset(x: -offset)
             }
         }
@@ -30,11 +30,5 @@ struct Swing: NavigationTransition {
                 SendToBack()
             }
         }
-    }
-}
-
-extension Angle {
-    static prefix func - (_ rhs: Self) -> Self {
-        .init(degrees: -rhs.degrees)
     }
 }
