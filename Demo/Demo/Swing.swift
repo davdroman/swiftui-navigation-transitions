@@ -9,11 +9,10 @@ extension AnyNavigationTransition {
 
 struct Swing: NavigationTransition {
     var body: some NavigationTransition {
-        let angle = 70.0
-        let offset = 150.0
-
         Slide(axis: .horizontal)
         MirrorPush {
+            let angle = 70.0
+            let offset = 150.0
             OnInsertion {
                 Rotate(.degrees(-angle))
                 Offset(x: offset)
