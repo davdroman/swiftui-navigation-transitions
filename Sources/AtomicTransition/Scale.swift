@@ -1,7 +1,7 @@
 import UIKit
 
 /// A transition that scales the view from `scale` to `1` on insertion, and from `1` to `scale` on removal.
-public struct Scale: AtomicTransition {
+public struct Scale: MirrorableAtomicTransition {
     private let scale: CGFloat
 
     /// Returns a transition that scales the view from `scale` to 1.0 on insertion, and from 1.0 to `scale` on removal.
@@ -26,6 +26,10 @@ public struct Scale: AtomicTransition {
             view.animation.scale = .init(width: scale, height: scale)
             view.completion.transform = .identity
         }
+    }
+
+    public func mirrored() -> Self {
+        self
     }
 }
 

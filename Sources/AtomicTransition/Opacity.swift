@@ -1,7 +1,7 @@
 import class UIKit.UIView
 
 /// A transition from transparent to opaque on insertion, and from opaque to transparent on removal.
-public struct Opacity: AtomicTransition {
+public struct Opacity: MirrorableAtomicTransition {
     public init() {}
 
     public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
@@ -13,6 +13,10 @@ public struct Opacity: AtomicTransition {
             view.animation.alpha = 0
             view.completion.alpha = 1
         }
+    }
+
+    public func mirrored() -> Self {
+        self
     }
 }
 

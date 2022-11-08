@@ -9,7 +9,7 @@ public struct Identity: AtomicTransition, MirrorableAtomicTransition {
     }
 
     @_transparent
-    public func mirrored() -> Identity {
+    public func mirrored() -> Self {
         self
     }
 }

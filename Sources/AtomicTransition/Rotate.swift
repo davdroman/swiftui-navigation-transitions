@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// A transition that rotates the view from `angle` to zero on insertion, and from zero to `angle` on removal.
-public struct Rotate: AtomicTransition {
+public struct Rotate: MirrorableAtomicTransition {
     private let angle: Angle
 
     public init(_ angle: Angle) {
@@ -17,6 +17,10 @@ public struct Rotate: AtomicTransition {
             view.animation.rotation += angle.radians
             view.completion.transform = .identity
         }
+    }
+
+    public func mirrored() -> Rotate {
+        .init(.radians(-angle.radians))
     }
 }
 

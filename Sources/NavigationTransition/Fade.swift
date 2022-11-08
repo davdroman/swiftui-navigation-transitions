@@ -24,34 +24,20 @@ public struct Fade: NavigationTransition {
     public var body: some NavigationTransition {
         switch style {
         case .in:
-            OnPush {
+            MirrorPush {
                 OnInsertion {
-                    Opacity()
-                }
-            }
-            OnPop {
-                OnRemoval {
                     Opacity()
                 }
             }
         case .out:
-            OnPush {
+            MirrorPush {
                 OnRemoval {
-                    BringToFront()
-                    Opacity()
-                }
-            }
-            OnPop {
-                OnInsertion {
                     BringToFront()
                     Opacity()
                 }
             }
         case .cross:
-            OnPush {
-                Opacity()
-            }
-            OnPop {
+            MirrorPush {
                 Opacity()
             }
         }

@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// A transition entering from `edge` on insertion, and exiting towards `edge` on removal.
-public struct Move: AtomicTransition {
+public struct Move: MirrorableAtomicTransition {
     private let edge: Edge
 
     public init(edge: Edge) {
@@ -41,6 +41,19 @@ public struct Move: AtomicTransition {
         case (.bottom, .removal):
             view.animation.translation.dy = container.frame.height
             view.completion.translation.dy = 0
+        }
+    }
+
+    public func mirrored() -> Move {
+        switch edge {
+        case .top:
+            return .init(edge: .bottom)
+        case .leading:
+            return .init(edge: .trailing)
+        case .bottom:
+            return .init(edge: .top)
+        case .trailing:
+            return .init(edge: .leading)
         }
     }
 }
