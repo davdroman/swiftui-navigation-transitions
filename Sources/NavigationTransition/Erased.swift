@@ -1,8 +1,8 @@
 // A type erased transition for internal use only.
 struct Erased: NavigationTransition {
-    private let handler: AnyNavigationTransition.Handler
+    private let handler: AnyNavigationTransition.TransientHandler
 
-    init(handler: @escaping AnyNavigationTransition.Handler) {
+    init(handler: @escaping AnyNavigationTransition.TransientHandler) {
         self.handler = handler
     }
 
