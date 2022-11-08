@@ -4,10 +4,27 @@ import UIKit
 
 public typealias _Animator = Animator
 
-//public struct AnyNavigationTransition {
-//    var transitionType: Any.Type
-//    var transitionHandler: ()
-//}
+public struct AnyNavigationTransition {
+    @_spi(package)public let type: Any.Type
+    @_spi(package)public let handler: ((AnimatorTransientView, AnimatorTransientView, NavigationTransitionOperation, UIView) -> Void)?
+//    @_spi(package)public let primitiveHandler: ()
+    @_spi(package)public var animation: Animation = .default
+
+    public init<T: NavigationTransitionProtocol>(_ transition: T) {
+        self.type = Swift.type(of: transition)
+        self.handler = transition.transition(from:to:for:in:)
+    }
+}
+
+extension AnyNavigationTransition {
+    /// Attaches an animation to this transition.
+    public func animation(_ animation: Animation) -> Self {
+        var copy = self
+        copy.animation = animation
+        return copy
+    }
+}
+
 
 /// Represents a transition which applies to two views: an origin ("from") view and a destination ("to") view.
 ///
