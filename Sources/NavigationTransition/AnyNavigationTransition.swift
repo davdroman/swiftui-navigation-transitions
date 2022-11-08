@@ -33,7 +33,12 @@ public struct AnyNavigationTransition {
     }
 }
 
+public typealias _Animation = Animation
+
 extension AnyNavigationTransition {
+    /// Typealias for `Animation`.
+    public typealias Animation = _Animation
+
     /// Attaches an animation to this transition.
     public func animation(_ animation: Animation) -> Self {
         var copy = self

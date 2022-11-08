@@ -94,7 +94,7 @@ final class AppState: ObservableObject {
         var curve: Curve
         var duration: Duration
 
-        func callAsFunction() -> NavigationTransition.Animation {
+        func callAsFunction() -> AnyNavigationTransition.Animation {
             switch curve {
             case .linear:
                 return .linear(duration: duration())
