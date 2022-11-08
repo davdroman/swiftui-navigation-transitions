@@ -46,7 +46,7 @@ public protocol AtomicTransitionProtocol {
     /// Typealias for `UIView`.
     typealias Container = UIView
 
-    /// Set up your atomic transition within this function.
+    /// Set up a custom atomic transition within this function.
     ///
     /// - Parameters:
     ///   - view: The ``TransientView`` instance being animated. Apply animations directly to this instance

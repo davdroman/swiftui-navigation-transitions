@@ -19,7 +19,7 @@ extension Collection where Element == AtomicTransition {
     }
 }
 
-/// A composite transition that is the result of both specified transitions being applied.
+/// A composite transition that is the result of two or more transitions being applied.
 public struct Combined<TransitionA: AtomicTransitionProtocol, TransitionB: AtomicTransitionProtocol>: AtomicTransitionProtocol {
     private let transitionA: TransitionA
     private let transitionB: TransitionB
@@ -29,8 +29,8 @@ public struct Combined<TransitionA: AtomicTransitionProtocol, TransitionB: Atomi
         self.transitionB = transitionB
     }
 
-    public init(@AtomicTransitionBuilder _ builder: () -> Self) {
-        self = builder()
+    public init(@AtomicTransitionBuilder transitions: () -> Self) {
+        self = transitions()
     }
 
     public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {

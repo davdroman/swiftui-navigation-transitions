@@ -16,3 +16,30 @@ extension Collection where Element == NavigationTransition {
         reduce(.identity) { $0.combined(with: $1) }
     }
 }
+
+public struct Combined<TransitionA: NavigationTransitionProtocol, TransitionB: NavigationTransitionProtocol>: NavigationTransitionProtocol {
+    private let transitionA: TransitionA
+    private let transitionB: TransitionB
+
+    init(_ transitionA: TransitionA, _ transitionB: TransitionB) {
+        self.transitionA = transitionA
+        self.transitionB = transitionB
+    }
+
+    public init(@NavigationTransitionBuilder transitions: () -> Self) {
+        self = transitions()
+    }
+
+    public func transition(
+        from fromView: TransientView,
+        to toView: TransientView,
+        for operation: TransitionOperation,
+        in container: Container
+    ) {
+        transitionA.transition(from: fromView, to: toView, for: operation, in: container)
+        transitionB.transition(from: fromView, to: toView, for: operation, in: container)
+    }
+}
+
+extension Combined: Equatable where TransitionA: Equatable, TransitionB: Equatable {}
+extension Combined: Hashable where TransitionA: Hashable, TransitionB: Hashable {}
