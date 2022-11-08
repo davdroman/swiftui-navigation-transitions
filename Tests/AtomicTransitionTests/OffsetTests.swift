@@ -38,8 +38,8 @@ final class OffsetTests: XCTestCase {
     }
 
     func testConveniences() {
-        XCTAssertEqual(Offset(x: 1, y: 0), Offset(x: 1))
-        XCTAssertEqual(Offset(x: 0, y: 1), Offset(y: 1))
-        XCTAssertEqual(Offset(x: 1, y: 2), Offset(.init(width: 1, height: 2)))
+        XCTAssertEqual(Offset(x: 1), Offset(x: 1, y: 0))
+        XCTAssertEqual(Offset(y: 1), Offset(x: 0, y: 1))
+        XCTAssertEqual(Offset(.init(width: 1, height: 2)), Offset(x: 1, y: 2))
     }
 }

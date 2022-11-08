@@ -5,10 +5,10 @@ import TestUtils
 final class RotateTests: XCTestCase {
     let viewUsed = AnimatorTransientView(UIView())
     let properties = AnimatorTransientViewProperties(alpha: 1, transform: .identity)
-    let contextUsed = MockedUIKitContext(containerView: UIView())
+    let containerUsed = UIView()
 
     func testInsertion() {
-        AtomicTransition.rotate(.radians(.pi)).prepare(viewUsed, for: .insertion, in: contextUsed)
+        Rotate(.radians(.pi)).transition(viewUsed, for: .insertion, in: containerUsed)
 
         var initial = properties
         initial.transform = .identity.rotated(by: .pi)
@@ -23,7 +23,7 @@ final class RotateTests: XCTestCase {
     }
 
     func testRemoval() {
-        AtomicTransition.rotate(.radians(.pi)).prepare(viewUsed, for: .removal, in: contextUsed)
+        Rotate(.radians(.pi)).transition(viewUsed, for: .removal, in: containerUsed)
 
         let initial = properties
         XCTAssertNoDifference(viewUsed.initial, initial)
