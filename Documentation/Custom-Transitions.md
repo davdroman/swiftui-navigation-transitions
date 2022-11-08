@@ -18,82 +18,87 @@ As a first time reader, it is highly recommended that you read **Core Concepts**
 
 ### `NavigationTransition`
 
-The main construct the library leverages is called `NavigationTransition`. You may have seen some instances of this type in the code samples (e.g. `.slide`).
+The main construct the library leverages is called `AnyNavigationTransition`. You may have seen some instances of this type in the README's code samples (e.g. `.slide`).
 
- `NavigationTransition` instances describe both `push` and `pop` transitions for both *origin* and *destination* views.
+ `AnyNavigationTransition` instances describe both `push` and `pop` transitions for both *origin* and *destination* views.
 
-Drawing from this previous example, if we dive into the implementation of `NavigationTransition.slide`, we'll find this:
+If we dive into the implementation of `AnyNavigationTransition.slide`, we'll find this:
 
 ```swift
-extension NavigationTransition {
-    /// Equivalent to `move(axis: .horizontal)`.
-    @inlinable
-    public static var slide: Self {
-        .move(axis: .horizontal)
+extension AnyNavigationTransition {
+    /// [...]
+    public static func slide(axis: Axis) -> Self {
+        .init(Slide(axis: axis))
     }
 }
 ```
 
-As the comment rightly documents, this statement is in fact **equivalent** to another transition called `.move`, which accepts a parameter `axis` to modify the direction of the movement.
+As you can see, there's not much going on here. The reason is that `AnyNavigationTransition` is actually just a type erasing wrapper around the real meat and potatoes: the protocol `NavigationTransition`.
 
-This first glance at the type teaches us two things:
-
-1. Transitions are **simple static extensions** of the type `NavigationTransition`.
-2. Transitions can be declared to **simplify access to more complex transitions**.
-
-Let's go ahead and dive even deeper, into the implementation of `NavigationTransition.move(axis:)`:
+Let's take a look at what (capital "S") `Slide` is:
 
 ```swift
-extension NavigationTransition {
-    /// A transition that moves both views in and out along the specified axis.
-    ///
-    /// This transition:
-    /// - Pushes views right-to-left and pops views left-to-right when `axis` is `horizontal`.
-    /// - Pushes views bottom-to-top and pops views top-to-bottom when `axis` is `vertical`.
-    public static func move(axis: Axis) -> Self {
+public struct Slide: NavigationTransition {
+    private let axis: Axis
+
+    public init(axis: Axis) {
+        self.axis = axis
+    }
+
+    public var body: some NavigationTransition {
         switch axis {
         case .horizontal:
-            return .asymmetric(
-                push: .asymmetric(
-                    insertion: .move(edge: .trailing),
-                    removal: .move(edge: .leading)
-                ),
-                pop: .asymmetric(
-                    insertion: .move(edge: .leading),
-                    removal: .move(edge: .trailing)
-                )
-            )
+            OnPush {
+                OnInsertion {
+                    Move(edge: .trailing)
+                }
+                OnRemoval {
+                    Move(edge: .leading)
+                }
+            }
+            OnPop {
+                OnInsertion {
+                    Move(edge: .leading)
+                }
+                OnRemoval {
+                    Move(edge: .trailing)
+                }
+            }
         case .vertical:
-            return .asymmetric(
-                push: .asymmetric(
-                    insertion: .move(edge: .bottom),
-                    removal: .move(edge: .top)
-                ),
-                pop: .asymmetric(
-                    insertion: .move(edge: .top),
-                    removal: .move(edge: .bottom)
-                )
-            )
+            OnPush {
+                OnInsertion {
+                    Move(edge: .bottom)
+                }
+                OnRemoval {
+                    Move(edge: .top)
+                }
+            }
+            OnPop {
+                OnInsertion {
+                    Move(edge: .top)
+                }
+                OnRemoval {
+                    Move(edge: .bottom)
+                }
+            }
         }
     }
 }
 ```
 
-Ah, this is a lot more interesting!
+This is more like it!
 
-Observe how the implementation body follows a very specific symmetrical shape. Funnily enough however, transitions themselves are built by using the term `asymmetric`, which we'll get to know in depth later in this read.
+As you can see, `NavigationTransition` leverages result builder syntax to define "what" transitions do, not "how" they do it. Notice how the entire transition is implemented concisely, yet there's **no explicit `UIView` animation** code to be seen anywhere at this point. I'd like to direct your attention instead to what's actually describing the transition at its core: `Move(edge: ...)`.
 
-Notice how the entire transition is implemented concisely in around 25 lines of code, yet there's **no explicit `UIView` animation** code to be seen anywhere at this point. I'd like to direct your attention instead to what's actually describing the transition on each `.asymmetric` call: `.move(edge: ...)`.
-
-If you've used the SwiftUI `transition` modifier before, you could easily mistake this for `AnyTransition.move(edge:)`, but this is in fact not the case. `.move(edge:)` actually belongs to another type that ships with this library: `AtomicTransition`.
+If you've used the SwiftUI `transition` modifier before, it's easy to draw a comparison to `AnyTransition.move(edge:)`. And in fact, whilst the API is slightly different, the intent behind it is the same indeed! `Move` is a type that conforms to the building block of the library: `AtomicTransition`.
 
 ### `AtomicTransition`
 
-`AtomicTransition` is a SwiftUI `AnyTransition`-inspired type which acts very much in the same manner. It can describe a specific set of mutations to view properties on an individual ("atomic") basis, for both **insertion** and **removal** of said view. 
+`AtomicTransition` is a SwiftUI `AnyTransition`-inspired type which acts very much in the same manner. It can describe a specific set of view changes on an individual ("atomic") basis, for both **insertion** and **removal** of said view. 
 
 Contrary to `NavigationTransition` and as the name indicates, `AtomicTransition` applies to only a **single view** out of the two, and is **agnostic** as to the **intent** (push or pop) of its **parent** `NavigationTransition`.
 
-If we dive even deeper into `AtomicTransition.move(edge:)`, this is what we find:
+If we dive even deeper into `Move`, this is what we find:
 
 ```swift
 extension AtomicTransition {
