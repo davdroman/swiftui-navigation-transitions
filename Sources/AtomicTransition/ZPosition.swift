@@ -1,30 +1,24 @@
-extension AtomicTransition {
-    public enum ZPosition {
-        case front
-        case back
-    }
+@_spi(package) import Animator
+import class UIKit.UIView
 
-    /// A transition that shifts the view's z axis to the given value, regardless of insertion or removal.
-    public static func zPosition(_ position: ZPosition) -> Self {
-        .custom { _, view, _, context in
-            switch position {
-            case .front:
-                context.containerView.bringSubviewToFront(view)
-            case .back:
-                context.containerView.sendSubviewToBack(view)
-            }
-        }
-    }
+/// A transition that brings the view to the front, regardless of insertion or removal.
+public struct BringToFront: AtomicTransition {
+    public init() {}
 
-    /// Equivalent to `zPosition(.front)`.
-    @inlinable
-    public static var bringToFront: Self {
-        .zPosition(.front)
-    }
-
-    /// Equivalent to `zPosition(.back)`.
-    @inlinable
-    public static var sendToBack: Self {
-        .zPosition(.back)
+    public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
+        container.bringSubviewToFront(view.uiView)
     }
 }
+
+extension BringToFront: Hashable {}
+
+/// A transition that sends the view to the back, regardless of insertion or removal.
+public struct SendToBack: AtomicTransition {
+    public init() {}
+
+    public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
+        container.sendSubviewToBack(view.uiView)
+    }
+}
+
+extension SendToBack: Hashable {}

@@ -9,288 +9,241 @@ As a first time reader, it is highly recommended that you read **Core Concepts**
   - [**`AtomicTransition`**](#AtomicTransition)
   
 - [**Implementation**](#Implementation)
-
   - [**Basic**](#Basic)
-  - [**Intermediate**](#Intermediate)
-  - [**Advanced**](#Advanced)
+  - [**Recommended**](#Recommended)
+  - [**UIKit**](#UIKit)
 
 ## Core Concepts
 
 ### `NavigationTransition`
 
-The main construct the library leverages is called `NavigationTransition`. You may have seen some instances of this type in the code samples (e.g. `.slide`).
+The main construct the library leverages is called `AnyNavigationTransition`. You may have seen some instances of this type in the README's code samples (e.g. `.slide`).
 
- `NavigationTransition` instances describe both `push` and `pop` transitions for both *origin* and *destination* views.
+ `AnyNavigationTransition` instances describe both `push` and `pop` transitions for both *origin* and *destination* views.
 
-Drawing from this previous example, if we dive into the implementation of `NavigationTransition.slide`, we'll find this:
+If we dive into the implementation of `AnyNavigationTransition.slide`, we'll find this:
 
 ```swift
-extension NavigationTransition {
-    /// Equivalent to `move(axis: .horizontal)`.
-    @inlinable
-    public static var slide: Self {
-        .move(axis: .horizontal)
+extension AnyNavigationTransition {
+    /// [...]
+    public static func slide(axis: Axis) -> Self {
+        .init(Slide(axis: axis))
     }
 }
 ```
 
-As the comment rightly documents, this statement is in fact **equivalent** to another transition called `.move`, which accepts a parameter `axis` to modify the direction of the movement.
+As you can see, there's not much going on here. The reason is that `AnyNavigationTransition` is actually just a type erasing wrapper around the real meat and potatoes: the protocol `NavigationTransition`.
 
-This first glance at the type teaches us two things:
-
-1. Transitions are **simple static extensions** of the type `NavigationTransition`.
-2. Transitions can be declared to **simplify access to more complex transitions**.
-
-Let's go ahead and dive even deeper, into the implementation of `NavigationTransition.move(axis:)`:
+Let's take a look at what (capital "S") `Slide` is:
 
 ```swift
-extension NavigationTransition {
-    /// A transition that moves both views in and out along the specified axis.
-    ///
-    /// This transition:
-    /// - Pushes views right-to-left and pops views left-to-right when `axis` is `horizontal`.
-    /// - Pushes views bottom-to-top and pops views top-to-bottom when `axis` is `vertical`.
-    public static func move(axis: Axis) -> Self {
+public struct Slide: NavigationTransition {
+    private let axis: Axis
+
+    public init(axis: Axis) {
+        self.axis = axis
+    }
+
+    public var body: some NavigationTransition {
         switch axis {
         case .horizontal:
-            return .asymmetric(
-                push: .asymmetric(
-                    insertion: .move(edge: .trailing),
-                    removal: .move(edge: .leading)
-                ),
-                pop: .asymmetric(
-                    insertion: .move(edge: .leading),
-                    removal: .move(edge: .trailing)
-                )
-            )
+            OnPush {
+                OnInsertion {
+                    Move(edge: .trailing)
+                }
+                OnRemoval {
+                    Move(edge: .leading)
+                }
+            }
+            OnPop {
+                OnInsertion {
+                    Move(edge: .leading)
+                }
+                OnRemoval {
+                    Move(edge: .trailing)
+                }
+            }
         case .vertical:
-            return .asymmetric(
-                push: .asymmetric(
-                    insertion: .move(edge: .bottom),
-                    removal: .move(edge: .top)
-                ),
-                pop: .asymmetric(
-                    insertion: .move(edge: .top),
-                    removal: .move(edge: .bottom)
-                )
-            )
-        }
-    }
-}
-```
-
-Ah, this is a lot more interesting!
-
-Observe how the implementation body follows a very specific symmetrical shape. Funnily enough however, transitions themselves are built by using the term `asymmetric`, which we'll get to know in depth later in this read.
-
-Notice how the entire transition is implemented concisely in around 25 lines of code, yet there's **no explicit `UIView` animation** code to be seen anywhere at this point. I'd like to direct your attention instead to what's actually describing the transition on each `.asymmetric` call: `.move(edge: ...)`.
-
-If you've used the SwiftUI `transition` modifier before, you could easily mistake this for `AnyTransition.move(edge:)`, but this is in fact not the case. `.move(edge:)` actually belongs to another type that ships with this library: `AtomicTransition`.
-
-### `AtomicTransition`
-
-`AtomicTransition` is a SwiftUI `AnyTransition`-inspired type which acts very much in the same manner. It can describe a specific set of mutations to view properties on an individual ("atomic") basis, for both **insertion** and **removal** of said view. 
-
-Contrary to `NavigationTransition` and as the name indicates, `AtomicTransition` applies to only a **single view** out of the two, and is **agnostic** as to the **intent** (push or pop) of its **parent** `NavigationTransition`.
-
-If we dive even deeper into `AtomicTransition.move(edge:)`, this is what we find:
-
-```swift
-extension AtomicTransition {
-    /// A transition entering from `edge` on insertion, and exiting towards `edge` on removal.
-    public static func move(edge: Edge) -> Self {
-        .custom { view, operation, container in
-            switch (edge, operation) {
-            case (.top, .insertion):
-                view.initial.translation.dy = -container.frame.height
-                view.animation.translation.dy = 0
-
-            case (.leading, .insertion):
-                view.initial.translation.dx = -container.frame.width
-                view.animation.translation.dx = 0
-
-            case (.trailing, .insertion):
-                view.initial.translation.dx = container.frame.width
-                view.animation.translation.dx = 0
-
-            case (.bottom, .insertion):
-                view.initial.translation.dy = container.frame.height
-                view.animation.translation.dy = 0
-
-            case (.top, .removal):
-                view.animation.translation.dy = -container.frame.height
-                view.completion.translation.dy = 0
-
-            case (.leading, .removal):
-                view.animation.translation.dx = -container.frame.width
-                view.completion.translation.dx = 0
-
-            case (.trailing, .removal):
-                view.animation.translation.dx = container.frame.width
-                view.completion.translation.dx = 0
-
-            case (.bottom, .removal):
-                view.animation.translation.dy = container.frame.height
-                view.completion.translation.dy = 0
+            OnPush {
+                OnInsertion {
+                    Move(edge: .bottom)
+                }
+                OnRemoval {
+                    Move(edge: .top)
+                }
+            }
+            OnPop {
+                OnInsertion {
+                    Move(edge: .top)
+                }
+                OnRemoval {
+                    Move(edge: .bottom)
+                }
             }
         }
     }
 }
 ```
 
-Now we're talking! There's some basic math and value assignments happening, but nothing resembling a typical `UIView` animation block just yet. Although there are some references to `animation` and `completion`, which are very familiar concepts in UIKit world.
+This is more like it!
 
-We'll be covering what these are in just a moment, but as a closing thought before we jump onto the nitty gritty of the implementation, take a moment to acknowledge the inherent **layered approach** this library uses to describe transitions. This design philosophy is the basis for building great, non-glitchy transitions down the line.
+As you can see, `NavigationTransition` leverages result builder syntax to define "what" transitions do, not "how" they do it. Notice how the entire transition is implemented concisely, yet there's **no explicit `UIView` animation** code to be seen anywhere at this point. I'd like to direct your attention instead to what's actually describing the transition at its core: `Move(edge: ...)`.
+
+If you've used SwiftUI's `transition` modifier before, it's easy to draw a comparison to `AnyTransition.move(edge:)`. And in fact, whilst the API is slightly different, the intent behind it is the same indeed! `Move` is a type that conforms to the building block of the library: `AtomicTransition`.
+
+### `AtomicTransition`
+
+`AtomicTransition` is a SwiftUI `AnyTransition`-inspired type which acts very much in the same manner. It can describe a specific set of view changes on an individual ("atomic") basis, for both **insertion** and **removal** of said view. 
+
+Contrary to `NavigationTransition` and as the name indicates, `AtomicTransition` applies to only a **single view** out of the two, and is **agnostic** as to the **intent** (push or pop) of its **parent** `NavigationTransition`.
+
+If we dive even deeper into `Move`, this is what we find:
+
+```swift
+public struct Move: AtomicTransition {
+    private let edge: Edge
+
+    public init(edge: Edge) {
+        self.edge = edge
+    }
+
+    public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
+        switch (edge, operation) {
+        case (.top, .insertion):
+            view.initial.translation.dy = -container.frame.height
+            view.animation.translation.dy = 0
+
+        case (.leading, .insertion):
+            view.initial.translation.dx = -container.frame.width
+            view.animation.translation.dx = 0
+
+        case (.trailing, .insertion):
+            view.initial.translation.dx = container.frame.width
+            view.animation.translation.dx = 0
+
+        case (.bottom, .insertion):
+            view.initial.translation.dy = container.frame.height
+            view.animation.translation.dy = 0
+
+        case (.top, .removal):
+            view.animation.translation.dy = -container.frame.height
+            view.completion.translation.dy = 0
+
+        case (.leading, .removal):
+            view.animation.translation.dx = -container.frame.width
+            view.completion.translation.dx = 0
+
+        case (.trailing, .removal):
+            view.animation.translation.dx = container.frame.width
+            view.completion.translation.dx = 0
+
+        case (.bottom, .removal):
+            view.animation.translation.dy = container.frame.height
+            view.completion.translation.dy = 0
+        }
+    }
+}
+```
+
+Now we're talking! There's some basic math and value assignments happening, but nothing resembling a typical `UIView` animation block even at this point. Although there are some references to `animation` and `completion`, which are very familiar concepts in UIKit world.
+
+We'll be covering what these are in just a moment, but as a closing thought before we jump onto the nitty gritty of the implementation, take a moment to acknowledge the inherent **layered approach** this library uses to describe transitions. This design philosophy is the basis for building great, easily maintainable, non-glitchy transitions down the road.
 
 ## Implementation
 
 ### Basic
 
-There are 2 main entry points for building a `NavigationTransition`:
+#### `AnyNavigationTransition.combined(with:)`
 
-#### `NavigationTransition.combined(with:)`
-
-You can create a custom `NavigationTransition` by combining two existing transitions:
+You can create a custom `AnyNavigationTransition` by combining two existing transitions:
 
 ```swift
 .slide.combined(with: .fade(.in))
 ```
 
-It is rarely the case where you'd want to combine `NavigationTransition`s in this manner due to their nature as high level abstractions. In fact, most of the time they won't combine very well at all, and will produce glitchy or weird effects. This is because two or more fully-fledged transitions tend to override the same view properties with different values, producing unexpected outcomes.
+It is rarely the case where you'd want to combine `AnyNavigationTransition`s in this manner due to their nature as high level abstractions. In fact, most of the time they won't combine very well at all, and will produce glitchy or weird effects. This is because two or more fully-fledged transitions tend to override the same view properties with different values, producing unexpected outcomes.
 
-Instead, most combinations should happen with the lower level abstraction `AtomicTransition`.
+Instead, most combinations should happen at lowers level, in `NavigationTransition` and `AtomicTransition` conformances.
 
 Regardless, it's still allowed for cases like `slide` + `fade(in:)`, which affect completely different properties of the view. Separatedly, `slide` only moves the views horizontally, and `.fade(.in)` fades views in. When combined, both occur at the same time without interfering with each other.
 
-#### `NavigationTransition.asymmetric(push:pop:)`
+### Recommended
+
+Let's delve into how `AtomicTransition` actually works, by taking another look at the implementation of `Move`:
 
 ```swift
-.asymmetric(push: .fade(.cross), pop: .slide)
-```
+public struct Move: AtomicTransition {
+    private let edge: Edge
 
-This second, more interesting entry point is one reminiscent of SwiftUI's asymmetric transition API. As the name suggest, this transition splits the `push` transition from the `pop` transition, to make them as different as you wish.
+    public init(edge: Edge) {
+        self.edge = edge
+    }
 
-You can use this method with a pair of `NavigationTransition` values or, more importantly, a pair of `AtomicTransition` values. Most transitions will utilize the latter due to its superior granularity.
+    public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
+        switch (edge, operation) {
+        case (.top, .insertion):
+            view.initial.translation.dy = -container.frame.height
+            view.animation.translation.dy = 0
 
----
+        case (.leading, .insertion):
+            view.initial.translation.dx = -container.frame.width
+            view.animation.translation.dx = 0
 
-There are 2 main entry points for building an `AtomicTransition`:
+        case (.trailing, .insertion):
+            view.initial.translation.dx = container.frame.width
+            view.animation.translation.dx = 0
 
-#### `AtomicTransition.combined(with:)`
+        case (.bottom, .insertion):
+            view.initial.translation.dy = container.frame.height
+            view.animation.translation.dy = 0
 
-```swift
-.move(edge: .trailing).combined(with: .scale(0.5))
-```
+        case (.top, .removal):
+            view.animation.translation.dy = -container.frame.height
+            view.completion.translation.dy = 0
 
-The API is remarkably similar to `AnyTransition` on purpose, and acts on a single view in the same way you'd expect the first-party API to behave.
+        case (.leading, .removal):
+            view.animation.translation.dx = -container.frame.width
+            view.completion.translation.dx = 0
 
-It's important to understand the **nuance** this entails: regardless of whether its parent transition is `push` or `pop`, this transition will insert the incoming view from the trailing edge and scale it from an initial value of 0.5 to a final value of 1. In the same manner, the outgoing view will be removed by moving away towards the same trailing edge and scaling down from 1 to 0.5. In order to actually apply a different edge movement for insertion vs removal you'll need to use the `.asymmetric` transition described below.
+        case (.trailing, .removal):
+            view.animation.translation.dx = container.frame.width
+            view.completion.translation.dx = 0
 
-#### `AtomicTransition.asymmetric(insertion:removal:)`
-
-```swift
-.asymmetric(
-    insertion: .move(edge: .trailing).combined(with: .scale(0.5)),
-    removal: .move(edge: .leading).combined(with: .scale(0.5))
-)
-```
-
-Just like `AnyTransition.asymmetric`, this transition uses a different transition for insertion vs removal, and acts as a cornerstone for custom transitions along with its `NavigationTransition.asymmetric(push:pop:)` counterpart.
-
-Now that you understand the 4 basic customization entry points the library has to offer, you should be able to refer back to the earlier [**example**](#NavigationTransition) and understand a bit more about how the entire implementation works.
-
-### Intermediate
-
-In addition to the basic entry points to customization described in the previous section, let's delve even deeper into how primitive transitions actually work. By "primitive transitions" I'm referring to standalone transitions which are not the result of composing other transitions together, but which rather define what the transition actually does to a view in animation terms.
-
-The primitive transitions which currently ship with this library are:
-
-- `AtomicTransition.identity`
-- `AtomicTransition.move(edge:)`
-- `AtomicTransition.offset(x:y:)`
-- `AtomicTransition.opacity(_:)`
-- `AtomicTransition.rotate(_:)`
-- `AtomicTransition.scale(_:)`
-- `AtomicTransition.zPosition(_:)`
-
-Let's take another look at the implementation of `.move(edge:)`:
-
-```swift
-extension AtomicTransition {
-    /// A transition entering from `edge` on insertion, and exiting towards `edge` on removal.
-    public static func move(edge: Edge) -> Self {
-        .custom { view, operation, container in
-            switch (edge, operation) {
-            case (.top, .insertion):
-                view.initial.translation.dy = -container.frame.height
-                view.animation.translation.dy = 0
-
-            case (.leading, .insertion):
-                view.initial.translation.dx = -container.frame.width
-                view.animation.translation.dx = 0
-
-            case (.trailing, .insertion):
-                view.initial.translation.dx = container.frame.width
-                view.animation.translation.dx = 0
-
-            case (.bottom, .insertion):
-                view.initial.translation.dy = container.frame.height
-                view.animation.translation.dy = 0
-
-            case (.top, .removal):
-                view.animation.translation.dy = -container.frame.height
-                view.completion.translation.dy = 0
-
-            case (.leading, .removal):
-                view.animation.translation.dx = -container.frame.width
-                view.completion.translation.dx = 0
-
-            case (.trailing, .removal):
-                view.animation.translation.dx = container.frame.width
-                view.completion.translation.dx = 0
-
-            case (.bottom, .removal):
-                view.animation.translation.dy = container.frame.height
-                view.completion.translation.dy = 0
-            }
+        case (.bottom, .removal):
+            view.animation.translation.dy = container.frame.height
+            view.completion.translation.dy = 0
         }
     }
 }
 ```
 
-Here we find neither `.asymmetric` nor `.combined` are used for this primitive transition. Instead, we find a `.custom` initializer with the following signature:
+All types conforming to `AtomicTransition` must implement what's known as a "transition handler". This transition handler hands over several things for us to work with:
 
-```swift
-// AtomicTransition.swift
-public static func custom(withTransientView handler: @escaping TransientViewHandler) -> Self
-```
-
-... where `TransientViewHandler` is a typealias for `(TransientView, Operation, Container) -> Void`.
-
-`TransientView` is actually an abstraction over the `UIView` which is being inserted or removed under the hood by UIKit (and thus SwiftUI) as part of a push or a pop. The reason this abstraction exists is because it helps abstract away all of the UIKit animation logic and instead allows one to focus on assigning the desired values for each stage of the transition (`initial`, `animation`, and `completion`). It also helps the transition engine with merging transition states under the hood, making sure two primitive transitions affecting the same property don't accidentally cause glitchy UI behavior.
-
-Alongside `TransientView`, `Operation` defines whether the operation being performed is an `insertion` or a `removal` of the view, which should help you differentiate and set up your property values accordingly.
-
-Finally, container is a direct typealias to `UIView`, and it represents the container in which the transition is ocurring. There's no need to add `TransientView` to this container as the library does this for you. Even better, there's no way to even accidentally do it because `TransientView` is not a `UIView` subclass.
+- A `TransientView` instance, which is actually an abstraction over the `UIView` being inserted or removed under the hood by UIKit (and thus SwiftUI) as part of a push or a pop. The reason it exists is because it helps abstract away all of the UIKit animation logic and instead allows you to focus on assigning the desired values for each stage of the transition (`initial`, `animation`, and `completion`). It also helps the transition engine with merging transition states under the hood, making sure two atomic transitions affecting the same property don't accidentally cause glitchy UI behavior.
+- `Operation` defines whether the operation being performed is an `insertion` or a `removal` of the view, which should help you differentiate and set up your property values accordingly.
+- `Container` is a direct typealias to `UIView`, and it represents the container in which the transition is ocurring. There's no need to add `TransientView` to this container as the library does this for you. Even better, there's no way to even accidentally do it because `TransientView` is not a `UIView` subclass.
 
 ---
 
-Whilst composing `AtomicTransition`s is the recommended way of building up to a `NavigationTransition`, there is actually an **alternative** option for those who'd like to reach for a more wholistic API:
+Next up, let's explore two ways of conforming to `NavigationTransition`.
+
+The simplest (and most recommended) way happens by declaring our atomic transitions (if needed), and composing them via `var body: some NavigationTransition { ... }` like we saw [previously with `Slide`](#NavigationTransition).
+
+But there's actually an **alternative** option for those who'd like to reach for a more wholistic API. `NavigationTransition` declares this other function that can be implemented instead of `body`:
 
 ```swift
-// NavigationTransition.swift
-public static func custom(withTransientViews handler: @escaping TransientViewsHandler) -> Self
+func transition(from fromView: TransientView, to toView: TransientView, for operation: TransitionOperation, in container: Container)
 ```
 
-... where `TransientViewsHandler` is a typealias for `(FromView, ToView, Operation, Container) -> Void`.
+Whilst `body` helps composing other transitions, this transition handler helps us define a completely custom transition without reaching down to atomic transitions as building blocks. You can roll your own logic as you would with `AtomicTransition` earlier, but with full context of the transition:
 
-`FromView` and `ToView` are typealiases for the `TransientView`s corresponding to the origin and destination views involved in the transition.
-
-Alongside them, `Operation` defines whether the operation being performed is a `push` or a `pop`. The concept of insertions or removals is entirely removed from this abstraction, since you can directly modify the property values for the views without needing atomic transitions.
+- `fromView` and `toView` are `TransientView`s corresponding to the *origin* and *destination* views involved in the transition. They work just like with `AtomicTransition`.
+- `Operation` defines whether the operation being performed is a `push` or a `pop`. The concept of insertions or removals is entirely irrelevant to this function, since you can directly modify the property values for the views without needing atomic transitions.
+- `Container` is the container view of type `UIView` where `fromView` and `toView` are added during the transition. There's no need to add either view to this container as the library does this for you. Even better, there's no way to even accidentally do it because `TransientView` is not a `UIView` subclass.
 
 This approach is often a simple one to take in case you're working on an app that only requires one custom navigation transition. However, if you're working on an app that features multiple custom transitions, it is recommended that you model your navigation transitions via atomic transitions as described earlier. In the long term, this will be beneficial to your development and iteration speed, by promoting code reusability amongst your team.
 
-### Advanced
+### UIKit
 
 We're now exploring the edges of the API surface of this library. Anything past this point entails a level of granularity that should be rarely needed in any team, unless:
 
@@ -299,7 +252,7 @@ We're now exploring the edges of the API surface of this library. Anything past 
 
 Before we get started, I'd like to ask that if you're reaching for these abstractions because there's something missing in the previously discussed customization mechanisms that you believe should be there to build your transition the way you need, **please** [**open an issue**](https://github.com/davdroman/swiftui-navigation-transitions/issues/new) in order to let me know, so I can close the capability gap between abstractions and make everyone's development experience richer.
 
-Let's delve into the two final customization entry points, which as mentioned interact with UIKit abstractions directly.
+Let's delve into the final customization entry point, which as mentioned interacts with UIKit abstractions directly.
 
 The entire concept of advanced custom transitions revolves around an `Animator` object. This `Animator` is a protocol which exposes a subset of functions in the UIKit protocol [`UIViewImplicitlyAnimating`](https://developer.apple.com/documentation/uikit/uiviewimplicitlyanimating).
 
@@ -312,25 +265,18 @@ The interface looks as follows:
 }
 ```
 
-The `AtomicTransition` API for utilising this mechanism is:
+In order to adopt this, you must declare a type conforming to `PrimitiveNavigationTransition`, and implement its transition handler:
 
 ```swift
-// AtomicTransition.swift
-public static func custom(withAnimator handler: @escaping AnimatorHandler) -> Self
+struct MyTransition: PrimitiveNavigationTransition {
+    func transition(with animator: Animator, for operation: TransitionOperation, in context: Context) {
+        // ...
+    }
+}
 ```
 
-... where `AnimatorHandler` is a typealias for `(Animator, UIView, Operation, Context) -> Void`.
+- `Animator` is used to setup animations and completion logic.
+- `Operation` describes the `push` or `pop` operation being performed.
+- `Context` ([`UIViewControllerContextTransitioning`](https://developer.apple.com/documentation/uikit/uiviewcontrollercontexttransitioning)) gives you access to the views being animated and more.
 
-In this case, the `Animator` is utilized to setup animations and completion logic for the inserted or removed `UIView` with access to a `Context` (typealias for [`UIViewControllerContextTransitioning`](https://developer.apple.com/documentation/uikit/uiviewcontrollercontexttransitioning)).
-
----
-
-The same principle applies to `NavigationTransition` as well:
-
-```swift
-public static func custom(withAnimator handler: @escaping AnimatorHandler) -> Self
-```
-
-... where `AnimatorHandler` is a typealias for `(Animator, Operation, Context) -> Void`.
-
-In this case, the `Animator` is utilized to setup animations and completion logic for the pushed or popped views which you must extract from `Context` (typealias for [`UIViewControllerContextTransitioning`](https://developer.apple.com/documentation/uikit/uiviewcontrollercontexttransitioning)).
+This function can be thought of as the equivalent of [`UIViewControllerAnimatedTransitioning.animateTransition(using:)`](https://developer.apple.com/documentation/uikit/uiviewcontrolleranimatedtransitioning/1622061-animatetransition), except it also handles interactive pops automatically for you (as long as you use the provided animator).

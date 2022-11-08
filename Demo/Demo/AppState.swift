@@ -3,6 +3,7 @@ import NavigationTransitions
 
 final class AppState: ObservableObject {
     enum Transition: CaseIterable, CustomStringConvertible, Hashable {
+        case `default`
         case slide
         case crossFade
         case slideAndFade
@@ -11,6 +12,8 @@ final class AppState: ObservableObject {
 
         var description: String {
             switch self {
+            case .default:
+                return "Default"
             case .slide:
                 return "Slide"
             case .crossFade:
@@ -18,14 +21,16 @@ final class AppState: ObservableObject {
             case .slideAndFade:
                 return "Slide + Fade"
             case .moveVertically:
-                return "Move Vertically"
+                return "Slide Vertically"
             case .swing:
                 return "Swing"
             }
         }
 
-        func callAsFunction() -> NavigationTransition {
+        func callAsFunction() -> AnyNavigationTransition {
             switch self {
+            case .default:
+                return .default
             case .slide:
                 return .slide
             case .crossFade:
@@ -33,7 +38,7 @@ final class AppState: ObservableObject {
             case .slideAndFade:
                 return .slide.combined(with: .fade(.in))
             case .moveVertically:
-                return .move(axis: .vertical)
+                return .slide(axis: .vertical)
             case .swing:
                 return .swing
             }
@@ -89,7 +94,7 @@ final class AppState: ObservableObject {
         var curve: Curve
         var duration: Duration
 
-        func callAsFunction() -> NavigationTransition.Animation {
+        func callAsFunction() -> AnyNavigationTransition.Animation {
             switch curve {
             case .linear:
                 return .linear(duration: duration())
@@ -117,7 +122,7 @@ final class AppState: ObservableObject {
             }
         }
 
-        func callAsFunction() -> NavigationTransition.Interactivity {
+        func callAsFunction() -> AnyNavigationTransition.Interactivity {
             switch self {
             case .disabled:
                 return .disabled
@@ -130,7 +135,7 @@ final class AppState: ObservableObject {
     }
 
     @Published var transition: Transition = .slide
-    @Published var animation: Animation = .init(curve: .easeInOut, duration: .medium)
+    @Published var animation: Animation = .init(curve: .easeInOut, duration: .fast)
     @Published var interactivity: Interactivity = .edgePan
 
     @Published var isPresentingSettings: Bool = false

@@ -1,15 +1,20 @@
-@_spi(package) @testable import AtomicTransition
+@_spi(package) import AtomicTransition
 import TestUtils
 
-final class CombinedTests: XCTestCase {
-    func testTwo() {
-        enum A {}; enum B {}
-        XCTAssert(Combined { Noop<A>(); Noop<B>() } is Combined<Noop<A>, Noop<B>>)
+final class GroupTests: XCTestCase {
+    func testEmpty() {
+        XCTAssert(Group {} is Group<Identity>)
+    }
+
+    func testOne() {
+        enum A {}
+        XCTAssert(Group { Noop<A>() } is Group<Noop<A>>)
     }
 
     func testEquality() {
-        enum A {}; enum B {}
-        XCTAssertEqual(Combined { Noop<A>(); Noop<B>() }, Combined(Noop<A>(), Noop<B>()))
+        XCTAssertEqual(Group {}, Group { Identity() })
+        enum A {}
+        XCTAssertEqual(Group { Noop<A>() }, Group { Noop<A>() })
     }
 
     func testExecutionOrder() {
@@ -18,7 +23,7 @@ final class CombinedTests: XCTestCase {
         let expectation3 = expectation(description: "Transition 3")
         let expectation4 = expectation(description: "Transition 4")
 
-        let sut = Combined {
+        let sut = Group {
             Spy { expectation1.fulfill() }
             Spy { expectation2.fulfill() }
             Spy { expectation3.fulfill() }

@@ -1,7 +1,7 @@
 @_spi(package) import NavigationTransition
 import UIKit
 
-extension NavigationTransition {
+extension AnyNavigationTransition {
     public enum Interactivity {
         case disabled
         case edgePan
@@ -32,9 +32,9 @@ public struct UISplitViewControllerColumns: OptionSet {
 
 extension UISplitViewController {
     public func setNavigationTransition(
-        _ transition: NavigationTransition,
+        _ transition: AnyNavigationTransition,
         forColumns columns: UISplitViewControllerColumns,
-        interactivity: NavigationTransition.Interactivity = .default
+        interactivity: AnyNavigationTransition.Interactivity = .default
     ) {
         if columns.contains(.compact), let compact = compactViewController as? UINavigationController {
             compact.setNavigationTransition(transition, interactivity: interactivity)
@@ -135,8 +135,8 @@ extension UINavigationController {
     }
 
     public func setNavigationTransition(
-        _ transition: NavigationTransition,
-        interactivity: NavigationTransition.Interactivity = .default
+        _ transition: AnyNavigationTransition,
+        interactivity: AnyNavigationTransition.Interactivity = .default
     ) {
         if defaultDelegate == nil {
             defaultDelegate = delegate
@@ -164,7 +164,7 @@ extension UINavigationController {
             view.addGestureRecognizer(panRecognizer)
         }
 
-        if transition.isDefault {
+        if transition.type == Default.self {
             delegate = defaultDelegate
 
             switch interactivity {

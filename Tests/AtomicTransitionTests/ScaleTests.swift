@@ -3,13 +3,12 @@
 import TestUtils
 
 final class ScaleTests: XCTestCase {
-    let animatorUsed = UnimplementedAnimator()
     let viewUsed = AnimatorTransientView(UIView())
     let properties = AnimatorTransientViewProperties(alpha: 1, transform: .identity)
-    let contextUsed = MockedUIKitContext(containerView: UIView())
+    let containerUsed = UIView()
 
     func testInsertion() {
-        AtomicTransition.scale(0.5).prepare(animatorUsed, or: viewUsed, for: .insertion, in: contextUsed)
+        Scale(0.5).transition(viewUsed, for: .insertion, in: containerUsed)
 
         var initial = properties
         initial.transform = .identity.scaledBy(x: 0.5, y: 0.5)
@@ -24,7 +23,7 @@ final class ScaleTests: XCTestCase {
     }
 
     func testRemoval() {
-        AtomicTransition.scale(0.5).prepare(animatorUsed, or: viewUsed, for: .removal, in: contextUsed)
+        Scale(0.5).transition(viewUsed, for: .removal, in: containerUsed)
 
         let initial = properties
         XCTAssertNoDifference(viewUsed.initial, initial)
@@ -38,7 +37,7 @@ final class ScaleTests: XCTestCase {
         XCTAssertNoDifference(viewUsed.completion, completion)
     }
 
-    // TODO: assert for (x, y | x | y) conveniences equality when this is done:
-    // https://github.com/davdroman/swiftui-navigation-transitions/discussions/6
-    // func testConveniences() {}
+    func testConveniences() {
+        XCTAssertEqual(Scale(), Scale(.leastNonzeroMagnitude))
+    }
 }

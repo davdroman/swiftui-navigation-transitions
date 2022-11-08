@@ -44,9 +44,9 @@ extension View {
     @available(iOS, introduced: 16)
     @ViewBuilder
     public func navigationSplitViewTransition(
-        _ transition: NavigationTransition,
+        _ transition: AnyNavigationTransition,
         forColumns columns: NavigationSplitViewColumns,
-        interactivity: NavigationTransition.Interactivity = .default
+        interactivity: AnyNavigationTransition.Interactivity = .default
     ) -> some View {
         self.modifier(
             NavigationSplitOrStackTransitionModifier(
@@ -60,8 +60,8 @@ extension View {
     @available(iOS, introduced: 16)
     @ViewBuilder
     public func navigationStackTransition(
-        _ transition: NavigationTransition,
-        interactivity: NavigationTransition.Interactivity = .default
+        _ transition: AnyNavigationTransition,
+        interactivity: AnyNavigationTransition.Interactivity = .default
     ) -> some View {
         self.modifier(
             NavigationSplitOrStackTransitionModifier(
@@ -80,9 +80,9 @@ struct NavigationSplitOrStackTransitionModifier: ViewModifier {
         case navigationStack
     }
 
-    let transition: NavigationTransition
+    let transition: AnyNavigationTransition
     let target: Target
-    let interactivity: NavigationTransition.Interactivity
+    let interactivity: AnyNavigationTransition.Interactivity
 
     func body(content: Content) -> some View {
         switch target {
@@ -191,9 +191,9 @@ extension View {
     )
     @ViewBuilder
     public func navigationViewColumnTransition(
-        _ transition: NavigationTransition,
+        _ transition: AnyNavigationTransition,
         forColumns columns: NavigationViewColumns,
-        interactivity: NavigationTransition.Interactivity = .default
+        interactivity: AnyNavigationTransition.Interactivity = .default
     ) -> some View {
         self.modifier(
             NavigationViewTransitionModifier(
@@ -211,8 +211,8 @@ extension View {
     )
     @ViewBuilder
     public func navigationViewStackTransition(
-        _ transition: NavigationTransition,
-        interactivity: NavigationTransition.Interactivity = .default
+        _ transition: AnyNavigationTransition,
+        interactivity: AnyNavigationTransition.Interactivity = .default
     ) -> some View {
         self.modifier(
             NavigationViewTransitionModifier(
@@ -230,9 +230,9 @@ struct NavigationViewTransitionModifier: ViewModifier {
         case stack
     }
 
-    let transition: NavigationTransition
+    let transition: AnyNavigationTransition
     let style: Style
-    let interactivity: NavigationTransition.Interactivity
+    let interactivity: AnyNavigationTransition.Interactivity
 
     func body(content: Content) -> some View {
         switch style {

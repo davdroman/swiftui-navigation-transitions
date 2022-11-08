@@ -2,39 +2,51 @@
 import TestUtils
 
 final class AsymmetricTests: XCTestCase {
-    let animatorUsed = UnimplementedAnimator()
-    let viewUsed = UnimplementedAnimatorTransientView()
-    let contextUsed = UnimplementedUIKitContext()
-
     func testInsertion() {
         let expectation = expectation(description: "Handler called")
-        let sut = AtomicTransition.asymmetric(
-            insertion: .spy { [self] animator, view, operation, context in
-                XCTAssertIdentical(animator, animatorUsed)
-                XCTAssertIdentical(view, viewUsed)
-                XCTAssertEqual(operation, .insertion)
-                XCTAssertIdentical(context, contextUsed)
-                expectation.fulfill()
-            },
-            removal: .spy { XCTFail() }
+        let sut = Asymmetric(
+            insertion: { Spy { expectation.fulfill() } },
+            removal: { Spy { XCTFail() } }
         )
-        sut.prepare(animatorUsed, or: viewUsed, for: .insertion, in: contextUsed)
+        sut.transition(.unimplemented, for: .insertion, in: .unimplemented)
         wait(for: [expectation], timeout: 0)
     }
 
     func testRemoval() {
         let expectation = expectation(description: "Handler called")
-        let sut = AtomicTransition.asymmetric(
-            insertion: .spy { XCTFail() },
-            removal: .spy { [self] animator, view, operation, context in
-                XCTAssertIdentical(animator, animatorUsed)
-                XCTAssertIdentical(view, viewUsed)
-                XCTAssertEqual(operation, .removal)
-                XCTAssertIdentical(context, contextUsed)
-                expectation.fulfill()
-            }
+        let sut = Asymmetric(
+            insertion: { Spy { XCTFail() } },
+            removal: { Spy { expectation.fulfill() } }
         )
-        sut.prepare(animatorUsed, or: viewUsed, for: .removal, in: contextUsed)
+        sut.transition(.unimplemented, for: .removal, in: .unimplemented)
+        wait(for: [expectation], timeout: 0)
+    }
+}
+
+final class OnInsertionTests: XCTestCase {
+    func testInsertion() {
+        let expectation = expectation(description: "Handler called")
+        let sut = OnInsertion { Spy { expectation.fulfill() } }
+        sut.transition(.unimplemented, for: .insertion, in: .unimplemented)
+        wait(for: [expectation], timeout: 0)
+    }
+
+    func testRemoval() {
+        let sut = OnInsertion { Spy { XCTFail() } }
+        sut.transition(.unimplemented, for: .removal, in: .unimplemented)
+    }
+}
+
+final class OnRemovalTests: XCTestCase {
+    func testInsertion() {
+        let sut = OnRemoval { Spy { XCTFail() } }
+        sut.transition(.unimplemented, for: .insertion, in: .unimplemented)
+    }
+
+    func testRemoval() {
+        let expectation = expectation(description: "Handler called")
+        let sut = OnRemoval { Spy { expectation.fulfill() } }
+        sut.transition(.unimplemented, for: .removal, in: .unimplemented)
         wait(for: [expectation], timeout: 0)
     }
 }

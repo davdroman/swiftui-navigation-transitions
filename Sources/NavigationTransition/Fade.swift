@@ -1,31 +1,61 @@
-extension NavigationTransition {
-    public enum Fade {
+import AtomicTransition
+
+extension AnyNavigationTransition {
+    /// A transition that fades the pushed view in, fades the popped view out, or cross-fades both views.
+    public static func fade(_ style: Fade.Style) -> Self {
+        .init(Fade(style))
+    }
+}
+
+/// A transition that fades the pushed view in, fades the popped view out, or cross-fades both views.
+public struct Fade: NavigationTransition {
+    public enum Style {
         case `in`
         case out
         case cross
     }
 
-    /// A transition that fades the pushed view in, fades the popped view out, or cross-fades both views.
-    public static func fade(_ fade: Fade) -> Self {
-        switch fade {
+    private let style: Style
+
+    public init(_ style: Style) {
+        self.style = style
+    }
+
+    public var body: some NavigationTransition {
+        switch style {
         case .in:
-            return .asymmetric(
-                push: .asymmetric(insertion: .opacity, removal: .identity),
-                pop: .asymmetric(insertion: .identity, removal: .opacity)
-            )
+            OnPush {
+                OnInsertion {
+                    Opacity()
+                }
+            }
+            OnPop {
+                OnRemoval {
+                    Opacity()
+                }
+            }
         case .out:
-            return .asymmetric(
-                push: .asymmetric(
-                    insertion: .identity,
-                    removal: .opacity.combined(with: .bringToFront)
-                ),
-                pop: .asymmetric(
-                    insertion: .opacity.combined(with: .bringToFront),
-                    removal: .identity
-                )
-            )
+            OnPush {
+                OnRemoval {
+                    BringToFront()
+                    Opacity()
+                }
+            }
+            OnPop {
+                OnInsertion {
+                    BringToFront()
+                    Opacity()
+                }
+            }
         case .cross:
-            return .asymmetric(push: .opacity, pop: .opacity)
+            OnPush {
+                Opacity()
+            }
+            OnPop {
+                Opacity()
+            }
         }
     }
 }
+
+extension Fade: Hashable {}

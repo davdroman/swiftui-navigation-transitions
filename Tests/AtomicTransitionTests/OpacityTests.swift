@@ -3,13 +3,12 @@
 import TestUtils
 
 final class OpacityTests: XCTestCase {
-    let animatorUsed = UnimplementedAnimator()
     let viewUsed = AnimatorTransientView(UIView())
     let properties = AnimatorTransientViewProperties(alpha: 1, transform: .identity)
-    let contextUsed = MockedUIKitContext(containerView: UIView())
+    let containerUsed = UIView()
 
     func testInsertion() {
-        AtomicTransition.opacity.prepare(animatorUsed, or: viewUsed, for: .insertion, in: contextUsed)
+        Opacity().transition(viewUsed, for: .insertion, in: containerUsed)
 
         var initial = properties
         initial.alpha = 0
@@ -24,7 +23,7 @@ final class OpacityTests: XCTestCase {
     }
 
     func testRemoval() {
-        AtomicTransition.opacity.prepare(animatorUsed, or: viewUsed, for: .removal, in: contextUsed)
+        Opacity().transition(viewUsed, for: .removal, in: containerUsed)
 
         let initial = properties
         XCTAssertNoDifference(viewUsed.initial, initial)

@@ -3,13 +3,12 @@
 import TestUtils
 
 final class OffsetTests: XCTestCase {
-    let animatorUsed = UnimplementedAnimator()
     let viewUsed = AnimatorTransientView(UIView())
     let properties = AnimatorTransientViewProperties(alpha: 1, transform: .identity)
-    let contextUsed = MockedUIKitContext(containerView: UIView())
+    let containerUsed = UIView()
 
     func testInsertion() {
-        AtomicTransition.offset(x: 100, y: 200).prepare(animatorUsed, or: viewUsed, for: .insertion, in: contextUsed)
+        Offset(x: 100, y: 200).transition(viewUsed, for: .insertion, in: containerUsed)
 
         var initial = properties
         initial.transform = .identity.translatedBy(x: 100, y: 200)
@@ -24,7 +23,7 @@ final class OffsetTests: XCTestCase {
     }
 
     func testRemoval() {
-        AtomicTransition.offset(x: 100, y: 200).prepare(animatorUsed, or: viewUsed, for: .removal, in: contextUsed)
+        Offset(x: 100, y: 200).transition(viewUsed, for: .removal, in: containerUsed)
 
         let initial = properties
         XCTAssertNoDifference(viewUsed.initial, initial)
@@ -38,7 +37,9 @@ final class OffsetTests: XCTestCase {
         XCTAssertNoDifference(viewUsed.completion, completion)
     }
 
-    // TODO: assert for (x, y | x | y) conveniences equality when this is done:
-    // https://github.com/davdroman/swiftui-navigation-transitions/discussions/6
-    // func testConveniences() {}
+    func testConveniences() {
+        XCTAssertEqual(Offset(x: 1), Offset(x: 1, y: 0))
+        XCTAssertEqual(Offset(y: 1), Offset(x: 0, y: 1))
+        XCTAssertEqual(Offset(.init(width: 1, height: 2)), Offset(x: 1, y: 2))
+    }
 }

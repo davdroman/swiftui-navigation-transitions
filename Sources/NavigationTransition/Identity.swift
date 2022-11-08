@@ -1,6 +1,15 @@
-extension NavigationTransition {
-    // For internal use only.
-    static var identity: Self {
-        .init { _, _, _ in }
+// For internal use only.
+struct Identity: NavigationTransition {
+    init() {}
+
+    func transition(
+        from fromView: TransientView,
+        to toView: TransientView,
+        for operation: TransitionOperation,
+        in container: Container
+    ) {
+        // NO-OP
     }
 }
+
+extension Identity: Hashable {}

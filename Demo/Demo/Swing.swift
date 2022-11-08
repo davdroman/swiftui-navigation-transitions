@@ -1,24 +1,44 @@
 import NavigationTransition
 import SwiftUI
 
-extension NavigationTransition {
+extension AnyNavigationTransition {
     static var swing: Self {
+        .init(Swing())
+    }
+}
+
+struct Swing: NavigationTransition {
+    var body: some NavigationTransition {
         let angle = Angle(degrees: 70)
         let offset: CGFloat = 150
         let scale: CGFloat = 0.5
 
-        return .move(axis: .horizontal).combined(
-            with: .asymmetric(
-                push: .asymmetric(
-                    insertion: [.rotate(-angle), .offset(x: offset), .opacity, .scale(scale)].combined(),
-                    removal: [.rotate(angle), .offset(x: -offset)].combined()
-                ),
-                pop: .asymmetric(
-                    insertion: [.rotate(angle), .offset(x: -offset), .opacity, .scale(scale), .bringToFront].combined(),
-                    removal: [.rotate(-angle), .offset(x: offset)].combined()
-                )
-            )
-        )
+        Slide(axis: .horizontal)
+        OnPush {
+            OnInsertion {
+                Rotate(-angle)
+                Offset(x: offset)
+                Opacity()
+                Scale(scale)
+            }
+            OnRemoval {
+                Rotate(angle)
+                Offset(x: -offset)
+            }
+        }
+        OnPop {
+            OnInsertion {
+                Rotate(angle)
+                Offset(x: -offset)
+                Opacity()
+                Scale(scale)
+                BringToFront()
+            }
+            OnRemoval {
+                Rotate(-angle)
+                Offset(x: offset)
+            }
+        }
     }
 }
 
