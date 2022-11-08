@@ -70,7 +70,6 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
             duration: transitionDuration(using: transitionContext),
             timingParameters: transition.animation.timingParameters
         )
-        let operation = self.operation
 
         if let (fromView, toView) = transientViews(for: transition, animator: animator, context: transitionContext) {
             fromView.setUIViewProperties(to: \.initial)

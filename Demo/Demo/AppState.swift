@@ -24,7 +24,7 @@ final class AppState: ObservableObject {
             }
         }
 
-        func callAsFunction() -> NavigationTransition {
+        func callAsFunction() -> AnyNavigationTransition {
             switch self {
             case .slide:
                 return .slide
@@ -33,7 +33,7 @@ final class AppState: ObservableObject {
             case .slideAndFade:
                 return .slide.combined(with: .fade(.in))
             case .moveVertically:
-                return .move(axis: .vertical)
+                return .slide(axis: .vertical)
             case .swing:
                 return .swing
             }
@@ -117,7 +117,7 @@ final class AppState: ObservableObject {
             }
         }
 
-        func callAsFunction() -> NavigationTransition.Interactivity {
+        func callAsFunction() -> NavigationTransitionInteractivity {
             switch self {
             case .disabled:
                 return .disabled
