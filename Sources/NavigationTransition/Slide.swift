@@ -41,7 +41,7 @@ public struct Slide: NavigationTransition {
     public var body: some NavigationTransition {
         switch axis {
         case .horizontal:
-            MirrorPush {
+            Mirror {
                 OnInsertion {
                     Move(edge: .trailing)
                 }
@@ -50,7 +50,7 @@ public struct Slide: NavigationTransition {
                 }
             }
         case .vertical:
-            MirrorPush {
+            Mirror {
                 OnInsertion {
                     Move(edge: .bottom)
                 }

@@ -11,15 +11,14 @@ struct Swing: NavigationTransition {
     var body: some NavigationTransition {
         let angle = Angle(degrees: 70)
         let offset: CGFloat = 150
-        let scale: CGFloat = 0.5
 
         Slide(axis: .horizontal)
-        OnPush {
+        Mirror {
             OnInsertion {
                 Rotate(-angle)
                 Offset(x: offset)
                 Opacity()
-                Scale(scale)
+                Scale(0.5)
             }
             OnRemoval {
                 Rotate(angle)
@@ -27,16 +26,8 @@ struct Swing: NavigationTransition {
             }
         }
         OnPop {
-            OnInsertion {
-                Rotate(angle)
-                Offset(x: -offset)
-                Opacity()
-                Scale(scale)
-                BringToFront()
-            }
             OnRemoval {
-                Rotate(-angle)
-                Offset(x: offset)
+                SendToBack()
             }
         }
     }
