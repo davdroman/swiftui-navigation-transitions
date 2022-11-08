@@ -1,7 +1,7 @@
 import UIKit
 
 /// A transition that translates the view from offset to zero on insertion, and from zero to offset on removal.
-public struct Offset: AtomicTransition {
+public struct Offset: MirrorableAtomicTransition {
     private let x: CGFloat
     private let y: CGFloat
 
@@ -33,6 +33,10 @@ public struct Offset: AtomicTransition {
             view.animation.translation.dy += y
             view.completion.transform = .identity
         }
+    }
+
+    public func mirrored() -> Offset {
+        .init(x: -x, y: -y)
     }
 }
 

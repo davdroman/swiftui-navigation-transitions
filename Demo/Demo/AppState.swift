@@ -9,6 +9,7 @@ final class AppState: ObservableObject {
         case slideAndFade
         case moveVertically
         case swing
+        case zoom
 
         var description: String {
             switch self {
@@ -24,6 +25,8 @@ final class AppState: ObservableObject {
                 return "Slide Vertically"
             case .swing:
                 return "Swing"
+            case .zoom:
+                return "Zoom"
             }
         }
 
@@ -41,6 +44,8 @@ final class AppState: ObservableObject {
                 return .slide(axis: .vertical)
             case .swing:
                 return .swing
+            case .zoom:
+                return .zoom
             }
         }
     }

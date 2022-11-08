@@ -41,37 +41,21 @@ public struct Slide: NavigationTransition {
     public var body: some NavigationTransition {
         switch axis {
         case .horizontal:
-            OnPush {
+            MirrorPush {
                 OnInsertion {
                     Move(edge: .trailing)
                 }
                 OnRemoval {
                     Move(edge: .leading)
-                }
-            }
-            OnPop {
-                OnInsertion {
-                    Move(edge: .leading)
-                }
-                OnRemoval {
-                    Move(edge: .trailing)
                 }
             }
         case .vertical:
-            OnPush {
+            MirrorPush {
                 OnInsertion {
                     Move(edge: .bottom)
                 }
                 OnRemoval {
                     Move(edge: .top)
-                }
-            }
-            OnPop {
-                OnInsertion {
-                    Move(edge: .top)
-                }
-                OnRemoval {
-                    Move(edge: .bottom)
                 }
             }
         }

@@ -6,6 +6,7 @@ struct Erased: NavigationTransition {
         self.handler = handler
     }
 
+    @inlinable
     func transition(
         from fromView: TransientView,
         to toView: TransientView,

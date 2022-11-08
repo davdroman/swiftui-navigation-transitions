@@ -1,16 +1,20 @@
 import class UIKit.UIView
 
-/// A composite transition that uses a different transition for insertion versus removal.
+/// A composite transition that uses a different transition for push versus pop.
 public struct Asymmetric<InsertionTransition: AtomicTransition, RemovalTransition: AtomicTransition>: AtomicTransition {
     private let insertion: InsertionTransition
     private let removal: RemovalTransition
+
+    private init(insertion: InsertionTransition, removal: RemovalTransition) {
+        self.insertion = insertion
+        self.removal = removal
+    }
 
     public init(
         @AtomicTransitionBuilder insertion: () -> InsertionTransition,
         @AtomicTransitionBuilder removal: () -> RemovalTransition
     ) {
-        self.insertion = insertion()
-        self.removal = removal()
+        self.init(insertion: insertion(), removal: removal())
     }
 
     public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
@@ -23,6 +27,12 @@ public struct Asymmetric<InsertionTransition: AtomicTransition, RemovalTransitio
     }
 }
 
+extension Asymmetric: MirrorableAtomicTransition where InsertionTransition: MirrorableAtomicTransition, RemovalTransition: MirrorableAtomicTransition {
+    public func mirrored() -> Asymmetric<InsertionTransition.Mirrored, RemovalTransition.Mirrored> {
+        return .init(insertion: insertion.mirrored(), removal: removal.mirrored())
+    }
+}
+
 extension Asymmetric: Equatable where InsertionTransition: Equatable, RemovalTransition: Equatable {}
 extension Asymmetric: Hashable where InsertionTransition: Hashable, RemovalTransition: Hashable {}
 
@@ -30,8 +40,12 @@ extension Asymmetric: Hashable where InsertionTransition: Hashable, RemovalTrans
 public struct OnInsertion<Transition: AtomicTransition>: AtomicTransition {
     private let transition: Transition
 
+    private init(_ transition: Transition) {
+        self.transition = transition
+    }
+
     public init(@AtomicTransitionBuilder transition: () -> Transition) {
-        self.transition = transition()
+        self.init(transition())
     }
 
     public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
@@ -44,6 +58,12 @@ public struct OnInsertion<Transition: AtomicTransition>: AtomicTransition {
     }
 }
 
+extension OnInsertion: MirrorableAtomicTransition where Transition: MirrorableAtomicTransition {
+    public func mirrored() -> OnInsertion<Transition.Mirrored> {
+        .init(transition.mirrored())
+    }
+}
+
 extension OnInsertion: Equatable where Transition: Equatable {}
 extension OnInsertion: Hashable where Transition: Hashable {}
 
@@ -51,8 +71,12 @@ extension OnInsertion: Hashable where Transition: Hashable {}
 public struct OnRemoval<Transition: AtomicTransition>: AtomicTransition {
     private let transition: Transition
 
+    init(_ transition: Transition) {
+        self.transition = transition
+    }
+
     public init(@AtomicTransitionBuilder transition: () -> Transition) {
-        self.transition = transition()
+        self.init(transition())
     }
 
     public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
@@ -62,6 +86,12 @@ public struct OnRemoval<Transition: AtomicTransition>: AtomicTransition {
         case .removal:
             transition.transition(view, for: operation, in: container)
         }
+    }
+}
+
+extension OnRemoval: MirrorableAtomicTransition where Transition: MirrorableAtomicTransition {
+    public func mirrored() -> OnRemoval<Transition.Mirrored> {
+        .init(transition.mirrored())
     }
 }
 
