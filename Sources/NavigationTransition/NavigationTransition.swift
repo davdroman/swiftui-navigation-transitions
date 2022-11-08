@@ -5,7 +5,7 @@ import UIKit
 /// It is designed to handle both push and pop operations for a pair of views in a given navigation stack transition,
 /// and is usually composed of smaller isolated transitions of type `AtomicTransition`, which act as building blocks.
 ///
-/// Although the library ships with a set of predefined transitions (e.g. ``slide(axis:)``, one can also create
+/// Although the library ships with a set of predefined transitions (e.g. ``Slide``, one can also create
 /// entirely new, fully customizable transitions by conforming to this protocol.
 public protocol NavigationTransition {
     /// Typealias for `AnimatorTransientView`.
@@ -20,10 +20,7 @@ public protocol NavigationTransition {
 
     /// A type representing the body of this transition.
     ///
-    /// When you create a custom transition by implementing the ``body-swift.property-7foai``, Swift
-    /// infers this type from the value returned.
-    ///
-    /// If you create a custom reducer by implementing the ``reduce(into:action:)-8yinq``, Swift
+    /// If you create a custom transition by implementing ``transition(from:to:for:in:)-211yh``, Swift
     /// infers this type to be `Never`.
     typealias Body = _Body
 
@@ -34,7 +31,7 @@ public protocol NavigationTransition {
     ///   by modifying specific sub-properties of its `initial`, `animation`, or `completion` properties.
     ///   - toView: A `TransientView` abstracting over the destination view. Apply animations directly to this instance
     ///   by modifying specific sub-properties of its `initial`, `animation`, or `completion` properties.
-    ///   - operation: The ``Operation``. Possible values are `push` or `pop`. It's recommended that you
+    ///   - operation: The ``TransitionOperation``. Possible values are `push` or `pop`. It's recommended that you
     ///   customize the behavior of your transition based on this parameter.
     ///   - container: The raw `UIView` containing the transitioning views.
     func transition(
@@ -51,14 +48,14 @@ public protocol NavigationTransition {
     ///
     /// Do not invoke this property directly.
     ///
-    /// - Important: If your transition implements the ``transition(from:to:for:in:)`` method, it will take precedence
-    ///   over this property, and only ``transition(from:to:for:in:)`` will be called by the animator.
+    /// - Important: If your transition implements the ``transition(from:to:for:in:)-22zdm`` method, it will take precedence
+    ///   over this property, and only ``transition(from:to:for:in:)-22zdm`` will be called by the animator.
     @NavigationTransitionBuilder
     var body: Body { get }
 }
 
 extension NavigationTransition where Body: NavigationTransition {
-    /// Invokes ``body``'s implementation of ``transition(from:to:for:in:)``.
+    /// Invokes ``body``'s implementation of ``transition(from:to:for:in:)-211yh``.
     @inlinable
     public func transition(
         from fromView: TransientView,
