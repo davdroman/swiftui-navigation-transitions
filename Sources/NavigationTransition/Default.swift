@@ -1,7 +1,7 @@
 extension NavigationTransition {
     /// The system-default transition.
     ///
-    /// Use this property if you wish to modify the interactivity of the transition without altering the
+    /// Use this transition if you wish to modify the interactivity of the transition without altering the
     /// system-provided transition itself. For example:
     ///
     ///   ```swift
@@ -19,10 +19,10 @@ extension NavigationTransition {
     }
 }
 
-public struct Default: NavigationTransitionProtocol {
-    public init() {}
+struct Default: NavigationTransitionProtocol {
+    init() {}
 
-    public func transition(
+    func transition(
         from fromView: TransientView,
         to toView: TransientView,
         for operation: TransitionOperation,
