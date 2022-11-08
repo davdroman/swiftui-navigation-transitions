@@ -47,37 +47,21 @@ public struct Slide: NavigationTransition {
     public var body: some NavigationTransition {
         switch axis {
         case .horizontal:
-            OnPush {
+            MirrorPush {
                 OnInsertion {
                     Move(edge: .trailing)
                 }
                 OnRemoval {
                     Move(edge: .leading)
-                }
-            }
-            OnPop {
-                OnInsertion {
-                    Move(edge: .leading)
-                }
-                OnRemoval {
-                    Move(edge: .trailing)
                 }
             }
         case .vertical:
-            OnPush {
+            MirrorPush {
                 OnInsertion {
                     Move(edge: .bottom)
                 }
                 OnRemoval {
                     Move(edge: .top)
-                }
-            }
-            OnPop {
-                OnInsertion {
-                    Move(edge: .top)
-                }
-                OnRemoval {
-                    Move(edge: .bottom)
                 }
             }
         }
@@ -229,7 +213,13 @@ Next up, let's explore two ways of conforming to `NavigationTransition`.
 
 The simplest (and most recommended) way happens by declaring our atomic transitions (if needed), and composing them via `var body: some NavigationTransition { ... }` like we saw [previously with `Slide`](#NavigationTransition).
 
-But there's actually an **alternative** option for those who'd like to reach for a more wholistic API. `NavigationTransition` declares this other function that can be implemented instead of `body`:
+Check out the documentation to learn about the different `NavigationTransition` types and how they compose.
+
+The Demo project in the repo is also a great source of learning about different types of custom transitions and the way to implement them.
+
+---
+
+Finally, let's explore an alternative option for those who'd like to reach for a more wholistic API. `NavigationTransition` declares a `transition` function that can be implemented instead of `body`:
 
 ```swift
 func transition(from fromView: TransientView, to toView: TransientView, for operation: TransitionOperation, in container: Container)
@@ -241,7 +231,7 @@ Whilst `body` helps composing other transitions, this transition handler helps u
 - `Operation` defines whether the operation being performed is a `push` or a `pop`. The concept of insertions or removals is entirely irrelevant to this function, since you can directly modify the property values for the views without needing atomic transitions.
 - `Container` is the container view of type `UIView` where `fromView` and `toView` are added during the transition. There's no need to add either view to this container as the library does this for you. Even better, there's no way to even accidentally do it because `TransientView` is not a `UIView` subclass.
 
-This approach is often a simple one to take in case you're working on an app that only requires one custom navigation transition. However, if you're working on an app that features multiple custom transitions, it is recommended that you model your navigation transitions via atomic transitions as described earlier. In the long term, this will be beneficial to your development and iteration speed, by promoting code reusability amongst your team.
+This approach is a less cumbersome one to take in case you're working on an app that only requires one custom navigation transition. However, if you're working on an app that features multiple custom transitions, it is recommended that you model your navigation transitions via atomic transitions as described earlier. In the long term, this will be beneficial to your development and iteration speed, by promoting code reusability amongst your team.
 
 ### UIKit
 
