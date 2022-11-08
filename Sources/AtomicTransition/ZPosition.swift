@@ -2,7 +2,7 @@
 import class UIKit.UIView
 
 /// A transition that brings the view to the front, regardless of insertion or removal.
-public struct BringToFront: AtomicTransitionProtocol {
+public struct BringToFront: AtomicTransition {
     public init() {}
 
     public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
@@ -13,7 +13,7 @@ public struct BringToFront: AtomicTransitionProtocol {
 extension BringToFront: Hashable {}
 
 /// A transition that sends the view to the back, regardless of insertion or removal.
-public struct SendToBack: AtomicTransitionProtocol {
+public struct SendToBack: AtomicTransition {
     public init() {}
 
     public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {

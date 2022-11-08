@@ -1,6 +1,6 @@
 @testable import AtomicTransition
 
-public struct Spy: AtomicTransitionProtocol {
+public struct Spy: AtomicTransition {
     public typealias Handler = (TransientView, TransitionOperation, Container) -> Void
 
     private let handler: Handler
@@ -18,7 +18,7 @@ public struct Spy: AtomicTransitionProtocol {
     }
 }
 
-public struct Noop<Tag>: AtomicTransitionProtocol {
+public struct Noop<Tag>: AtomicTransition {
     public init() {}
 
     public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {

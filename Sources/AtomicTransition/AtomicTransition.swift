@@ -7,7 +7,7 @@ import class UIKit.UIView
 /// Similarly to SwiftUI's `AnyTransition`, `AtomicTransition` is designed to handle both the insertion and the removal
 /// of a view, and is agnostic as to what the overarching operation (push vs pop) is. This design allows great
 /// composability when defining complex navigation transitions.
-public protocol AtomicTransitionProtocol {
+public protocol AtomicTransition {
     /// Typealias for `AtomicTransitionOperation`.
     typealias TransitionOperation = AtomicTransitionOperation
     /// Typealias for `AnimatorTransientView`.

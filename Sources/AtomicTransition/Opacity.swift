@@ -1,7 +1,7 @@
 import class UIKit.UIView
 
 /// A transition from transparent to opaque on insertion, and from opaque to transparent on removal.
-public struct Opacity: AtomicTransitionProtocol {
+public struct Opacity: AtomicTransition {
     public init() {}
 
     public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {

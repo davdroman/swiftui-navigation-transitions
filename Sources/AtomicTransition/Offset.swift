@@ -1,7 +1,7 @@
 import UIKit
 
 /// A transition that translates the view from offset to zero on insertion, and from zero to offset on removal.
-public struct Offset: AtomicTransitionProtocol {
+public struct Offset: AtomicTransition {
     private let x: CGFloat
     private let y: CGFloat
 

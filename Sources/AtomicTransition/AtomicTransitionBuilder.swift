@@ -4,16 +4,16 @@ public struct AtomicTransitionBuilder {
         Identity()
     }
     #if compiler(>=5.7)
-    public static func buildPartialBlock<T1: AtomicTransitionProtocol>(first: T1) -> T1 {
+    public static func buildPartialBlock<T1: AtomicTransition>(first: T1) -> T1 {
         first
     }
 
-    public static func buildPartialBlock<T1: AtomicTransitionProtocol, T2: AtomicTransitionProtocol>(accumulated: T1, next: T2) -> Combined<T1, T2> {
+    public static func buildPartialBlock<T1: AtomicTransition, T2: AtomicTransition>(accumulated: T1, next: T2) -> Combined<T1, T2> {
         Combined(accumulated, next)
     }
     #else
     public static func buildBlock<
-        T1: AtomicTransitionProtocol
+        T1: AtomicTransition
     >(
         _ t1: T1
     ) -> T1 {
@@ -21,8 +21,8 @@ public struct AtomicTransitionBuilder {
     }
 
     public static func buildBlock<
-        T1: AtomicTransitionProtocol,
-        T2: AtomicTransitionProtocol
+        T1: AtomicTransition,
+        T2: AtomicTransition
     >(
         _ t1: T1,
         _ t2: T2
@@ -31,9 +31,9 @@ public struct AtomicTransitionBuilder {
     }
 
     public static func buildBlock<
-        T1: AtomicTransitionProtocol,
-        T2: AtomicTransitionProtocol,
-        T3: AtomicTransitionProtocol
+        T1: AtomicTransition,
+        T2: AtomicTransition,
+        T3: AtomicTransition
     >(
         _ t1: T1,
         _ t2: T2,
@@ -43,10 +43,10 @@ public struct AtomicTransitionBuilder {
     }
 
     public static func buildBlock<
-        T1: AtomicTransitionProtocol,
-        T2: AtomicTransitionProtocol,
-        T3: AtomicTransitionProtocol,
-        T4: AtomicTransitionProtocol
+        T1: AtomicTransition,
+        T2: AtomicTransition,
+        T3: AtomicTransition,
+        T4: AtomicTransition
     >(
         _ t1: T1,
         _ t2: T2,
@@ -57,11 +57,11 @@ public struct AtomicTransitionBuilder {
     }
 
     public static func buildBlock<
-        T1: AtomicTransitionProtocol,
-        T2: AtomicTransitionProtocol,
-        T3: AtomicTransitionProtocol,
-        T4: AtomicTransitionProtocol,
-        T5: AtomicTransitionProtocol
+        T1: AtomicTransition,
+        T2: AtomicTransition,
+        T3: AtomicTransition,
+        T4: AtomicTransition,
+        T5: AtomicTransition
     >(
         _ t1: T1,
         _ t2: T2,
@@ -73,12 +73,12 @@ public struct AtomicTransitionBuilder {
     }
 
     public static func buildBlock<
-        T1: AtomicTransitionProtocol,
-        T2: AtomicTransitionProtocol,
-        T3: AtomicTransitionProtocol,
-        T4: AtomicTransitionProtocol,
-        T5: AtomicTransitionProtocol,
-        T6: AtomicTransitionProtocol
+        T1: AtomicTransition,
+        T2: AtomicTransition,
+        T3: AtomicTransition,
+        T4: AtomicTransition,
+        T5: AtomicTransition,
+        T6: AtomicTransition
     >(
         _ t1: T1,
         _ t2: T2,
@@ -91,13 +91,13 @@ public struct AtomicTransitionBuilder {
     }
 
     public static func buildBlock<
-        T1: AtomicTransitionProtocol,
-        T2: AtomicTransitionProtocol,
-        T3: AtomicTransitionProtocol,
-        T4: AtomicTransitionProtocol,
-        T5: AtomicTransitionProtocol,
-        T6: AtomicTransitionProtocol,
-        T7: AtomicTransitionProtocol
+        T1: AtomicTransition,
+        T2: AtomicTransition,
+        T3: AtomicTransition,
+        T4: AtomicTransition,
+        T5: AtomicTransition,
+        T6: AtomicTransition,
+        T7: AtomicTransition
     >(
         _ t1: T1,
         _ t2: T2,

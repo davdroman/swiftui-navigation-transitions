@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// A transition entering from `edge` on insertion, and exiting towards `edge` on removal.
-public struct Move: AtomicTransitionProtocol {
+public struct Move: AtomicTransition {
     private let edge: Edge
 
     public init(edge: Edge) {

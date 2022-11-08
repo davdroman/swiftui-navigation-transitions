@@ -16,7 +16,7 @@ extension AnyNavigationTransition {
     }
 }
 
-public struct Combined<TransitionA: NavigationTransitionProtocol, TransitionB: NavigationTransitionProtocol>: NavigationTransitionProtocol {
+public struct Combined<TransitionA: NavigationTransition, TransitionB: NavigationTransition>: NavigationTransition {
     private let transitionA: TransitionA
     private let transitionB: TransitionB
 

@@ -1,5 +1,5 @@
 // A type erased transition for internal use only.
-struct Erased: NavigationTransitionProtocol {
+struct Erased: NavigationTransition {
     private let handler: AnyNavigationTransition.Handler
 
     init(handler: @escaping AnyNavigationTransition.Handler) {

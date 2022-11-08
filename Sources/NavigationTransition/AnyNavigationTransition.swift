@@ -20,7 +20,7 @@ public struct AnyNavigationTransition {
     @_spi(package)public let primitiveHandler: PrimitiveHandler?
     @_spi(package)public var animation: Animation = .default
 
-    public init<T: NavigationTransitionProtocol>(_ transition: T) {
+    public init<T: NavigationTransition>(_ transition: T) {
         self.type = Swift.type(of: transition)
         self.handler = transition.transition(from:to:for:in:)
         self.primitiveHandler = nil

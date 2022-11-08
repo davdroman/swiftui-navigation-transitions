@@ -17,7 +17,7 @@ extension AnyNavigationTransition {
     }
 }
 
-@_spi(package)public struct Default: NavigationTransitionProtocol {
+@_spi(package)public struct Default: NavigationTransition {
     init() {}
 
     public func transition(

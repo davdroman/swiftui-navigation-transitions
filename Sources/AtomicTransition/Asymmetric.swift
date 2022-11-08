@@ -1,7 +1,7 @@
 import class UIKit.UIView
 
 /// A composite transition that uses a different transition for insertion versus removal.
-public struct Asymmetric<InsertionTransition: AtomicTransitionProtocol, RemovalTransition: AtomicTransitionProtocol>: AtomicTransitionProtocol {
+public struct Asymmetric<InsertionTransition: AtomicTransition, RemovalTransition: AtomicTransition>: AtomicTransition {
     private let insertion: InsertionTransition
     private let removal: RemovalTransition
 
@@ -27,7 +27,7 @@ extension Asymmetric: Equatable where InsertionTransition: Equatable, RemovalTra
 extension Asymmetric: Hashable where InsertionTransition: Hashable, RemovalTransition: Hashable {}
 
 /// A transition that executes only on insertion.
-public struct OnInsertion<Transition: AtomicTransitionProtocol>: AtomicTransitionProtocol {
+public struct OnInsertion<Transition: AtomicTransition>: AtomicTransition {
     private let transition: Transition
 
     public init(@AtomicTransitionBuilder transition: () -> Transition) {
@@ -48,7 +48,7 @@ extension OnInsertion: Equatable where Transition: Equatable {}
 extension OnInsertion: Hashable where Transition: Hashable {}
 
 /// A transition that executes only on removal.
-public struct OnRemoval<Transition: AtomicTransitionProtocol>: AtomicTransitionProtocol {
+public struct OnRemoval<Transition: AtomicTransition>: AtomicTransition {
     private let transition: Transition
 
     public init(@AtomicTransitionBuilder transition: () -> Transition) {

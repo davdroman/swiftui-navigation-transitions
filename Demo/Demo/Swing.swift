@@ -7,8 +7,8 @@ extension AnyNavigationTransition {
     }
 }
 
-struct Swing: NavigationTransitionProtocol {
-    var body: some NavigationTransitionProtocol {
+struct Swing: NavigationTransition {
+    var body: some NavigationTransition {
         let angle = Angle(degrees: 70)
         let offset: CGFloat = 150
         let scale: CGFloat = 0.5

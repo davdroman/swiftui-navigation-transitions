@@ -1,7 +1,7 @@
 import class UIKit.UIView
 
 /// A composite transition that is the result of two or more transitions being applied.
-public struct Combined<TransitionA: AtomicTransitionProtocol, TransitionB: AtomicTransitionProtocol>: AtomicTransitionProtocol {
+public struct Combined<TransitionA: AtomicTransition, TransitionB: AtomicTransition>: AtomicTransition {
     private let transitionA: TransitionA
     private let transitionB: TransitionB
 

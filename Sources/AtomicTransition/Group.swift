@@ -1,7 +1,7 @@
 import class UIKit.UIView
 
 /// A composite transition that is the result of all the specified transitions being applied.
-public struct Group<Transitions: AtomicTransitionProtocol>: AtomicTransitionProtocol {
+public struct Group<Transitions: AtomicTransition>: AtomicTransition {
     private let transitions: Transitions
 
     public init(@AtomicTransitionBuilder _ transitions: () -> Transitions) {

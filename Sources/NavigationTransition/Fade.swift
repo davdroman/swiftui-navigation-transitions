@@ -8,7 +8,7 @@ extension AnyNavigationTransition {
 }
 
 /// A transition that fades the pushed view in, fades the popped view out, or cross-fades both views.
-public struct Fade: NavigationTransitionProtocol {
+public struct Fade: NavigationTransition {
     public enum Style {
         case `in`
         case out
@@ -21,7 +21,7 @@ public struct Fade: NavigationTransitionProtocol {
         self.style = style
     }
 
-    public var body: some NavigationTransitionProtocol {
+    public var body: some NavigationTransition {
         switch style {
         case .in:
             OnPush {
