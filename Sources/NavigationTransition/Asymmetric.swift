@@ -1,36 +1,5 @@
 import AtomicTransition
 
-/// A composite transition that uses a different transition for push versus pop.
-public struct Asymmetric<PushTransition: NavigationTransition, PopTransition: NavigationTransition>: NavigationTransition {
-    private let push: PushTransition
-    private let pop: PopTransition
-
-    public init(
-        @AtomicTransitionBuilder push: () -> PushTransition,
-        @AtomicTransitionBuilder pop: () -> PopTransition
-    ) {
-        self.push = push()
-        self.pop = pop()
-    }
-
-    public func transition(
-        from fromView: TransientView,
-        to toView: TransientView,
-        for operation: TransitionOperation,
-        in container: Container
-    ) {
-        switch operation {
-        case .push:
-            push.transition(from: fromView, to: toView, for: operation, in: container)
-        case .pop:
-            pop.transition(from: fromView, to: toView, for: operation, in: container)
-        }
-    }
-}
-
-extension Asymmetric: Equatable where PushTransition: Equatable, PopTransition: Equatable {}
-extension Asymmetric: Hashable where PushTransition: Hashable, PopTransition: Hashable {}
-
 /// Used to define a transition that executes only on push.
 public struct OnPush<Transition: AtomicTransition>: NavigationTransition {
     private let transition: Transition
