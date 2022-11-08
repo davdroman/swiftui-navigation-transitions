@@ -46,6 +46,18 @@ public struct Offset: AtomicTransitionProtocol {
         self.y = y
     }
 
+    public init(x: CGFloat) {
+        self.init(x: x, y: 0)
+    }
+
+    public init(y: CGFloat) {
+        self.init(x: 0, y: y)
+    }
+
+    public init(_ offset: CGSize) {
+        self.init(x: offset.width, y: offset.height)
+    }
+
     public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
         switch operation {
         case .insertion:
