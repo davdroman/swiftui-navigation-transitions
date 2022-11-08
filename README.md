@@ -7,7 +7,6 @@
 <p align="center">
     <img width="320" src="https://user-images.githubusercontent.com/2538074/199754334-7f2f801d-1d9e-4cc4-a7a0-bb22c9835007.gif">
 </p>
-
 **NavigationTransitions** is a library that integrates seamlessly with SwiftUI's **Navigation** views, allowing complete customization over **push and pop transitions**!
 
 The library is fully compatible with:
@@ -89,15 +88,48 @@ The library ships with some **standard transitions** out of the box:
 
 - [`default`](Sources/NavigationTransition/Default.swift)
 - [`fade(_:)`](Sources/NavigationTransition/Fade.swift)
-- [`move(axis:)`](Sources/NavigationTransition/Move.swift)
-- [`slide`](Sources/NavigationTransition/Slide.swift)
+- [`slide(axis:)`](Sources/NavigationTransition/Slide.swift)
 
-In addition to these, you can create fully [**custom transitions**](Documentation/Custom-Transitions.md) in just a few lines of code with the following:
+In addition to these, you can create fully [**custom**](Demo/Demo/Swing.swift) transitions in just a few lines of SwiftUI-like code!
 
-- [`asymmetric(push:pop:)`](Sources/NavigationTransition/Asymmetric.swift)
-- [`combined(with:)`](Sources/NavigationTransition/Combined.swift)
-- [`custom(withAnimator:)`](Sources/NavigationTransition/Custom.swift)
-- [`custom(withTransientViews:)`](Sources/NavigationTransition/Custom.swift)
+```swift
+struct Swing: NavigationTransition {
+    var body: some NavigationTransition {
+        let angle = Angle(degrees: 70)
+        let offset: CGFloat = 150
+        let scale: CGFloat = 0.5
+
+        Slide(axis: .horizontal)
+        OnPush {
+            OnInsertion {
+                Rotate(-angle)
+                Offset(x: offset)
+                Opacity()
+                Scale(scale)
+            }
+            OnRemoval {
+                Rotate(angle)
+                Offset(x: -offset)
+            }
+        }
+        OnPop {
+            OnInsertion {
+                Rotate(angle)
+                Offset(x: -offset)
+                Opacity()
+                Scale(scale)
+                BringToFront()
+            }
+            OnRemoval {
+                Rotate(-angle)
+                Offset(x: offset)
+            }
+        }
+    }
+}
+```
+
+Check out the [**documentation**](Documentation/Custom-Transitions.md) to learn more about custom transitions.
 
 The [**Demo**](Demo) app showcases some of these transitions in action.
 
