@@ -1,18 +1,5 @@
 import class UIKit.UIView
 
-extension AtomicTransition {
-    public static func asymmetric(insertion: Self, removal: Self) -> Self {
-        .init { view, operation, container in
-            switch operation {
-            case .insertion:
-                insertion.prepare(view, for: operation, in: container)
-            case .removal:
-                removal.prepare(view, for: operation, in: container)
-            }
-        }
-    }
-}
-
 /// A composite transition that uses a different transition for insertion versus removal.
 public struct Asymmetric<InsertionTransition: AtomicTransitionProtocol, RemovalTransition: AtomicTransitionProtocol>: AtomicTransitionProtocol {
     private let insertion: InsertionTransition
