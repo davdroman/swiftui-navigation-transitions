@@ -5,7 +5,7 @@ public struct Asymmetric<InsertionTransition: AtomicTransition, RemovalTransitio
     private let insertion: InsertionTransition
     private let removal: RemovalTransition
 
-    init(insertion: InsertionTransition, removal: RemovalTransition) {
+    private init(insertion: InsertionTransition, removal: RemovalTransition) {
         self.insertion = insertion
         self.removal = removal
     }
