@@ -4,12 +4,22 @@ import class UIKit.UIView
 public struct Group<Transitions: AtomicTransition>: AtomicTransition {
     private let transitions: Transitions
 
+    init(_ transitions: Transitions) {
+        self.transitions = transitions
+    }
+
     public init(@AtomicTransitionBuilder _ transitions: () -> Transitions) {
-        self.transitions = transitions()
+        self.init(transitions())
     }
 
     public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
         transitions.transition(view, for: operation, in: container)
+    }
+}
+
+extension Group: MirrorableAtomicTransition where Transitions: MirrorableAtomicTransition {
+    public func mirrored() -> Group<Transitions.Mirrored> {
+        .init(transitions.mirrored())
     }
 }
 

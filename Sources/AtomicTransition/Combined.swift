@@ -20,5 +20,11 @@ public struct Combined<TransitionA: AtomicTransition, TransitionB: AtomicTransit
     }
 }
 
+extension Combined: MirrorableAtomicTransition where TransitionA: MirrorableAtomicTransition, TransitionB: MirrorableAtomicTransition {
+    public func mirrored() -> Combined<TransitionA.Mirrored, TransitionB.Mirrored> {
+        .init(transitionA.mirrored(), transitionB.mirrored())
+    }
+}
+
 extension Combined: Equatable where TransitionA: Equatable, TransitionB: Equatable {}
 extension Combined: Hashable where TransitionA: Hashable, TransitionB: Hashable {}
