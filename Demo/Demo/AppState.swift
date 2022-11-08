@@ -3,6 +3,7 @@ import NavigationTransitions
 
 final class AppState: ObservableObject {
     enum Transition: CaseIterable, CustomStringConvertible, Hashable {
+        case `default`
         case slide
         case crossFade
         case slideAndFade
@@ -11,6 +12,8 @@ final class AppState: ObservableObject {
 
         var description: String {
             switch self {
+            case .default:
+                return "Default"
             case .slide:
                 return "Slide"
             case .crossFade:
@@ -18,7 +21,7 @@ final class AppState: ObservableObject {
             case .slideAndFade:
                 return "Slide + Fade"
             case .moveVertically:
-                return "Move Vertically"
+                return "Slide Vertically"
             case .swing:
                 return "Swing"
             }
@@ -26,6 +29,8 @@ final class AppState: ObservableObject {
 
         func callAsFunction() -> AnyNavigationTransition {
             switch self {
+            case .default:
+                return .default
             case .slide:
                 return .slide
             case .crossFade:

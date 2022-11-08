@@ -16,23 +16,6 @@ extension AnyNavigationTransition {
     }
 }
 
-struct Erased: NavigationTransitionProtocol {
-    private let handler: AnyNavigationTransition.Handler
-
-    init(handler: @escaping AnyNavigationTransition.Handler) {
-        self.handler = handler
-    }
-
-    func transition(
-        from fromView: TransientView,
-        to toView: TransientView,
-        for operation: TransitionOperation,
-        in container: Container
-    ) {
-        handler(fromView, toView, operation, container)
-    }
-}
-
 public struct Combined<TransitionA: NavigationTransitionProtocol, TransitionB: NavigationTransitionProtocol>: NavigationTransitionProtocol {
     private let transitionA: TransitionA
     private let transitionB: TransitionB
