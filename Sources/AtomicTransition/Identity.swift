@@ -8,7 +8,7 @@ public struct Identity: AtomicTransition, MirrorableAtomicTransition {
         // NO-OP
     }
 
-    @_transparent
+    @inlinable
     public func mirrored() -> Self {
         self
     }
