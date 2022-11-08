@@ -4,11 +4,11 @@
 import UIKit
 
 final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelegate {
-    let transition: NavigationTransition
+    let transition: AnyNavigationTransition
     weak var baseDelegate: UINavigationControllerDelegate?
     var interactionController: UIPercentDrivenInteractiveTransition?
 
-    init(transition: NavigationTransition, baseDelegate: UINavigationControllerDelegate?) {
+    init(transition: AnyNavigationTransition, baseDelegate: UINavigationControllerDelegate?) {
         self.transition = transition
         self.baseDelegate = baseDelegate
     }
@@ -26,7 +26,7 @@ final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelega
     }
 
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        if let operation = NavigationTransition.Operation(operation) {
+        if let operation = NavigationTransitionOperation(operation) {
             return NavigationTransitionAnimatorProvider(transition: transition, operation: operation)
         } else {
             return nil
@@ -35,10 +35,10 @@ final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelega
 }
 
 final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnimatedTransitioning {
-    let transition: NavigationTransition
-    let operation: NavigationTransition.Operation
+    let transition: AnyNavigationTransition
+    let operation: NavigationTransitionOperation
 
-    init(transition: NavigationTransition, operation: NavigationTransition.Operation) {
+    init(transition: AnyNavigationTransition, operation: NavigationTransitionOperation) {
         self.transition = transition
         self.operation = operation
     }
@@ -71,11 +71,8 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
             timingParameters: transition.animation.timingParameters
         )
         let operation = self.operation
-        let context = NavigationTransition._Context(uiKitContext: transitionContext)
 
-        transition.prepare(animator, for: operation, in: context)
-
-        if let (fromView, toView) = context.transientViews {
+        if let (fromView, toView) = transientViews(for: transition, animator: animator, context: transitionContext) {
             fromView.setUIViewProperties(to: \.initial)
             animator.addAnimations { fromView.setUIViewProperties(to: \.animation) }
             animator.addCompletion { _ in fromView.setUIViewProperties(to: \.completion) }
@@ -84,11 +81,72 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
             animator.addAnimations { toView.setUIViewProperties(to: \.animation) }
             animator.addCompletion { _ in toView.setUIViewProperties(to: \.completion) }
         }
+
         animator.addCompletion { _ in
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         }
 
         cachedAnimators[ObjectIdentifier(transitionContext)] = animator
         return animator
+    }
+
+    private func transientViews(
+        for transition: AnyNavigationTransition,
+        animator: Animator,
+        context: UIViewControllerContextTransitioning
+    ) -> (fromView: AnimatorTransientView, toView: AnimatorTransientView)? {
+        guard
+            let handler = transition.handler,
+            let fromUIView = context.view(forKey: .from),
+            let fromUIViewSnapshot = fromUIView.snapshotView(afterScreenUpdates: false),
+            let toUIView = context.view(forKey: .to),
+            let toUIViewSnapshot = toUIView.snapshotView(afterScreenUpdates: true)
+        else {
+            return nil
+        }
+
+        let fromView = AnimatorTransientView(fromUIViewSnapshot)
+        let toView = AnimatorTransientView(toUIViewSnapshot)
+
+        let container = context.containerView
+        fromUIView.removeFromSuperview()
+        container.addSubview(fromUIViewSnapshot)
+        switch operation {
+        case .push:
+            container.insertSubview(toUIViewSnapshot, aboveSubview: fromUIViewSnapshot)
+        case .pop:
+            container.insertSubview(toUIViewSnapshot, belowSubview: fromUIViewSnapshot)
+        }
+
+        // this is a hack that uses a 0-sized container to ensure that
+        // toView is added to the view hierarchy but not visible,
+        // in order to have toViewSnapshot sized properly
+        let invisibleContainer = UIView()
+        invisibleContainer.clipsToBounds = true
+        invisibleContainer.addSubview(fromUIView)
+        invisibleContainer.addSubview(toUIView)
+        container.addSubview(invisibleContainer)
+
+        animator.addCompletion { [weak container, weak fromUIView, weak toUIView] _ in
+            guard
+                let container = container,
+                let fromUIView = fromUIView,
+                let toUIView = toUIView
+            else {
+                return
+            }
+            for subview in container.subviews {
+                subview.removeFromSuperview()
+            }
+            if context.transitionWasCancelled {
+                container.addSubview(fromUIView)
+            } else {
+                container.addSubview(toUIView)
+            }
+        }
+
+        handler(fromView, toView, operation, container)
+
+        return (fromView: fromView, toView: toView)
     }
 }

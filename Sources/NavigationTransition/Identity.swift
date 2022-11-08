@@ -1,15 +1,8 @@
-extension NavigationTransition {
-    // For internal use only.
-    static var identity: Self {
-        .init { _, _, _ in }
-    }
-}
+// For internal use only.
+struct Identity: NavigationTransitionProtocol {
+    init() {}
 
-/// A transition that returns the input view, unmodified, as the output view.
-public struct Identity: NavigationTransitionProtocol {
-    public init() {}
-
-    public func transition(
+    func transition(
         from fromView: TransientView,
         to toView: TransientView,
         for operation: TransitionOperation,

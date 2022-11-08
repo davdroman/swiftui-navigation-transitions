@@ -1,8 +1,5 @@
 @resultBuilder
 public struct NavigationTransitionBuilder {
-    public static func buildBlock() -> Identity {
-        Identity()
-    }
     #if compiler(>=5.7)
     public static func buildPartialBlock<T1: NavigationTransitionProtocol>(first: T1) -> T1 {
         first
