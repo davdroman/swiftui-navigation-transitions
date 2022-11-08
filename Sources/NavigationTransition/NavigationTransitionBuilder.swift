@@ -143,17 +143,15 @@ public struct _OptionalTransition<Transition: NavigationTransition>: NavigationT
 }
 
 public struct _ConditionalTransition<TrueTransition: NavigationTransition, FalseTransition: NavigationTransition>: NavigationTransition {
-    private let trueTransition: TrueTransition?
-    private let falseTransition: FalseTransition?
+    private typealias Transition = _Either<TrueTransition, FalseTransition>
+    private let transition: Transition
 
     init(trueTransition: TrueTransition) {
-        self.trueTransition = trueTransition
-        self.falseTransition = nil
+        self.transition = .left(trueTransition)
     }
 
     init(falseTransition: FalseTransition) {
-        self.trueTransition = nil
-        self.falseTransition = falseTransition
+        self.transition = .right(falseTransition)
     }
 
     public func transition(
@@ -162,7 +160,19 @@ public struct _ConditionalTransition<TrueTransition: NavigationTransition, False
         for operation: TransitionOperation,
         in container: Container
     ) {
-        trueTransition?.transition(from: fromView, to: toView, for: operation, in: container)
-        falseTransition?.transition(from: fromView, to: toView, for: operation, in: container)
+        switch transition {
+        case .left(let trueTransition):
+            trueTransition.transition(from: fromView, to: toView, for: operation, in: container)
+        case .right(let falseTransition):
+            falseTransition.transition(from: fromView, to: toView, for: operation, in: container)
+        }
     }
 }
+
+private enum _Either<Left, Right> {
+    case left(Left)
+    case right(Right)
+}
+
+extension _Either: Equatable where Left: Equatable, Right: Equatable {}
+extension _Either: Hashable where Left: Hashable, Right: Hashable {}

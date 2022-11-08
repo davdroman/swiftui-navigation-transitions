@@ -1,4 +1,4 @@
-/// A transition that executes only on insertion.
+/// A transition that executes only on insertion, but executes only on removal when mirrored.
 public struct MirrorInsertion<Transition: AtomicTransition>: AtomicTransition {
     private let transition: Transition
 
@@ -29,7 +29,7 @@ extension MirrorInsertion: MirrorableAtomicTransition where Transition: Mirrorab
 extension MirrorInsertion: Equatable where Transition: Equatable {}
 extension MirrorInsertion: Hashable where Transition: Hashable {}
 
-/// A transition that executes only on removal.
+/// A transition that executes only on removal, but executes only on insertion when mirrored.
 public struct MirrorRemoval<Transition: AtomicTransition>: AtomicTransition {
     private let transition: Transition
 
