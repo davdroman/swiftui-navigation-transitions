@@ -1,5 +1,6 @@
 import AtomicTransition
 
+/// Used to define a transition that executes on push, and executes the mirrored version of said transition on pop.
 public struct MirrorPush<Transition: MirrorableAtomicTransition>: NavigationTransition {
     private let transition: Transition
 
@@ -17,6 +18,7 @@ public struct MirrorPush<Transition: MirrorableAtomicTransition>: NavigationTran
     }
 }
 
+/// Used to define a transition that executes on pop, and executes the mirrored version of said transition on push.
 public struct MirrorPop<Transition: MirrorableAtomicTransition>: NavigationTransition {
     private let transition: Transition
 

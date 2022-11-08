@@ -1,6 +1,6 @@
 import AtomicTransition
 
-/// A composite transition that uses a different transition for insertion versus removal.
+/// A composite transition that uses a different transition for push versus pop.
 public struct Asymmetric<PushTransition: NavigationTransition, PopTransition: NavigationTransition>: NavigationTransition {
     private let push: PushTransition
     private let pop: PopTransition
@@ -31,7 +31,7 @@ public struct Asymmetric<PushTransition: NavigationTransition, PopTransition: Na
 extension Asymmetric: Equatable where PushTransition: Equatable, PopTransition: Equatable {}
 extension Asymmetric: Hashable where PushTransition: Hashable, PopTransition: Hashable {}
 
-/// A transition that executes only on insertion.
+/// Used to define a transition that executes only on push.
 public struct OnPush<Transition: AtomicTransition>: NavigationTransition {
     private let transition: Transition
 
@@ -58,7 +58,7 @@ public struct OnPush<Transition: AtomicTransition>: NavigationTransition {
 extension OnPush: Equatable where Transition: Equatable {}
 extension OnPush: Hashable where Transition: Hashable {}
 
-/// A transition that executes only on removal.
+/// Used to define a transition that executes only on pop.
 public struct OnPop<Transition: AtomicTransition>: NavigationTransition {
     private let transition: Transition
 
