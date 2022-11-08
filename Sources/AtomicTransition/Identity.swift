@@ -7,6 +7,7 @@ extension AtomicTransition {
     }
 }
 
+/// A transition that returns the input view, unmodified, as the output view.
 public struct Identity: AtomicTransitionProtocol {
     public init() {}
 

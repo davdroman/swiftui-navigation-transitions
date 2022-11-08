@@ -24,7 +24,7 @@ public struct Combined<TransitionA: AtomicTransitionProtocol, TransitionB: Atomi
     private let transitionA: TransitionA
     private let transitionB: TransitionB
 
-    public init(_ transitionA: TransitionA, _ transitionB: TransitionB) {
+    init(_ transitionA: TransitionA, _ transitionB: TransitionB) {
         self.transitionA = transitionA
         self.transitionB = transitionB
     }

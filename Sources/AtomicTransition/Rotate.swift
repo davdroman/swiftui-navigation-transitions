@@ -16,6 +16,7 @@ extension AtomicTransition {
     }
 }
 
+/// A transition that rotates the view from `angle` to zero on insertion, and from zero to `angle` on removal.
 public struct Rotate: AtomicTransitionProtocol {
     private let angle: Angle
 

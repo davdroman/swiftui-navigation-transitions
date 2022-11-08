@@ -16,6 +16,7 @@ extension AtomicTransition {
     }
 }
 
+/// A transition from transparent to opaque on insertion, and from opaque to transparent on removal.
 public struct Opacity: AtomicTransitionProtocol {
     public init() {}
 

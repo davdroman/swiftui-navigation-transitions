@@ -41,6 +41,7 @@ extension AtomicTransition {
     }
 }
 
+/// A transition entering from `edge` on insertion, and exiting towards `edge` on removal.
 public struct Move: AtomicTransitionProtocol {
     private let edge: Edge
 
