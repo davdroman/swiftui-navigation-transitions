@@ -211,9 +211,9 @@ All types conforming to `AtomicTransition` must implement what's known as a "tra
 
 Next up, let's explore two ways of conforming to `NavigationTransition`.
 
-The simplest (and most recommended) way happens by declaring our atomic transitions (if needed), and composing them via `var body: some NavigationTransition { ... }` like we saw [previously with `Slide`](#NavigationTransition).
+The simplest (and most recommended) way is by declaring our atomic transitions (if needed), and composing them via `var body: some NavigationTransition { ... }` like we saw [previously with `Slide`](#NavigationTransition).
 
-Check out the documentation to learn about the different `NavigationTransition` types and how they compose.
+Check out the [documentation](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.2.0/documentation/navigationtransitions/navigationtransition) to learn about the different `NavigationTransition` types and how they compose.
 
 The Demo project in the repo is also a great source of learning about different types of custom transitions and the way to implement them.
 
