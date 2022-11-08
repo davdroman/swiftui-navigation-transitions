@@ -30,3 +30,9 @@ public enum AtomicTransitionOperation {
     case insertion
     case removal
 }
+
+public protocol MirrorableAtomicTransition: AtomicTransition {
+    associatedtype Mirrored: AtomicTransition
+
+    func mirrored() -> Mirrored
+}
