@@ -6,10 +6,12 @@ final class AppState: ObservableObject {
         case `default`
         case slide
         case crossFade
-        case slideAndFade
+        case slideAndFadeIn
+        case slideAndFadeOut
         case moveVertically
         case swing
         case zoom
+        case zoomAndSlide
 
         var description: String {
             switch self {
@@ -19,14 +21,18 @@ final class AppState: ObservableObject {
                 return "Slide"
             case .crossFade:
                 return "Fade"
-            case .slideAndFade:
-                return "Slide + Fade"
+            case .slideAndFadeIn:
+                return "Slide + Fade In"
+            case .slideAndFadeOut:
+                return "Slide + Fade Out"
             case .moveVertically:
                 return "Slide Vertically"
             case .swing:
                 return "Swing"
             case .zoom:
                 return "Zoom"
+            case .zoomAndSlide:
+                return "Zoom + Slide"
             }
         }
 
@@ -38,14 +44,18 @@ final class AppState: ObservableObject {
                 return .slide
             case .crossFade:
                 return .fade(.cross)
-            case .slideAndFade:
+            case .slideAndFadeIn:
                 return .slide.combined(with: .fade(.in))
+            case .slideAndFadeOut:
+                return .slide.combined(with: .fade(.out))
             case .moveVertically:
                 return .slide(axis: .vertical)
             case .swing:
                 return .swing
             case .zoom:
-                return .zoom
+                return .zoom.combined(with: .fade(.in))
+            case .zoomAndSlide:
+                return .zoom.combined(with: .slide)
             }
         }
     }
