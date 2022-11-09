@@ -18,6 +18,9 @@ public struct MirrorPush<Transition: MirrorableAtomicTransition>: NavigationTran
     }
 }
 
+extension MirrorPush: Equatable where Transition: Equatable {}
+extension MirrorPush: Hashable where Transition: Hashable {}
+
 /// Used to define a transition that executes on pop, and executes the mirrored version of said transition on push.
 public struct MirrorPop<Transition: MirrorableAtomicTransition>: NavigationTransition {
     private let transition: Transition
@@ -35,3 +38,6 @@ public struct MirrorPop<Transition: MirrorableAtomicTransition>: NavigationTrans
         }
     }
 }
+
+extension MirrorPop: Equatable where Transition: Equatable {}
+extension MirrorPop: Hashable where Transition: Hashable {}
