@@ -4,6 +4,14 @@ extension AnyNavigationTransition {
     public func combined(with other: Self) -> Self {
         switch (self.handler, other.handler) {
         case (.transient(let lhsHandler), .transient(let rhsHandler)):
+            struct Erased: NavigationTransition {
+                let handler: AnyNavigationTransition.TransientHandler
+
+                @inlinable
+                func transition(from fromView: TransientView, to toView: TransientView, for operation: TransitionOperation, in container: Container) {
+                    handler(fromView, toView, operation, container)
+                }
+            }
             return AnyNavigationTransition(
                 Combined(Erased(handler: lhsHandler), Erased(handler: rhsHandler))
             )
