@@ -2,7 +2,7 @@
 public struct PickPush<Transition: NavigationTransition>: NavigationTransition {
     private let transition: Transition
 
-    public init(@AtomicTransitionBuilder transition: () -> Transition) {
+    public init(@NavigationTransitionBuilder transition: () -> Transition) {
         self.transition = transition()
     }
 
@@ -28,7 +28,7 @@ extension PickPush: Hashable where Transition: Hashable {}
 public struct PickPop<Transition: NavigationTransition>: NavigationTransition {
     private let transition: Transition
 
-    public init(@AtomicTransitionBuilder transition: () -> Transition) {
+    public init(@NavigationTransitionBuilder transition: () -> Transition) {
         self.transition = transition()
     }
 
