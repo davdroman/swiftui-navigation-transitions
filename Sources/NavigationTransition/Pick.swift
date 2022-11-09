@@ -1,6 +1,4 @@
-import AtomicTransition
-
-/// Used to define a transition that executes on push, and executes the mirrored version of said transition on pop.
+/// Used to isolate the push portion of a full `NavigationTransition` and execute it on push, ignoring the pop portion.
 public struct PickPush<Transition: NavigationTransition>: NavigationTransition {
     private let transition: Transition
 
@@ -26,7 +24,7 @@ public struct PickPush<Transition: NavigationTransition>: NavigationTransition {
 extension PickPush: Equatable where Transition: Equatable {}
 extension PickPush: Hashable where Transition: Hashable {}
 
-/// Used to define a transition that executes on pop, and executes the mirrored version of said transition on push.
+/// Used to isolate the pop portion of a full `NavigationTransition` and execute it on pop, ignoring the push portion.
 public struct PickPop<Transition: NavigationTransition>: NavigationTransition {
     private let transition: Transition
 
