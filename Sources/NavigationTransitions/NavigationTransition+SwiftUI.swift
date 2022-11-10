@@ -88,7 +88,7 @@ struct NavigationTransitionModifier: ViewModifier {
 
                             OR
 
-                            NavigationStack {
+                            NavigationView {
                                 ...
                             }
                             .navigationViewStyle(.stack)
