@@ -142,6 +142,12 @@ extension UINavigationController {
             defaultDelegate = delegate
         }
 
+        if transition.type == Default.self {
+            delegate = defaultDelegate
+        } else {
+            customDelegate = NavigationTransitionDelegate(transition: transition, baseDelegate: defaultDelegate)
+        }
+
         #if !os(tvOS)
         if defaultPanRecognizer == nil {
             defaultPanRecognizer = UIPanGestureRecognizer()
@@ -166,8 +172,6 @@ extension UINavigationController {
         }
 
         if transition.type == Default.self {
-            delegate = defaultDelegate
-
             switch interactivity {
             case .disabled:
                 exclusivelyEnableGestureRecognizer(.none)
@@ -177,8 +181,6 @@ extension UINavigationController {
                 exclusivelyEnableGestureRecognizer(defaultPanRecognizer)
             }
         } else {
-            customDelegate = NavigationTransitionDelegate(transition: transition, baseDelegate: defaultDelegate)
-
             switch interactivity {
             case .disabled:
                 exclusivelyEnableGestureRecognizer(.none)
