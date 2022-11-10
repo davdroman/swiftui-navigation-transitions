@@ -79,8 +79,6 @@ struct NavigationTransitionModifier: ViewModifier {
                         """
                         Modifier "navigationTransition" was applied to a view other than NavigationStack OR NavigationView with .navigationViewStyle(.stack). This has no effect.
 
-                        You could also be attempting to apply the modifier to NavigationSplitView OR NavigationView with .navigationViewStyle(.columns). This also has no effect.
-
                         Please make sure you're applying the modifier correctly:
 
                             NavigationStack {
@@ -95,6 +93,8 @@ struct NavigationTransitionModifier: ViewModifier {
                             }
                             .navigationViewStyle(.stack)
                             .navigationTransition(...)
+
+                        If you're attempting to apply the modifier to NavigationSplitView OR NavigationView with .navigationViewStyle(.columns), this has no effect either. Instead, you should apply the modifier to the child stack navigation component within it (if any).
                         """
                     )
                     return nil
