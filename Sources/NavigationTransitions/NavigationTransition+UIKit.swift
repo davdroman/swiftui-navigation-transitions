@@ -53,7 +53,7 @@ extension UISplitViewController {
 
 extension UISplitViewController {
     var compactViewController: UIViewController? {
-        if #available(iOS 14, *) {
+        if #available(iOS 14, tvOS 14, *) {
             return viewController(for: .compact)
         } else {
             if isCollapsed {
@@ -65,7 +65,7 @@ extension UISplitViewController {
     }
 
     var primaryViewController: UIViewController? {
-        if #available(iOS 14, *) {
+        if #available(iOS 14, tvOS 14, *) {
             return viewController(for: .primary)
         } else {
             if !isCollapsed {
@@ -77,7 +77,7 @@ extension UISplitViewController {
     }
 
     var supplementaryViewController: UIViewController? {
-        if #available(iOS 14, *) {
+        if #available(iOS 14, tvOS 14, *) {
             return viewController(for: .supplementary)
         } else {
             if !isCollapsed {
@@ -93,7 +93,7 @@ extension UISplitViewController {
     }
 
     var secondaryViewController: UIViewController? {
-        if #available(iOS 14, *) {
+        if #available(iOS 14, tvOS 14, *) {
             return viewController(for: .secondary)
         } else {
             if !isCollapsed {
@@ -142,6 +142,13 @@ extension UINavigationController {
             defaultDelegate = delegate
         }
 
+        if transition.type == Default.self {
+            delegate = defaultDelegate
+        } else {
+            customDelegate = NavigationTransitionDelegate(transition: transition, baseDelegate: defaultDelegate)
+        }
+
+        #if !os(tvOS)
         if defaultPanRecognizer == nil {
             defaultPanRecognizer = UIPanGestureRecognizer()
             defaultPanRecognizer.targets = defaultEdgePanRecognizer?.targets // https://stackoverflow.com/a/60526328/1922543
@@ -165,8 +172,6 @@ extension UINavigationController {
         }
 
         if transition.type == Default.self {
-            delegate = defaultDelegate
-
             switch interactivity {
             case .disabled:
                 exclusivelyEnableGestureRecognizer(.none)
@@ -176,8 +181,6 @@ extension UINavigationController {
                 exclusivelyEnableGestureRecognizer(defaultPanRecognizer)
             }
         } else {
-            customDelegate = NavigationTransitionDelegate(transition: transition, baseDelegate: defaultDelegate)
-
             switch interactivity {
             case .disabled:
                 exclusivelyEnableGestureRecognizer(.none)
@@ -187,8 +190,10 @@ extension UINavigationController {
                 exclusivelyEnableGestureRecognizer(panRecognizer)
             }
         }
+        #endif
     }
 
+    @available(tvOS, unavailable)
     private func exclusivelyEnableGestureRecognizer(_ gestureRecognizer: UIPanGestureRecognizer?) {
         for recognizer in [defaultEdgePanRecognizer!, defaultPanRecognizer!, edgePanRecognizer!, panRecognizer!] {
             if let gestureRecognizer = gestureRecognizer, recognizer === gestureRecognizer {
@@ -200,6 +205,7 @@ extension UINavigationController {
     }
 }
 
+@available(tvOS, unavailable)
 extension UINavigationController {
     var defaultEdgePanRecognizer: UIScreenEdgePanGestureRecognizer! {
         interactivePopGestureRecognizer as? UIScreenEdgePanGestureRecognizer
@@ -225,6 +231,7 @@ extension UINavigationController {
     }
 }
 
+@available(tvOS, unavailable)
 extension UIGestureRecognizer {
     private static var strongDelegateKey = "strongDelegateKey"
 
@@ -252,6 +259,7 @@ extension UIGestureRecognizer {
     }
 }
 
+@available(tvOS, unavailable)
 final class NavigationGestureRecognizerDelegate: NSObject, UIGestureRecognizerDelegate {
     private unowned let navigationController: UINavigationController
 

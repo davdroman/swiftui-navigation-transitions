@@ -2,6 +2,7 @@ import SwiftUI
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
+    #if !os(tvOS)
     func applicationDidFinishLaunching(_ application: UIApplication) {
         customizeNavigationBarAppearance()
         customizeTabBarAppearance()
@@ -18,7 +19,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         proxy.scrollEdgeAppearance = customAppearance
         proxy.compactAppearance = customAppearance
         proxy.standardAppearance = customAppearance
-        if #available(iOS 15.0, *) {
+        if #available(iOS 15.0, tvOS 15, *) {
             proxy.compactScrollEdgeAppearance = customAppearance
         }
     }
@@ -31,10 +32,11 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let proxy = UITabBar.appearance()
         proxy.standardAppearance = customAppearance
-        if #available(iOS 15, *) {
+        if #available(iOS 15, tvOS 15, *) {
             proxy.scrollEdgeAppearance = customAppearance
         }
     }
+    #endif
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)

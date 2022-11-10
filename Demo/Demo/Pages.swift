@@ -14,7 +14,7 @@ struct PageOne: View {
             PageTwo()
         }
         .do {
-            if #available(iOS 16, *) {
+            if #available(iOS 16, tvOS 16, *) {
                 $0.navigationDestination(for: Int.self) { number in
                     switch number {
                     case 1: PageOne()
@@ -125,10 +125,14 @@ struct PageLink: View {
 
     var body: some View {
         ZStack {
+            #if !os(tvOS)
             RoundedRectangle(cornerRadius: 6, style: .continuous)
                 .fill(Color.blue.opacity(0.8))
+            #endif
             Text(title)
+                #if !os(tvOS)
                 .foregroundColor(.white)
+                #endif
                 .font(.system(size: 18, weight: .medium, design: .rounded))
         }
         .frame(maxHeight: 50)
@@ -150,7 +154,7 @@ struct Code<Content: StringProtocol>: View {
         let shape = RoundedRectangle(cornerRadius: 4, style: .circular)
 
         Text(content)
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(maxWidth: 500, alignment: .leading)
             .padding(10)
             .lineLimit(lineLimit)
             .multilineTextAlignment(.leading)
@@ -158,6 +162,7 @@ struct Code<Content: StringProtocol>: View {
             .font(.system(size: 14, design: .monospaced))
             .background(shape.stroke(Color(white: 0.1).opacity(0.35), lineWidth: 1))
             .background(Color(white: 0.94).opacity(0.6).clipShape(shape))
+            #if !os(tvOS)
             .do {
                 if #available(iOS 15, *) {
                     $0.textSelection(.enabled)
@@ -165,5 +170,6 @@ struct Code<Content: StringProtocol>: View {
                     $0
                 }
             }
+            #endif
     }
 }

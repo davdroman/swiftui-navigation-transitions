@@ -25,6 +25,8 @@ jobs:
           - macos-12
         platform:
           - iOS
+          - mac-catalyst
+          - tvOS
         swift:
           - 5.5
           - 5.6

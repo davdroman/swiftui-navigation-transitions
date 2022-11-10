@@ -6,7 +6,7 @@ struct RootView: View {
 
     var body: some View {
         Group {
-            if #available(iOS 16, *) {
+            if #available(iOS 16, tvOS 16, *) {
                 NavigationStack {
                     PageOne()
                 }
@@ -21,6 +21,8 @@ struct RootView: View {
             appState.transition().animation(appState.animation()),
             interactivity: appState.interactivity()
         )
-        .sheet(isPresented: $appState.isPresentingSettings, content: SettingsView.init)
+        .sheet(isPresented: $appState.isPresentingSettings) {
+            SettingsView().environmentObject(appState)
+        }
     }
 }
