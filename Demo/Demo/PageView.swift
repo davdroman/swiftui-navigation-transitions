@@ -44,7 +44,11 @@ struct PageView<Content: View, Link: View, Destination: View>: View {
                         }
                     }
                 }
+                #if os(tvOS)
                 .frame(maxWidth: 600)
+                #else
+                .frame(maxWidth: 300)
+                #endif
             }
             .multilineTextAlignment(.center)
             .padding(.horizontal)
