@@ -52,12 +52,7 @@ extension View {
         forColumns columns: NavigationSplitViewColumns,
         interactivity: AnyNavigationTransition.Interactivity = .default
     ) -> some View {
-        self.modifier(
-            NavigationTransitionModifier(
-                transition: transition,
-                interactivity: interactivity
-            )
-        )
+        self.navigationTransition(transition, interactivity: interactivity)
     }
 
     @available(iOS, introduced: 16, deprecated, renamed: "navigationTransition")
