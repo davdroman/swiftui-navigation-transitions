@@ -14,7 +14,7 @@ struct PageView<Content: View, Link: View, Destination: View>: View {
         ZStack {
             Rectangle()
                 .do {
-                    if #available(iOS 16, *) {
+                    if #available(iOS 16, tvOS 16, *) {
                         $0.fill(color.gradient)
                     } else {
                         $0.fill(color)
@@ -34,7 +34,7 @@ struct PageView<Content: View, Link: View, Destination: View>: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .foregroundColor(Color(white: 0.14))
                 if let link = link, let destination = destination {
-                    if #available(iOS 16, *) {
+                    if #available(iOS 16, tvOS 16, *) {
                         NavigationLink(value: number + 1) { link }
                     } else {
                         NavigationLink(destination: destination) { link }
@@ -45,11 +45,13 @@ struct PageView<Content: View, Link: View, Destination: View>: View {
             .padding(.horizontal)
             .padding(.bottom, 30)
         }
+        #if !os(tvOS)
         .navigationBarTitle(Text(title), displayMode: .inline)
+        #endif
         .navigationBarItems(
             trailing: Button(action: { appState.isPresentingSettings = true }) {
                 Group {
-                    if #available(iOS 14, *) {
+                    if #available(iOS 14, tvOS 16, *) {
                         Image(systemName: "gearshape")
                     } else {
                         Image(systemName: "gear")

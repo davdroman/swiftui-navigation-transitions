@@ -14,7 +14,7 @@ struct PageOne: View {
             PageTwo()
         }
         .do {
-            if #available(iOS 16, *) {
+            if #available(iOS 16, tvOS 16, *) {
                 $0.navigationDestination(for: Int.self) { number in
                     switch number {
                     case 1: PageOne()
@@ -158,6 +158,7 @@ struct Code<Content: StringProtocol>: View {
             .font(.system(size: 14, design: .monospaced))
             .background(shape.stroke(Color(white: 0.1).opacity(0.35), lineWidth: 1))
             .background(Color(white: 0.94).opacity(0.6).clipShape(shape))
+            #if !os(tvOS)
             .do {
                 if #available(iOS 15, *) {
                     $0.textSelection(.enabled)
@@ -165,5 +166,6 @@ struct Code<Content: StringProtocol>: View {
                     $0
                 }
             }
+            #endif
     }
 }

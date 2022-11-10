@@ -6,7 +6,7 @@ struct RootView: View {
 
     var body: some View {
         Group {
-            if #available(iOS 16, *) {
+            if #available(iOS 16, tvOS 16, *) {
                 NavigationStack {
                     PageOne()
                 }

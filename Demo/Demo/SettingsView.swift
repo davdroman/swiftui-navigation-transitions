@@ -20,7 +20,9 @@ struct SettingsView: View {
                     picker("Interactivity", $appState.interactivity)
                 }
             }
+            #if !os(tvOS)
             .navigationBarTitle("Settings", displayMode: .inline)
+            #endif
             .navigationBarItems(
                 leading: Button("Shuffle", action: shuffle),
                 trailing: Button(action: dismiss) { Text("Done").bold() }
