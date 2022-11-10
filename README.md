@@ -7,6 +7,7 @@
 <p align="center">
     <img width="320" src="https://user-images.githubusercontent.com/2538074/199754334-7f2f801d-1d9e-4cc4-a7a0-bb22c9835007.gif">
 </p>
+
 **NavigationTransitions** is a library that integrates seamlessly with SwiftUI's **Navigation** views, allowing complete customization over **push and pop transitions**!
 
 The library is fully compatible with:
