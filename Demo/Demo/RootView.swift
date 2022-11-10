@@ -21,6 +21,8 @@ struct RootView: View {
             appState.transition().animation(appState.animation()),
             interactivity: appState.interactivity()
         )
-        .sheet(isPresented: $appState.isPresentingSettings, content: SettingsView.init)
+        .sheet(isPresented: $appState.isPresentingSettings) {
+            SettingsView().environmentObject(appState)
+        }
     }
 }
