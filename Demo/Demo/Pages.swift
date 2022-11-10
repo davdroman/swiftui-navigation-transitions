@@ -125,10 +125,14 @@ struct PageLink: View {
 
     var body: some View {
         ZStack {
+            #if !os(tvOS)
             RoundedRectangle(cornerRadius: 6, style: .continuous)
                 .fill(Color.blue.opacity(0.8))
+            #endif
             Text(title)
+                #if !os(tvOS)
                 .foregroundColor(.white)
+                #endif
                 .font(.system(size: 18, weight: .medium, design: .rounded))
         }
         .frame(maxHeight: 50)
@@ -150,7 +154,7 @@ struct Code<Content: StringProtocol>: View {
         let shape = RoundedRectangle(cornerRadius: 4, style: .circular)
 
         Text(content)
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(maxWidth: 500, alignment: .leading)
             .padding(10)
             .lineLimit(lineLimit)
             .multilineTextAlignment(.leading)

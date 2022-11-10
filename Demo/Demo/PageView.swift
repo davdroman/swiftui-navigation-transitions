@@ -33,13 +33,18 @@ struct PageView<Content: View, Link: View, Destination: View>: View {
                 .shadow(color: .white.opacity(0.25), radius: 1, x: 0, y: 1)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .foregroundColor(Color(white: 0.14))
-                if let link = link, let destination = destination {
-                    if #available(iOS 16, tvOS 16, *) {
-                        NavigationLink(value: number + 1) { link }
-                    } else {
-                        NavigationLink(destination: destination) { link }
+                .frame(maxWidth: 1200)
+
+                Group {
+                    if let link = link, let destination = destination {
+                        if #available(iOS 16, tvOS 16, *) {
+                            NavigationLink(value: number + 1) { link }
+                        } else {
+                            NavigationLink(destination: destination) { link }
+                        }
                     }
                 }
+                .frame(maxWidth: 600)
             }
             .multilineTextAlignment(.center)
             .padding(.horizontal)
