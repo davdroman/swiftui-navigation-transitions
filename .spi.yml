@@ -4,3 +4,7 @@ builder:
   - platform: ios
     scheme: NavigationTransitions
     documentation_targets: [NavigationTransitions, NavigationTransition, AtomicTransition, Animator, Animation]
+  - platform: macos-xcodebuild
+    scheme: NavigationTransitions
+  - platform: tvos
+    scheme: NavigationTransitions
