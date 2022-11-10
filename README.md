@@ -7,17 +7,16 @@
 <p align="center">
     <img width="320" src="https://user-images.githubusercontent.com/2538074/199754334-7f2f801d-1d9e-4cc4-a7a0-bb22c9835007.gif">
 </p>
-
 **NavigationTransitions** is a library that integrates seamlessly with SwiftUI's **Navigation** views, allowing complete customization over **push and pop transitions**!
 
 The library is fully compatible with:
 
-- **`NavigationView`** (iOS 13+)
-- **`NavigationStack`** & **`NavigationSplitView`** (iOS 16)
+- **`NavigationView`** (iOS 13, 14, 15)
+- **`NavigationStack`** (iOS 16)
 
 ## Overview
 
-Instead of reinventing entire navigation components in order to customize its transitions, `NavigationTransitions` ships as a simple set of 2 modifiers that can be applied directly to SwiftUI's very own first-party navigation components.
+Instead of reinventing entire navigation components in order to customize its transitions, `NavigationTransitions` ships with a simple modifier that can be applied directly to SwiftUI's very own first-party navigation component.
 
 ### The Basics
 
@@ -28,15 +27,7 @@ NavigationView {
   // ...
 }
 .navigationViewStyle(.stack)
-.navigationViewStackTransition(.slide)
-```
-
-```swift
-NavigationView {
-  // ...
-}
-.navigationViewStyle(.columns)
-.navigationViewColumnTransition(.slide, forColumns: .all)
+.navigationTransition(.slide)
 ```
 
 #### iOS 16
@@ -45,14 +36,7 @@ NavigationView {
 NavigationStack {
   // ...
 }
-.navigationStackTransition(.slide)
-```
-
-```swift
-NavigationSplitView {
-  // ...
-}
-.navigationSplitViewTransition(.slide, forColumns: .all)
+.navigationTransition(.slide)
 ```
 
 ---
@@ -62,7 +46,7 @@ The API is designed to resemble that of built-in SwiftUI Transitions for maximum
 You can apply **custom animations** just like with standard SwiftUI transitions:
 
 ```swift
-.navigationViewStackTransition(
+.navigationTransition(
     .fade(.in).animation(.easeInOut(duration: 0.3))
 )
 ```
@@ -70,7 +54,7 @@ You can apply **custom animations** just like with standard SwiftUI transitions:
 You can **combine** them:
 
 ```swift
-.navigationViewStackTransition(
+.navigationTransition(
     .slide.combined(with: .fade(.in))
 )
 ```
@@ -78,7 +62,7 @@ You can **combine** them:
 And you can **dynamically** choose between transitions based on logic:
 
 ```swift
-.navigationViewStackTransition(
+.navigationTransition(
     reduceMotion ? .fade(.in).animation(.linear) : .slide(.vertical)
 )
 ```
@@ -129,13 +113,13 @@ The [**Demo**](Demo) app showcases some of these transitions in action.
 A sweet additional feature is the ability to override the behavior of the **pop gesture** on the navigation view:
 
 ```swift
-.navigationViewStackTransition(.slide, interactivity: .pan) // full-pan screen gestures!
+.navigationTransition(.slide, interactivity: .pan) // full-pan screen gestures!
 ```
 
 This even works to override its behavior while maintaining the **default system transition** in iOS:
 
 ```swift
-.navigationViewStackTransition(.default, interactivity: .pan) // ✨
+.navigationTransition(.default, interactivity: .pan) // ✨
 ```
 
 ## Documentation
