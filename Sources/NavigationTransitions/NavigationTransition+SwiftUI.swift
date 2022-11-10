@@ -45,7 +45,7 @@ extension UISplitViewControllerColumns {
 }
 
 extension View {
-    @available(iOS, introduced: 16, deprecated, renamed: "navigationTransition", message: "Use 'navigationTransition' instead")
+    @available(iOS, introduced: 16, deprecated, renamed: "navigationTransition")
     @ViewBuilder
     public func navigationSplitViewTransition(
         _ transition: AnyNavigationTransition,
@@ -60,7 +60,7 @@ extension View {
         )
     }
 
-    @available(iOS, introduced: 16, deprecated, renamed: "navigationTransition", message: "Use 'navigationTransition' instead")
+    @available(iOS, introduced: 16, deprecated, renamed: "navigationTransition")
     @ViewBuilder
     public func navigationStackTransition(
         _ transition: AnyNavigationTransition,
@@ -171,7 +171,7 @@ extension UISplitViewControllerColumns {
 }
 
 extension View {
-    @available(iOS, introduced: 13, deprecated, renamed: "navigationTransition", message: "Use 'navigationTransition' instead")
+    @available(iOS, introduced: 13, deprecated, renamed: "navigationTransition")
     @ViewBuilder
     public func navigationViewColumnTransition(
         _ transition: AnyNavigationTransition,
@@ -181,7 +181,7 @@ extension View {
         self.navigationTransition(transition, interactivity: interactivity)
     }
 
-    @available(iOS, introduced: 13, deprecated, renamed: "navigationTransition", message: "Use 'navigationTransition' instead")
+    @available(iOS, introduced: 13, deprecated, renamed: "navigationTransition")
     @ViewBuilder
     public func navigationViewStackTransition(
         _ transition: AnyNavigationTransition,
