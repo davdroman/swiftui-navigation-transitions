@@ -24,26 +24,6 @@ public struct NavigationSplitViewColumns: OptionSet {
     }
 }
 
-@available(iOS, introduced: 16, deprecated, message: "Use 'navigationTransition' modifier instead")
-extension UISplitViewControllerColumns {
-    init(_ columns: NavigationSplitViewColumns) {
-        var _columns: Self = []
-        if columns.contains(.sidebar) {
-            _columns.insert(.primary)
-        }
-        if columns.contains(.content) {
-            _columns.insert(.supplementary)
-        }
-        if columns.contains(.detail) {
-            _columns.insert(.secondary)
-        }
-        if columns.contains(.compact) {
-            _columns.insert(.compact)
-        }
-        self = _columns
-    }
-}
-
 extension View {
     @available(iOS, introduced: 16, deprecated, renamed: "navigationTransition")
     @ViewBuilder
@@ -81,11 +61,6 @@ extension View {
 }
 
 struct NavigationTransitionModifier: ViewModifier {
-    enum Target {
-        case navigationSplitView(NavigationSplitViewColumns)
-        case navigationStack
-    }
-
     let transition: AnyNavigationTransition
     let interactivity: AnyNavigationTransition.Interactivity
 
@@ -148,20 +123,6 @@ public struct NavigationViewColumns: OptionSet {
 
     public init(rawValue: Int8) {
         self.rawValue = rawValue
-    }
-}
-
-extension UISplitViewControllerColumns {
-    @available(iOS, introduced: 13, deprecated, message: "Use 'navigationTransition' instead")
-    init(_ columns: NavigationViewColumns) {
-        var _columns: Self = []
-        if columns.contains(.sidebar) {
-            _columns.insert(.primary)
-        }
-        if columns.contains(.detail) {
-            _columns.insert(.secondary)
-        }
-        self = _columns
     }
 }
 
