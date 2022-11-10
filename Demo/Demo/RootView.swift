@@ -17,7 +17,7 @@ struct RootView: View {
                 .navigationViewStyle(.stack)
             }
         }
-        .navigationViewStackTransition(
+        .navigationTransition(
             appState.transition().animation(appState.animation()),
             interactivity: appState.interactivity()
         )
