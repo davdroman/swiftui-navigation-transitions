@@ -1,8 +1,16 @@
 #!/usr/bin/env bash
 
-mkdir -p docs
+killall Xcode
+
+git checkout docs
 
 xcodebuild docbuild \
   -scheme NavigationTransitions \
   -destination generic/platform=iOS \
-  OTHER_DOCC_FLAGS="--transform-for-static-hosting --hosting-base-path /swiftui-navigation-transitions/$1 --output-path docs/$1"
+  OTHER_DOCC_FLAGS="--transform-for-static-hosting --hosting-base-path /swiftui-navigation-transitions/$1 --output-path $1"
+
+git add .
+git commit -c "Generate docs for $1"
+git push origin docs
+
+git checkout -
