@@ -76,7 +76,7 @@ The library ships with some **standard transitions** out of the box:
 - [`fade(_:)`](Sources/NavigationTransition/Fade.swift)
 - [`slide(axis:)`](Sources/NavigationTransition/Slide.swift)
 
-In addition to these, you can create fully [**custom**](Demo/Demo/Swing.swift) transitions in just a few lines of SwiftUI-like code!
+In addition to these, you can create fully [**custom transitions**](https://davdroman.github.io/swiftui-navigation-transitions/main/documentation/navigationtransitions/custom-transitions/) in just a few lines of SwiftUI-like code!
 
 ```swift
 struct Swing: NavigationTransition {
@@ -105,8 +105,6 @@ struct Swing: NavigationTransition {
 }
 ```
 
-Check out the [**documentation**](Documentation/Custom-Transitions.md) to learn more about custom transitions.
-
 The [**Demo**](Demo) app showcases some of these transitions in action.
 
 ### Interactivity
@@ -127,8 +125,8 @@ This even works to override its behavior while maintaining the **default system 
 
 The documentation for releases and `main` are available here:
 
-- [`main`](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/main/documentation/navigationtransitions)
-- [0.2.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.2.0/documentation/navigationtransitions)
+- [`main`](https://davdroman.github.io/swiftui-navigation-transitions/main/documentation/navigationtransitions/)
+- [0.5.0](https://davdroman.github.io/swiftui-navigation-transitions/0.5.0/documentation/navigationtransitions/)
 
 The repository also contains [**documentation**](Documentation/Custom-Transitions.md) covering how to set up your own **custom transitions**.
 
