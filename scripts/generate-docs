@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+xcodebuild docbuild -scheme NavigationTransitions \
+  -destination generic/platform=iOS \
+  OTHER_DOCC_FLAGS="--transform-for-static-hosting --hosting-base-path /swiftui-navigation-transitions/$1 --output-path docs/$1"
