@@ -75,7 +75,7 @@ The library ships with some **standard transitions** out of the box:
 - [`fade(_:)`](Sources/NavigationTransition/Fade.swift)
 - [`slide(axis:)`](Sources/NavigationTransition/Slide.swift)
 
-In addition to these, you can create fully [**custom**](Demo/Demo/Swing.swift) transitions in just a few lines of SwiftUI-like code!
+In addition to these, you can create fully [**custom transitions**](https://davdroman.github.io/swiftui-navigation-transitions/main/documentation/navigationtransitions/custom-transitions/) in just a few lines of SwiftUI-like code!
 
 ```swift
 struct Swing: NavigationTransition {
@@ -103,8 +103,6 @@ struct Swing: NavigationTransition {
     }
 }
 ```
-
-Check out the [**documentation**](Documentation/Custom-Transitions.md) to learn more about custom transitions.
 
 The [**Demo**](Demo) app showcases some of these transitions in action.
 
