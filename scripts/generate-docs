@@ -2,12 +2,12 @@
 
 killall Xcode
 
-git checkout docs
-
 xcodebuild docbuild \
   -scheme NavigationTransitions \
   -destination generic/platform=iOS \
   OTHER_DOCC_FLAGS="--transform-for-static-hosting --hosting-base-path /swiftui-navigation-transitions/$1 --output-path $1"
+
+git checkout docs
 
 git add .
 git commit -c "Generate docs for $1"
