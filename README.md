@@ -128,8 +128,6 @@ The documentation for releases and `main` are available here:
 - [`main`](https://davdroman.github.io/swiftui-navigation-transitions/main/documentation/navigationtransitions/)
 - [0.5.0](https://davdroman.github.io/swiftui-navigation-transitions/0.5.0/documentation/navigationtransitions/)
 
-The repository also contains [**documentation**](Documentation/Custom-Transitions.md) covering how to set up your own **custom transitions**.
-
 ## Community
 
 Feel free to **post questions**, **ideas**, or any **cool transitions** you build in the [**Discussions**](https://github.com/davdroman/swiftui-navigation-transitions/discussions) section!
