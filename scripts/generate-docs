@@ -10,7 +10,7 @@ xcodebuild docbuild \
 git checkout docs
 
 git add .
-git commit -c "Generate docs for $1"
+git commit -m "Generate docs for $1"
 git push origin docs
 
 git checkout -
