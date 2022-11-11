@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+mkdir -p docs
+
 xcodebuild docbuild \
   -scheme NavigationTransitions \
   -destination generic/platform=iOS \
