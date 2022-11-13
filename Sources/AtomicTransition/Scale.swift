@@ -28,6 +28,7 @@ public struct Scale: MirrorableAtomicTransition {
         }
     }
 
+    @inlinable
     public func mirrored() -> Self {
         self
     }

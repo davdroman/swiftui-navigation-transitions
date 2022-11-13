@@ -15,6 +15,7 @@ public struct Opacity: MirrorableAtomicTransition {
         }
     }
 
+    @inlinable
     public func mirrored() -> Self {
         self
     }
