@@ -5,7 +5,10 @@
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fdavdroman%2Fswiftui-navigation-transitions%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions)
 
 <p align="center">
-    <img width="320" src="https://user-images.githubusercontent.com/2538074/199754334-7f2f801d-1d9e-4cc4-a7a0-bb22c9835007.gif">
+<img width="280" src="https://user-images.githubusercontent.com/2538074/201548660-cbd5a403-78bb-4d7c-87a7-711e0de5232d.gif">
+<img width="280" src="https://user-images.githubusercontent.com/2538074/201548660-cbd5a403-78bb-4d7c-87a7-711e0de5232d.gif">
+<img width="280" src="https://user-images.githubusercontent.com/2538074/201548660-cbd5a403-78bb-4d7c-87a7-711e0de5232d.gif">
+<img width="280" src="https://user-images.githubusercontent.com/2538074/201548660-cbd5a403-78bb-4d7c-87a7-711e0de5232d.gif">
 </p>
 
 **NavigationTransitions** is a library that integrates seamlessly with SwiftUI's **Navigation** views, allowing complete customization over **push and pop transitions**!
