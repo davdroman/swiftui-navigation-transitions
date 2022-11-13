@@ -9,9 +9,8 @@ public struct ZPosition: MirrorableAtomicTransition {
     }
 
     public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
-        let initialZPosition = view.uiView.layer.zPosition
         view.animation.layer.zPosition = zPosition
-        view.completion.layer.zPosition = initialZPosition
+        view.completion.layer.zPosition = 0
     }
 
     @inlinable

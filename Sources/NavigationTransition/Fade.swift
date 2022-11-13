@@ -26,23 +26,15 @@ public struct Fade: NavigationTransition {
         case .in:
             MirrorPush {
                 OnInsertion {
+                    ZPosition(1)
                     Opacity()
-                }
-            }
-            OnPop {
-                OnInsertion {
-                    BringToFront()
                 }
             }
         case .out:
             MirrorPush {
                 OnRemoval {
+                    ZPosition(1)
                     Opacity()
-                }
-            }
-            OnPush {
-                OnRemoval {
-                    BringToFront()
                 }
             }
         case .cross:
