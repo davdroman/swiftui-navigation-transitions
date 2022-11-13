@@ -6,10 +6,11 @@ final class RotateTests: XCTestCase {
     let viewUsed = AnimatorTransientView(UIView())
     let properties = AnimatorTransientViewProperties(
         alpha: 1,
-        transform: .identity,
         layer: .init(
+            transform: CATransform3DIdentity,
             zPosition: 0
-        )
+        ),
+        transform: .identity
     )
     let containerUsed = UIView()
 

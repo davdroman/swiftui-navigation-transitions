@@ -1,3 +1,4 @@
+@_spi(CATransform3DExtensions) import Animator
 import UIKit
 
 /// A transition that scales the view from `scale` to `1` on insertion, and from `1` to `scale` on removal.
@@ -20,11 +21,11 @@ public struct Scale: MirrorableAtomicTransition {
     public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
         switch operation {
         case .insertion:
-            view.initial.scale = .init(width: scale, height: scale)
-            view.animation.transform = .identity
+            view.initial.layer.transform.scale(scale)
+            view.animation.layer.transform = .identity
         case .removal:
-            view.animation.scale = .init(width: scale, height: scale)
-            view.completion.transform = .identity
+            view.animation.layer.transform.scale(scale)
+            view.completion.layer.transform = .identity
         }
     }
 

@@ -1,3 +1,4 @@
+@_spi(CATransform3DExtensions) import Animator
 import UIKit
 
 /// A transition that translates the view from offset to zero on insertion, and from zero to offset on removal.
@@ -25,13 +26,11 @@ public struct Offset: MirrorableAtomicTransition {
     public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
         switch operation {
         case .insertion:
-            view.initial.translation.dx += x
-            view.initial.translation.dy += y
-            view.animation.transform = .identity
+            view.initial.layer.transform.translate(x: x, y: y)
+            view.animation.layer.transform = .identity
         case .removal:
-            view.animation.translation.dx += x
-            view.animation.translation.dy += y
-            view.completion.transform = .identity
+            view.animation.layer.transform.translate(x: x, y: y)
+            view.completion.layer.transform = .identity
         }
     }
 

@@ -9,6 +9,7 @@ extension AnimatorTransientViewTests {
         uiView.alpha = 0.5
         uiView.frame = .init(x: 10, y: 20, width: 30, height: 40)
         uiView.transform = .identity.translatedBy(x: 50, y: 60).scaledBy(x: 4, y: 4).rotated(by: .pi)
+        uiView.layer.transform = CATransform3DIdentity
         uiView.layer.zPosition = 15
 
         let sut = AnimatorTransientView(uiView)
@@ -23,8 +24,11 @@ extension AnimatorTransientViewTests {
 
         let expectedProperties = AnimatorTransientView.Properties(
             alpha: 0.5,
-            transform: .identity.translatedBy(x: 50, y: 60).scaledBy(x: 4, y: 4).rotated(by: .pi),
-            layer: .init(zPosition: 15)
+            layer: .init(
+                transform: CATransform3DIdentity,
+                zPosition: 15
+            ),
+            transform: .identity.translatedBy(x: 50, y: 60).scaledBy(x: 4, y: 4).rotated(by: .pi)
         )
 
         XCTAssertEqual(sut.initial, expectedProperties)

@@ -4,10 +4,11 @@ import TestUtils
 final class AnimatorTransientViewPropertiesTests: XCTestCase {
     var sut = AnimatorTransientView.Properties(
         alpha: 0.5,
-        transform: .identity,
         layer: .init(
+            transform: CATransform3DIdentity,
             zPosition: 0
-        )
+        ),
+        transform: .identity
     )
 }
 
