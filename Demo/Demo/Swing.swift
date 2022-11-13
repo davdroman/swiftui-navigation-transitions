@@ -14,6 +14,7 @@ struct Swing: NavigationTransition {
             let angle = 70.0
             let offset = 150.0
             OnInsertion {
+                ZPosition(1)
                 Rotate(.degrees(-angle))
                 Offset(x: offset)
                 Opacity()
@@ -22,11 +23,6 @@ struct Swing: NavigationTransition {
             OnRemoval {
                 Rotate(.degrees(angle))
                 Offset(x: -offset)
-            }
-        }
-        OnPop {
-            OnRemoval {
-                SendToBack()
             }
         }
     }

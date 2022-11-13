@@ -1,5 +1,24 @@
 @_spi(package) import Animator
-import class UIKit.UIView
+import UIKit
+
+/// A transition that changes the view layer’s position on the z axis.
+public struct ZPosition: MirrorableAtomicTransition {
+    private var zPosition: CGFloat
+
+    public init(_ zPosition: CGFloat) {
+        self.zPosition = zPosition
+    }
+
+    public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
+        view.animation.layer.zPosition = zPosition
+        view.completion.layer.zPosition = 0
+    }
+
+    @inlinable
+    public func mirrored() -> Self {
+        self
+    }
+}
 
 /// A transition that brings the view to the front, regardless of insertion or removal.
 public struct BringToFront: AtomicTransition {

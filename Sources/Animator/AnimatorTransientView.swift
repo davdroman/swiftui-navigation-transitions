@@ -34,7 +34,7 @@ public class AnimatorTransientView {
 
     @_spi(package)public let uiView: UIView
 
-    /// Read-only proxy to underlying `UIView` instance.
+    /// Read-only proxy to underlying `UIView` properties.
     public subscript<T>(dynamicMember keyPath: KeyPath<UIView, T>) -> T {
         uiView[keyPath: keyPath]
     }
@@ -42,7 +42,10 @@ public class AnimatorTransientView {
     @_spi(package)public init(_ uiView: UIView) {
         let properties = Properties(
             alpha: uiView.alpha,
-            transform: uiView.transform
+            transform: uiView.transform,
+            layer: .init(
+                zPosition: uiView.layer.zPosition
+            )
         )
         self.initial = properties
         self.animation = properties

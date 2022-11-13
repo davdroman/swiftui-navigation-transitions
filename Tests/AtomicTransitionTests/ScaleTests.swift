@@ -4,7 +4,13 @@ import TestUtils
 
 final class ScaleTests: XCTestCase {
     let viewUsed = AnimatorTransientView(UIView())
-    let properties = AnimatorTransientViewProperties(alpha: 1, transform: .identity)
+    let properties = AnimatorTransientViewProperties(
+        alpha: 1,
+        transform: .identity,
+        layer: .init(
+            zPosition: 0
+        )
+    )
     let containerUsed = UIView()
 
     func testInsertion() {

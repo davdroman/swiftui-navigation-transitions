@@ -12,7 +12,7 @@ final class UnimplementedAnimatorTransientView: AnimatorTransientView {
     public override var initial: AnimatorTransientView.Properties {
         get {
             XCTFail("\(Self.self).\(#function) is unimplemented")
-            return .init(alpha: 0, transform: .init())
+            return .noop
         }
         set {
             XCTFail("\(Self.self).\(#function) is unimplemented")
@@ -22,7 +22,7 @@ final class UnimplementedAnimatorTransientView: AnimatorTransientView {
     public override var animation: AnimatorTransientView.Properties {
         get {
             XCTFail("\(Self.self).\(#function) is unimplemented")
-            return .init(alpha: 0, transform: .init())
+            return .noop
         }
         set {
             XCTFail("\(Self.self).\(#function) is unimplemented")
@@ -32,7 +32,7 @@ final class UnimplementedAnimatorTransientView: AnimatorTransientView {
     public override var completion: AnimatorTransientView.Properties {
         get {
             XCTFail("\(Self.self).\(#function) is unimplemented")
-            return .init(alpha: 0, transform: .init())
+            return .noop
         }
         set {
             XCTFail("\(Self.self).\(#function) is unimplemented")
@@ -51,4 +51,14 @@ final class UnimplementedAnimatorTransientView: AnimatorTransientView {
     public override func setUIViewProperties(to properties: KeyPath<AnimatorTransientView, AnimatorTransientView.Properties>) {
         XCTFail("\(Self.self).\(#function) is unimplemented")
     }
+}
+
+private extension AnimatorTransientView.Properties {
+    static let noop = Self(
+        alpha: 0,
+        transform: .init(),
+        layer: .init(
+            zPosition: 0
+        )
+    )
 }
