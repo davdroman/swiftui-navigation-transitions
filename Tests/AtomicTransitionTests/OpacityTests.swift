@@ -6,11 +6,8 @@ final class OpacityTests: XCTestCase {
     let viewUsed = AnimatorTransientView(UIView())
     let properties = AnimatorTransientViewProperties(
         alpha: 1,
-        layer: .init(
-            transform: CATransform3DIdentity,
-            zPosition: 0
-        ),
-        transform: .identity
+        transform: .identity,
+        zPosition: 0
     )
     let containerUsed = UIView()
 

@@ -6,11 +6,8 @@ final class ZPositionTests: XCTestCase {
     let viewUsed = AnimatorTransientView(UIView())
     let properties = AnimatorTransientViewProperties(
         alpha: 1,
-        layer: .init(
-            transform: CATransform3DIdentity,
-            zPosition: 0
-        ),
-        transform: .identity
+        transform: .identity,
+        zPosition: 0
     )
     let containerUsed = UIView()
 
@@ -21,11 +18,11 @@ final class ZPositionTests: XCTestCase {
         XCTAssertNoDifference(viewUsed.initial, initial)
 
         var animation = properties
-        animation.layer.zPosition = 2
+        animation.zPosition = 2
         XCTAssertNoDifference(viewUsed.animation, animation)
 
         var completion = properties
-        completion.layer.zPosition = 0
+        completion.zPosition = 0
         XCTAssertNoDifference(viewUsed.completion, completion)
     }
 
@@ -36,11 +33,11 @@ final class ZPositionTests: XCTestCase {
         XCTAssertNoDifference(viewUsed.initial, initial)
 
         var animation = properties
-        animation.layer.zPosition = 2
+        animation.zPosition = 2
         XCTAssertNoDifference(viewUsed.animation, animation)
 
         var completion = properties
-        completion.layer.zPosition = 0
+        completion.zPosition = 0
         XCTAssertNoDifference(viewUsed.completion, completion)
     }
 }
@@ -50,11 +47,8 @@ final class BringToFrontAndSendToBackTests: XCTestCase {
     lazy var viewUsed = AnimatorTransientView(uiViewUsed)
     let properties = AnimatorTransientViewProperties(
         alpha: 1,
-        layer: .init(
-            transform: CATransform3DIdentity,
-            zPosition: 0
-        ),
-        transform: .identity
+        transform: .identity,
+        zPosition: 0
     )
     let anotherUIViewA = UIView()
     let anotherUIViewB = UIView()

@@ -24,11 +24,8 @@ extension AnimatorTransientViewTests {
 
         let expectedProperties = AnimatorTransientView.Properties(
             alpha: 0.5,
-            layer: .init(
-                transform: CATransform3DIdentity,
-                zPosition: 15
-            ),
-            transform: .identity.translatedBy(x: 50, y: 60).scaledBy(x: 4, y: 4).rotated(by: .pi)
+            transform: .init(.identity.translated(x: 50, y: 60, z: 0).scaled(x: 4, y: 4, z: 0).rotated(by: .pi, x: 0, y: 0, z: 1)),
+            zPosition: 15
         )
 
         XCTAssertEqual(sut.initial, expectedProperties)

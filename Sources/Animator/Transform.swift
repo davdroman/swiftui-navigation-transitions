@@ -39,15 +39,9 @@ extension Transform: Equatable {
 
 extension Transform {
     public static var identity: Self {
-        .init(CATransform3DIdentity)
+        .init(.identity)
     }
 
-    public var isIdentity: Bool {
-        CATransform3DIsIdentity(transform)
-    }
-}
-
-extension Transform {
     public mutating func translate(x: CGFloat = 0, y: CGFloat = 0, z: CGFloat = 0) {
         transform = transform.translated(x: x, y: y, z: z)
     }
@@ -70,6 +64,11 @@ extension Transform {
 }
 
 extension CATransform3D {
+    @inlinable
+    static var identity: Self {
+        CATransform3DIdentity
+    }
+
     @inlinable
     func translated(x: CGFloat, y: CGFloat, z: CGFloat) -> CATransform3D {
         CATransform3DTranslate(self, x, y, z)
