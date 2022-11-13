@@ -4,13 +4,13 @@ import UIKit
 public struct Transform {
     private var transform: CATransform3D
 
-    init(_ transform: CATransform3D) {
-        self.transform = transform
-    }
-
     public subscript<T>(dynamicMember keyPath: WritableKeyPath<CATransform3D, T>) -> T {
         get { transform[keyPath: keyPath] }
         set { transform[keyPath: keyPath] = newValue }
+    }
+
+    init(_ transform: CATransform3D) {
+        self.transform = transform
     }
 
     func assignToUIView(_ uiView: UIView) {
