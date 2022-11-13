@@ -14,7 +14,7 @@ public struct Rotate3D: MirrorableAtomicTransition {
     }
 
     public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
-        let m34 = perspective/max(container.frame.width, container.frame.height)
+        let m34 = perspective/max(view.frame.width, view.frame.height)
         switch operation {
         case .insertion:
             view.uiView.layer.isDoubleSided = false
