@@ -63,6 +63,10 @@ extension Transform {
     public mutating func rotate(by angle: CGFloat, x: CGFloat = 0, y: CGFloat = 0, z: CGFloat = 0) {
         transform = transform.rotated(by: angle, x: x, y: y, z: z)
     }
+
+    public func concatenated(with other: Self) -> Self {
+        .init(transform.concatenated(with: other.transform))
+    }
 }
 
 extension CATransform3D {
@@ -84,5 +88,10 @@ extension CATransform3D {
     @inlinable
     func rotated(by angle: CGFloat, x: CGFloat, y: CGFloat, z: CGFloat) -> CATransform3D {
         CATransform3DRotate(self, angle, x, y, z)
+    }
+
+    @inlinable
+    func concatenated(with other: CATransform3D) -> CATransform3D {
+        CATransform3DConcat(self, other)
     }
 }

@@ -1,4 +1,3 @@
-@_spi(CATransform3DExtensions) import Animator
 import SwiftUI
 
 /// A transition entering from `edge` on insertion, and exiting towards `edge` on removal.

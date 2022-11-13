@@ -1,4 +1,3 @@
-@_spi(CATransform3DExtensions) import Animator
 import UIKit
 
 /// A transition that translates the view from offset to zero on insertion, and from zero to offset on removal.
