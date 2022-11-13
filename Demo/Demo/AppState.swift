@@ -53,7 +53,7 @@ final class AppState: ObservableObject {
             case .swing:
                 return .swing
             case .zoom:
-                return .zoom.combined(with: .fade(.in))
+                return .zoom
             case .zoomAndSlide:
                 return .zoom.combined(with: .slide)
             }

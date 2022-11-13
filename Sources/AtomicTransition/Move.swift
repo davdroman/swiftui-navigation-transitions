@@ -12,36 +12,36 @@ public struct Move: MirrorableAtomicTransition {
     public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
         switch (edge, operation) {
         case (.top, .insertion):
-            view.initial.layer.transform.translate(x: 0, y: -container.frame.height, z: 0)
-            view.animation.layer.transform = .identity
+            view.initial.transform.translate(y: -container.frame.height)
+            view.animation.transform = .identity
 
         case (.leading, .insertion):
-            view.initial.layer.transform.translate(x: -container.frame.width, y: 0, z: 0)
-            view.animation.layer.transform = .identity
+            view.initial.transform.translate(x: -container.frame.width)
+            view.animation.transform = .identity
 
         case (.trailing, .insertion):
-            view.initial.layer.transform.translate(x: container.frame.width, y: 0, z: 0)
-            view.animation.layer.transform = .identity
+            view.initial.transform.translate(x: container.frame.width)
+            view.animation.transform = .identity
 
         case (.bottom, .insertion):
-            view.initial.layer.transform.translate(x: 0, y: container.frame.height, z: 0)
-            view.animation.layer.transform = .identity
+            view.initial.transform.translate(y: container.frame.height)
+            view.animation.transform = .identity
 
         case (.top, .removal):
-            view.animation.layer.transform.translate(x: 0, y: -container.frame.height, z: 0)
-            view.completion.layer.transform = .identity
+            view.animation.transform.translate(y: -container.frame.height)
+            view.completion.transform = .identity
 
         case (.leading, .removal):
-            view.animation.layer.transform.translate(x: -container.frame.width, y: 0, z: 0)
-            view.completion.layer.transform = .identity
+            view.animation.transform.translate(x: -container.frame.width)
+            view.completion.transform = .identity
 
         case (.trailing, .removal):
-            view.animation.layer.transform.translate(x: container.frame.width, y: 0, z: 0)
-            view.completion.layer.transform = .identity
+            view.animation.transform.translate(x: container.frame.width)
+            view.completion.transform = .identity
 
         case (.bottom, .removal):
-            view.animation.layer.transform.translate(x: 0, y: container.frame.height, z: 0)
-            view.completion.layer.transform = .identity
+            view.animation.transform.translate(y: container.frame.height)
+            view.completion.transform = .identity
         }
     }
 

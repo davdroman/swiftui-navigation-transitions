@@ -26,11 +26,11 @@ public struct Offset: MirrorableAtomicTransition {
     public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
         switch operation {
         case .insertion:
-            view.initial.layer.transform.translate(x: x, y: y)
-            view.animation.layer.transform = .identity
+            view.initial.transform.translate(x: x, y: y)
+            view.animation.transform = .identity
         case .removal:
-            view.animation.layer.transform.translate(x: x, y: y)
-            view.completion.layer.transform = .identity
+            view.animation.transform.translate(x: x, y: y)
+            view.completion.transform = .identity
         }
     }
 

@@ -42,11 +42,8 @@ public class AnimatorTransientView {
     @_spi(package)public init(_ uiView: UIView) {
         let properties = Properties(
             alpha: uiView.alpha,
-            layer: .init(
-                transform: uiView.layer.transform,
-                zPosition: uiView.layer.zPosition
-            ),
-            transform: uiView.transform
+            transform: .init(uiView.transform3D),
+            zPosition: uiView.layer.zPosition
         )
         self.initial = properties
         self.animation = properties

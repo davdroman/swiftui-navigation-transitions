@@ -21,11 +21,11 @@ public struct Scale: MirrorableAtomicTransition {
     public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
         switch operation {
         case .insertion:
-            view.initial.layer.transform.scale(scale)
-            view.animation.layer.transform = .identity
+            view.initial.transform.scale(scale)
+            view.animation.transform = .identity
         case .removal:
-            view.animation.layer.transform.scale(scale)
-            view.completion.layer.transform = .identity
+            view.animation.transform.scale(scale)
+            view.completion.transform = .identity
         }
     }
 

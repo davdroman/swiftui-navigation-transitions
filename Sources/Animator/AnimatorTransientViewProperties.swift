@@ -2,24 +2,22 @@ import UIKit
 
 /// Defines the allowed mutable properties in a transient view throughout each stage of the transition.
 public struct AnimatorTransientViewProperties: Equatable {
-    public typealias Layer = AnimatorTransientViewLayerProperties
-
     /// A proxy for `UIView.alpha`.
     @OptionalWithDefault
     public var alpha: CGFloat
 
-    /// A proxy for `UIView.layer`.
+    /// A proxy for `UIView.transform` or `UIView.transform3D`.
     @OptionalWithDefault
-    public var layer: Layer
+    public var transform: Transform
 
-    /// A proxy for `UIView.transform`.
+    /// A proxy for `UIView.layer.zPosition`.
     @OptionalWithDefault
-    public var transform: CGAffineTransform
+    public var zPosition: CGFloat
 
     func assignToUIView(_ uiView: UIView) {
         $alpha.assignTo(uiView, \.alpha)
-        $layer?.assignToUIView(uiView)
-        $transform.assignTo(uiView, \.transform)
+        $transform?.assignToUIView(uiView)
+        $zPosition.assignTo(uiView, \.layer.zPosition)
     }
 }
 
