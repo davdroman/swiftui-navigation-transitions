@@ -15,7 +15,7 @@ final class RotateTests: XCTestCase {
         Rotate(.radians(.pi)).transition(viewUsed, for: .insertion, in: containerUsed)
 
         var initial = properties
-        initial.transform.rotate(by: .pi)
+        initial.transform.rotate(by: .pi, z: 1)
         XCTAssertNoDifference(viewUsed.initial, initial)
 
         var animation = properties
@@ -33,7 +33,7 @@ final class RotateTests: XCTestCase {
         XCTAssertNoDifference(viewUsed.initial, initial)
 
         var animation = properties
-        animation.transform.rotate(by: .pi)
+        animation.transform.rotate(by: .pi, z: 1)
         XCTAssertNoDifference(viewUsed.animation, animation)
 
         var completion = properties
