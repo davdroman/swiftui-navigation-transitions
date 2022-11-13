@@ -5,7 +5,10 @@
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fdavdroman%2Fswiftui-navigation-transitions%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions)
 
 <p align="center">
-    <img width="320" src="https://user-images.githubusercontent.com/2538074/199754334-7f2f801d-1d9e-4cc4-a7a0-bb22c9835007.gif">
+<img width="320" src="https://user-images.githubusercontent.com/2538074/201549712-4234ca45-bdeb-42c4-9ee9-8d44b346ecdd.gif">
+<img width="320" src="https://user-images.githubusercontent.com/2538074/201549897-147e90a0-3773-42ab-94bc-1065fbb7a66b.gif">
+<img width="320" src="https://user-images.githubusercontent.com/2538074/201549995-62b86d4a-aa8b-4a6e-9bb4-5ed70cd47d84.gif">
+<img width="320" src="https://user-images.githubusercontent.com/2538074/201550282-64ce0f8e-8f99-4fe2-baf8-583e35c0518a.gif">
 </p>
 
 **NavigationTransitions** is a library that integrates seamlessly with SwiftUI's **Navigation** views, allowing complete customization over **push and pop transitions**!
@@ -17,7 +20,7 @@ The library is fully compatible with:
 
 ## Overview
 
-Instead of reinventing entire navigation components in order to customize its transitions, `NavigationTransitions` ships with a simple modifier that can be applied directly to SwiftUI's very own first-party navigation component.
+Instead of reinventing the entire navigation stack just to control its transitions, `NavigationTransitions` ships with a **simple modifier** that can be applied directly to SwiftUI's very own **first-party navigation** components.
 
 ### The Basics
 

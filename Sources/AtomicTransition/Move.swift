@@ -11,36 +11,36 @@ public struct Move: MirrorableAtomicTransition {
     public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
         switch (edge, operation) {
         case (.top, .insertion):
-            view.initial.translation.dy = -container.frame.height
-            view.animation.translation.dy = 0
+            view.initial.transform.translate(y: -container.frame.height)
+            view.animation.transform = .identity
 
         case (.leading, .insertion):
-            view.initial.translation.dx = -container.frame.width
-            view.animation.translation.dx = 0
+            view.initial.transform.translate(x: -container.frame.width)
+            view.animation.transform = .identity
 
         case (.trailing, .insertion):
-            view.initial.translation.dx = container.frame.width
-            view.animation.translation.dx = 0
+            view.initial.transform.translate(x: container.frame.width)
+            view.animation.transform = .identity
 
         case (.bottom, .insertion):
-            view.initial.translation.dy = container.frame.height
-            view.animation.translation.dy = 0
+            view.initial.transform.translate(y: container.frame.height)
+            view.animation.transform = .identity
 
         case (.top, .removal):
-            view.animation.translation.dy = -container.frame.height
-            view.completion.translation.dy = 0
+            view.animation.transform.translate(y: -container.frame.height)
+            view.completion.transform = .identity
 
         case (.leading, .removal):
-            view.animation.translation.dx = -container.frame.width
-            view.completion.translation.dx = 0
+            view.animation.transform.translate(x: -container.frame.width)
+            view.completion.transform = .identity
 
         case (.trailing, .removal):
-            view.animation.translation.dx = container.frame.width
-            view.completion.translation.dx = 0
+            view.animation.transform.translate(x: container.frame.width)
+            view.completion.transform = .identity
 
         case (.bottom, .removal):
-            view.animation.translation.dy = container.frame.height
-            view.completion.translation.dy = 0
+            view.animation.transform.translate(y: container.frame.height)
+            view.completion.transform = .identity
         }
     }
 

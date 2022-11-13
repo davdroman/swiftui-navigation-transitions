@@ -53,12 +53,10 @@ final class UnimplementedAnimatorTransientView: AnimatorTransientView {
     }
 }
 
-private extension AnimatorTransientView.Properties {
+fileprivate extension AnimatorTransientView.Properties {
     static let noop = Self(
         alpha: 0,
-        transform: .init(),
-        layer: .init(
-            zPosition: 0
-        )
+        transform: .init(.init()),
+        zPosition: 0
     )
 }

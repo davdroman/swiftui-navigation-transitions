@@ -2,155 +2,24 @@
 import TestUtils
 
 final class AnimatorTransientViewPropertiesTests: XCTestCase {
-    var sut = AnimatorTransientView.Properties(
-        alpha: 0.5,
-        transform: .identity,
-        layer: .init(
-            zPosition: 0
-        )
-    )
 }
 
 extension AnimatorTransientViewPropertiesTests {
-    func testInitAndSet() {
-        XCTAssertEqual(sut.$alpha, nil)
-        XCTAssertEqual(sut.alpha, 0.5)
-        XCTAssertEqual(sut.$transform, nil)
-        XCTAssertEqual(sut.transform, .identity)
+    func testAssignToUIView() {
+        let view = UIView()
+        XCTAssertEqual(view.alpha, 1)
+        XCTAssertEqual(view.transform3D, .identity)
+        XCTAssertEqual(view.layer.zPosition, 0)
 
-        sut.alpha = 0.3
-        XCTAssertEqual(sut.$alpha, 0.3)
-        XCTAssertEqual(sut.alpha, 0.3)
-        sut.transform = .identity.rotated(by: .pi)
-        XCTAssertEqual(sut.$transform, .identity.rotated(by: .pi))
-        XCTAssertEqual(sut.transform, .identity.rotated(by: .pi))
-    }
-}
+        var sut = AnimatorTransientView.Properties(of: view)
 
-extension AnimatorTransientViewPropertiesTests {
-    func testTransformComponents() {
-        sut.translation = .init(dx: 10, dy: 20)
-        sut.scale = .init(width: 30, height: 40)
-        sut.rotation = .pi
+        sut.alpha = 0.5
+        sut.transform = .init(.identity.scaled(5))
+        sut.zPosition = 15
 
-        XCTAssertEqual(sut.translation, .init(dx: 10, dy: 20))
-        XCTAssertEqual(sut.scale, .init(width: 30, height: 40))
-        XCTAssertEqual(sut.rotation, .pi)
-
-        XCTAssertEqual(
-            sut.transform,
-            .identity.translatedBy(x: 10, y: 20).scaledBy(x: 30, y: 40).rotated(by: .pi)
-        )
-    }
-}
-
-extension AnimatorTransientViewPropertiesTests {
-    func testTransformComponents_negativeX() {
-        sut.translation = .init(dx: -10, dy: 20)
-        sut.scale = .init(width: 30, height: 40)
-        sut.rotation = .pi
-
-        XCTAssertEqual(sut.translation, .init(dx: -10, dy: 20))
-        XCTAssertEqual(sut.scale, .init(width: 30, height: 40))
-        XCTAssertEqual(sut.rotation, .pi)
-
-        XCTAssertEqual(
-            sut.transform,
-            .identity.translatedBy(x: -10, y: 20).scaledBy(x: 30, y: 40).rotated(by: .pi)
-        )
-    }
-
-    func testTransformComponents_negativeY() {
-        sut.translation = .init(dx: 10, dy: -20)
-        sut.scale = .init(width: 30, height: 40)
-        sut.rotation = .pi
-
-        XCTAssertEqual(sut.translation, .init(dx: 10, dy: -20))
-        XCTAssertEqual(sut.scale, .init(width: 30, height: 40))
-        XCTAssertEqual(sut.rotation, .pi)
-
-        XCTAssertEqual(
-            sut.transform,
-            .identity.translatedBy(x: 10, y: -20).scaledBy(x: 30, y: 40).rotated(by: .pi)
-        )
-    }
-
-    func testTransformComponents_negativeRotation() {
-        sut.translation = .init(dx: 10, dy: 20)
-        sut.scale = .init(width: 30, height: 40)
-        sut.rotation = -.pi
-
-        XCTAssertEqual(sut.translation, .init(dx: 10, dy: 20))
-        XCTAssertEqual(sut.scale, .init(width: 30, height: 40))
-        XCTAssertEqual(sut.rotation, -.pi)
-
-        XCTAssertEqual(
-            sut.transform,
-            .identity.translatedBy(x: 10, y: 20).scaledBy(x: 30, y: 40).rotated(by: -.pi)
-        )
-    }
-}
-
-extension AnimatorTransientViewPropertiesTests {
-    func testTransformComponents_negativeXNegativeY() {
-        sut.translation = .init(dx: -10, dy: -20)
-        sut.scale = .init(width: 30, height: 40)
-        sut.rotation = .pi
-
-        XCTAssertEqual(sut.translation, .init(dx: -10, dy: -20))
-        XCTAssertEqual(sut.scale, .init(width: 30, height: 40))
-        XCTAssertEqual(sut.rotation, .pi)
-
-        XCTAssertEqual(
-            sut.transform,
-            .identity.translatedBy(x: -10, y: -20).scaledBy(x: 30, y: 40).rotated(by: .pi)
-        )
-    }
-
-    func testTransformComponents_negativeXNegativeRotation() {
-        sut.translation = .init(dx: -10, dy: 20)
-        sut.scale = .init(width: 30, height: 40)
-        sut.rotation = -.pi
-
-        XCTAssertEqual(sut.translation, .init(dx: -10, dy: 20))
-        XCTAssertEqual(sut.scale, .init(width: 30, height: 40))
-        XCTAssertEqual(sut.rotation, -.pi)
-
-        XCTAssertEqual(
-            sut.transform,
-            .identity.translatedBy(x: -10, y: 20).scaledBy(x: 30, y: 40).rotated(by: -.pi)
-        )
-    }
-
-    func testTransformComponents_negativeYNegativeRotation() {
-        sut.translation = .init(dx: 10, dy: -20)
-        sut.scale = .init(width: 30, height: 40)
-        sut.rotation = -.pi
-
-        XCTAssertEqual(sut.translation, .init(dx: 10, dy: -20))
-        XCTAssertEqual(sut.scale, .init(width: 30, height: 40))
-        XCTAssertEqual(sut.rotation, -.pi)
-
-        XCTAssertEqual(
-            sut.transform,
-            .identity.translatedBy(x: 10, y: -20).scaledBy(x: 30, y: 40).rotated(by: -.pi)
-        )
-    }
-}
-
-extension AnimatorTransientViewPropertiesTests {
-    func testTransformComponents_negativeXNegativeYNegativeRotation() {
-        sut.translation = .init(dx: -10, dy: -20)
-        sut.scale = .init(width: 30, height: 40)
-        sut.rotation = -.pi
-
-        XCTAssertEqual(sut.translation, .init(dx: -10, dy: -20))
-        XCTAssertEqual(sut.scale, .init(width: 30, height: 40))
-        XCTAssertEqual(sut.rotation, -.pi)
-
-        XCTAssertEqual(
-            sut.transform,
-            .identity.translatedBy(x: -10, y: -20).scaledBy(x: 30, y: 40).rotated(by: -.pi)
-        )
+        sut.assignToUIView(view)
+        XCTAssertEqual(view.alpha, 0.5)
+        XCTAssertEqual(view.transform3D, .identity.scaled(5))
+        XCTAssertEqual(view.layer.zPosition, 15)
     }
 }

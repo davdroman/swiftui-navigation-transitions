@@ -7,9 +7,7 @@ final class ScaleTests: XCTestCase {
     let properties = AnimatorTransientViewProperties(
         alpha: 1,
         transform: .identity,
-        layer: .init(
-            zPosition: 0
-        )
+        zPosition: 0
     )
     let containerUsed = UIView()
 
@@ -17,11 +15,11 @@ final class ScaleTests: XCTestCase {
         Scale(0.5).transition(viewUsed, for: .insertion, in: containerUsed)
 
         var initial = properties
-        initial.transform = .identity.scaledBy(x: 0.5, y: 0.5)
+        initial.transform.scale(0.5)
         XCTAssertNoDifference(viewUsed.initial, initial)
 
         var animation = properties
-        animation.transform = .identity.rotated(by: 0)
+        animation.transform.rotate(by: 0, z: 1)
         XCTAssertNoDifference(viewUsed.animation, animation)
 
         let completion = properties
@@ -35,11 +33,11 @@ final class ScaleTests: XCTestCase {
         XCTAssertNoDifference(viewUsed.initial, initial)
 
         var animation = properties
-        animation.transform = .identity.scaledBy(x: 0.5, y: 0.5)
+        animation.transform.scale(0.5)
         XCTAssertNoDifference(viewUsed.animation, animation)
 
         var completion = properties
-        completion.transform = .identity.rotated(by: 0)
+        completion.transform.rotate(by: 0, z: 1)
         XCTAssertNoDifference(viewUsed.completion, completion)
     }
 

@@ -11,10 +11,10 @@ public struct Rotate: MirrorableAtomicTransition {
     public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
         switch operation {
         case .insertion:
-            view.initial.rotation += angle.radians
+            view.initial.transform.rotate(by: angle.radians, z: 1)
             view.animation.transform = .identity
         case .removal:
-            view.animation.rotation += angle.radians
+            view.animation.transform.rotate(by: angle.radians, z: 1)
             view.completion.transform = .identity
         }
     }

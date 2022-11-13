@@ -7,9 +7,7 @@ final class MoveTests: XCTestCase {
     let properties = AnimatorTransientViewProperties(
         alpha: 1,
         transform: .identity,
-        layer: .init(
-            zPosition: 0
-        )
+        zPosition: 0
     )
     let containerUsed: UIView = {
         let _containerUsed = UIView()
@@ -31,11 +29,11 @@ extension MoveTests {
         Move(edge: .top).transition(viewUsed, for: .insertion, in: containerUsed)
 
         var initial = properties
-        initial.transform = .identity.translatedBy(x: 0, y: -200)
+        initial.transform.translate(x: 0, y: -200, z: 0)
         XCTAssertNoDifference(viewUsed.initial, initial)
 
         var animation = properties
-        animation.transform = .identity.translatedBy(x: 0, y: 0)
+        animation.transform.translate(x: 0, y: 0, z: 0)
         XCTAssertNoDifference(viewUsed.animation, animation)
 
         let completion = properties
@@ -46,11 +44,11 @@ extension MoveTests {
         Move(edge: .leading).transition(viewUsed, for: .insertion, in: containerUsed)
 
         var initial = properties
-        initial.transform = .identity.translatedBy(x: -100, y: 0)
+        initial.transform.translate(x: -100, y: 0, z: 0)
         XCTAssertNoDifference(viewUsed.initial, initial)
 
         var animation = properties
-        animation.transform = .identity.translatedBy(x: 0, y: 0)
+        animation.transform.translate(x: 0, y: 0, z: 0)
         XCTAssertNoDifference(viewUsed.animation, animation)
 
         let completion = properties
@@ -61,11 +59,11 @@ extension MoveTests {
         Move(edge: .trailing).transition(viewUsed, for: .insertion, in: containerUsed)
 
         var initial = properties
-        initial.transform = .identity.translatedBy(x: 100, y: 0)
+        initial.transform.translate(x: 100, y: 0, z: 0)
         XCTAssertNoDifference(viewUsed.initial, initial)
 
         var animation = properties
-        animation.transform = .identity.translatedBy(x: 0, y: 0)
+        animation.transform.translate(x: 0, y: 0, z: 0)
         XCTAssertNoDifference(viewUsed.animation, animation)
 
         let completion = properties
@@ -76,11 +74,11 @@ extension MoveTests {
         Move(edge: .bottom).transition(viewUsed, for: .insertion, in: containerUsed)
 
         var initial = properties
-        initial.transform = .identity.translatedBy(x: 0, y: 200)
+        initial.transform.translate(x: 0, y: 200, z: 0)
         XCTAssertNoDifference(viewUsed.initial, initial)
 
         var animation = properties
-        animation.transform = .identity.translatedBy(x: 0, y: 0)
+        animation.transform.translate(x: 0, y: 0, z: 0)
         XCTAssertNoDifference(viewUsed.animation, animation)
 
         let completion = properties
@@ -96,11 +94,11 @@ extension MoveTests {
         XCTAssertNoDifference(viewUsed.initial, initial)
 
         var animation = properties
-        animation.transform = .identity.translatedBy(x: 0, y: -200)
+        animation.transform.translate(x: 0, y: -200)
         XCTAssertNoDifference(viewUsed.animation, animation)
 
         var completion = properties
-        completion.transform = .identity.translatedBy(x: 0, y: 0)
+        completion.transform.translate(x: 0, y: 0)
         XCTAssertNoDifference(viewUsed.completion, completion)
     }
 
@@ -111,11 +109,11 @@ extension MoveTests {
         XCTAssertNoDifference(viewUsed.initial, initial)
 
         var animation = properties
-        animation.transform = .identity.translatedBy(x: -100, y: 0)
+        animation.transform.translate(x: -100, y: 0)
         XCTAssertNoDifference(viewUsed.animation, animation)
 
         var completion = properties
-        completion.transform = .identity.translatedBy(x: 0, y: 0)
+        completion.transform.translate(x: 0, y: 0)
         XCTAssertNoDifference(viewUsed.completion, completion)
     }
 
@@ -126,11 +124,11 @@ extension MoveTests {
         XCTAssertNoDifference(viewUsed.initial, initial)
 
         var animation = properties
-        animation.transform = .identity.translatedBy(x: 100, y: 0)
+        animation.transform.translate(x: 100, y: 0)
         XCTAssertNoDifference(viewUsed.animation, animation)
 
         var completion = properties
-        completion.transform = .identity.translatedBy(x: 0, y: 0)
+        completion.transform.translate(x: 0, y: 0)
         XCTAssertNoDifference(viewUsed.completion, completion)
     }
 
@@ -141,11 +139,11 @@ extension MoveTests {
         XCTAssertNoDifference(viewUsed.initial, initial)
 
         var animation = properties
-        animation.transform = .identity.translatedBy(x: 0, y: 200)
+        animation.transform.translate(x: 0, y: 200)
         XCTAssertNoDifference(viewUsed.animation, animation)
 
         var completion = properties
-        completion.transform = .identity.translatedBy(x: 0, y: 0)
+        completion.transform.translate(x: 0, y: 0)
         XCTAssertNoDifference(viewUsed.completion, completion)
     }
 }

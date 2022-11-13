@@ -6,6 +6,8 @@ final class AppState: ObservableObject {
         case `default`
         case slide
         case crossFade
+        case flip
+        case flipVertically
         case slideAndFadeIn
         case slideAndFadeOut
         case moveVertically
@@ -21,6 +23,10 @@ final class AppState: ObservableObject {
                 return "Slide"
             case .crossFade:
                 return "Fade"
+            case .flip:
+                return "Flip"
+            case .flipVertically:
+                return "Flip Vertically"
             case .slideAndFadeIn:
                 return "Slide + Fade In"
             case .slideAndFadeOut:
@@ -44,6 +50,10 @@ final class AppState: ObservableObject {
                 return .slide
             case .crossFade:
                 return .fade(.cross)
+            case .flip:
+                return .flip
+            case .flipVertically:
+                return .flip(axis: .vertical)
             case .slideAndFadeIn:
                 return .slide.combined(with: .fade(.in))
             case .slideAndFadeOut:
@@ -53,7 +63,7 @@ final class AppState: ObservableObject {
             case .swing:
                 return .swing
             case .zoom:
-                return .zoom.combined(with: .fade(.in))
+                return .zoom
             case .zoomAndSlide:
                 return .zoom.combined(with: .slide)
             }
