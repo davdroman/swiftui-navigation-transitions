@@ -34,7 +34,7 @@ public class AnimatorTransientView {
 
     @_spi(package)public let uiView: UIView
 
-    /// Read-only proxy to underlying `UIView` instance.
+    /// Read-only proxy to underlying `UIView` properties.
     public subscript<T>(dynamicMember keyPath: KeyPath<UIView, T>) -> T {
         uiView[keyPath: keyPath]
     }

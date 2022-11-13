@@ -4,10 +4,15 @@ import UIKit
 public struct AnimatorTransientViewProperties: Equatable {
     public typealias Layer = AnimatorTransientViewLayerProperties
 
+    /// A proxy for `UIView.alpha`.
     @OptionalWithDefault
     public var alpha: CGFloat
+
+    /// A proxy for `UIView.transform`.
     @OptionalWithDefault
     public var transform: CGAffineTransform
+
+    /// A proxy for `UIView.layer`.
     @OptionalWithDefault
     public var layer: Layer
 
