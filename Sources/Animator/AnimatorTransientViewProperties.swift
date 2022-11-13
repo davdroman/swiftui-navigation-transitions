@@ -2,22 +2,19 @@ import UIKit
 
 /// Defines the allowed mutable properties in a transient view throughout each stage of the transition.
 public struct AnimatorTransientViewProperties: Equatable {
+    public typealias Layer = AnimatorTransientViewLayerProperties
+
     @OptionalWithDefault
     public var alpha: CGFloat
     @OptionalWithDefault
     public var transform: CGAffineTransform
+    @OptionalWithDefault
+    public var layer: Layer
 
     func assignToUIView(_ uiView: UIView) {
         $alpha.assignTo(uiView, \.alpha)
         $transform.assignTo(uiView, \.transform)
-    }
-}
-
-private extension Optional {
-    func assignTo<Root: AnyObject>(_ root: Root, _ valueKeyPath: ReferenceWritableKeyPath<Root, Wrapped>) {
-        if let value = self {
-            root[keyPath: valueKeyPath] = value
-        }
+        $layer?.assignToUIView(uiView)
     }
 }
 

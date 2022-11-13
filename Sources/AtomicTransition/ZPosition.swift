@@ -1,5 +1,24 @@
 @_spi(package) import Animator
-import class UIKit.UIView
+import UIKit
+
+public struct ZPosition: MirrorableAtomicTransition {
+    private var zPosition: CGFloat
+
+    public init(_ zPosition: CGFloat) {
+        self.zPosition = zPosition
+    }
+
+    public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
+        let initialZPosition = view.uiView.layer.zPosition
+        view.animation.layer.zPosition = zPosition
+        view.completion.layer.zPosition = initialZPosition
+    }
+
+    @inlinable
+    public func mirrored() -> Self {
+        self
+    }
+}
 
 /// A transition that brings the view to the front, regardless of insertion or removal.
 public struct BringToFront: AtomicTransition {

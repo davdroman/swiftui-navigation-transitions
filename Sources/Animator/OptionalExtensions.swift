@@ -15,3 +15,11 @@ public struct OptionalWithDefault<Value> {
 }
 
 extension OptionalWithDefault: Equatable where Value: Equatable {}
+
+extension Optional {
+    func assignTo<Root: AnyObject>(_ root: Root, _ valueKeyPath: ReferenceWritableKeyPath<Root, Wrapped>) {
+        if let value = self {
+            root[keyPath: valueKeyPath] = value
+        }
+    }
+}
