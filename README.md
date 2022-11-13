@@ -128,11 +128,11 @@ The documentation for releases and `main` are available here:
 - [0.6.0](https://davdroman.github.io/swiftui-navigation-transitions/0.6.0/documentation/navigationtransitions/)
 
 <details>
-  <summary>
-  Other versions
-  </summary>
+<summary>
+Other versions
+</summary>
 
-  - [0.5.0](https://davdroman.github.io/swiftui-navigation-transitions/0.5.0/documentation/navigationtransitions/)
+- [0.5.0](https://davdroman.github.io/swiftui-navigation-transitions/0.5.0/documentation/navigationtransitions/)
 </details>
 
 ## Community
