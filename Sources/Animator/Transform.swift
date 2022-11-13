@@ -1,7 +1,7 @@
 import UIKit
 
 @dynamicMemberLookup
-public struct Transform {
+public struct Transform: Equatable {
     private var transform: CATransform3D
 
     public subscript<T>(dynamicMember keyPath: WritableKeyPath<CATransform3D, T>) -> T {
@@ -31,9 +31,11 @@ extension CATransform3D {
     }
 }
 
-extension Transform: Equatable {
+@_spi(package)
+extension CATransform3D: Equatable {
+    @inlinable
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        CATransform3DEqualToTransform(lhs.transform, rhs.transform)
+        CATransform3DEqualToTransform(lhs, rhs)
     }
 }
 

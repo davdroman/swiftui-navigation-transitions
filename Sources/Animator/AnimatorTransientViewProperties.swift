@@ -13,6 +13,16 @@ public struct AnimatorTransientViewProperties: Equatable {
     /// A proxy for `UIView.layer.zPosition`.
     @OptionalWithDefault
     public var zPosition: CGFloat
+}
+
+extension AnimatorTransientViewProperties {
+    init(of uiView: UIView) {
+        self.init(
+            alpha: uiView.alpha,
+            transform: .init(uiView.transform3D),
+            zPosition: uiView.layer.zPosition
+        )
+    }
 
     func assignToUIView(_ uiView: UIView) {
         $alpha.assignTo(uiView, \.alpha)
