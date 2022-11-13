@@ -17,22 +17,10 @@ extension AnyNavigationTransition {
     }
 }
 
-@_spi(package)public struct Default: NavigationTransition {
+@_spi(package)public struct Default: PrimitiveNavigationTransition {
     init() {}
 
-    public func transition(
-        from fromView: TransientView,
-        to toView: TransientView,
-        for operation: TransitionOperation,
-        in container: Container
-    ) {
-        runtimeWarn(
-            """
-            'Default' transition was used in conjunction with another transition.
-            This won't produce the expected outcome, as 'Default' is a special-cased transition only used
-            as a reference to the system default navigation transition and doesn't actually contain information
-            about how the transition is performed.
-            """
-        )
+    public func transition(with animator: Animator, for operation: TransitionOperation, in context: Context) {
+        // NO-OP
     }
 }

@@ -142,7 +142,7 @@ extension UINavigationController {
             defaultDelegate = delegate
         }
 
-        if transition.type == Default.self {
+        if transition.isDefault {
             delegate = defaultDelegate
         } else {
             customDelegate = NavigationTransitionDelegate(transition: transition, baseDelegate: defaultDelegate)
@@ -171,7 +171,7 @@ extension UINavigationController {
             view.addGestureRecognizer(panRecognizer)
         }
 
-        if transition.type == Default.self {
+        if transition.isDefault {
             switch interactivity {
             case .disabled:
                 exclusivelyEnableGestureRecognizer(.none)
