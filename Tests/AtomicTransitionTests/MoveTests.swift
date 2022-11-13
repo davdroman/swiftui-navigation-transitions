@@ -4,7 +4,13 @@ import TestUtils
 
 final class MoveTests: XCTestCase {
     let viewUsed = AnimatorTransientView(UIView())
-    let properties = AnimatorTransientViewProperties(alpha: 1, transform: .identity)
+    let properties = AnimatorTransientViewProperties(
+        alpha: 1,
+        transform: .identity,
+        layer: .init(
+            zPosition: 0
+        )
+    )
     let containerUsed: UIView = {
         let _containerUsed = UIView()
         _containerUsed.frame.size = .init(width: 100, height: 200)

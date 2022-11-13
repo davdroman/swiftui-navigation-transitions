@@ -5,7 +5,13 @@ import TestUtils
 final class ZPositionTests: XCTestCase {
     let uiViewUsed = UIView()
     lazy var viewUsed = AnimatorTransientView(uiViewUsed)
-    let properties = AnimatorTransientViewProperties(alpha: 1, transform: .identity)
+    let properties = AnimatorTransientViewProperties(
+        alpha: 1,
+        transform: .identity,
+        layer: .init(
+            zPosition: 0
+        )
+    )
     let anotherUIViewA = UIView()
     let anotherUIViewB = UIView()
     lazy var containerView: UIView = {

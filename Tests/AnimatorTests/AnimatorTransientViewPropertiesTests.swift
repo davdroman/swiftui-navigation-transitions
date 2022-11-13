@@ -1,11 +1,18 @@
 @_spi(package) @testable import Animator
 import TestUtils
 
-final class AnimatorTransientViewPropertiesTests: XCTestCase {}
+final class AnimatorTransientViewPropertiesTests: XCTestCase {
+    var sut = AnimatorTransientView.Properties(
+        alpha: 0.5,
+        transform: .identity,
+        layer: .init(
+            zPosition: 0
+        )
+    )
+}
 
 extension AnimatorTransientViewPropertiesTests {
     func testInitAndSet() {
-        var sut = AnimatorTransientView.Properties(alpha: 0.5, transform: .identity)
         XCTAssertEqual(sut.$alpha, nil)
         XCTAssertEqual(sut.alpha, 0.5)
         XCTAssertEqual(sut.$transform, nil)
@@ -22,8 +29,6 @@ extension AnimatorTransientViewPropertiesTests {
 
 extension AnimatorTransientViewPropertiesTests {
     func testTransformComponents() {
-        var sut = AnimatorTransientView.Properties(alpha: 0.5, transform: .identity)
-
         sut.translation = .init(dx: 10, dy: 20)
         sut.scale = .init(width: 30, height: 40)
         sut.rotation = .pi
@@ -39,10 +44,8 @@ extension AnimatorTransientViewPropertiesTests {
     }
 }
 
-extension AnimatorTransientViewTests {
+extension AnimatorTransientViewPropertiesTests {
     func testTransformComponents_negativeX() {
-        var sut = AnimatorTransientView.Properties(alpha: 0.5, transform: .identity)
-
         sut.translation = .init(dx: -10, dy: 20)
         sut.scale = .init(width: 30, height: 40)
         sut.rotation = .pi
@@ -58,8 +61,6 @@ extension AnimatorTransientViewTests {
     }
 
     func testTransformComponents_negativeY() {
-        var sut = AnimatorTransientView.Properties(alpha: 0.5, transform: .identity)
-
         sut.translation = .init(dx: 10, dy: -20)
         sut.scale = .init(width: 30, height: 40)
         sut.rotation = .pi
@@ -75,8 +76,6 @@ extension AnimatorTransientViewTests {
     }
 
     func testTransformComponents_negativeRotation() {
-        var sut = AnimatorTransientView.Properties(alpha: 0.5, transform: .identity)
-
         sut.translation = .init(dx: 10, dy: 20)
         sut.scale = .init(width: 30, height: 40)
         sut.rotation = -.pi
@@ -92,10 +91,8 @@ extension AnimatorTransientViewTests {
     }
 }
 
-extension AnimatorTransientViewTests {
+extension AnimatorTransientViewPropertiesTests {
     func testTransformComponents_negativeXNegativeY() {
-        var sut = AnimatorTransientView.Properties(alpha: 0.5, transform: .identity)
-
         sut.translation = .init(dx: -10, dy: -20)
         sut.scale = .init(width: 30, height: 40)
         sut.rotation = .pi
@@ -111,8 +108,6 @@ extension AnimatorTransientViewTests {
     }
 
     func testTransformComponents_negativeXNegativeRotation() {
-        var sut = AnimatorTransientView.Properties(alpha: 0.5, transform: .identity)
-
         sut.translation = .init(dx: -10, dy: 20)
         sut.scale = .init(width: 30, height: 40)
         sut.rotation = -.pi
@@ -128,8 +123,6 @@ extension AnimatorTransientViewTests {
     }
 
     func testTransformComponents_negativeYNegativeRotation() {
-        var sut = AnimatorTransientView.Properties(alpha: 0.5, transform: .identity)
-
         sut.translation = .init(dx: 10, dy: -20)
         sut.scale = .init(width: 30, height: 40)
         sut.rotation = -.pi
@@ -145,10 +138,8 @@ extension AnimatorTransientViewTests {
     }
 }
 
-extension AnimatorTransientViewTests {
+extension AnimatorTransientViewPropertiesTests {
     func testTransformComponents_negativeXNegativeYNegativeRotation() {
-        var sut = AnimatorTransientView.Properties(alpha: 0.5, transform: .identity)
-
         sut.translation = .init(dx: -10, dy: -20)
         sut.scale = .init(width: 30, height: 40)
         sut.rotation = -.pi
