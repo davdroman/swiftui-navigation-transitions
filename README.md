@@ -17,7 +17,7 @@ The library is fully compatible with:
 
 ## Overview
 
-Instead of reinventing entire navigation components in order to customize its transitions, `NavigationTransitions` ships with a simple modifier that can be applied directly to SwiftUI's very own first-party navigation component.
+Instead of reinventing the entire navigation stack just to control its transitions, `NavigationTransitions` ships with a **simple modifier** that can be applied directly to SwiftUI's very own **first-party navigation** components.
 
 ### The Basics
 
