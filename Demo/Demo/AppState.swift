@@ -4,13 +4,13 @@ import NavigationTransitions
 final class AppState: ObservableObject {
     enum Transition: CaseIterable, CustomStringConvertible, Hashable {
         case `default`
-        case slide
         case crossFade
-        case flip
-        case flipVertically
+        case slide
+        case slideVertically
         case slideAndFadeIn
         case slideAndFadeOut
-        case moveVertically
+        case flip
+        case flipVertically
         case swing
         case zoom
         case zoomAndSlide
@@ -19,20 +19,20 @@ final class AppState: ObservableObject {
             switch self {
             case .default:
                 return "Default"
-            case .slide:
-                return "Slide"
             case .crossFade:
                 return "Fade"
-            case .flip:
-                return "Flip"
-            case .flipVertically:
-                return "Flip Vertically"
+            case .slide:
+                return "Slide"
+            case .slideVertically:
+                return "Slide Vertically"
             case .slideAndFadeIn:
                 return "Slide + Fade In"
             case .slideAndFadeOut:
                 return "Slide + Fade Out"
-            case .moveVertically:
-                return "Slide Vertically"
+            case .flip:
+                return "Flip"
+            case .flipVertically:
+                return "Flip Vertically"
             case .swing:
                 return "Swing"
             case .zoom:
@@ -46,20 +46,20 @@ final class AppState: ObservableObject {
             switch self {
             case .default:
                 return .default
-            case .slide:
-                return .slide
             case .crossFade:
                 return .fade(.cross)
-            case .flip:
-                return .flip
-            case .flipVertically:
-                return .flip(axis: .vertical)
+            case .slide:
+                return .slide
+            case .slideVertically:
+                return .slide(axis: .vertical)
             case .slideAndFadeIn:
                 return .slide.combined(with: .fade(.in))
             case .slideAndFadeOut:
                 return .slide.combined(with: .fade(.out))
-            case .moveVertically:
-                return .slide(axis: .vertical)
+            case .flip:
+                return .flip
+            case .flipVertically:
+                return .flip(axis: .vertical)
             case .swing:
                 return .swing
             case .zoom:
