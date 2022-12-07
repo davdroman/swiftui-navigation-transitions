@@ -17,12 +17,25 @@ struct RootView: View {
                 .navigationViewStyle(.stack)
             }
         }
-        .navigationTransition(
-            appState.transition().animation(appState.animation()),
-            interactivity: appState.interactivity()
-        )
+        .navigationTransition(transition.animation(animation), interactivity: interactivity)
         .sheet(isPresented: $appState.isPresentingSettings) {
             SettingsView().environmentObject(appState)
         }
+    }
+
+    var transition: AnyNavigationTransition {
+        appState.transition()
+    }
+
+    var animation: AnyNavigationTransition.Animation? {
+        appState.animation(
+            duration: appState.duration,
+            stiffness: appState.stiffness,
+            damping: appState.damping
+        )
+    }
+
+    var interactivity: AnyNavigationTransition.Interactivity {
+        appState.interactivity()
     }
 }

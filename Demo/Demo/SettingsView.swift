@@ -7,13 +7,21 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Transition"), footer: transitionFooter) {
+                Section(header: Text("Transition")) {
                     picker("Transition", $appState.transition)
                 }
 
-                Section(header: Text("Animation"), footer: animationFooter) {
-                    picker("Curve", $appState.animation.curve)
-                    picker("Duration", $appState.animation.duration)
+                Section(header: Text("Animation")) {
+                    picker("Animation", $appState.animation)
+                    switch appState.animation {
+                    case .none:
+                        EmptyView()
+                    case .linear, .easeInOut:
+                        picker("Duration", $appState.duration)
+                    case .spring:
+                        picker("Stiffness", $appState.stiffness)
+                        picker("Damping", $appState.damping)
+                    }
                 }
 
                 Section(header: Text("Interactivity"), footer: interactivityFooter) {
@@ -29,22 +37,6 @@ struct SettingsView: View {
             )
         }
         .navigationViewStyle(.stack)
-    }
-
-    var transitionFooter: some View {
-        Text(
-            """
-            "Swing" is a custom transition exclusive to this demo (only 12 lines of code!).
-            """
-        )
-    }
-
-    var animationFooter: some View {
-        Text(
-            """
-            Note: Duration is ignored when the Spring curve is selected.
-            """
-        )
     }
 
     var interactivityFooter: some View {
@@ -76,8 +68,12 @@ struct SettingsView: View {
 
     func shuffle() {
         appState.transition = .allCases.randomElement()!
-        appState.animation.curve = .allCases.randomElement()!
-        appState.animation.duration = .allCases.randomElement()!
+
+        appState.animation = .allCases.randomElement()!
+        appState.duration = .allCases.randomElement()!
+        appState.stiffness = .allCases.randomElement()!
+        appState.damping = .allCases.randomElement()!
+
         appState.interactivity = .allCases.randomElement()!
     }
 

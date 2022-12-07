@@ -70,63 +70,128 @@ final class AppState: ObservableObject {
         }
     }
 
-    struct Animation {
-        enum Curve: CaseIterable, CustomStringConvertible, Hashable {
-            case linear
-            case easeInOut
-            case spring
+    enum Animation: CaseIterable, CustomStringConvertible, Hashable {
+        case none
+        case linear
+        case easeInOut
+        case spring
 
-            var description: String {
-                switch self {
-                case .linear:
-                    return "Linear"
-                case .easeInOut:
-                    return "Ease In Out"
-                case .spring:
-                    return "Spring"
-                }
+        var description: String {
+            switch self {
+            case .none:
+                return "None"
+            case .linear:
+                return "Linear"
+            case .easeInOut:
+                return "Ease In Out"
+            case .spring:
+                return "Spring"
             }
         }
 
-        enum Duration: CaseIterable, CustomStringConvertible, Hashable {
-            case slow
-            case medium
-            case fast
-
-            var description: String {
-                switch self {
-                case .slow:
-                    return "Slow"
-                case .medium:
-                    return "Medium"
-                case .fast:
-                    return "Fast"
-                }
-            }
-
-            func callAsFunction() -> Double {
-                switch self {
-                case .slow:
-                    return 1
-                case .medium:
-                    return 0.6
-                case .fast:
-                    return 0.35
-                }
-            }
-        }
-
-        var curve: Curve
-        var duration: Duration
-
-        func callAsFunction() -> AnyNavigationTransition.Animation {
-            switch curve {
+        func callAsFunction(
+            duration: Duration,
+            stiffness: Stiffness,
+            damping: Damping
+        ) -> AnyNavigationTransition.Animation? {
+            switch self {
+            case .none:
+                return .none
             case .linear:
                 return .linear(duration: duration())
             case .easeInOut:
                 return .easeInOut(duration: duration())
             case .spring:
-                return .interpolatingSpring(stiffness: 120, damping: 50)
+                return .interpolatingSpring(stiffness: stiffness(), damping: damping())
+            }
+        }
+    }
+
+    enum Duration: CaseIterable, CustomStringConvertible, Hashable {
+        case slow
+        case medium
+        case fast
+
+        var description: String {
+            switch self {
+            case .slow:
+                return "Slow"
+            case .medium:
+                return "Medium"
+            case .fast:
+                return "Fast"
+            }
+        }
+
+        func callAsFunction() -> Double {
+            switch self {
+            case .slow:
+                return 1
+            case .medium:
+                return 0.6
+            case .fast:
+                return 0.35
+            }
+        }
+    }
+
+    enum Stiffness: CaseIterable, CustomStringConvertible, Hashable {
+        case low
+        case medium
+        case high
+
+        var description: String {
+            switch self {
+            case .low:
+                return "Low"
+            case .medium:
+                return "Medium"
+            case .high:
+                return "High"
+            }
+        }
+
+        func callAsFunction() -> Double {
+            switch self {
+            case .low:
+                return 300
+            case .medium:
+                return 120
+            case .high:
+                return 50
+            }
+        }
+    }
+
+    enum Damping: CaseIterable, CustomStringConvertible, Hashable {
+        case low
+        case medium
+        case high
+        case veryHigh
+
+        var description: String {
+            switch self {
+            case .low:
+                return "Low"
+            case .medium:
+                return "Medium"
+            case .high:
+                return "High"
+            case .veryHigh:
+                return "Very High"
+            }
+        }
+
+        func callAsFunction() -> Double {
+            switch self {
+            case .low:
+                return 20
+            case .medium:
+                return 25
+            case .high:
+                return 30
+            case .veryHigh:
+                return 50
             }
         }
     }
@@ -160,7 +225,12 @@ final class AppState: ObservableObject {
     }
 
     @Published var transition: Transition = .slide
-    @Published var animation: Animation = .init(curve: .easeInOut, duration: .fast)
+
+    @Published var animation: Animation = .spring
+    @Published var duration: Duration = .fast
+    @Published var stiffness: Stiffness = .low
+    @Published var damping: Damping = .high
+
     @Published var interactivity: Interactivity = .edgePan
 
     @Published var isPresentingSettings: Bool = false

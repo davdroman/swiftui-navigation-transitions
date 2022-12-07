@@ -5,8 +5,9 @@ import UIKit
 
 final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelegate {
     let transition: AnyNavigationTransition
-    weak var baseDelegate: UINavigationControllerDelegate?
+    private weak var baseDelegate: UINavigationControllerDelegate?
     var interactionController: UIPercentDrivenInteractiveTransition?
+    private var initialAreAnimationsEnabled = UIView.areAnimationsEnabled
 
     init(transition: AnyNavigationTransition, baseDelegate: UINavigationControllerDelegate?) {
         self.transition = transition
@@ -14,11 +15,14 @@ final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelega
     }
 
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        initialAreAnimationsEnabled = UIView.areAnimationsEnabled
+        UIView.setAnimationsEnabled(transition.animation != nil)
         baseDelegate?.navigationController?(navigationController, willShow: viewController, animated: animated)
     }
 
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         baseDelegate?.navigationController?(navigationController, didShow: viewController, animated: animated)
+        UIView.setAnimationsEnabled(initialAreAnimationsEnabled)
     }
 
     func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
@@ -26,8 +30,15 @@ final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelega
     }
 
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        if let operation = NavigationTransitionOperation(operation) {
-            return NavigationTransitionAnimatorProvider(transition: transition, operation: operation)
+        if
+            let animation = transition.animation,
+            let operation = NavigationTransitionOperation(operation)
+        {
+            return NavigationTransitionAnimatorProvider(
+                transition: transition,
+                animation: animation,
+                operation: operation
+            )
         } else {
             return nil
         }
@@ -36,15 +47,17 @@ final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelega
 
 final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnimatedTransitioning {
     let transition: AnyNavigationTransition
+    let animation: Animation
     let operation: NavigationTransitionOperation
 
-    init(transition: AnyNavigationTransition, operation: NavigationTransitionOperation) {
+    init(transition: AnyNavigationTransition, animation: Animation, operation: NavigationTransitionOperation) {
         self.transition = transition
+        self.animation = animation
         self.operation = operation
     }
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        transition.animation.duration
+        animation.duration
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -67,7 +80,7 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
         }
         let animator = UIViewPropertyAnimator(
             duration: transitionDuration(using: transitionContext),
-            timingParameters: transition.animation.timingParameters
+            timingParameters: animation.timingParameters
         )
         cachedAnimators[ObjectIdentifier(transitionContext)] = animator
 
