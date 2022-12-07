@@ -8,11 +8,11 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Transition"), footer: transitionFooter) {
+                Section(header: Text("Transition")) {
                     picker("Transition", $appState.transition)
                 }
 
-                Section(header: Text("Animation"), footer: animationFooter) {
+                Section(header: Text("Animation")) {
                     picker("Animation", $appState.animation)
                     switch appState.animation {
                     case .none:
@@ -38,22 +38,6 @@ struct SettingsView: View {
             )
         }
         .navigationViewStyle(.stack)
-    }
-
-    var transitionFooter: some View {
-        Text(
-            """
-            "Swing" is a custom transition exclusive to this demo (only 12 lines of code!).
-            """
-        )
-    }
-
-    var animationFooter: some View {
-        Text(
-            """
-            Note: Duration is ignored when the Spring curve is selected.
-            """
-        )
     }
 
     var interactivityFooter: some View {
