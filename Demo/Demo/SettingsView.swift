@@ -1,6 +1,5 @@
 import NavigationTransitions
 import SwiftUI
-import SwiftUINavigation
 
 struct SettingsView: View {
     @EnvironmentObject var appState: AppState
