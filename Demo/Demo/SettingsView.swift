@@ -20,7 +20,8 @@ struct SettingsView: View {
                     case .linear, .easeInOut:
                         picker("Duration", $appState.duration)
                     case .spring:
-                        EmptyView() // TODO: allow customizing dampness
+                        picker("Stiffness", $appState.stiffness)
+                        picker("Damping", $appState.damping)
                     }
                 }
 
@@ -84,8 +85,12 @@ struct SettingsView: View {
 
     func shuffle() {
         appState.transition = .allCases.randomElement()!
+
         appState.animation = .allCases.randomElement()!
         appState.duration = .allCases.randomElement()!
+        appState.stiffness = .allCases.randomElement()!
+        appState.damping = .allCases.randomElement()!
+
         appState.interactivity = .allCases.randomElement()!
     }
 

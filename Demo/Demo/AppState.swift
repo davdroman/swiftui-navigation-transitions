@@ -89,7 +89,11 @@ final class AppState: ObservableObject {
             }
         }
 
-        func callAsFunction(duration: Duration) -> AnyNavigationTransition.Animation? {
+        func callAsFunction(
+            duration: Duration,
+            stiffness: Stiffness,
+            damping: Damping
+        ) -> AnyNavigationTransition.Animation? {
             switch self {
             case .none:
                 return .none
@@ -98,7 +102,7 @@ final class AppState: ObservableObject {
             case .easeInOut:
                 return .easeInOut(duration: duration())
             case .spring:
-                return .interpolatingSpring(stiffness: 120, damping: 50)
+                return .interpolatingSpring(stiffness: stiffness(), damping: damping())
             }
         }
     }
@@ -127,6 +131,67 @@ final class AppState: ObservableObject {
                 return 0.6
             case .fast:
                 return 0.35
+            }
+        }
+    }
+
+    enum Stiffness: CaseIterable, CustomStringConvertible, Hashable {
+        case low
+        case medium
+        case high
+
+        var description: String {
+            switch self {
+            case .low:
+                return "Low"
+            case .medium:
+                return "Medium"
+            case .high:
+                return "High"
+            }
+        }
+
+        func callAsFunction() -> Double {
+            switch self {
+            case .low:
+                return 300
+            case .medium:
+                return 120
+            case .high:
+                return 50
+            }
+        }
+    }
+
+    enum Damping: CaseIterable, CustomStringConvertible, Hashable {
+        case low
+        case medium
+        case high
+        case veryHigh
+
+        var description: String {
+            switch self {
+            case .low:
+                return "Low"
+            case .medium:
+                return "Medium"
+            case .high:
+                return "High"
+            case .veryHigh:
+                return "Very High"
+            }
+        }
+
+        func callAsFunction() -> Double {
+            switch self {
+            case .low:
+                return 20
+            case .medium:
+                return 25
+            case .high:
+                return 30
+            case .veryHigh:
+                return 50
             }
         }
     }
@@ -160,8 +225,12 @@ final class AppState: ObservableObject {
     }
 
     @Published var transition: Transition = .slide
-    @Published var animation: Animation = .easeInOut
+
+    @Published var animation: Animation = .spring
     @Published var duration: Duration = .fast
+    @Published var stiffness: Stiffness = .low
+    @Published var damping: Damping = .high
+
     @Published var interactivity: Interactivity = .edgePan
 
     @Published var isPresentingSettings: Bool = false
