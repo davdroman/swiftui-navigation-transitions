@@ -22,7 +22,7 @@ public struct AnyNavigationTransition {
 
     @_spi(package)public let isDefault: Bool
     @_spi(package)public let handler: Handler
-    @_spi(package)public var animation: Animation = .default
+    @_spi(package)public var animation: Animation? = .default
 
     public init<T: NavigationTransition>(_ transition: T) {
         self.isDefault = false
@@ -42,7 +42,7 @@ extension AnyNavigationTransition {
     public typealias Animation = _Animation
 
     /// Attaches an animation to this transition.
-    public func animation(_ animation: Animation) -> Self {
+    public func animation(_ animation: Animation?) -> Self {
         var copy = self
         copy.animation = animation
         return copy
