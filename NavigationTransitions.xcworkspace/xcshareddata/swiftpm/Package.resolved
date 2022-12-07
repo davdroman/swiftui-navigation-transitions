@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "swift-case-paths",
+        "repositoryURL": "https://github.com/pointfreeco/swift-case-paths",
+        "state": {
+          "branch": null,
+          "revision": "bb436421f57269fbcfe7360735985321585a86e5",
+          "version": "0.10.1"
+        }
+      },
+      {
         "package": "swift-custom-dump",
         "repositoryURL": "https://github.com/pointfreeco/swift-custom-dump",
         "state": {
@@ -17,6 +26,15 @@
           "branch": null,
           "revision": "f2616860a41f9d9932da412a8978fec79c06fe24",
           "version": "0.1.4"
+        }
+      },
+      {
+        "package": "swiftui-navigation",
+        "repositoryURL": "https://github.com/pointfreeco/swiftui-navigation.git",
+        "state": {
+          "branch": null,
+          "revision": "a4a84e387c83a735e56d03bf9736d49a07b3c3ae",
+          "version": "0.4.3"
         }
       },
       {

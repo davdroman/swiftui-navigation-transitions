@@ -1,5 +1,6 @@
 import NavigationTransitions
 import SwiftUI
+import SwiftUINavigation
 
 struct SettingsView: View {
     @EnvironmentObject var appState: AppState
@@ -12,8 +13,15 @@ struct SettingsView: View {
                 }
 
                 Section(header: Text("Animation"), footer: animationFooter) {
-                    picker("Curve", $appState.animation.curve)
-                    picker("Duration", $appState.animation.duration)
+                    picker("Animation", $appState.animation)
+                    switch appState.animation {
+                    case .none:
+                        EmptyView()
+                    case .linear, .easeInOut:
+                        picker("Duration", $appState.duration)
+                    case .spring:
+                        EmptyView() // TODO: allow customizing dampness
+                    }
                 }
 
                 Section(header: Text("Interactivity"), footer: interactivityFooter) {
@@ -76,8 +84,8 @@ struct SettingsView: View {
 
     func shuffle() {
         appState.transition = .allCases.randomElement()!
-        appState.animation.curve = .allCases.randomElement()!
-        appState.animation.duration = .allCases.randomElement()!
+        appState.animation = .allCases.randomElement()!
+        appState.duration = .allCases.randomElement()!
         appState.interactivity = .allCases.randomElement()!
     }
 

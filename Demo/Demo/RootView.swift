@@ -18,7 +18,7 @@ struct RootView: View {
             }
         }
         .navigationTransition(
-            appState.transition().animation(appState.animation()),
+            appState.transition().animation(appState.animation(duration: appState.duration)),
             interactivity: appState.interactivity()
         )
         .sheet(isPresented: $appState.isPresentingSettings) {
