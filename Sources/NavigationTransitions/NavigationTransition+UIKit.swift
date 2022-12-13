@@ -142,11 +142,7 @@ extension UINavigationController {
             defaultDelegate = delegate
         }
 
-        if transition.isDefault {
-            delegate = defaultDelegate
-        } else {
-            customDelegate = NavigationTransitionDelegate(transition: transition, baseDelegate: defaultDelegate)
-        }
+        customDelegate = NavigationTransitionDelegate(transition: transition, baseDelegate: defaultDelegate)
 
         #if !os(tvOS)
         if defaultPanRecognizer == nil {
