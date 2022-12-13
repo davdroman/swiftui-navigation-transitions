@@ -1,5 +1,7 @@
 import ObjectiveC
 
+public var swizzleLogs = false
+
 public func swizzle(_ type: AnyObject.Type, _ original: Selector, _ swizzled: Selector) {
     guard let originalMethod = class_getInstanceMethod(type, original) else {
         assertionFailure("[Swizzling] Instance method \(type).\(original) not found.")
@@ -9,6 +11,8 @@ public func swizzle(_ type: AnyObject.Type, _ original: Selector, _ swizzled: Se
         assertionFailure("[Swizzling] Instance method \(type).\(swizzled) not found.")
         return
     }
-    print("[Swizzling] [\(type) \(original) <~> \(swizzled)]")
+    if swizzleLogs {
+        print("[Swizzling] [\(type) \(original) <~> \(swizzled)]")
+    }
     method_exchangeImplementations(originalMethod, swizzledMethod)
 }
