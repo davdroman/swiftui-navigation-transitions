@@ -1,4 +1,6 @@
 @_spi(package) import NavigationTransition
+import RuntimeAssociation
+import RuntimeSwizzling
 import UIKit
 
 extension AnyNavigationTransition {
@@ -115,21 +117,16 @@ extension RandomAccessCollection where Index == Int {
     }
 }
 
-extension UINavigationController {
-    private static var defaultDelegateKey = "defaultDelegate"
-    private static var customDelegateKey = "customDelegate"
-
+extension UINavigationController: RuntimeAssociation {
     private var defaultDelegate: UINavigationControllerDelegate! {
-        get { objc_getAssociatedObject(self, &Self.defaultDelegateKey) as? UINavigationControllerDelegate }
-        set { objc_setAssociatedObject(self, &Self.defaultDelegateKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        get { self[] }
+        set { self[] = newValue }
     }
 
     var customDelegate: NavigationTransitionDelegate! {
-        get {
-            objc_getAssociatedObject(self, &Self.customDelegateKey) as? NavigationTransitionDelegate
-        }
+        get { self[] }
         set {
-            objc_setAssociatedObject(self, &Self.customDelegateKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            self[] = newValue
             delegate = newValue
         }
     }
@@ -138,6 +135,13 @@ extension UINavigationController {
         _ transition: AnyNavigationTransition,
         interactivity: AnyNavigationTransition.Interactivity = .default
     ) {
+        // fix for https://stackoverflow.com/q/73753796/1922543
+        swizzle(
+            UINavigationController.self,
+            #selector(UINavigationController.popToViewController),
+            #selector(UINavigationController.popToViewController_forceAnimated)
+        )
+
         if defaultDelegate == nil {
             defaultDelegate = delegate
         }
@@ -201,42 +205,41 @@ extension UINavigationController {
     }
 }
 
+extension UINavigationController {
+    @objc func popToViewController_forceAnimated(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
+        // TODO: `if #unavailable(iOS 17?...)` when fixed by Apple
+        popToViewController_forceAnimated(viewController, animated: true)
+    }
+}
+
 @available(tvOS, unavailable)
 extension UINavigationController {
     var defaultEdgePanRecognizer: UIScreenEdgePanGestureRecognizer! {
         interactivePopGestureRecognizer as? UIScreenEdgePanGestureRecognizer
     }
 
-    private static var defaultInteractivePanGestureRecognizer = "defaultInteractivePanGestureRecognizer"
-    private static var interactiveEdgePanGestureRecognizer = "interactiveEdgePanGestureRecognizer"
-    private static var interactivePanGestureRecognizer = "interactivePanGestureRecognizer"
-
     var defaultPanRecognizer: UIPanGestureRecognizer! {
-        get { objc_getAssociatedObject(self, &Self.defaultInteractivePanGestureRecognizer) as? UIPanGestureRecognizer }
-        set { objc_setAssociatedObject(self, &Self.defaultInteractivePanGestureRecognizer, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        get { self[] }
+        set { self[] = newValue }
     }
 
     var edgePanRecognizer: UIScreenEdgePanGestureRecognizer! {
-        get { objc_getAssociatedObject(self, &Self.interactiveEdgePanGestureRecognizer) as? UIScreenEdgePanGestureRecognizer }
-        set { objc_setAssociatedObject(self, &Self.interactiveEdgePanGestureRecognizer, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        get { self[] }
+        set { self[] = newValue }
     }
 
     var panRecognizer: UIPanGestureRecognizer! {
-        get { objc_getAssociatedObject(self, &Self.interactivePanGestureRecognizer) as? UIPanGestureRecognizer }
-        set { objc_setAssociatedObject(self, &Self.interactivePanGestureRecognizer, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        get { self[] }
+        set { self[] = newValue }
     }
 }
 
 @available(tvOS, unavailable)
-extension UIGestureRecognizer {
-    private static var strongDelegateKey = "strongDelegateKey"
-
+extension UIGestureRecognizer: RuntimeAssociation {
     var strongDelegate: UIGestureRecognizerDelegate? {
-        get {
-            objc_getAssociatedObject(self, &Self.strongDelegateKey) as? UIGestureRecognizerDelegate
-        }
+        get { self[] }
         set {
-            objc_setAssociatedObject(self, &Self.strongDelegateKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            self[] = newValue
             delegate = newValue
         }
     }

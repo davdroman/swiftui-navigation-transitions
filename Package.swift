@@ -62,7 +62,12 @@ package.targets += [
 
     .target(name: "NavigationTransitions", dependencies: [
         "NavigationTransition",
+        "RuntimeAssociation",
+        "RuntimeSwizzling",
     ]),
+
+    .target(name: "RuntimeAssociation"),
+    .target(name: "RuntimeSwizzling"),
 
     .target(name: "TestUtils", dependencies: [
         CustomDump,
