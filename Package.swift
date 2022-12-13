@@ -64,6 +64,8 @@ package.targets += [
         "NavigationTransition",
     ]),
 
+    .target(name: "RuntimeAssociation"),
+
     .target(name: "TestUtils", dependencies: [
         CustomDump,
         "NavigationTransitions",
