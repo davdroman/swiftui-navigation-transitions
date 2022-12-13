@@ -1,4 +1,5 @@
 @_spi(package) import NavigationTransition
+import RuntimeAssociation
 import UIKit
 
 extension AnyNavigationTransition {
@@ -115,21 +116,16 @@ extension RandomAccessCollection where Index == Int {
     }
 }
 
-extension UINavigationController {
-    private static var defaultDelegateKey = "defaultDelegate"
-    private static var customDelegateKey = "customDelegate"
-
+extension UINavigationController: RuntimeAssociation {
     private var defaultDelegate: UINavigationControllerDelegate! {
-        get { objc_getAssociatedObject(self, &Self.defaultDelegateKey) as? UINavigationControllerDelegate }
-        set { objc_setAssociatedObject(self, &Self.defaultDelegateKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        get { self[] }
+        set { self[] = newValue }
     }
 
     var customDelegate: NavigationTransitionDelegate! {
-        get {
-            objc_getAssociatedObject(self, &Self.customDelegateKey) as? NavigationTransitionDelegate
-        }
+        get { self[] }
         set {
-            objc_setAssociatedObject(self, &Self.customDelegateKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            self[] = newValue
             delegate = newValue
         }
     }
@@ -207,36 +203,28 @@ extension UINavigationController {
         interactivePopGestureRecognizer as? UIScreenEdgePanGestureRecognizer
     }
 
-    private static var defaultInteractivePanGestureRecognizer = "defaultInteractivePanGestureRecognizer"
-    private static var interactiveEdgePanGestureRecognizer = "interactiveEdgePanGestureRecognizer"
-    private static var interactivePanGestureRecognizer = "interactivePanGestureRecognizer"
-
     var defaultPanRecognizer: UIPanGestureRecognizer! {
-        get { objc_getAssociatedObject(self, &Self.defaultInteractivePanGestureRecognizer) as? UIPanGestureRecognizer }
-        set { objc_setAssociatedObject(self, &Self.defaultInteractivePanGestureRecognizer, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        get { self[] }
+        set { self[] = newValue }
     }
 
     var edgePanRecognizer: UIScreenEdgePanGestureRecognizer! {
-        get { objc_getAssociatedObject(self, &Self.interactiveEdgePanGestureRecognizer) as? UIScreenEdgePanGestureRecognizer }
-        set { objc_setAssociatedObject(self, &Self.interactiveEdgePanGestureRecognizer, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        get { self[] }
+        set { self[] = newValue }
     }
 
     var panRecognizer: UIPanGestureRecognizer! {
-        get { objc_getAssociatedObject(self, &Self.interactivePanGestureRecognizer) as? UIPanGestureRecognizer }
-        set { objc_setAssociatedObject(self, &Self.interactivePanGestureRecognizer, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        get { self[] }
+        set { self[] = newValue }
     }
 }
 
 @available(tvOS, unavailable)
-extension UIGestureRecognizer {
-    private static var strongDelegateKey = "strongDelegateKey"
-
+extension UIGestureRecognizer: RuntimeAssociation {
     var strongDelegate: UIGestureRecognizerDelegate? {
-        get {
-            objc_getAssociatedObject(self, &Self.strongDelegateKey) as? UIGestureRecognizerDelegate
-        }
+        get { self[] }
         set {
-            objc_setAssociatedObject(self, &Self.strongDelegateKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            self[] = newValue
             delegate = newValue
         }
     }

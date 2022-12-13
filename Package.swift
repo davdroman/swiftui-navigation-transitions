@@ -62,6 +62,7 @@ package.targets += [
 
     .target(name: "NavigationTransitions", dependencies: [
         "NavigationTransition",
+        "RuntimeAssociation",
     ]),
 
     .target(name: "RuntimeAssociation"),
