@@ -66,6 +66,7 @@ package.targets += [
     ]),
 
     .target(name: "RuntimeAssociation"),
+    .target(name: "RuntimeSwizzling"),
 
     .target(name: "TestUtils", dependencies: [
         CustomDump,
