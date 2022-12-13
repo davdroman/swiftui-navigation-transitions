@@ -135,16 +135,16 @@ extension UINavigationController: RuntimeAssociation {
         _ transition: AnyNavigationTransition,
         interactivity: AnyNavigationTransition.Interactivity = .default
     ) {
-        if defaultDelegate == nil {
-            defaultDelegate = delegate
-        }
-
         // fix for https://stackoverflow.com/q/73753796/1922543
         swizzle(
             UINavigationController.self,
             #selector(UINavigationController.popToViewController),
             #selector(UINavigationController.popToViewController_forceAnimated)
         )
+
+        if defaultDelegate == nil {
+            defaultDelegate = delegate
+        }
 
         customDelegate = NavigationTransitionDelegate(transition: transition, baseDelegate: defaultDelegate)
 
