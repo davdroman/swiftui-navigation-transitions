@@ -1,5 +1,6 @@
 @_spi(package) import NavigationTransition
 import RuntimeAssociation
+import RuntimeSwizzling
 import UIKit
 
 extension AnyNavigationTransition {
@@ -138,6 +139,13 @@ extension UINavigationController: RuntimeAssociation {
             defaultDelegate = delegate
         }
 
+        // fix for https://stackoverflow.com/q/73753796/1922543
+        swizzle(
+            UINavigationController.self,
+            #selector(UINavigationController.popToViewController),
+            #selector(UINavigationController.popToViewController_forceAnimated)
+        )
+
         customDelegate = NavigationTransitionDelegate(transition: transition, baseDelegate: defaultDelegate)
 
         #if !os(tvOS)
@@ -194,6 +202,13 @@ extension UINavigationController: RuntimeAssociation {
                 recognizer.isEnabled = false
             }
         }
+    }
+}
+
+extension UINavigationController {
+    @objc func popToViewController_forceAnimated(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
+        // TODO: `if #unavailable(iOS 17?...)` when fixed by Apple
+        popToViewController_forceAnimated(viewController, animated: true)
     }
 }
 

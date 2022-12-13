@@ -63,6 +63,7 @@ package.targets += [
     .target(name: "NavigationTransitions", dependencies: [
         "NavigationTransition",
         "RuntimeAssociation",
+        "RuntimeSwizzling",
     ]),
 
     .target(name: "RuntimeAssociation"),
