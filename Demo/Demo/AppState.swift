@@ -229,7 +229,7 @@ final class AppState: ObservableObject {
     @Published var animation: Animation = .spring
     @Published var duration: Duration = .fast
     @Published var stiffness: Stiffness = .low
-    @Published var damping: Damping = .high
+    @Published var damping: Damping = .veryHigh
 
     @Published var interactivity: Interactivity = .edgePan
 
