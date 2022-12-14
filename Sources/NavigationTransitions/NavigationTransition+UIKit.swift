@@ -200,7 +200,7 @@ extension UINavigationController: RuntimeAssociation {
         #if targetEnvironment(macCatalyst)
         forceAnimatedPopToViewController()
         #else
-        if #unavailable(iOS 16.2, tvOS 16.2) {
+        if #available(iOS 16.2, tvOS 16.2, *) {} else {
             forceAnimatedPopToViewController()
         }
         #endif
