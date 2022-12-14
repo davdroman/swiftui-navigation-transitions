@@ -135,12 +135,7 @@ extension UINavigationController: RuntimeAssociation {
         _ transition: AnyNavigationTransition,
         interactivity: AnyNavigationTransition.Interactivity = .default
     ) {
-        // fix for https://stackoverflow.com/q/73753796/1922543
-        swizzle(
-            UINavigationController.self,
-            #selector(UINavigationController.popToViewController),
-            #selector(UINavigationController.popToViewController_forceAnimated)
-        )
+        backDeploy96852321()
 
         if defaultDelegate == nil {
             defaultDelegate = delegate
@@ -193,6 +188,28 @@ extension UINavigationController: RuntimeAssociation {
         #endif
     }
 
+    private func backDeploy96852321() {
+        func forceAnimatedPopToViewController() {
+            swizzle(
+                UINavigationController.self,
+                #selector(UINavigationController.popToViewController),
+                #selector(UINavigationController.popToViewController_forceAnimated)
+            )
+        }
+
+        if #available(iOS 16.2, macCatalyst 16.2, tvOS 16.2, *) {} else {
+            #if targetEnvironment(macCatalyst)
+            let major = ProcessInfo.processInfo.operatingSystemVersion.majorVersion
+            let minor = ProcessInfo.processInfo.operatingSystemVersion.minorVersion
+            if (major, minor) < (13, 1) {
+                forceAnimatedPopToViewController()
+            }
+            #else
+            forceAnimatedPopToViewController()
+            #endif
+        }
+    }
+
     @available(tvOS, unavailable)
     private func exclusivelyEnableGestureRecognizer(_ gestureRecognizer: UIPanGestureRecognizer?) {
         for recognizer in [defaultEdgePanRecognizer!, defaultPanRecognizer!, edgePanRecognizer!, panRecognizer!] {
@@ -206,8 +223,7 @@ extension UINavigationController: RuntimeAssociation {
 }
 
 extension UINavigationController {
-    @objc func popToViewController_forceAnimated(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
-        // TODO: `if #unavailable(iOS 17?...)` when fixed by Apple
+    @objc fileprivate func popToViewController_forceAnimated(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
         popToViewController_forceAnimated(viewController, animated: true)
     }
 }
