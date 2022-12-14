@@ -135,12 +135,7 @@ extension UINavigationController: RuntimeAssociation {
         _ transition: AnyNavigationTransition,
         interactivity: AnyNavigationTransition.Interactivity = .default
     ) {
-        // fix for https://stackoverflow.com/q/73753796/1922543
-        swizzle(
-            UINavigationController.self,
-            #selector(UINavigationController.popToViewController),
-            #selector(UINavigationController.popToViewController_forceAnimated)
-        )
+        backDeploy96852321()
 
         if defaultDelegate == nil {
             defaultDelegate = delegate
@@ -193,6 +188,24 @@ extension UINavigationController: RuntimeAssociation {
         #endif
     }
 
+    private func backDeploy96852321() {
+        func _swizzle() {
+            swizzle(
+                UINavigationController.self,
+                #selector(UINavigationController.popToViewController),
+                #selector(UINavigationController.popToViewController_forceAnimated)
+            )
+        }
+
+        #if targetEnvironment(macCatalyst)
+        _swizzle()
+        #else
+        if #unavailable(iOS 16.2, tvOS 16.2) {
+            _swizzle()
+        }
+        #endif
+    }
+
     @available(tvOS, unavailable)
     private func exclusivelyEnableGestureRecognizer(_ gestureRecognizer: UIPanGestureRecognizer?) {
         for recognizer in [defaultEdgePanRecognizer!, defaultPanRecognizer!, edgePanRecognizer!, panRecognizer!] {
@@ -207,7 +220,6 @@ extension UINavigationController: RuntimeAssociation {
 
 extension UINavigationController {
     @objc func popToViewController_forceAnimated(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
-        // TODO: `if #unavailable(iOS 17?...)` when fixed by Apple
         popToViewController_forceAnimated(viewController, animated: true)
     }
 }
