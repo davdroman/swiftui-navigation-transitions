@@ -135,7 +135,6 @@ Other versions
 - [0.7.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.7.0/documentation/navigationtransitions)
 - [0.6.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.6.0/documentation/navigationtransitions)
 - [0.5.1](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.5.1/documentation/navigationtransitions)
-- [0.5.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.5.0/documentation/navigationtransitions)
 </details>
 
 ## Community
