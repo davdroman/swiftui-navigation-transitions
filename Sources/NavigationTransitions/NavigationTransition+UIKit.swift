@@ -251,7 +251,7 @@ extension UINavigationController {
 }
 
 @available(tvOS, unavailable)
-extension UIGestureRecognizer: RuntimeAssociation {
+extension UIGestureRecognizer {
     var strongDelegate: UIGestureRecognizerDelegate? {
         get { self[] }
         set {
