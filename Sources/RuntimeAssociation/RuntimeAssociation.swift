@@ -16,3 +16,5 @@ extension RuntimeAssociation {
         }
     }
 }
+
+extension NSObject: RuntimeAssociation {}
