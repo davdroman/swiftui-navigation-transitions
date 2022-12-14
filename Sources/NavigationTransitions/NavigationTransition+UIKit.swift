@@ -197,13 +197,17 @@ extension UINavigationController: RuntimeAssociation {
             )
         }
 
-        #if targetEnvironment(macCatalyst)
-        forceAnimatedPopToViewController()
-        #else
-        if #available(iOS 16.2, tvOS 16.2, *) {} else {
+        if #available(iOS 16.2, macCatalyst 16.2, tvOS 16.2, *) {} else {
+            #if targetEnvironment(macCatalyst)
+            let major = ProcessInfo.processInfo.operatingSystemVersion.majorVersion
+            let minor = ProcessInfo.processInfo.operatingSystemVersion.minorVersion
+            if (major, minor) < (13, 1) {
+                forceAnimatedPopToViewController()
+            }
+            #else
             forceAnimatedPopToViewController()
+            #endif
         }
-        #endif
     }
 
     @available(tvOS, unavailable)
