@@ -1,6 +1,6 @@
 @_spi(package) import NavigationTransition
-import RuntimeAssociation
-import RuntimeSwizzling
+@_implementationOnly import RuntimeAssociation
+@_implementationOnly import RuntimeSwizzling
 import UIKit
 
 extension AnyNavigationTransition {
@@ -117,7 +117,7 @@ extension RandomAccessCollection where Index == Int {
     }
 }
 
-extension UINavigationController: RuntimeAssociation {
+extension UINavigationController {
     private var defaultDelegate: UINavigationControllerDelegate! {
         get { self[] }
         set { self[] = newValue }
