@@ -189,7 +189,7 @@ extension UINavigationController: RuntimeAssociation {
     }
 
     private func backDeploy96852321() {
-        func _swizzle() {
+        func forceAnimatedPopToViewController() {
             swizzle(
                 UINavigationController.self,
                 #selector(UINavigationController.popToViewController),
@@ -198,10 +198,10 @@ extension UINavigationController: RuntimeAssociation {
         }
 
         #if targetEnvironment(macCatalyst)
-        _swizzle()
+        forceAnimatedPopToViewController()
         #else
         if #unavailable(iOS 16.2, tvOS 16.2) {
-            _swizzle()
+            forceAnimatedPopToViewController()
         }
         #endif
     }
