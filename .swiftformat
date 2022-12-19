@@ -2,7 +2,6 @@
 --disable redundantNilInit,redundantSelf,redundantType,unusedArguments
 
 --header strip
---indent tab
 --ifdef no-indent
 --extensionacl on-declarations
 --patternlet inline
