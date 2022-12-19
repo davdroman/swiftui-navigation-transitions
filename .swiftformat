@@ -1,5 +1,3 @@
---swiftversion 5.5
-
 --exclude **/RuntimeWarnings.swift
 --disable redundantNilInit,redundantSelf,redundantType,unusedArguments
 
