@@ -1,0 +1,7 @@
+--exclude **/RuntimeWarnings.swift
+--disable redundantNilInit,redundantSelf,redundantType,unusedArguments
+
+--header strip
+--ifdef no-indent
+--extensionacl on-declarations
+--patternlet inline

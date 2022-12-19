@@ -11,7 +11,7 @@ on:
     - cron: '3 3 * * 2'  # 3:03 AM, every Tuesday
 
 concurrency:
-  group: ${{ github.ref }}
+  group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -32,19 +32,19 @@ jobs:
           - 5.6
           - 5.7
     steps:
-    - uses: actions/checkout@v2
-    - name: Test NavigationTransitions
-      uses: mxcl/xcodebuild@v1
-      with:
-        platform: ${{ matrix.platform }}
-        swift: ~${{ matrix.swift }}
-        action: test
-        scheme: NavigationTransitions
-    - if: ${{ matrix.swift >= 5.7 }}
-      name: Build Demo
-      uses: mxcl/xcodebuild@v1
-      with:
-        platform: ${{ matrix.platform }}
-        swift: ~${{ matrix.swift }}
-        action: build
-        scheme: Demo
+      - uses: actions/checkout@v2
+      - name: Test NavigationTransitions
+        uses: mxcl/xcodebuild@v1
+        with:
+          platform: ${{ matrix.platform }}
+          swift: ~${{ matrix.swift }}
+          action: test
+          scheme: NavigationTransitions
+      - if: ${{ matrix.swift >= 5.7 }}
+        name: Build Demo
+        uses: mxcl/xcodebuild@v1
+        with:
+          platform: ${{ matrix.platform }}
+          swift: ~${{ matrix.swift }}
+          action: build
+          scheme: Demo
