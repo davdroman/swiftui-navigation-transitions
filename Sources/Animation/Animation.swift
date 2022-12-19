@@ -3,8 +3,8 @@ import UIKit
 public struct Animation {
     static var defaultDuration: Double { 0.35 }
 
-    @_spi(package)public var duration: Double
-    @_spi(package)public let timingParameters: UITimingCurveProvider
+    @_spi(package) public var duration: Double
+    @_spi(package) public let timingParameters: UITimingCurveProvider
 
     init(duration: Double, timingParameters: UITimingCurveProvider) {
         self.duration = duration

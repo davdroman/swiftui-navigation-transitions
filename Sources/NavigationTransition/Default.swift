@@ -17,7 +17,7 @@ extension AnyNavigationTransition {
     }
 }
 
-@_spi(package)public struct Default: PrimitiveNavigationTransition {
+@_spi(package) public struct Default: PrimitiveNavigationTransition {
     init() {}
 
     public func transition(with animator: Animator, for operation: TransitionOperation, in context: Context) {

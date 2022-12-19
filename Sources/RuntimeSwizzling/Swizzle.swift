@@ -26,7 +26,7 @@ public func swizzle(_ type: AnyObject.Type, _ original: Selector, _ swizzled: Se
     method_exchangeImplementations(originalMethod, swizzledMethod)
 }
 
-fileprivate struct SwizzlingHistory {
+private struct SwizzlingHistory {
     private var map: [Int: Void] = [:]
 
     func contains(_ type: AnyObject.Type, _ original: Selector, _ swizzled: Selector) -> Bool {
@@ -46,4 +46,4 @@ fileprivate struct SwizzlingHistory {
     }
 }
 
-fileprivate var swizzlingHistory = SwizzlingHistory()
+private var swizzlingHistory = SwizzlingHistory()

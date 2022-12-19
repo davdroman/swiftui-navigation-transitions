@@ -9,7 +9,7 @@ extension AnimatorTransientView {
 }
 
 final class UnimplementedAnimatorTransientView: AnimatorTransientView {
-    public override var initial: AnimatorTransientView.Properties {
+    override public var initial: AnimatorTransientView.Properties {
         get {
             XCTFail("\(Self.self).\(#function) is unimplemented")
             return .noop
@@ -19,7 +19,7 @@ final class UnimplementedAnimatorTransientView: AnimatorTransientView {
         }
     }
 
-    public override var animation: AnimatorTransientView.Properties {
+    override public var animation: AnimatorTransientView.Properties {
         get {
             XCTFail("\(Self.self).\(#function) is unimplemented")
             return .noop
@@ -29,7 +29,7 @@ final class UnimplementedAnimatorTransientView: AnimatorTransientView {
         }
     }
 
-    public override var completion: AnimatorTransientView.Properties {
+    override public var completion: AnimatorTransientView.Properties {
         get {
             XCTFail("\(Self.self).\(#function) is unimplemented")
             return .noop
@@ -39,7 +39,7 @@ final class UnimplementedAnimatorTransientView: AnimatorTransientView {
         }
     }
 
-    public override subscript<T>(dynamicMember keyPath: KeyPath<UIView, T>) -> T {
+    override public subscript<T>(dynamicMember keyPath: KeyPath<UIView, T>) -> T {
         XCTFail("\(Self.self).\(#function) is unimplemented")
         return uiView[keyPath: keyPath]
     }
@@ -48,13 +48,13 @@ final class UnimplementedAnimatorTransientView: AnimatorTransientView {
         super.init(UIView())
     }
 
-    public override func setUIViewProperties(to properties: KeyPath<AnimatorTransientView, AnimatorTransientView.Properties>) {
+    override public func setUIViewProperties(to properties: KeyPath<AnimatorTransientView, AnimatorTransientView.Properties>) {
         XCTFail("\(Self.self).\(#function) is unimplemented")
     }
 }
 
-fileprivate extension AnimatorTransientView.Properties {
-    static let noop = Self(
+extension AnimatorTransientView.Properties {
+    fileprivate static let noop = Self(
         alpha: 0,
         transform: .init(.init()),
         zPosition: 0

@@ -1,8 +1,9 @@
 @resultBuilder
-public struct AtomicTransitionBuilder {
+public enum AtomicTransitionBuilder {
     public static func buildBlock() -> Identity {
         Identity()
     }
+
     #if compiler(>=5.7)
     public static func buildPartialBlock<T1: AtomicTransition>(first: T1) -> T1 {
         first

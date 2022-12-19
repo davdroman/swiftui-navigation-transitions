@@ -2,27 +2,27 @@ import Animation
 import UIKit
 
 public struct AnyNavigationTransition {
-    @_spi(package)public typealias TransientHandler = (
+    @_spi(package) public typealias TransientHandler = (
         AnimatorTransientView,
         AnimatorTransientView,
         NavigationTransitionOperation,
         UIView
     ) -> Void
 
-    @_spi(package)public typealias PrimitiveHandler = (
+    @_spi(package) public typealias PrimitiveHandler = (
         Animator,
         NavigationTransitionOperation,
         UIViewControllerContextTransitioning
     ) -> Void
 
-    @_spi(package)public enum Handler {
+    @_spi(package) public enum Handler {
         case transient(TransientHandler)
         case primitive(PrimitiveHandler)
     }
 
-    @_spi(package)public let isDefault: Bool
-    @_spi(package)public let handler: Handler
-    @_spi(package)public var animation: Animation? = .default
+    @_spi(package) public let isDefault: Bool
+    @_spi(package) public let handler: Handler
+    @_spi(package) public var animation: Animation? = .default
 
     public init<T: NavigationTransition>(_ transition: T) {
         self.isDefault = false

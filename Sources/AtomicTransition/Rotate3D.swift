@@ -36,7 +36,7 @@ public struct Rotate3D: MirrorableAtomicTransition {
 
 extension Rotate3D: Hashable {
     public static func == (lhs: Rotate3D, rhs: Rotate3D) -> Bool {
-        return lhs.angle == rhs.angle
+        lhs.angle == rhs.angle
             && lhs.axis == rhs.axis
     }
 

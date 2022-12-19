@@ -223,7 +223,7 @@ extension UINavigationController {
 }
 
 extension UINavigationController {
-    @objc fileprivate func popToViewController_forceAnimated(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
+    @objc private func popToViewController_forceAnimated(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
         popToViewController_forceAnimated(viewController, animated: true)
     }
 }

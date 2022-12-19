@@ -79,7 +79,7 @@ public final class MockedUIKitContext: UnimplementedUIKitContext {
     }
 
     private var _containerView: UIView
-    public override var containerView: UIView {
+    override public var containerView: UIView {
         _containerView
     }
 }

@@ -1,8 +1,7 @@
 @_spi(package) @testable import Animator
 import TestUtils
 
-final class AnimatorTransientViewPropertiesTests: XCTestCase {
-}
+final class AnimatorTransientViewPropertiesTests: XCTestCase {}
 
 extension AnimatorTransientViewPropertiesTests {
     func testAssignToUIView() {

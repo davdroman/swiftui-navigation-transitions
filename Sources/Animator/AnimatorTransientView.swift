@@ -32,14 +32,14 @@ public class AnimatorTransientView {
     /// Note: these changes are *not* animated.
     public var completion: Properties
 
-    @_spi(package)public let uiView: UIView
+    @_spi(package) public let uiView: UIView
 
     /// Read-only proxy to underlying `UIView` properties.
     public subscript<T>(dynamicMember keyPath: KeyPath<UIView, T>) -> T {
         uiView[keyPath: keyPath]
     }
 
-    @_spi(package)public init(_ uiView: UIView) {
+    @_spi(package) public init(_ uiView: UIView) {
         self.initial = Properties(of: uiView)
         self.animation = Properties(of: uiView)
         self.completion = Properties(of: uiView)
@@ -47,7 +47,7 @@ public class AnimatorTransientView {
         self.uiView = uiView
     }
 
-    @_spi(package)public func setUIViewProperties(to properties: KeyPath<AnimatorTransientView, Properties>) {
+    @_spi(package) public func setUIViewProperties(to properties: KeyPath<AnimatorTransientView, Properties>) {
         self[keyPath: properties].assignToUIView(uiView)
     }
 }

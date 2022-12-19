@@ -1,5 +1,5 @@
 @resultBuilder
-public struct NavigationTransitionBuilder {
+public enum NavigationTransitionBuilder {
     #if compiler(>=5.7)
     public static func buildPartialBlock<T1: NavigationTransition>(first: T1) -> T1 {
         first
@@ -119,7 +119,7 @@ public struct NavigationTransitionBuilder {
     public static func buildEither<TrueTransition: NavigationTransition, FalseTransition: NavigationTransition>(first component: TrueTransition) -> _ConditionalTransition<TrueTransition, FalseTransition> {
         _ConditionalTransition(trueTransition: component)
     }
-    
+
     public static func buildEither<TrueTransition: NavigationTransition, FalseTransition: NavigationTransition>(second component: FalseTransition) -> _ConditionalTransition<TrueTransition, FalseTransition> {
         _ConditionalTransition(falseTransition: component)
     }
