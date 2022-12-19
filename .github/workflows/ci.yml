@@ -32,19 +32,19 @@ jobs:
           - 5.6
           - 5.7
     steps:
-    - uses: actions/checkout@v2
-    - name: Test NavigationTransitions
-      uses: mxcl/xcodebuild@v1
-      with:
-        platform: ${{ matrix.platform }}
-        swift: ~${{ matrix.swift }}
-        action: test
-        scheme: NavigationTransitions
-    - if: ${{ matrix.swift >= 5.7 }}
-      name: Build Demo
-      uses: mxcl/xcodebuild@v1
-      with:
-        platform: ${{ matrix.platform }}
-        swift: ~${{ matrix.swift }}
-        action: build
-        scheme: Demo
+      - uses: actions/checkout@v2
+      - name: Test NavigationTransitions
+        uses: mxcl/xcodebuild@v1
+        with:
+          platform: ${{ matrix.platform }}
+          swift: ~${{ matrix.swift }}
+          action: test
+          scheme: NavigationTransitions
+      - if: ${{ matrix.swift >= 5.7 }}
+        name: Build Demo
+        uses: mxcl/xcodebuild@v1
+        with:
+          platform: ${{ matrix.platform }}
+          swift: ~${{ matrix.swift }}
+          action: build
+          scheme: Demo
