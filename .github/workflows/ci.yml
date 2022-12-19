@@ -11,7 +11,7 @@ on:
     - cron: '3 3 * * 2'  # 3:03 AM, every Tuesday
 
 concurrency:
-  group: ${{ github.ref }}
+  group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
