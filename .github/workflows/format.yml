@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Format
-        run: swiftformat
+        run: swiftformat .
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Run SwiftFormat
