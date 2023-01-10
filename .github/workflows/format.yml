@@ -19,7 +19,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install SwiftFormat
-        run: brew install swiftformat
+        run: |
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          brew install swiftformat
       - name: Format
         run: swiftformat .
       - uses: stefanzweifel/git-auto-commit-action@v4
