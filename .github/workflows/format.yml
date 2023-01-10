@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - "**"
 
 concurrency:
   group: format-${{ github.ref }}
@@ -12,9 +15,11 @@ concurrency:
 jobs:
   format:
     name: swiftformat
-    runs-on: macos-12
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Install SwiftFormat
+        run: brew install swiftformat
       - name: Format
         run: swiftformat .
       - uses: stefanzweifel/git-auto-commit-action@v4
