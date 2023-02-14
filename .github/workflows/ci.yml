@@ -33,7 +33,7 @@ jobs:
           - 5.7
     steps:
       - uses: actions/checkout@v2
-      - name: Test NavigationTransitions
+      - name: Run Tests
         uses: mxcl/xcodebuild@v1
         with:
           platform: ${{ matrix.platform }}
@@ -41,7 +41,7 @@ jobs:
           action: test
           scheme: NavigationTransitions
       - if: ${{ matrix.swift >= 5.7 }}
-        name: Build Demo
+        name: Build Examples/Demo
         uses: mxcl/xcodebuild@v1
         with:
           platform: ${{ matrix.platform }}
