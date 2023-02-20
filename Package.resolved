@@ -14,9 +14,9 @@
         "package": "Introspect",
         "repositoryURL": "https://github.com/siteline/SwiftUI-Introspect",
         "state": {
-          "branch": null,
-          "revision": "0ee6d36368422aa2fef62fc41a86a179abe46ef1",
-          "version": "0.2.2"
+          "branch": "no-more-thread-hops",
+          "revision": "2c36641298ae11a3d0f7205baf77cf84e897927a",
+          "version": null
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/pointfreeco/xctest-dynamic-overlay",
         "state": {
           "branch": null,
-          "revision": "ace21305e0dd3a9e749aef79fef14be79a3b4669",
-          "version": "0.8.2"
+          "revision": "62041e6016a30f56952f5d7d3f12a3fd7029e1cd",
+          "version": "0.8.3"
         }
       }
     ]
