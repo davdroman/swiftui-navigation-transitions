@@ -104,7 +104,7 @@ struct Swing: NavigationTransition {
 }
 ```
 
-The [**Demo**](Demo) app showcases some of these transitions in action.
+The [**Demo**](Examples/Demo) app showcases some of these transitions in action.
 
 ### Interactivity
 
