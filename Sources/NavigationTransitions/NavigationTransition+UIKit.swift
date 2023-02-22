@@ -144,6 +144,10 @@ extension UINavigationController {
 		customDelegate = NavigationTransitionDelegate(transition: transition, baseDelegate: defaultDelegate)
 
 		#if !os(tvOS)
+        if defaultEdgePanRecognizer.strongDelegate == nil {
+            defaultEdgePanRecognizer.strongDelegate = NavigationGestureRecognizerDelegate(controller: self)
+        }
+
 		if defaultPanRecognizer == nil {
 			defaultPanRecognizer = UIPanGestureRecognizer()
 			defaultPanRecognizer.targets = defaultEdgePanRecognizer?.targets // https://stackoverflow.com/a/60526328/1922543
