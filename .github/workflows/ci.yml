@@ -33,7 +33,7 @@ jobs:
           - 5.7
     steps:
       - uses: actions/checkout@v2
-      - name: Run Tests
+      - name: Test Library
         uses: mxcl/xcodebuild@v1
         with:
           platform: ${{ matrix.platform }}
