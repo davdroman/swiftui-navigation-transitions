@@ -150,7 +150,7 @@ extension UINavigationController {
 
 		if defaultPanRecognizer == nil {
 			defaultPanRecognizer = UIPanGestureRecognizer()
-			defaultPanRecognizer.targets = defaultEdgePanRecognizer?.targets // https://stackoverflow.com/a/60526328/1922543
+			defaultPanRecognizer.targets = defaultEdgePanRecognizer.targets // https://stackoverflow.com/a/60526328/1922543
 			defaultPanRecognizer.strongDelegate = NavigationGestureRecognizerDelegate(controller: self)
 			view.addGestureRecognizer(defaultPanRecognizer)
 		}
