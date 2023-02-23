@@ -141,11 +141,11 @@ extension UINavigationController {
 			defaultDelegate = delegate
 		}
 
-        if customDelegate == nil {
-            customDelegate = NavigationTransitionDelegate(transition: transition, baseDelegate: defaultDelegate)
-        } else {
-            customDelegate.transition = transition
-        }
+		if customDelegate == nil {
+			customDelegate = NavigationTransitionDelegate(transition: transition, baseDelegate: defaultDelegate)
+		} else {
+			customDelegate.transition = transition
+		}
 
 		#if !os(tvOS)
 		if defaultEdgePanRecognizer.strongDelegate == nil {
