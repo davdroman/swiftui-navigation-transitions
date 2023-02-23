@@ -4,7 +4,7 @@
 import UIKit
 
 final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelegate {
-	let transition: AnyNavigationTransition
+	var transition: AnyNavigationTransition
 	private weak var baseDelegate: UINavigationControllerDelegate?
 	var interactionController: UIPercentDrivenInteractiveTransition?
 	private var initialAreAnimationsEnabled = UIView.areAnimationsEnabled
