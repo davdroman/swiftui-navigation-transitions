@@ -16,7 +16,6 @@ let package = Package(
 
 package.dependencies = [
     .package(url: "https://github.com/siteline/SwiftUI-Introspect", branch: "no-more-thread-hops"),
-//    .package(url: "https://github.com/siteline/SwiftUI-Introspect", revision: "9683f887efeb168fb2c9e7582a3e283db42bcebf"),
 
 //    .package(url: "https://github.com/siteline/SwiftUI-Introspect", from: "0.1.4"),
 	.package(url: "https://github.com/pointfreeco/swift-custom-dump", from: "0.6.0"), // dev

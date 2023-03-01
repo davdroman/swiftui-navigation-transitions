@@ -66,11 +66,11 @@ struct NavigationTransitionModifier: ViewModifier {
 
 	func body(content: Content) -> some View {
 		content.inject(
-			UIKitIntrospectionViewController { spy -> UINavigationController? in
+			UIKitIntrospectionViewController { spy, id -> UINavigationController? in
 				guard spy.parent != nil else {
 					return nil // don't evaluate view until it's on screen
 				}
-				if let controller = Introspect.previousSibling(ofType: UINavigationController.self, from: spy) {
+				if let controller = Introspect.previousSibling(ofType: UINavigationController.self, from: spy, containerID: id) {
 					return controller
 				} else if let controller = spy.navigationController {
 					return controller
