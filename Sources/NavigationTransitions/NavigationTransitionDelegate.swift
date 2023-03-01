@@ -123,9 +123,6 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 			return nil
 		}
 
-		let fromView = AnimatorTransientView(fromUIView)
-		let toView = AnimatorTransientView(toUIView)
-
 		let container = context.containerView
 		switch operation {
 		case .push:
@@ -133,6 +130,9 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 		case .pop:
 			container.insertSubview(toUIView, belowSubview: fromUIView)
 		}
+
+        let fromView = AnimatorTransientView(fromUIView)
+        let toView = AnimatorTransientView(toUIView)
 
 		handler(fromView, toView, operation, container)
 
