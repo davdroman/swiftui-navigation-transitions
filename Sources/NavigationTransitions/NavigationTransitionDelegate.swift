@@ -127,31 +127,11 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 		let toView = AnimatorTransientView(toUIView)
 
 		let container = context.containerView
-		fromUIView.removeFromSuperview()
-		container.addSubview(fromUIView)
 		switch operation {
 		case .push:
 			container.insertSubview(toUIView, aboveSubview: fromUIView)
 		case .pop:
 			container.insertSubview(toUIView, belowSubview: fromUIView)
-		}
-
-		animator.addCompletion { [weak container, weak fromUIView, weak toUIView] _ in
-			guard
-				let container = container,
-				let fromUIView = fromUIView,
-				let toUIView = toUIView
-			else {
-				return
-			}
-			for subview in container.subviews {
-				subview.removeFromSuperview()
-			}
-			if context.transitionWasCancelled {
-				container.addSubview(fromUIView)
-			} else {
-				container.addSubview(toUIView)
-			}
 		}
 
 		handler(fromView, toView, operation, container)
