@@ -131,8 +131,8 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 			container.insertSubview(toUIView, belowSubview: fromUIView)
 		}
 
-        let fromView = AnimatorTransientView(fromUIView)
-        let toView = AnimatorTransientView(toUIView)
+		let fromView = AnimatorTransientView(fromUIView)
+		let toView = AnimatorTransientView(toUIView)
 
 		handler(fromView, toView, operation, container)
 
