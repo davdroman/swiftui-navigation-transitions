@@ -6,12 +6,12 @@ public struct Animation {
 	@_spi(package) public var duration: Double
 	@_spi(package) public let timingParameters: UITimingCurveProvider
 
-	init(duration: Double, timingParameters: UITimingCurveProvider) {
+	public init(duration: Double, timingParameters: UITimingCurveProvider) {
 		self.duration = duration
 		self.timingParameters = timingParameters
 	}
 
-	init(duration: Double, curve: UIView.AnimationCurve) {
+	public init(duration: Double, curve: UIView.AnimationCurve) {
 		self.init(duration: duration, timingParameters: UICubicTimingParameters(animationCurve: curve))
 	}
 }
