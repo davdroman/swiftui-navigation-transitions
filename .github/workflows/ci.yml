@@ -21,8 +21,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os:
-          - macos-12
         platform:
           - iOS
           - mac-catalyst
@@ -31,6 +29,16 @@ jobs:
           - 5.5
           - 5.6
           - 5.7
+          - 5.8
+        include:
+          - swift: 5.5
+            os: macos-12
+          - swift: 5.6
+            os: macos-12
+          - swift: 5.7
+            os: macos-13
+          - swift: 5.8
+            os: macos-13
     steps:
       - uses: actions/checkout@v2
       - name: Test Library
