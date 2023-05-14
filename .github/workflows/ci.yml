@@ -40,9 +40,9 @@ jobs:
           - swift: 5.8
             os: macos-13
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Test Library
-        uses: mxcl/xcodebuild@v1
+        uses: mxcl/xcodebuild@v2
         with:
           platform: ${{ matrix.platform }}
           swift: ~${{ matrix.swift }}
@@ -50,7 +50,7 @@ jobs:
           scheme: NavigationTransitions
       - if: ${{ matrix.swift >= 5.7 }}
         name: Build Examples/Demo
-        uses: mxcl/xcodebuild@v1
+        uses: mxcl/xcodebuild@v2
         with:
           platform: ${{ matrix.platform }}
           swift: ~${{ matrix.swift }}
