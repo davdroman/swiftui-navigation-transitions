@@ -6,7 +6,7 @@ public struct Animation {
 	@_spi(package) public var duration: Double
 	@_spi(package) public let timingParameters: UITimingCurveProvider
 
-	// Initializes a new `Animation` instance.
+	/// Initializes a new `Animation` instance.
 	///
 	/// - Parameters:
 	///   - duration: The duration of the animation.
