@@ -2,7 +2,7 @@ import UIKit
 
 @dynamicMemberLookup
 public struct Transform: Equatable {
-	private var transform: CATransform3D
+	fileprivate var transform: CATransform3D
 
 	public subscript<T>(dynamicMember keyPath: WritableKeyPath<CATransform3D, T>) -> T {
 		get { transform[keyPath: keyPath] }
@@ -12,12 +12,16 @@ public struct Transform: Equatable {
 	init(_ transform: CATransform3D) {
 		self.transform = transform
 	}
+}
 
-	func assignToUIView(_ uiView: UIView) {
-		if let transform = transform.affineTransform {
-			uiView.transform = transform
-		} else {
-			uiView.transform3D = transform
+extension OptionalWithDefault where Value == Transform {
+	func assign(to uiView: UIView, force: Bool) {
+		self.assign(force: force) {
+			if let transform = $0.transform.affineTransform {
+				uiView.transform = transform
+			} else {
+				uiView.transform3D = $0.transform
+			}
 		}
 	}
 }

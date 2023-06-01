@@ -125,13 +125,15 @@ This even works to override its behavior while maintaining the **default system 
 The documentation for releases and `main` are available here:
 
 - [`main`](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/main/documentation/navigationtransitions)
-- [0.9.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.9.0/documentation/navigationtransitions)
+- [0.9.2](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.9.2/documentation/navigationtransitions)
 
 <details>
 <summary>
 Other versions
 </summary>
 
+- [0.9.1](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.9.1/documentation/navigationtransitions)
+- [0.9.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.9.0/documentation/navigationtransitions)
 - [0.8.1](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.8.1/documentation/navigationtransitions)
 - [0.8.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.8.0/documentation/navigationtransitions)
 - [0.7.4](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.7.4/documentation/navigationtransitions)
