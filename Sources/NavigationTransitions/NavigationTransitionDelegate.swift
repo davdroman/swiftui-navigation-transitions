@@ -89,16 +89,35 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 		)
 		cachedAnimators[ObjectIdentifier(transitionContext)] = animator
 
+		let container = transitionContext.containerView
+		guard
+			let fromUIView = transitionContext.view(forKey: .from),
+			let toUIView = transitionContext.view(forKey: .to)
+		else {
+			return animator
+		}
+
+		fromUIView.isUserInteractionEnabled = false
+		toUIView.isUserInteractionEnabled = false
+
 		switch transition.handler {
 		case .transient(let handler):
-			if let (fromView, toView) = transientViews(for: handler, animator: animator, context: transitionContext) {
-				fromView.setUIViewProperties(to: \.initial)
-				animator.addAnimations { fromView.setUIViewProperties(to: \.animation) }
-				animator.addCompletion { _ in fromView.setUIViewProperties(to: \.completion) }
-
-				toView.setUIViewProperties(to: \.initial)
-				animator.addAnimations { toView.setUIViewProperties(to: \.animation) }
-				animator.addCompletion { _ in toView.setUIViewProperties(to: \.completion) }
+			if let (fromView, toView) = transientViews(
+				for: handler,
+				animator: animator,
+				context: (container, fromUIView, toUIView)
+			) {
+				for view in [fromView, toView] {
+					view.setUIViewProperties(to: \.initial)
+					animator.addAnimations { view.setUIViewProperties(to: \.animation) }
+					animator.addCompletion { _ in
+						if transitionContext.transitionWasCancelled {
+							view.resetUIViewProperties()
+						} else {
+							view.setUIViewProperties(to: \.completion)
+						}
+					}
+				}
 			}
 		case .primitive(let handler):
 			handler(animator, operation, transitionContext)
@@ -106,8 +125,18 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 
 		animator.addCompletion { _ in
 			transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-			transitionContext.view(forKey: .from)?.isUserInteractionEnabled = true
-			transitionContext.view(forKey: .to)?.isUserInteractionEnabled = true
+
+			fromUIView.isUserInteractionEnabled = true
+			toUIView.isUserInteractionEnabled = true
+
+			// iOS 16 workaround to nudge views into becoming responsive after transition
+			if transitionContext.transitionWasCancelled {
+				fromUIView.removeFromSuperview()
+				container.addSubview(fromUIView)
+			} else {
+				toUIView.removeFromSuperview()
+				container.addSubview(toUIView)
+			}
 		}
 
 		return animator
@@ -116,19 +145,10 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 	private func transientViews(
 		for handler: AnyNavigationTransition.TransientHandler,
 		animator: Animator,
-		context: UIViewControllerContextTransitioning
+		context: (container: UIView, fromUIView: UIView, toUIView: UIView)
 	) -> (fromView: AnimatorTransientView, toView: AnimatorTransientView)? {
-		guard
-			let fromUIView = context.view(forKey: .from),
-			let toUIView = context.view(forKey: .to)
-		else {
-			return nil
-		}
+		let (container, fromUIView, toUIView) = context
 
-		fromUIView.isUserInteractionEnabled = false
-		toUIView.isUserInteractionEnabled = false
-
-		let container = context.containerView
 		switch operation {
 		case .push:
 			container.insertSubview(toUIView, aboveSubview: fromUIView)
@@ -141,6 +161,6 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 
 		handler(fromView, toView, operation, container)
 
-		return (fromView: fromView, toView: toView)
+		return (fromView, toView)
 	}
 }

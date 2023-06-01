@@ -48,7 +48,10 @@ final class UnimplementedAnimatorTransientView: AnimatorTransientView {
 		super.init(UIView())
 	}
 
-	override public func setUIViewProperties(to properties: KeyPath<AnimatorTransientView, AnimatorTransientView.Properties>) {
+	override public func setUIViewProperties(
+		to properties: KeyPath<AnimatorTransientView, AnimatorTransientView.Properties>,
+		force: Bool
+	) {
 		XCTFail("\(Self.self).\(#function) is unimplemented")
 	}
 }
