@@ -11,11 +11,11 @@
         }
       },
       {
-        "package": "Introspect",
+        "package": "swiftui-introspect",
         "repositoryURL": "https://github.com/siteline/SwiftUI-Introspect",
         "state": {
-          "branch": "no-more-thread-hops",
-          "revision": "b39b0ed21d699812e9ce1b1358a547136b0e4f59",
+          "branch": "new-module",
+          "revision": "2980a5f689ad103fc37fb35d991ffd9f0a1f7512",
           "version": null
         }
       },

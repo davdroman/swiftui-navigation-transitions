@@ -1,4 +1,4 @@
-@_implementationOnly import Introspect
+@_implementationOnly import SwiftUIIntrospect
 import SwiftUI
 
 // MARK: iOS 16
@@ -51,59 +51,13 @@ extension View {
 		_ transition: AnyNavigationTransition,
 		interactivity: AnyNavigationTransition.Interactivity = .default
 	) -> some View {
-		self.modifier(
-			NavigationTransitionModifier(
-				transition: transition,
-				interactivity: interactivity
-			)
-		)
-	}
-}
-
-struct NavigationTransitionModifier: ViewModifier {
-	let transition: AnyNavigationTransition
-	let interactivity: AnyNavigationTransition.Interactivity
-
-	func body(content: Content) -> some View {
-		content.inject(
-			UIKitIntrospectionViewController { spy, id -> UINavigationController? in
-				guard spy.parent != nil else {
-					return nil // don't evaluate view until it's on screen
-				}
-				if let controller = Introspect.previousSibling(ofType: UINavigationController.self, from: spy, containerID: id) {
-					return controller
-				} else if let controller = spy.navigationController {
-					return controller
-				} else {
-					runtimeWarn(
-						"""
-						Modifier "navigationTransition" was applied to a view other than NavigationStack OR NavigationView with .navigationViewStyle(.stack). This has no effect.
-
-						Please make sure you're applying the modifier correctly:
-
-						    NavigationStack {
-						        ...
-						    }
-						    .navigationTransition(...)
-
-						    OR
-
-						    NavigationView {
-						        ...
-						    }
-						    .navigationViewStyle(.stack)
-						    .navigationTransition(...)
-
-						If you're attempting to apply the modifier to NavigationSplitView OR NavigationView with .navigationViewStyle(.columns), this has no effect either. Instead, you should apply the modifier to the child stack navigation component within it (if any).
-						"""
-					)
-					return nil
-				}
-			}
-			customize: { (controller: UINavigationController) in
-				controller.setNavigationTransition(transition, interactivity: interactivity)
-			}
-		)
+		self.introspect(
+			.navigationView(style: .stack),
+			on: .iOS(.v13, .v14, .v15, .v16), .tvOS(.v13, .v14, .v15, .v16),
+			scope: [.receiver, .ancestor]
+		) { controller in
+			controller.setNavigationTransition(transition, interactivity: interactivity)
+		}
 	}
 }
 

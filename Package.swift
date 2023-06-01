@@ -1,4 +1,4 @@
-// swift-tools-version: 5.5
+// swift-tools-version: 5.7
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -15,16 +15,14 @@ let package = Package(
 // MARK: Dependencies
 
 package.dependencies = [
-    .package(url: "https://github.com/siteline/SwiftUI-Introspect", branch: "no-more-thread-hops"),
-
-//    .package(url: "https://github.com/siteline/SwiftUI-Introspect", from: "0.1.4"),
+	.package(url: "https://github.com/siteline/swiftui-introspect", branch: "new-module"),
 	.package(url: "https://github.com/pointfreeco/swift-custom-dump", from: "0.6.0"), // dev
 	.package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "0.5.0"), // dev
 ]
 
-let Introspect: Target.Dependency = .product(
-	name: "Introspect",
-	package: "SwiftUI-Introspect"
+let SwiftUIIntrospect: Target.Dependency = .product(
+	name: "SwiftUIIntrospect",
+	package: "swiftui-introspect"
 )
 
 let CustomDump: Target.Dependency = .product(
@@ -59,7 +57,7 @@ package.targets += [
 	.target(name: "NavigationTransition", dependencies: [
 		"Animation",
 		"AtomicTransition",
-		Introspect,
+		SwiftUIIntrospect,
 	]),
 
 	.target(name: "NavigationTransitions", dependencies: [
