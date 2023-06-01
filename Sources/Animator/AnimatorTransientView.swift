@@ -47,7 +47,14 @@ public class AnimatorTransientView {
 		self.uiView = uiView
 	}
 
-	@_spi(package) public func setUIViewProperties(to properties: KeyPath<AnimatorTransientView, Properties>) {
-		self[keyPath: properties].assignToUIView(uiView)
+	@_spi(package) public func setUIViewProperties(
+		to properties: KeyPath<AnimatorTransientView, Properties>,
+		force: Bool = false
+	) {
+		self[keyPath: properties].assignToUIView(uiView, force: force)
+	}
+
+	@_spi(package) public func resetUIViewProperties() {
+		Properties.default.assignToUIView(uiView, force: true)
 	}
 }

@@ -16,6 +16,12 @@ public struct AnimatorTransientViewProperties: Equatable {
 }
 
 extension AnimatorTransientViewProperties {
+	static let `default` = Self(
+		alpha: 1,
+		transform: .identity,
+		zPosition: 0
+	)
+
 	init(of uiView: UIView) {
 		self.init(
 			alpha: uiView.alpha,
@@ -24,9 +30,9 @@ extension AnimatorTransientViewProperties {
 		)
 	}
 
-	func assignToUIView(_ uiView: UIView) {
-		$alpha.assignTo(uiView, \.alpha)
-		$transform?.assignToUIView(uiView)
-		$zPosition.assignTo(uiView, \.layer.zPosition)
+	func assignToUIView(_ uiView: UIView, force: Bool) {
+		$alpha.assign(to: uiView, \.alpha, force: force)
+		$transform.assign(force: force) { $0.assignToUIView(uiView) }
+		$zPosition.assign(to: uiView, \.layer.zPosition, force: force)
 	}
 }

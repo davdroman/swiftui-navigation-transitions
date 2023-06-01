@@ -109,11 +109,23 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 			) {
 				fromView.setUIViewProperties(to: \.initial)
 				animator.addAnimations { fromView.setUIViewProperties(to: \.animation) }
-				animator.addCompletion { _ in fromView.setUIViewProperties(to: \.completion) }
+				animator.addCompletion { _ in
+					if transitionContext.transitionWasCancelled {
+						fromView.resetUIViewProperties()
+					} else {
+						fromView.setUIViewProperties(to: \.completion)
+					}
+				}
 
 				toView.setUIViewProperties(to: \.initial)
 				animator.addAnimations { toView.setUIViewProperties(to: \.animation) }
-				animator.addCompletion { _ in toView.setUIViewProperties(to: \.completion) }
+				animator.addCompletion { _ in
+					if transitionContext.transitionWasCancelled {
+						toView.resetUIViewProperties()
+					} else {
+						toView.setUIViewProperties(to: \.completion)
+					}
+				}
 			}
 		case .primitive(let handler):
 			handler(animator, operation, transitionContext)
@@ -157,6 +169,6 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 
 		handler(fromView, toView, operation, container)
 
-		return (fromView: fromView, toView: toView)
+		return (fromView, toView)
 	}
 }
