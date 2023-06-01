@@ -15,7 +15,7 @@ let package = Package(
 // MARK: Dependencies
 
 package.dependencies = [
-	.package(url: "https://github.com/siteline/swiftui-introspect", branch: "new-module"),
+	.package(url: "https://github.com/siteline/swiftui-introspect", branch: "master"),
 	.package(url: "https://github.com/pointfreeco/swift-custom-dump", from: "0.6.0"), // dev
 	.package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "0.5.0"), // dev
 ]
