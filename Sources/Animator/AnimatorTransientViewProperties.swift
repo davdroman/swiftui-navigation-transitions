@@ -32,7 +32,7 @@ extension AnimatorTransientViewProperties {
 
 	func assignToUIView(_ uiView: UIView, force: Bool) {
 		$alpha.assign(to: uiView, \.alpha, force: force)
-		$transform.assign(force: force) { $0.assignToUIView(uiView) }
+		$transform.assign(to: uiView, force: force)
 		$zPosition.assign(to: uiView, \.layer.zPosition, force: force)
 	}
 }
