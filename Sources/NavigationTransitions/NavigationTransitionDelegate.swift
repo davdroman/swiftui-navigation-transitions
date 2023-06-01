@@ -106,6 +106,8 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 
 		animator.addCompletion { _ in
 			transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+			transitionContext.view(forKey: .from)?.isUserInteractionEnabled = true
+			transitionContext.view(forKey: .to)?.isUserInteractionEnabled = true
 		}
 
 		return animator
@@ -122,6 +124,9 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 		else {
 			return nil
 		}
+
+		fromUIView.isUserInteractionEnabled = false
+		toUIView.isUserInteractionEnabled = false
 
 		let container = context.containerView
 		switch operation {
