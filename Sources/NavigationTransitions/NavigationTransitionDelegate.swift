@@ -107,23 +107,15 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 				animator: animator,
 				context: (container, fromUIView, toUIView)
 			) {
-				fromView.setUIViewProperties(to: \.initial)
-				animator.addAnimations { fromView.setUIViewProperties(to: \.animation) }
-				animator.addCompletion { _ in
-					if transitionContext.transitionWasCancelled {
-						fromView.resetUIViewProperties()
-					} else {
-						fromView.setUIViewProperties(to: \.completion)
-					}
-				}
-
-				toView.setUIViewProperties(to: \.initial)
-				animator.addAnimations { toView.setUIViewProperties(to: \.animation) }
-				animator.addCompletion { _ in
-					if transitionContext.transitionWasCancelled {
-						toView.resetUIViewProperties()
-					} else {
-						toView.setUIViewProperties(to: \.completion)
+				for view in [fromView, toView] {
+					view.setUIViewProperties(to: \.initial)
+					animator.addAnimations { view.setUIViewProperties(to: \.animation) }
+					animator.addCompletion { _ in
+						if transitionContext.transitionWasCancelled {
+							view.resetUIViewProperties()
+						} else {
+							view.setUIViewProperties(to: \.completion)
+						}
 					}
 				}
 			}
