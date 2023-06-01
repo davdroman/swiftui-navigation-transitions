@@ -100,7 +100,7 @@ struct NavigationTransitionModifier: ViewModifier {
 					return nil
 				}
 			}
-            customize: { (controller: UINavigationController) in
+			customize: { (controller: UINavigationController) in
 				controller.setNavigationTransition(transition, interactivity: interactivity)
 			}
 		)

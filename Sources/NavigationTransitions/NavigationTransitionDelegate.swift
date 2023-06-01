@@ -118,52 +118,21 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 	) -> (fromView: AnimatorTransientView, toView: AnimatorTransientView)? {
 		guard
 			let fromUIView = context.view(forKey: .from),
-			let fromUIViewSnapshot = fromUIView.snapshotView(afterScreenUpdates: false),
-			let toUIView = context.view(forKey: .to),
-			let toUIViewSnapshot = toUIView.snapshotView(afterScreenUpdates: true)
+			let toUIView = context.view(forKey: .to)
 		else {
 			return nil
 		}
 
-		let fromView = AnimatorTransientView(fromUIViewSnapshot)
-		let toView = AnimatorTransientView(toUIViewSnapshot)
-
 		let container = context.containerView
-		fromUIView.removeFromSuperview()
-		container.addSubview(fromUIViewSnapshot)
 		switch operation {
 		case .push:
-			container.insertSubview(toUIViewSnapshot, aboveSubview: fromUIViewSnapshot)
+			container.insertSubview(toUIView, aboveSubview: fromUIView)
 		case .pop:
-			container.insertSubview(toUIViewSnapshot, belowSubview: fromUIViewSnapshot)
+			container.insertSubview(toUIView, belowSubview: fromUIView)
 		}
 
-		// this is a hack that uses a 0-sized container to ensure that
-		// toView is added to the view hierarchy but not visible,
-		// in order to have toViewSnapshot sized properly
-		let invisibleContainer = UIView()
-		invisibleContainer.clipsToBounds = true
-		invisibleContainer.addSubview(fromUIView)
-		invisibleContainer.addSubview(toUIView)
-		container.addSubview(invisibleContainer)
-
-		animator.addCompletion { [weak container, weak fromUIView, weak toUIView] _ in
-			guard
-				let container = container,
-				let fromUIView = fromUIView,
-				let toUIView = toUIView
-			else {
-				return
-			}
-			for subview in container.subviews {
-				subview.removeFromSuperview()
-			}
-			if context.transitionWasCancelled {
-				container.addSubview(fromUIView)
-			} else {
-				container.addSubview(toUIView)
-			}
-		}
+		let fromView = AnimatorTransientView(fromUIView)
+		let toView = AnimatorTransientView(toUIView)
 
 		handler(fromView, toView, operation, container)
 
