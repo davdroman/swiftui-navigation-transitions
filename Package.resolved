@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/siteline/swiftui-introspect",
       "state" : {
-        "revision" : "95c4382161d8140ed9508bea028ea4bea125921a",
-        "version" : "0.5.0"
+        "revision" : "94ab0068fcc81e3e98894256ee6793e317bc4641",
+        "version" : "0.5.1"
       }
     },
     {

@@ -16,8 +16,8 @@ let package = Package(
 
 package.dependencies = [
 	.package(url: "https://github.com/siteline/swiftui-introspect", from: "0.4.0"),
-	.package(url: "https://github.com/pointfreeco/swift-custom-dump", from: "0.6.0"), // dev
-	.package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "0.5.0"), // dev
+	.package(url: "https://github.com/pointfreeco/swift-custom-dump", from: "0.10.3"), // dev
+	.package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "0.8.5"), // dev
 ]
 
 let SwiftUIIntrospect: Target.Dependency = .product(
