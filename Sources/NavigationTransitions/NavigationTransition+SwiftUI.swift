@@ -53,7 +53,7 @@ extension View {
 	) -> some View {
 		self.introspect(
 			.navigationView(style: .stack),
-			on: .iOS(.v13, .v14, .v15, .v16), .tvOS(.v13, .v14, .v15, .v16),
+			on: .iOS(.v13, .v14, .v15, .v16, .v17), .tvOS(.v13, .v14, .v15, .v16, .v17),
 			scope: [.receiver, .ancestor]
 		) { controller in
 			controller.setNavigationTransition(transition, interactivity: interactivity)
