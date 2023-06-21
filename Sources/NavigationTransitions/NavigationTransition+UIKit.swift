@@ -292,6 +292,7 @@ final class NavigationGestureRecognizerDelegate: NSObject, UIGestureRecognizerDe
 
 	func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
 		let isNotOnRoot = navigationController.viewControllers.count > 1
-		return isNotOnRoot
+		let noModalIsPresented = navigationController.presentedViewController == nil
+		return isNotOnRoot && noModalIsPresented
 	}
 }
