@@ -1,5 +1,5 @@
-@_implementationOnly import SwiftUIIntrospect
 import SwiftUI
+@_implementationOnly import SwiftUIIntrospect
 
 // MARK: iOS 16
 
