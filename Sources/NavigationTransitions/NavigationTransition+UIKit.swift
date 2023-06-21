@@ -290,6 +290,7 @@ final class NavigationGestureRecognizerDelegate: NSObject, UIGestureRecognizerDe
 		self.navigationController = controller
 	}
 
+	// TODO: swizzle instead
 	func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
 		let isNotOnRoot = navigationController.viewControllers.count > 1
 		let noModalIsPresented = navigationController.presentedViewController == nil
