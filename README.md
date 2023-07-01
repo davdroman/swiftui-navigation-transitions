@@ -11,12 +11,7 @@
 <img width="320" src="https://user-images.githubusercontent.com/2538074/201550282-64ce0f8e-8f99-4fe2-baf8-583e35c0518a.gif">
 </p>
 
-**NavigationTransitions** is a library that integrates seamlessly with SwiftUI's **Navigation** views, allowing complete customization over **push and pop transitions**!
-
-The library is fully compatible with:
-
-- **`NavigationView`** (iOS 13, 14, 15)
-- **`NavigationStack`** (iOS 16)
+**NavigationTransitions** is a library that integrates seamlessly with SwiftUI's `NavigationView` and `NavigationStack`, allowing complete customization over **push and pop transitions**!
 
 ## Overview
 
@@ -34,7 +29,7 @@ NavigationView {
 .navigationTransition(.slide)
 ```
 
-#### iOS 16
+#### iOS 16+
 
 ```swift
 NavigationStack {
