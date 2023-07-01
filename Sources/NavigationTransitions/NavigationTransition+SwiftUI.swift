@@ -1,5 +1,5 @@
 import SwiftUI
-@_implementationOnly import SwiftUIIntrospect
+@_implementationOnly @_spi(Advanced) import SwiftUIIntrospect
 
 // MARK: iOS 16
 
@@ -53,7 +53,7 @@ extension View {
 	) -> some View {
 		self.introspect(
 			.navigationView(style: .stack),
-			on: .iOS(.v13, .v14, .v15, .v16, .v17), .tvOS(.v13, .v14, .v15, .v16, .v17),
+			on: .iOS(.v13...), .tvOS(.v13...),
 			scope: [.receiver, .ancestor]
 		) { controller in
 			controller.setNavigationTransition(transition, interactivity: interactivity)
