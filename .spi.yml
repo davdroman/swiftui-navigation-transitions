@@ -4,5 +4,6 @@ builder:
   - platform: ios
     scheme: NavigationTransitions
     documentation_targets: [NavigationTransitions]
+    custom_documentation_parameters: [--include-extended-types]
   - platform: tvos
     scheme: NavigationTransitions
