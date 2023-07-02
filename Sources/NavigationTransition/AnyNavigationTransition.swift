@@ -24,12 +24,12 @@ public struct AnyNavigationTransition {
 	@_spi(package) public let handler: Handler
 	@_spi(package) public var animation: Animation? = .default
 
-	public init<T: NavigationTransition>(_ transition: T) {
+	public init(_ transition: some NavigationTransition) {
 		self.isDefault = false
 		self.handler = .transient(transition.transition(from:to:for:in:))
 	}
 
-	public init<T: PrimitiveNavigationTransition>(_ transition: T) {
+	public init(_ transition: some PrimitiveNavigationTransition) {
 		self.isDefault = transition is Default
 		self.handler = .primitive(transition.transition(with:for:in:))
 	}

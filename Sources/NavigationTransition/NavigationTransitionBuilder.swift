@@ -109,7 +109,7 @@ public enum NavigationTransitionBuilder {
 	#endif
 
 	public static func buildOptional<T: NavigationTransition>(_ component: T?) -> _OptionalTransition<T> {
-		if let component = component {
+		if let component {
 			return _OptionalTransition(component)
 		} else {
 			return _OptionalTransition(nil)

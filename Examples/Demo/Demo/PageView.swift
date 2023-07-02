@@ -36,7 +36,7 @@ struct PageView<Content: View, Link: View, Destination: View>: View {
 				.frame(maxWidth: 1200)
 
 				Group {
-					if let link = link, let destination = destination {
+					if let link, let destination {
 						if #available(iOS 16, tvOS 16, *) {
 							NavigationLink(value: number + 1) { link }
 						} else {

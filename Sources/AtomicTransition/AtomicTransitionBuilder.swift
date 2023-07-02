@@ -113,7 +113,7 @@ public enum AtomicTransitionBuilder {
 	#endif
 
 	public static func buildOptional<T: AtomicTransition>(_ component: T?) -> _OptionalTransition<T> {
-		if let component = component {
+		if let component {
 			return _OptionalTransition(component)
 		} else {
 			return _OptionalTransition(nil)

@@ -221,7 +221,7 @@ extension UINavigationController {
 	@available(tvOS, unavailable)
 	private func exclusivelyEnableGestureRecognizer(_ gestureRecognizer: UIPanGestureRecognizer?) {
 		for recognizer in [defaultEdgePanRecognizer!, defaultPanRecognizer!, edgePanRecognizer!, panRecognizer!] {
-			if let gestureRecognizer = gestureRecognizer, recognizer === gestureRecognizer {
+			if let gestureRecognizer, recognizer === gestureRecognizer {
 				recognizer.isEnabled = true
 			} else {
 				recognizer.isEnabled = false
@@ -273,7 +273,7 @@ extension UIGestureRecognizer {
 			value(forKey: #function)
 		}
 		set {
-			if let newValue = newValue {
+			if let newValue {
 				setValue(newValue, forKey: #function)
 			} else {
 				setValue(NSMutableArray(), forKey: #function)
