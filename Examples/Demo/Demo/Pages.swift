@@ -13,7 +13,7 @@ struct PageOne: View {
 		} destination: {
 			PageTwo()
 		}
-		.do {
+		.modifier {
 			if #available(iOS 16, tvOS 16, *) {
 				$0.navigationDestination(for: Int.self) { number in
 					switch number {
@@ -130,9 +130,9 @@ struct PageLink: View {
 				.fill(Color.blue.opacity(0.8))
 			#endif
 			Text(title)
-			#if !os(tvOS)
+				#if !os(tvOS)
 				.foregroundColor(.white)
-			#endif
+				#endif
 				.font(.system(size: 18, weight: .medium, design: .rounded))
 		}
 		.frame(maxHeight: 50)
@@ -162,14 +162,14 @@ struct Code<Content: StringProtocol>: View {
 			.font(.system(size: 14, design: .monospaced))
 			.background(shape.stroke(Color(white: 0.1).opacity(0.35), lineWidth: 1))
 			.background(Color(white: 0.94).opacity(0.6).clipShape(shape))
-		#if !os(tvOS)
-			.do {
+			#if !os(tvOS)
+			.modifier {
 				if #available(iOS 15, *) {
 					$0.textSelection(.enabled)
 				} else {
 					$0
 				}
 			}
-		#endif
+			#endif
 	}
 }

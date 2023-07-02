@@ -2,7 +2,6 @@ import SwiftUI
 @_implementationOnly @_spi(Advanced) import SwiftUIIntrospect
 
 extension View {
-	@ViewBuilder
 	public func navigationTransition(
 		_ transition: AnyNavigationTransition,
 		interactivity: AnyNavigationTransition.Interactivity = .default
