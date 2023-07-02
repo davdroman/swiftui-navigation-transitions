@@ -1,5 +1,5 @@
 import SwiftUI
-@_implementationOnly @_spi(Advanced) import SwiftUIIntrospect
+@_spi(Advanced) import SwiftUIIntrospect
 
 extension View {
 	public func navigationTransition(

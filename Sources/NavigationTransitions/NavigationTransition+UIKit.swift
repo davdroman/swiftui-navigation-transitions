@@ -1,6 +1,6 @@
 @_spi(package) import NavigationTransition
-@_implementationOnly import RuntimeAssociation
-@_implementationOnly import RuntimeSwizzling
+import RuntimeAssociation
+import RuntimeSwizzling
 import UIKit
 
 extension AnyNavigationTransition {
