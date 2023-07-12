@@ -19,17 +19,13 @@ extension OptionalWithDefault: Equatable where Value: Equatable {}
 
 extension OptionalWithDefault {
 	func assign<Root: AnyObject>(to root: Root, _ valueKeyPath: ReferenceWritableKeyPath<Root, Value>, force: Bool) {
-		assign(force: force) { root[keyPath: valueKeyPath] = $0 }
+		assign(force: force) {
+			root[keyPath: valueKeyPath] = $0
+		}
 	}
 
 	func assign(force: Bool, handler: (Value) -> Void) {
-		if let value = { () -> Value? in
-			if force {
-				return wrappedValue
-			} else {
-				return value
-			}
-		}() {
+		if let value = force ? wrappedValue : value {
 			handler(value)
 		}
 	}
