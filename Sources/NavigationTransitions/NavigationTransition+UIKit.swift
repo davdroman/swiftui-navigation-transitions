@@ -219,7 +219,7 @@ extension UINavigationController {
 	}
 
 	@available(tvOS, unavailable)
-    @available(visionOS, unavailable)
+	@available(visionOS, unavailable)
 	private func exclusivelyEnableGestureRecognizer(_ gestureRecognizer: UIPanGestureRecognizer?) {
 		for recognizer in [defaultEdgePanRecognizer!, defaultPanRecognizer!, edgePanRecognizer!, panRecognizer!] {
 			if let gestureRecognizer, recognizer === gestureRecognizer {
