@@ -125,10 +125,12 @@ struct PageLink: View {
 
 	var body: some View {
 		ZStack {
-			#if !os(tvOS)
-			RoundedRectangle(cornerRadius: 6, style: .continuous)
+            RoundedRectangle(cornerRadius: 6, style: .continuous)
+                #if !os(tvOS) && !os(visionOS)
 				.fill(Color.blue.opacity(0.8))
-			#endif
+                #else
+                .fill(Color.clear)
+                #endif
 			Text(title)
 			#if !os(tvOS)
 				.foregroundColor(.white)
@@ -162,7 +164,7 @@ struct Code<Content: StringProtocol>: View {
 			.font(.system(size: 14, design: .monospaced))
 			.background(shape.stroke(Color(white: 0.1).opacity(0.35), lineWidth: 1))
 			.background(Color(white: 0.94).opacity(0.6).clipShape(shape))
-		#if !os(tvOS)
+            #if !os(tvOS)
 			.modifier {
 				if #available(iOS 15, *) {
 					$0.textSelection(.enabled)
@@ -170,6 +172,6 @@ struct Code<Content: StringProtocol>: View {
 					$0
 				}
 			}
-		#endif
+            #endif
 	}
 }

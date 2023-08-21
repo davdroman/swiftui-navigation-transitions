@@ -147,7 +147,7 @@ extension UINavigationController {
 			customDelegate.transition = transition
 		}
 
-		#if !os(tvOS)
+		#if !os(tvOS) && !os(visionOS)
 		if defaultEdgePanRecognizer.strongDelegate == nil {
 			defaultEdgePanRecognizer.strongDelegate = NavigationGestureRecognizerDelegate(controller: self)
 		}
@@ -219,6 +219,7 @@ extension UINavigationController {
 	}
 
 	@available(tvOS, unavailable)
+    @available(visionOS, unavailable)
 	private func exclusivelyEnableGestureRecognizer(_ gestureRecognizer: UIPanGestureRecognizer?) {
 		for recognizer in [defaultEdgePanRecognizer!, defaultPanRecognizer!, edgePanRecognizer!, panRecognizer!] {
 			if let gestureRecognizer, recognizer === gestureRecognizer {
@@ -237,6 +238,7 @@ extension UINavigationController {
 }
 
 @available(tvOS, unavailable)
+@available(visionOS, unavailable)
 extension UINavigationController {
 	var defaultEdgePanRecognizer: UIScreenEdgePanGestureRecognizer! {
 		interactivePopGestureRecognizer as? UIScreenEdgePanGestureRecognizer
