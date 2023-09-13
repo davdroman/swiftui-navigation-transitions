@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-custom-dump",
       "state" : {
-        "revision" : "4a87bb75be70c983a9548597e8783236feb3401e",
-        "version" : "0.11.1"
+        "revision" : "edd66cace818e1b1c6f1b3349bb1d8e00d6f8b01",
+        "version" : "1.0.0"
       }
     },
     {
@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/xctest-dynamic-overlay",
       "state" : {
-        "revision" : "50843cbb8551db836adec2290bb4bc6bac5c1865",
-        "version" : "0.9.0"
+        "revision" : "23cbf2294e350076ea4dbd7d5d047c1e76b03631",
+        "version" : "1.0.2"
       }
     }
   ],
