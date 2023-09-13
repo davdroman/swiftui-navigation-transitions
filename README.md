@@ -144,9 +144,3 @@ Other versions
 - [0.6.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.6.0/documentation/navigationtransitions)
 - [0.5.1](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.5.1/documentation/navigationtransitions)
 </details>
-
-## Community
-
-Feel free to **post questions**, **ideas**, or any **cool transitions** you build in the [**Discussions**](https://github.com/davdroman/swiftui-navigation-transitions/discussions) section!
-
-I sincerely hope you enjoy using this library as much as I enjoyed building it ❤️
