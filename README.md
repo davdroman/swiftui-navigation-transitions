@@ -120,13 +120,14 @@ This even works to override its behavior while maintaining the **default system 
 The documentation for releases and `main` are available here:
 
 - [`main`](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/main/documentation/navigationtransitions)
-- [0.11.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.11.0/documentation/navigationtransitions)
+- [0.12.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.12.0/documentation/navigationtransitions)
 
 <details>
 <summary>
 Other versions
 </summary>
 
+- [0.11.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.11.0/documentation/navigationtransitions)
 - [0.10.1](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.10.1/documentation/navigationtransitions)
 - [0.10.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.10.0/documentation/navigationtransitions)
 - [0.9.3](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.9.3/documentation/navigationtransitions)
@@ -143,9 +144,3 @@ Other versions
 - [0.6.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.6.0/documentation/navigationtransitions)
 - [0.5.1](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.5.1/documentation/navigationtransitions)
 </details>
-
-## Community
-
-Feel free to **post questions**, **ideas**, or any **cool transitions** you build in the [**Discussions**](https://github.com/davdroman/swiftui-navigation-transitions/discussions) section!
-
-I sincerely hope you enjoy using this library as much as I enjoyed building it ❤️
