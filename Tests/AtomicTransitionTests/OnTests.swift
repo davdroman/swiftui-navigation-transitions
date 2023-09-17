@@ -1,4 +1,4 @@
-@_spi(package) import AtomicTransition
+import AtomicTransition
 import TestUtils
 
 final class OnInsertionTests: XCTestCase {

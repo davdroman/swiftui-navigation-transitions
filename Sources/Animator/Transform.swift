@@ -35,10 +35,9 @@ extension CATransform3D {
 	}
 }
 
-@_spi(package)
 extension CATransform3D: Equatable {
 	@inlinable
-	public static func == (lhs: Self, rhs: Self) -> Bool {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
 		CATransform3DEqualToTransform(lhs, rhs)
 	}
 }
