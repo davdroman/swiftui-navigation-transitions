@@ -31,7 +31,7 @@ jobs:
           - 5.9
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Test Library
         uses: mxcl/xcodebuild@v2

@@ -14,7 +14,7 @@ jobs:
     name: swiftformat
     runs-on: macos-13
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Format
         run: swiftformat .
       - uses: stefanzweifel/git-auto-commit-action@v4
