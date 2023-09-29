@@ -7,6 +7,7 @@ final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelega
 	var transition: AnyNavigationTransition
 	private weak var baseDelegate: UINavigationControllerDelegate?
 	var interactionController: UIPercentDrivenInteractiveTransition?
+	private var initialAreAnimationsEnabled: Bool?
 
 	init(transition: AnyNavigationTransition, baseDelegate: UINavigationControllerDelegate?) {
 		self.transition = transition
@@ -14,15 +15,19 @@ final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelega
 	}
 
 	func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-		if transition.animation == nil {
-			UIView.setAnimationsEnabled(false)
+		if navigationController.transitionCoordinator != nil {
+			self.initialAreAnimationsEnabled = UIView.areAnimationsEnabled
+			UIView.setAnimationsEnabled(transition.animation != nil)
 		}
 		baseDelegate?.navigationController?(navigationController, willShow: viewController, animated: animated)
 	}
 
 	func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
 		baseDelegate?.navigationController?(navigationController, didShow: viewController, animated: animated)
-		UIView.setAnimationsEnabled(true)
+		if let initialAreAnimationsEnabled {
+			UIView.setAnimationsEnabled(initialAreAnimationsEnabled)
+			self.initialAreAnimationsEnabled = nil
+		}
 	}
 
 	func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
