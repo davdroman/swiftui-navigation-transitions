@@ -242,25 +242,25 @@ extension UINavigationController {
 
 	@objc private func popViewController_animateIfNeeded(animated: Bool) -> UIViewController? {
 		if let transitionDelegate = customDelegate {
-			popViewController_animateIfNeeded(animated: transitionDelegate.transition.animation != nil)
+			return popViewController_animateIfNeeded(animated: transitionDelegate.transition.animation != nil)
 		} else {
-			popViewController_animateIfNeeded(animated: animated)
+			return popViewController_animateIfNeeded(animated: animated)
 		}
 	}
 
 	@objc private func popToViewController_animateIfNeeded(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
 		if let transitionDelegate = customDelegate {
-			popToViewController_animateIfNeeded(viewController, animated: transitionDelegate.transition.animation != nil)
+			return popToViewController_animateIfNeeded(viewController, animated: transitionDelegate.transition.animation != nil)
 		} else {
-			popToViewController_animateIfNeeded(viewController, animated: animated)
+			return popToViewController_animateIfNeeded(viewController, animated: animated)
 		}
 	}
 
 	@objc private func popToRootViewController_animateIfNeeded(animated: Bool) -> UIViewController? {
 		if let transitionDelegate = customDelegate {
-			popToRootViewController_animateIfNeeded(animated: transitionDelegate.transition.animation != nil)
+			return popToRootViewController_animateIfNeeded(animated: transitionDelegate.transition.animation != nil)
 		} else {
-			popToRootViewController_animateIfNeeded(animated: animated)
+			return popToRootViewController_animateIfNeeded(animated: animated)
 		}
 	}
 }
