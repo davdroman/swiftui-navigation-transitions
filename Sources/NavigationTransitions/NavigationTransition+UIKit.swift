@@ -135,8 +135,6 @@ extension UINavigationController {
 		_ transition: AnyNavigationTransition,
 		interactivity: AnyNavigationTransition.Interactivity = .default
 	) {
-		backDeploy96852321()
-
 		if defaultDelegate == nil {
 			defaultDelegate = delegate
 		}
@@ -146,6 +144,30 @@ extension UINavigationController {
 		} else {
 			customDelegate.transition = transition
 		}
+
+		swizzle(
+			UINavigationController.self,
+			#selector(UINavigationController.pushViewController),
+			#selector(UINavigationController.pushViewController_animateIfNeeded)
+		)
+
+		swizzle(
+			UINavigationController.self,
+			#selector(UINavigationController.popViewController),
+			#selector(UINavigationController.popViewController_animateIfNeeded)
+		)
+
+		swizzle(
+			UINavigationController.self,
+			#selector(UINavigationController.popToViewController),
+			#selector(UINavigationController.popToViewController_animateIfNeeded)
+		)
+
+		swizzle(
+			UINavigationController.self,
+			#selector(UINavigationController.popToRootViewController),
+			#selector(UINavigationController.popToRootViewController_animateIfNeeded)
+		)
 
 		#if !os(tvOS) && !os(visionOS)
 		if defaultEdgePanRecognizer.strongDelegate == nil {
@@ -196,28 +218,6 @@ extension UINavigationController {
 		#endif
 	}
 
-	private func backDeploy96852321() {
-		func forceAnimatedPopToViewController() {
-			swizzle(
-				UINavigationController.self,
-				#selector(UINavigationController.popToViewController),
-				#selector(UINavigationController.popToViewController_forceAnimated)
-			)
-		}
-
-		if #available(iOS 16.2, macCatalyst 16.2, tvOS 16.2, *) {} else {
-			#if targetEnvironment(macCatalyst)
-			let major = ProcessInfo.processInfo.operatingSystemVersion.majorVersion
-			let minor = ProcessInfo.processInfo.operatingSystemVersion.minorVersion
-			if (major, minor) < (13, 1) {
-				forceAnimatedPopToViewController()
-			}
-			#else
-			forceAnimatedPopToViewController()
-			#endif
-		}
-	}
-
 	@available(tvOS, unavailable)
 	@available(visionOS, unavailable)
 	private func exclusivelyEnableGestureRecognizer(_ gestureRecognizer: UIPanGestureRecognizer?) {
@@ -232,8 +232,36 @@ extension UINavigationController {
 }
 
 extension UINavigationController {
-	@objc private func popToViewController_forceAnimated(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
-		popToViewController_forceAnimated(viewController, animated: true)
+	@objc private func pushViewController_animateIfNeeded(_ viewController: UIViewController, animated: Bool) {
+		if let transitionDelegate = customDelegate {
+			pushViewController_animateIfNeeded(viewController, animated: transitionDelegate.transition.animation != nil)
+		} else {
+			pushViewController_animateIfNeeded(viewController, animated: animated)
+		}
+	}
+
+	@objc private func popViewController_animateIfNeeded(animated: Bool) -> UIViewController? {
+		if let transitionDelegate = customDelegate {
+			popViewController_animateIfNeeded(animated: transitionDelegate.transition.animation != nil)
+		} else {
+			popViewController_animateIfNeeded(animated: animated)
+		}
+	}
+
+	@objc private func popToViewController_animateIfNeeded(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
+		if let transitionDelegate = customDelegate {
+			popToViewController_animateIfNeeded(viewController, animated: transitionDelegate.transition.animation != nil)
+		} else {
+			popToViewController_animateIfNeeded(viewController, animated: animated)
+		}
+	}
+
+	@objc private func popToRootViewController_animateIfNeeded(animated: Bool) -> UIViewController? {
+		if let transitionDelegate = customDelegate {
+			popToRootViewController_animateIfNeeded(animated: transitionDelegate.transition.animation != nil)
+		} else {
+			popToRootViewController_animateIfNeeded(animated: animated)
+		}
 	}
 }
 
