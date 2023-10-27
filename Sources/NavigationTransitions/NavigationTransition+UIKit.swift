@@ -279,10 +279,6 @@ extension UINavigationController {
 	}
 }
 
-final class UI: UINavigationController {
-
-}
-
 @available(tvOS, unavailable)
 @available(visionOS, unavailable)
 extension UINavigationController {
