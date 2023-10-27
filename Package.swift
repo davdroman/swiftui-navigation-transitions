@@ -57,13 +57,13 @@ package.targets += [
 	.target(name: "NavigationTransition", dependencies: [
 		"Animation",
 		"AtomicTransition",
-		SwiftUIIntrospect,
 	]),
 
 	.target(name: "NavigationTransitions", dependencies: [
 		"NavigationTransition",
 		"RuntimeAssociation",
 		"RuntimeSwizzling",
+		SwiftUIIntrospect,
 	]),
 
 	.target(name: "RuntimeAssociation"),
