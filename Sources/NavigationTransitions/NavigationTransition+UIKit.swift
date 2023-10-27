@@ -147,6 +147,12 @@ extension UINavigationController {
 
 		swizzle(
 			UINavigationController.self,
+			#selector(UINavigationController.setViewControllers),
+			#selector(UINavigationController.setViewControllers_animateIfNeeded)
+		)
+
+		swizzle(
+			UINavigationController.self,
 			#selector(UINavigationController.pushViewController),
 			#selector(UINavigationController.pushViewController_animateIfNeeded)
 		)
@@ -232,6 +238,14 @@ extension UINavigationController {
 }
 
 extension UINavigationController {
+	@objc private func setViewControllers_animateIfNeeded(_ viewControllers: [UIViewController], animated: Bool) {
+		if let transitionDelegate = customDelegate {
+			setViewControllers_animateIfNeeded(viewControllers, animated: transitionDelegate.transition.animation != nil)
+		} else {
+			setViewControllers_animateIfNeeded(viewControllers, animated: animated)
+		}
+	}
+
 	@objc private func pushViewController_animateIfNeeded(_ viewController: UIViewController, animated: Bool) {
 		if let transitionDelegate = customDelegate {
 			pushViewController_animateIfNeeded(viewController, animated: transitionDelegate.transition.animation != nil)
@@ -263,6 +277,10 @@ extension UINavigationController {
 			return popToRootViewController_animateIfNeeded(animated: animated)
 		}
 	}
+}
+
+final class UI: UINavigationController {
+
 }
 
 @available(tvOS, unavailable)
