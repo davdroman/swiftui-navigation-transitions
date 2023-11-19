@@ -86,7 +86,7 @@ public enum NavigationTransitionOperation: Hashable {
 	case push
 	case pop
 
-    package init?(_ operation: UINavigationController.Operation) {
+	package init?(_ operation: UINavigationController.Operation) {
 		switch operation {
 		case .push:
 			self = .push

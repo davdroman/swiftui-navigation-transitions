@@ -20,7 +20,7 @@ extension AnyNavigationTransition {
 package struct Default: PrimitiveNavigationTransition {
 	init() {}
 
-    package func transition(with animator: Animator, for operation: TransitionOperation, in context: Context) {
+	package func transition(with animator: Animator, for operation: TransitionOperation, in context: Context) {
 		// NO-OP
 	}
 }

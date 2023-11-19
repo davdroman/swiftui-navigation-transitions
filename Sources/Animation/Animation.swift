@@ -4,7 +4,7 @@ public struct Animation {
 	static var defaultDuration: Double { 0.35 }
 
 	package var duration: Double
-    package let timingParameters: UITimingCurveProvider
+	package let timingParameters: UITimingCurveProvider
 
 	init(duration: Double, timingParameters: UITimingCurveProvider) {
 		self.duration = duration
