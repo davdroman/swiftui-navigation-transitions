@@ -1,7 +1,6 @@
 import ObjectiveC
 
-@MainActor
-public var swizzleLogs = false
+nonisolated(unsafe) public var swizzleLogs = false
 
 @MainActor
 public func swizzle(_ type: AnyObject.Type, _ original: Selector, _ swizzled: Selector) {
@@ -48,5 +47,4 @@ private struct SwizzlingHistory {
 	}
 }
 
-@MainActor
-private var swizzlingHistory = SwizzlingHistory()
+nonisolated(unsafe) private var swizzlingHistory = SwizzlingHistory()
