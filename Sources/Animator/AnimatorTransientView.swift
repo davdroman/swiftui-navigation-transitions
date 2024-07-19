@@ -9,6 +9,7 @@ import UIKit
 /// view being animated, which helps compound mutating values across
 /// different defined transitions before actually submitting them
 /// to the animator. This helps ensure no jumpy behavior in animations occurs.
+@MainActor
 @dynamicMemberLookup
 public class AnimatorTransientView {
 	/// Typealias for `AnimatorTransientViewProperties`.

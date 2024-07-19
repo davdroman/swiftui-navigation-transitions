@@ -15,6 +15,7 @@ public struct AnimatorTransientViewProperties: Equatable {
 	public var zPosition: CGFloat
 }
 
+@MainActor
 extension AnimatorTransientViewProperties {
 	static let `default` = Self(
 		alpha: 1,

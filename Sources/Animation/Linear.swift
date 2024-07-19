@@ -1,3 +1,4 @@
+@MainActor
 extension Animation {
 	public static func linear(duration: Double) -> Self {
 		.init(duration: duration, curve: .linear)

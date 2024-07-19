@@ -1,7 +1,9 @@
 import ObjectiveC
 
+@MainActor
 public var swizzleLogs = false
 
+@MainActor
 public func swizzle(_ type: AnyObject.Type, _ original: Selector, _ swizzled: Selector) {
 	guard !swizzlingHistory.contains(type, original, swizzled) else {
 		return
@@ -46,4 +48,5 @@ private struct SwizzlingHistory {
 	}
 }
 
+@MainActor
 private var swizzlingHistory = SwizzlingHistory()

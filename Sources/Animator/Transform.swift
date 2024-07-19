@@ -14,6 +14,7 @@ public struct Transform: Equatable {
 	}
 }
 
+@MainActor
 extension OptionalWithDefault where Value == Transform {
 	func assign(to uiView: UIView, force: Bool) {
 		self.assign(force: force) {
