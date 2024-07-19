@@ -26,8 +26,8 @@ jobs:
           - mac-catalyst
           - tvOS
         swift:
-          - 5.9
-          - 5.10
+          - "5.9"
+          - "5.10"
     steps:
       - name: Git Checkout
         uses: actions/checkout@v4
