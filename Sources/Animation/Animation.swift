@@ -1,5 +1,6 @@
 import UIKit
 
+@MainActor
 public struct Animation {
 	static var defaultDuration: Double { 0.35 }
 

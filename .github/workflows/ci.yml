@@ -28,6 +28,7 @@ jobs:
         swift:
           - "5.9"
           - "5.10"
+          - "6.0"
     steps:
       - name: Git Checkout
         uses: actions/checkout@v4
