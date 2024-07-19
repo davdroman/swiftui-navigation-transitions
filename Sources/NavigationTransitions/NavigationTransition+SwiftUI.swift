@@ -2,6 +2,7 @@ import SwiftUI
 @_spi(Advanced) import SwiftUIIntrospect
 
 extension View {
+	@MainActor
 	public func navigationTransition(
 		_ transition: AnyNavigationTransition,
 		interactivity: AnyNavigationTransition.Interactivity = .default
