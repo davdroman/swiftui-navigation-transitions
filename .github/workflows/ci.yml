@@ -8,7 +8,7 @@ on:
     branches:
       - "**"
   schedule:
-    - cron: '3 3 * * 2'  # 3:03 AM, every Tuesday
+    - cron: "3 3 * * 2" # 3:03 AM, every Tuesday
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -26,9 +26,8 @@ jobs:
           - mac-catalyst
           - tvOS
         swift:
-          - 5.7
-          - 5.8
           - 5.9
+          - 5.10
     steps:
       - name: Git Checkout
         uses: actions/checkout@v4
