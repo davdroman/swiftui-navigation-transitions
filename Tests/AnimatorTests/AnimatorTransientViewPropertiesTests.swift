@@ -1,4 +1,4 @@
-@_spi(package) @testable import Animator
+@testable import Animator
 import TestUtils
 
 final class AnimatorTransientViewPropertiesTests: XCTestCase {}

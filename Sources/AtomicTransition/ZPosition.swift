@@ -1,4 +1,4 @@
-@_spi(package) import Animator
+import Animator
 import UIKit
 
 /// A transition that changes the view layer’s position on the z axis.

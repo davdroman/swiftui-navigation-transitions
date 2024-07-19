@@ -1,4 +1,4 @@
-@_spi(package) @testable import AtomicTransition
+@testable import AtomicTransition
 import TestUtils
 
 final class CombinedTests: XCTestCase {

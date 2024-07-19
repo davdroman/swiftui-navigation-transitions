@@ -17,10 +17,10 @@ extension AnyNavigationTransition {
 	}
 }
 
-@_spi(package) public struct Default: PrimitiveNavigationTransition {
+package struct Default: PrimitiveNavigationTransition {
 	init() {}
 
-	public func transition(with animator: Animator, for operation: TransitionOperation, in context: Context) {
+	package func transition(with animator: Animator, for operation: TransitionOperation, in context: Context) {
 		// NO-OP
 	}
 }

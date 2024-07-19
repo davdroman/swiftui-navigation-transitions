@@ -1,4 +1,4 @@
-@_spi(package) import NavigationTransition
+import NavigationTransition
 import RuntimeAssociation
 import RuntimeSwizzling
 import UIKit

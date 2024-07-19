@@ -1,6 +1,6 @@
-@_spi(package) import Animation
-@_spi(package) import Animator
-@_spi(package) import NavigationTransition
+import Animation
+import Animator
+import NavigationTransition
 import UIKit
 
 final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelegate {

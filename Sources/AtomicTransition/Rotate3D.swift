@@ -1,4 +1,4 @@
-@_spi(package) import Animator
+import Animator
 import SwiftUI
 
 /// A transition that rotates the view from `angle` to zero on insertion, and from zero to `angle` on removal.
