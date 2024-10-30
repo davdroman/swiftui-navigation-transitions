@@ -6,7 +6,7 @@ import UIKit
 /// This protocol variant is used to implement transitions that need to interact with raw UIKit transitioning entities.
 ///
 /// - Warning: Usage of this initializer is highly discouraged unless you know what you're doing.
-/// Conform to ``NavigationTransition`` instead to ensure correct transition behavior.
+/// Conform to ``NavigationTransitionProtocol`` instead to ensure correct transition behavior.
 public protocol PrimitiveNavigationTransition {
 	/// Typealias for `NavigationTransitionOperation`.
 	typealias TransitionOperation = NavigationTransitionOperation

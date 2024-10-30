@@ -7,8 +7,8 @@ extension AnyNavigationTransition {
 	}
 }
 
-struct Swing: NavigationTransition {
-	var body: some NavigationTransition {
+struct Swing: NavigationTransitionProtocol {
+	var body: some NavigationTransitionProtocol {
 		Slide(axis: .horizontal)
 		MirrorPush {
 			let angle = 70.0

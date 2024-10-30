@@ -25,7 +25,7 @@ extension AnyNavigationTransition {
 /// This transition:
 /// - Pushes views right-to-left and pops views left-to-right when `axis` is `horizontal`.
 /// - Pushes views bottom-to-top and pops views top-to-bottom when `axis` is `vertical`.
-public struct Slide: NavigationTransition {
+public struct Slide: NavigationTransitionProtocol {
 	private let axis: Axis
 
 	public init(axis: Axis) {
@@ -38,7 +38,7 @@ public struct Slide: NavigationTransition {
 		self.init(axis: .horizontal)
 	}
 
-	public var body: some NavigationTransition {
+	public var body: some NavigationTransitionProtocol {
 		switch axis {
 		case .horizontal:
 			MirrorPush {

@@ -15,7 +15,7 @@ As a first time reader, it is highly recommended that you read **Core Concepts**
 
 ## Core Concepts
 
-### `NavigationTransition`
+### `NavigationTransitionProtocol`
 
 The main construct the library leverages is called `AnyNavigationTransition`. You may have seen some instances of this type in the README's code samples (e.g. `.slide`).
 
@@ -32,19 +32,19 @@ extension AnyNavigationTransition {
 }
 ```
 
-As you can see, there's not much going on here. The reason is that `AnyNavigationTransition` is actually just a type erasing wrapper around the real meat and potatoes: the protocol `NavigationTransition`.
+As you can see, there's not much going on here. The reason is that `AnyNavigationTransition` is actually just a type erasing wrapper around the real meat and potatoes: the protocol `NavigationTransitionProtocol`.
 
 Let's take a look at what (capital "S") `Slide` is:
 
 ```swift
-public struct Slide: NavigationTransition {
+public struct Slide: NavigationTransitionProtocol {
     private let axis: Axis
 
     public init(axis: Axis) {
         self.axis = axis
     }
 
-    public var body: some NavigationTransition {
+    public var body: some NavigationTransitionProtocol {
         switch axis {
         case .horizontal:
             MirrorPush {
@@ -71,7 +71,7 @@ public struct Slide: NavigationTransition {
 
 This is more like it!
 
-As you can see, `NavigationTransition` leverages result builder syntax to define "what" transitions do, not "how" they do it. Notice how the entire transition is implemented concisely, yet there's **no explicit `UIView` animation** code to be seen anywhere at this point. I'd like to direct your attention instead to what's actually describing the transition at its core: `Move(edge: ...)`.
+As you can see, `NavigationTransitionProtocol` leverages result builder syntax to define "what" transitions do, not "how" they do it. Notice how the entire transition is implemented concisely, yet there's **no explicit `UIView` animation** code to be seen anywhere at this point. I'd like to direct your attention instead to what's actually describing the transition at its core: `Move(edge: ...)`.
 
 If you've used SwiftUI's `transition` modifier before, it's easy to draw a comparison to `AnyTransition.move(edge:)`. And in fact, whilst the API is slightly different, the intent behind it is the same indeed! `Move` is a type that conforms to the building block of the library: `AtomicTransition`.
 
@@ -79,7 +79,7 @@ If you've used SwiftUI's `transition` modifier before, it's easy to draw a compa
 
 `AtomicTransition` is a SwiftUI `AnyTransition`-inspired type which acts very much in the same manner. It can describe a specific set of view changes on an individual ("atomic") basis, for both **insertion** and **removal** of said view. 
 
-Contrary to `NavigationTransition` and as the name indicates, `AtomicTransition` applies to only a **single view** out of the two, and is **agnostic** as to the **intent** (push or pop) of its **parent** `NavigationTransition`.
+Contrary to `NavigationTransitionProtocol` and as the name indicates, `AtomicTransition` applies to only a **single view** out of the two, and is **agnostic** as to the **intent** (push or pop) of its **parent** `NavigationTransitionProtocol`.
 
 If we dive even deeper into `Move`, this is what we find:
 
@@ -147,7 +147,7 @@ You can create a custom `AnyNavigationTransition` by combining two existing tran
 
 It is rarely the case where you'd want to combine `AnyNavigationTransition`s in this manner due to their nature as high level abstractions. In fact, most of the time they won't combine very well at all, and will produce glitchy or weird effects. This is because two or more fully-fledged transitions tend to override the same view properties with different values, producing unexpected outcomes.
 
-Instead, most combinations should happen at lowers level, in `NavigationTransition` and `AtomicTransition` conformances.
+Instead, most combinations should happen at lowers level, in `NavigationTransitionProtocol` and `AtomicTransition` conformances.
 
 Regardless, it's still allowed for cases like `slide` + `fade(in:)`, which affect completely different properties of the view. Separatedly, `slide` only moves the views horizontally, and `.fade(.in)` fades views in. When combined, both occur at the same time without interfering with each other.
 
@@ -209,17 +209,17 @@ All types conforming to `AtomicTransition` must implement what's known as a "tra
 
 ---
 
-Next up, let's explore two ways of conforming to `NavigationTransition`.
+Next up, let's explore two ways of conforming to `NavigationTransitionProtocol`.
 
-The simplest (and most recommended) way is by declaring our atomic transitions (if needed), and composing them via `var body: some NavigationTransition { ... }` like we saw [previously with `Slide`](#NavigationTransition).
+The simplest (and most recommended) way is by declaring our atomic transitions (if needed), and composing them via `var body: some NavigationTransitionProtocol { ... }` like we saw [previously with `Slide`](#NavigationTransitionProtocol).
 
-Check out the [documentation](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.2.0/documentation/navigationtransitions/navigationtransition) to learn about the different `NavigationTransition` types and how they compose.
+Check out the [documentation](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.2.0/documentation/navigationtransitions/NavigationTransitionProtocol) to learn about the different `NavigationTransitionProtocol` types and how they compose.
 
 The Demo project in the repo is also a great source of learning about different types of custom transitions and the way to implement them.
 
 ---
 
-Finally, let's explore an alternative option for those who'd like to reach for a more wholistic API. `NavigationTransition` declares a `transition` function that can be implemented instead of `body`:
+Finally, let's explore an alternative option for those who'd like to reach for a more wholistic API. `NavigationTransitionProtocol` declares a `transition` function that can be implemented instead of `body`:
 
 ```swift
 func transition(from fromView: TransientView, to toView: TransientView, for operation: TransitionOperation, in container: Container)
