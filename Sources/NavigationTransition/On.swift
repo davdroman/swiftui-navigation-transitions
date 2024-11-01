@@ -1,7 +1,7 @@
 import AtomicTransition
 
 /// Used to define a transition that executes only on push.
-public struct OnPush<Transition: AtomicTransition>: NavigationTransition {
+public struct OnPush<Transition: AtomicTransition>: NavigationTransitionProtocol {
 	private let transition: Transition
 
 	public init(@AtomicTransitionBuilder transition: () -> Transition) {
@@ -28,7 +28,7 @@ extension OnPush: Equatable where Transition: Equatable {}
 extension OnPush: Hashable where Transition: Hashable {}
 
 /// Used to define a transition that executes only on pop.
-public struct OnPop<Transition: AtomicTransition>: NavigationTransition {
+public struct OnPop<Transition: AtomicTransition>: NavigationTransitionProtocol {
 	private let transition: Transition
 
 	public init(@AtomicTransitionBuilder transition: () -> Transition) {

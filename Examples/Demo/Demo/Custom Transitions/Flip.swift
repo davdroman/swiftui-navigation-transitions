@@ -11,10 +11,10 @@ extension AnyNavigationTransition {
 	}
 }
 
-struct Flip: NavigationTransition {
+struct Flip: NavigationTransitionProtocol {
 	var axis: Axis
 
-	var body: some NavigationTransition {
+	var body: some NavigationTransitionProtocol {
 		MirrorPush {
 			Rotate3D(.degrees(180), axis: axis == .horizontal ? (x: 1, y: 0, z: 0) : (x: 0, y: 1, z: 0))
 		}

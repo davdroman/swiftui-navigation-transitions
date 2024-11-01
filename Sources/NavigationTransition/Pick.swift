@@ -1,5 +1,5 @@
-/// Used to isolate the push portion of a full `NavigationTransition` and execute it on push, ignoring the pop portion.
-public struct PickPush<Transition: NavigationTransition>: NavigationTransition {
+/// Used to isolate the push portion of a full `NavigationTransitionProtocol` and execute it on push, ignoring the pop portion.
+public struct PickPush<Transition: NavigationTransitionProtocol>: NavigationTransitionProtocol {
 	private let transition: Transition
 
 	public init(@NavigationTransitionBuilder transition: () -> Transition) {
@@ -24,8 +24,8 @@ public struct PickPush<Transition: NavigationTransition>: NavigationTransition {
 extension PickPush: Equatable where Transition: Equatable {}
 extension PickPush: Hashable where Transition: Hashable {}
 
-/// Used to isolate the pop portion of a full `NavigationTransition` and execute it on pop, ignoring the push portion.
-public struct PickPop<Transition: NavigationTransition>: NavigationTransition {
+/// Used to isolate the pop portion of a full `NavigationTransitionProtocol` and execute it on pop, ignoring the push portion.
+public struct PickPop<Transition: NavigationTransitionProtocol>: NavigationTransitionProtocol {
 	private let transition: Transition
 
 	public init(@NavigationTransitionBuilder transition: () -> Transition) {

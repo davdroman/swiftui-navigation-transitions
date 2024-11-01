@@ -7,8 +7,8 @@ extension AnyNavigationTransition {
 	}
 }
 
-struct Zoom: NavigationTransition {
-	var body: some NavigationTransition {
+struct Zoom: NavigationTransitionProtocol {
+	var body: some NavigationTransitionProtocol {
 		MirrorPush {
 			Scale(0.5)
 			OnInsertion {

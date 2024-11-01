@@ -1,5 +1,5 @@
 // For internal use only.
-struct Identity: NavigationTransition {
+struct Identity: NavigationTransitionProtocol {
 	init() {}
 
 	func transition(

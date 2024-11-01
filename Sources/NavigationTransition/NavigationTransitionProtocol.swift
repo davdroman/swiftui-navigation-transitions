@@ -7,7 +7,7 @@ import UIKit
 ///
 /// Although the library ships with a set of predefined transitions (e.g. ``Slide``, one can also create
 /// entirely new, fully customizable transitions by conforming to this protocol.
-public protocol NavigationTransition {
+public protocol NavigationTransitionProtocol {
 	/// Typealias for `AnimatorTransientView`.
 	typealias TransientView = AnimatorTransientView
 	/// Typealias for `NavigationTransitionOperation`.
@@ -54,7 +54,7 @@ public protocol NavigationTransition {
 	var body: Body { get }
 }
 
-extension NavigationTransition where Body: NavigationTransition {
+extension NavigationTransitionProtocol where Body: NavigationTransitionProtocol {
 	/// Invokes ``body``'s implementation of ``transition(from:to:for:in:)-211yh``.
 	@inlinable
 	public func transition(
@@ -67,7 +67,7 @@ extension NavigationTransition where Body: NavigationTransition {
 	}
 }
 
-extension NavigationTransition where Body == Never {
+extension NavigationTransitionProtocol where Body == Never {
 	/// A non-existent body.
 	///
 	/// > Warning: Do not invoke this property directly. It will trigger a fatal error at runtime.

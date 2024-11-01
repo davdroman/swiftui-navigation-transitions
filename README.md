@@ -77,8 +77,8 @@ The library ships with some **standard transitions** out of the box:
 In addition to these, you can create fully [**custom transitions**](https://davdroman.github.io/swiftui-navigation-transitions/main/documentation/navigationtransitions/custom-transitions/) in just a few lines of SwiftUI-like code!
 
 ```swift
-struct Swing: NavigationTransition {
-    var body: some NavigationTransition {
+struct Swing: NavigationTransitionProtocol {
+    var body: some NavigationTransitionProtocol {
         Slide(axis: .horizontal)
         MirrorPush {
             let angle = 70.0

@@ -24,7 +24,7 @@ public struct AnyNavigationTransition {
 	package let handler: Handler
 	package var animation: Animation? = .default
 
-	public init(_ transition: some NavigationTransition) {
+	public init(_ transition: some NavigationTransitionProtocol) {
 		self.isDefault = false
 		self.handler = .transient(transition.transition(from:to:for:in:))
 	}

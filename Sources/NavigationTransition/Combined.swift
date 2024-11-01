@@ -4,7 +4,7 @@ extension AnyNavigationTransition {
 	public func combined(with other: Self) -> Self {
 		switch (self.handler, other.handler) {
 		case (.transient(let lhsHandler), .transient(let rhsHandler)):
-			struct Erased: NavigationTransition {
+			struct Erased: NavigationTransitionProtocol {
 				let handler: AnyNavigationTransition.TransientHandler
 
 				@inlinable
@@ -30,7 +30,7 @@ extension AnyNavigationTransition {
 	}
 }
 
-public struct Combined<TransitionA: NavigationTransition, TransitionB: NavigationTransition>: NavigationTransition {
+public struct Combined<TransitionA: NavigationTransitionProtocol, TransitionB: NavigationTransitionProtocol>: NavigationTransitionProtocol {
 	private let transitionA: TransitionA
 	private let transitionB: TransitionB
 

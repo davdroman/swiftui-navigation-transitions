@@ -1,16 +1,16 @@
 @resultBuilder
 public enum NavigationTransitionBuilder {
 	#if compiler(>=5.7)
-	public static func buildPartialBlock<T1: NavigationTransition>(first: T1) -> T1 {
+	public static func buildPartialBlock<T1: NavigationTransitionProtocol>(first: T1) -> T1 {
 		first
 	}
 
-	public static func buildPartialBlock<T1: NavigationTransition, T2: NavigationTransition>(accumulated: T1, next: T2) -> Combined<T1, T2> {
+	public static func buildPartialBlock<T1: NavigationTransitionProtocol, T2: NavigationTransitionProtocol>(accumulated: T1, next: T2) -> Combined<T1, T2> {
 		Combined(accumulated, next)
 	}
 	#else
 	public static func buildBlock<
-		T1: NavigationTransition
+		T1: NavigationTransitionProtocol
 	>(
 		_ t1: T1
 	) -> T1 {
@@ -18,8 +18,8 @@ public enum NavigationTransitionBuilder {
 	}
 
 	public static func buildBlock<
-		T1: NavigationTransition,
-		T2: NavigationTransition
+		T1: NavigationTransitionProtocol,
+		T2: NavigationTransitionProtocol
 	>(
 		_ t1: T1,
 		_ t2: T2
@@ -28,9 +28,9 @@ public enum NavigationTransitionBuilder {
 	}
 
 	public static func buildBlock<
-		T1: NavigationTransition,
-		T2: NavigationTransition,
-		T3: NavigationTransition
+		T1: NavigationTransitionProtocol,
+		T2: NavigationTransitionProtocol,
+		T3: NavigationTransitionProtocol
 	>(
 		_ t1: T1,
 		_ t2: T2,
@@ -40,10 +40,10 @@ public enum NavigationTransitionBuilder {
 	}
 
 	public static func buildBlock<
-		T1: NavigationTransition,
-		T2: NavigationTransition,
-		T3: NavigationTransition,
-		T4: NavigationTransition
+		T1: NavigationTransitionProtocol,
+		T2: NavigationTransitionProtocol,
+		T3: NavigationTransitionProtocol,
+		T4: NavigationTransitionProtocol
 	>(
 		_ t1: T1,
 		_ t2: T2,
@@ -54,11 +54,11 @@ public enum NavigationTransitionBuilder {
 	}
 
 	public static func buildBlock<
-		T1: NavigationTransition,
-		T2: NavigationTransition,
-		T3: NavigationTransition,
-		T4: NavigationTransition,
-		T5: NavigationTransition
+		T1: NavigationTransitionProtocol,
+		T2: NavigationTransitionProtocol,
+		T3: NavigationTransitionProtocol,
+		T4: NavigationTransitionProtocol,
+		T5: NavigationTransitionProtocol
 	>(
 		_ t1: T1,
 		_ t2: T2,
@@ -70,12 +70,12 @@ public enum NavigationTransitionBuilder {
 	}
 
 	public static func buildBlock<
-		T1: NavigationTransition,
-		T2: NavigationTransition,
-		T3: NavigationTransition,
-		T4: NavigationTransition,
-		T5: NavigationTransition,
-		T6: NavigationTransition
+		T1: NavigationTransitionProtocol,
+		T2: NavigationTransitionProtocol,
+		T3: NavigationTransitionProtocol,
+		T4: NavigationTransitionProtocol,
+		T5: NavigationTransitionProtocol,
+		T6: NavigationTransitionProtocol
 	>(
 		_ t1: T1,
 		_ t2: T2,
@@ -88,13 +88,13 @@ public enum NavigationTransitionBuilder {
 	}
 
 	public static func buildBlock<
-		T1: NavigationTransition,
-		T2: NavigationTransition,
-		T3: NavigationTransition,
-		T4: NavigationTransition,
-		T5: NavigationTransition,
-		T6: NavigationTransition,
-		T7: NavigationTransition
+		T1: NavigationTransitionProtocol,
+		T2: NavigationTransitionProtocol,
+		T3: NavigationTransitionProtocol,
+		T4: NavigationTransitionProtocol,
+		T5: NavigationTransitionProtocol,
+		T6: NavigationTransitionProtocol,
+		T7: NavigationTransitionProtocol
 	>(
 		_ t1: T1,
 		_ t2: T2,
@@ -108,7 +108,7 @@ public enum NavigationTransitionBuilder {
 	}
 	#endif
 
-	public static func buildOptional<T: NavigationTransition>(_ component: T?) -> _OptionalTransition<T> {
+	public static func buildOptional<T: NavigationTransitionProtocol>(_ component: T?) -> _OptionalTransition<T> {
 		if let component {
 			return _OptionalTransition(component)
 		} else {
@@ -116,16 +116,16 @@ public enum NavigationTransitionBuilder {
 		}
 	}
 
-	public static func buildEither<TrueTransition: NavigationTransition, FalseTransition: NavigationTransition>(first component: TrueTransition) -> _ConditionalTransition<TrueTransition, FalseTransition> {
+	public static func buildEither<TrueTransition: NavigationTransitionProtocol, FalseTransition: NavigationTransitionProtocol>(first component: TrueTransition) -> _ConditionalTransition<TrueTransition, FalseTransition> {
 		_ConditionalTransition(trueTransition: component)
 	}
 
-	public static func buildEither<TrueTransition: NavigationTransition, FalseTransition: NavigationTransition>(second component: FalseTransition) -> _ConditionalTransition<TrueTransition, FalseTransition> {
+	public static func buildEither<TrueTransition: NavigationTransitionProtocol, FalseTransition: NavigationTransitionProtocol>(second component: FalseTransition) -> _ConditionalTransition<TrueTransition, FalseTransition> {
 		_ConditionalTransition(falseTransition: component)
 	}
 }
 
-public struct _OptionalTransition<Transition: NavigationTransition>: NavigationTransition {
+public struct _OptionalTransition<Transition: NavigationTransitionProtocol>: NavigationTransitionProtocol {
 	private let transition: Transition?
 
 	init(_ transition: Transition?) {
@@ -142,7 +142,7 @@ public struct _OptionalTransition<Transition: NavigationTransition>: NavigationT
 	}
 }
 
-public struct _ConditionalTransition<TrueTransition: NavigationTransition, FalseTransition: NavigationTransition>: NavigationTransition {
+public struct _ConditionalTransition<TrueTransition: NavigationTransitionProtocol, FalseTransition: NavigationTransitionProtocol>: NavigationTransitionProtocol {
 	private typealias Transition = _Either<TrueTransition, FalseTransition>
 	private let transition: Transition
 
