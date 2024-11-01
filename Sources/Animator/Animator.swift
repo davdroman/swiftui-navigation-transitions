@@ -38,6 +38,7 @@ public typealias _Animator = Animator
 	func addCompletion(_ completion: @escaping (UIViewAnimatingPosition) -> Void)
 }
 
+@MainActor
 extension Animator where Self: UIViewImplicitlyAnimating {
 	public func addAnimations(_ animation: @escaping () -> Void) {
 		addAnimations?(animation)
