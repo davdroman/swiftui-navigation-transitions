@@ -59,3 +59,10 @@ package.dependencies = [
 	.package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "1.0.0"),
 	.package(url: "https://github.com/siteline/swiftui-introspect", from: "1.0.0"),
 ]
+
+for target in package.targets {
+	target.swiftSettings = target.swiftSettings ?? []
+	target.swiftSettings? += [
+		.enableExperimentalFeature("AccessLevelOnImport"),
+	]
+}

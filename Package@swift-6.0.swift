@@ -65,7 +65,6 @@ package.dependencies = [
 for target in package.targets {
 	target.swiftSettings = target.swiftSettings ?? []
 	target.swiftSettings? += [
-		.enableExperimentalFeature("AccessLevelOnImport"),
 		.enableUpcomingFeature("ExistentialAny"),
 		.enableUpcomingFeature("InternalImportsByDefault"),
 	]
