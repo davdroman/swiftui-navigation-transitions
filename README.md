@@ -133,8 +133,8 @@ dependencies: [
 
 The documentation for releases and `main` are available here:
 
-- [`main`](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/main/documentation/navigationtransitions)
-- [0.15.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.15.0/documentation/navigationtransitions)
+- [`main`](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/main/documentation/swiftuinavigationtransitions)
+- [0.15.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.15.0/documentation/swiftuinavigationtransitions)
 
 <details>
 <summary>
