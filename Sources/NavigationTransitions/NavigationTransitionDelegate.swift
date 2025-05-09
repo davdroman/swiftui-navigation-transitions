@@ -23,9 +23,9 @@ final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelega
 
 	func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: any UIViewControllerAnimatedTransitioning) -> (any UIViewControllerInteractiveTransitioning)? {
 		if !transition.isDefault {
-			return interactionController
+			interactionController
 		} else {
-			return nil
+			nil
 		}
 	}
 
@@ -35,13 +35,13 @@ final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelega
 			let animation = transition.animation,
 			let operation = NavigationTransitionOperation(operation)
 		{
-			return NavigationTransitionAnimatorProvider(
+			NavigationTransitionAnimatorProvider(
 				transition: transition,
 				animation: animation,
 				operation: operation
 			)
 		} else {
-			return nil
+			nil
 		}
 	}
 }
