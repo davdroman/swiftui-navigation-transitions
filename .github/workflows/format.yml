@@ -12,12 +12,12 @@ concurrency:
 jobs:
   format:
     name: swiftformat
-    runs-on: macos-13
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
       - name: Format
         run: swiftformat .
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Run SwiftFormat
           branch: main
