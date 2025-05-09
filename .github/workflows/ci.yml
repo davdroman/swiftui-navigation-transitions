@@ -39,6 +39,7 @@ jobs:
           platform: ${{ matrix.platform }}
           swift: ~${{ matrix.swift }}
           action: test
+          workspace: SwiftUINavigationTransitions.xcworkspace
           scheme: SwiftUINavigationTransitions
 
       - name: Build Examples/Demo
@@ -47,4 +48,5 @@ jobs:
           platform: ${{ matrix.platform }}
           swift: ~${{ matrix.swift }}
           action: build
+          workspace: SwiftUINavigationTransitions.xcworkspace
           scheme: Demo
