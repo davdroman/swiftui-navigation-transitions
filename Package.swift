@@ -45,7 +45,7 @@ let package = Package(
 			"NavigationTransition",
 			"RuntimeAssociation",
 			"RuntimeSwizzling",
-			"UIKitNavigationTransitions","
+//			"UIKitNavigationTransitions",
 			.product(name: "SwiftUIIntrospect", package: "swiftui-introspect"),
 		]),
 
