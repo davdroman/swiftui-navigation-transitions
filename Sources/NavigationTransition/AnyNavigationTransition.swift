@@ -10,9 +10,9 @@ public struct AnyNavigationTransition {
 	) -> Void
 
 	package typealias PrimitiveHandler = (
-		Animator,
+		any Animator,
 		NavigationTransitionOperation,
-		UIViewControllerContextTransitioning
+		any UIViewControllerContextTransitioning
 	) -> Void
 
 	package enum Handler {

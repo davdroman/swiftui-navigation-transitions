@@ -118,7 +118,7 @@ extension RandomAccessCollection where Index == Int {
 }
 
 extension UINavigationController {
-	private var defaultDelegate: UINavigationControllerDelegate! {
+	private var defaultDelegate: (any UINavigationControllerDelegate)! {
 		get { self[] }
 		set { self[] = newValue }
 	}
@@ -304,7 +304,7 @@ extension UINavigationController {
 
 @available(tvOS, unavailable)
 extension UIGestureRecognizer {
-	var strongDelegate: UIGestureRecognizerDelegate? {
+	var strongDelegate: (any UIGestureRecognizerDelegate)? {
 		get { self[] }
 		set {
 			self[] = newValue

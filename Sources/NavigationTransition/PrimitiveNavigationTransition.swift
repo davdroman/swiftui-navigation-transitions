@@ -20,5 +20,5 @@ public protocol PrimitiveNavigationTransition {
 	///   - Operation: The ``TransitionOperation``. Possible values are `push` or `pop`. It's recommended that you
 	///   customize the behavior of your transition based on this parameter.
 	///   - Context: The raw `UIViewControllerContextTransitioning` instance of the transition coordinator.
-	func transition(with animator: Animator, for operation: TransitionOperation, in context: Context)
+	func transition(with animator: any Animator, for operation: TransitionOperation, in context: any Context)
 }
