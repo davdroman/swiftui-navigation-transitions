@@ -7,4 +7,7 @@
    <FileRef
       location = "group:">
    </FileRef>
+   <FileRef
+      location = "group:Tests/TestPlans/SwiftUINavigationTransitions.xctestplan">
+   </FileRef>
 </Workspace>
