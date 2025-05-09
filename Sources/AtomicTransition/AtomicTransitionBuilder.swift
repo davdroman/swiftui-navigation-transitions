@@ -14,9 +14,9 @@ public enum AtomicTransitionBuilder {
 
 	public static func buildOptional<T: AtomicTransition>(_ component: T?) -> _OptionalTransition<T> {
 		if let component {
-			return _OptionalTransition(component)
+			_OptionalTransition(component)
 		} else {
-			return _OptionalTransition(nil)
+			_OptionalTransition(nil)
 		}
 	}
 
@@ -76,9 +76,9 @@ extension _ConditionalTransition: MirrorableAtomicTransition where TrueTransitio
 	public func mirrored() -> _ConditionalTransition<TrueTransition.Mirrored, FalseTransition.Mirrored> {
 		switch transition {
 		case .left(let trueTransition):
-			return .init(trueTransition: trueTransition.mirrored())
+			.init(trueTransition: trueTransition.mirrored())
 		case .right(let falseTransition):
-			return .init(falseTransition: falseTransition.mirrored())
+			.init(falseTransition: falseTransition.mirrored())
 		}
 	}
 }
