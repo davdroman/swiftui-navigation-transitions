@@ -1,4 +1,3 @@
---exclude **/RuntimeWarnings.swift
 --disable redundantNilInit,redundantSelf,redundantType,unusedArguments
 
 --header strip
