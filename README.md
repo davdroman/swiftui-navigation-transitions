@@ -115,18 +115,34 @@ This even works to override its behavior while maintaining the **default system 
 .navigationTransition(.default, interactivity: .pan) // ✨
 ```
 
+## Installation
+
+Add the package via Swift Package Manager:
+
+``` swift
+dependencies: [
+    .package(url: "https://github.com/davdroman/swiftui-navigation-transitions", from: "0.15.0")
+]
+```
+
+```swift
+.product(name: "NavigationTransitions", package: "swiftui-navigation-transitions"),
+```
+
 ## Documentation
 
 The documentation for releases and `main` are available here:
 
 - [`main`](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/main/documentation/navigationtransitions)
-- [0.13.3](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.13.3/documentation/navigationtransitions)
+- [0.15.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.15.0/documentation/navigationtransitions)
 
 <details>
 <summary>
 Other versions
 </summary>
 
+- [0.14.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.14.0/documentation/navigationtransitions)
+- [0.13.3](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.13.3/documentation/navigationtransitions)
 - [0.13.2](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.13.2/documentation/navigationtransitions)
 - [0.13.1](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.13.1/documentation/navigationtransitions)
 - [0.13.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.13.0/documentation/navigationtransitions)
