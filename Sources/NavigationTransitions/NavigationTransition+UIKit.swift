@@ -56,56 +56,56 @@ extension UISplitViewController {
 extension UISplitViewController {
 	var compactViewController: UIViewController? {
 		if #available(iOS 14, tvOS 14, *) {
-			return viewController(for: .compact)
+			viewController(for: .compact)
 		} else {
 			if isCollapsed {
-				return viewControllers.first
+				viewControllers.first
 			} else {
-				return nil
+				nil
 			}
 		}
 	}
 
 	var primaryViewController: UIViewController? {
 		if #available(iOS 14, tvOS 14, *) {
-			return viewController(for: .primary)
+			viewController(for: .primary)
 		} else {
 			if !isCollapsed {
-				return viewControllers.first
+				viewControllers.first
 			} else {
-				return nil
+				nil
 			}
 		}
 	}
 
 	var supplementaryViewController: UIViewController? {
 		if #available(iOS 14, tvOS 14, *) {
-			return viewController(for: .supplementary)
+			viewController(for: .supplementary)
 		} else {
 			if !isCollapsed {
 				if viewControllers.count >= 3 {
-					return viewControllers[safe: 1]
+					viewControllers[safe: 1]
 				} else {
-					return nil
+					nil
 				}
 			} else {
-				return nil
+				nil
 			}
 		}
 	}
 
 	var secondaryViewController: UIViewController? {
 		if #available(iOS 14, tvOS 14, *) {
-			return viewController(for: .secondary)
+			viewController(for: .secondary)
 		} else {
 			if !isCollapsed {
 				if viewControllers.count >= 3 {
-					return viewControllers[safe: 2]
+					viewControllers[safe: 2]
 				} else {
-					return viewControllers[safe: 1]
+					viewControllers[safe: 1]
 				}
 			} else {
-				return nil
+				nil
 			}
 		}
 	}
@@ -256,25 +256,25 @@ extension UINavigationController {
 
 	@objc private func popViewController_animateIfNeeded(animated: Bool) -> UIViewController? {
 		if let transitionDelegate = customDelegate {
-			return popViewController_animateIfNeeded(animated: transitionDelegate.transition.animation != nil)
+			popViewController_animateIfNeeded(animated: transitionDelegate.transition.animation != nil)
 		} else {
-			return popViewController_animateIfNeeded(animated: animated)
+			popViewController_animateIfNeeded(animated: animated)
 		}
 	}
 
 	@objc private func popToViewController_animateIfNeeded(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
 		if let transitionDelegate = customDelegate {
-			return popToViewController_animateIfNeeded(viewController, animated: transitionDelegate.transition.animation != nil)
+			popToViewController_animateIfNeeded(viewController, animated: transitionDelegate.transition.animation != nil)
 		} else {
-			return popToViewController_animateIfNeeded(viewController, animated: animated)
+			popToViewController_animateIfNeeded(viewController, animated: animated)
 		}
 	}
 
 	@objc private func popToRootViewController_animateIfNeeded(animated: Bool) -> UIViewController? {
 		if let transitionDelegate = customDelegate {
-			return popToRootViewController_animateIfNeeded(animated: transitionDelegate.transition.animation != nil)
+			popToRootViewController_animateIfNeeded(animated: transitionDelegate.transition.animation != nil)
 		} else {
-			return popToRootViewController_animateIfNeeded(animated: animated)
+			popToRootViewController_animateIfNeeded(animated: animated)
 		}
 	}
 }

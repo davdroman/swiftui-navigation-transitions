@@ -18,54 +18,54 @@ final class AppState: ObservableObject {
 		var description: String {
 			switch self {
 			case .default:
-				return "Default"
+				"Default"
 			case .crossFade:
-				return "Fade"
+				"Fade"
 			case .slide:
-				return "Slide"
+				"Slide"
 			case .slideVertically:
-				return "Slide Vertically"
+				"Slide Vertically"
 			case .slideAndFadeIn:
-				return "Slide + Fade In"
+				"Slide + Fade In"
 			case .slideAndFadeOut:
-				return "Slide + Fade Out"
+				"Slide + Fade Out"
 			case .flip:
-				return "Flip"
+				"Flip"
 			case .flipVertically:
-				return "Flip Vertically"
+				"Flip Vertically"
 			case .swing:
-				return "Swing"
+				"Swing"
 			case .zoom:
-				return "Zoom"
+				"Zoom"
 			case .zoomAndSlide:
-				return "Zoom + Slide"
+				"Zoom + Slide"
 			}
 		}
 
 		func callAsFunction() -> AnyNavigationTransition {
 			switch self {
 			case .default:
-				return .default
+				.default
 			case .crossFade:
-				return .fade(.cross)
+				.fade(.cross)
 			case .slide:
-				return .slide
+				.slide
 			case .slideVertically:
-				return .slide(axis: .vertical)
+				.slide(axis: .vertical)
 			case .slideAndFadeIn:
-				return .slide.combined(with: .fade(.in))
+				.slide.combined(with: .fade(.in))
 			case .slideAndFadeOut:
-				return .slide.combined(with: .fade(.out))
+				.slide.combined(with: .fade(.out))
 			case .flip:
-				return .flip
+				.flip
 			case .flipVertically:
-				return .flip(axis: .vertical)
+				.flip(axis: .vertical)
 			case .swing:
-				return .swing
+				.swing
 			case .zoom:
-				return .zoom
+				.zoom
 			case .zoomAndSlide:
-				return .zoom.combined(with: .slide)
+				.zoom.combined(with: .slide)
 			}
 		}
 	}
@@ -79,13 +79,13 @@ final class AppState: ObservableObject {
 		var description: String {
 			switch self {
 			case .none:
-				return "None"
+				"None"
 			case .linear:
-				return "Linear"
+				"Linear"
 			case .easeInOut:
-				return "Ease In Out"
+				"Ease In Out"
 			case .spring:
-				return "Spring"
+				"Spring"
 			}
 		}
 
@@ -96,13 +96,13 @@ final class AppState: ObservableObject {
 		) -> AnyNavigationTransition.Animation? {
 			switch self {
 			case .none:
-				return .none
+				.none
 			case .linear:
-				return .linear(duration: duration())
+				.linear(duration: duration())
 			case .easeInOut:
-				return .easeInOut(duration: duration())
+				.easeInOut(duration: duration())
 			case .spring:
-				return .interpolatingSpring(stiffness: stiffness(), damping: damping())
+				.interpolatingSpring(stiffness: stiffness(), damping: damping())
 			}
 		}
 	}
@@ -115,22 +115,22 @@ final class AppState: ObservableObject {
 		var description: String {
 			switch self {
 			case .slow:
-				return "Slow"
+				"Slow"
 			case .medium:
-				return "Medium"
+				"Medium"
 			case .fast:
-				return "Fast"
+				"Fast"
 			}
 		}
 
 		func callAsFunction() -> Double {
 			switch self {
 			case .slow:
-				return 1
+				1
 			case .medium:
-				return 0.6
+				0.6
 			case .fast:
-				return 0.35
+				0.35
 			}
 		}
 	}
@@ -143,22 +143,22 @@ final class AppState: ObservableObject {
 		var description: String {
 			switch self {
 			case .low:
-				return "Low"
+				"Low"
 			case .medium:
-				return "Medium"
+				"Medium"
 			case .high:
-				return "High"
+				"High"
 			}
 		}
 
 		func callAsFunction() -> Double {
 			switch self {
 			case .low:
-				return 300
+				300
 			case .medium:
-				return 120
+				120
 			case .high:
-				return 50
+				50
 			}
 		}
 	}
@@ -172,26 +172,26 @@ final class AppState: ObservableObject {
 		var description: String {
 			switch self {
 			case .low:
-				return "Low"
+				"Low"
 			case .medium:
-				return "Medium"
+				"Medium"
 			case .high:
-				return "High"
+				"High"
 			case .veryHigh:
-				return "Very High"
+				"Very High"
 			}
 		}
 
 		func callAsFunction() -> Double {
 			switch self {
 			case .low:
-				return 20
+				20
 			case .medium:
-				return 25
+				25
 			case .high:
-				return 30
+				30
 			case .veryHigh:
-				return 50
+				50
 			}
 		}
 	}
@@ -204,22 +204,22 @@ final class AppState: ObservableObject {
 		var description: String {
 			switch self {
 			case .disabled:
-				return "Disabled"
+				"Disabled"
 			case .edgePan:
-				return "Edge Pan"
+				"Edge Pan"
 			case .pan:
-				return "Pan"
+				"Pan"
 			}
 		}
 
 		func callAsFunction() -> AnyNavigationTransition.Interactivity {
 			switch self {
 			case .disabled:
-				return .disabled
+				.disabled
 			case .edgePan:
-				return .edgePan
+				.edgePan
 			case .pan:
-				return .pan
+				.pan
 			}
 		}
 	}

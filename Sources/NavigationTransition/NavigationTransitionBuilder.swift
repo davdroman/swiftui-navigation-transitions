@@ -10,9 +10,9 @@ public enum NavigationTransitionBuilder {
 
 	public static func buildOptional<T: NavigationTransitionProtocol>(_ component: T?) -> _OptionalTransition<T> {
 		if let component {
-			return _OptionalTransition(component)
+			_OptionalTransition(component)
 		} else {
-			return _OptionalTransition(nil)
+			_OptionalTransition(nil)
 		}
 	}
 
