@@ -1,4 +1,4 @@
-import AtomicTransition
+public import AtomicTransition
 
 /// Used to define a transition that executes only on push.
 public struct OnPush<Transition: AtomicTransition>: NavigationTransitionProtocol {

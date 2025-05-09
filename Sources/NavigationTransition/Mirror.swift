@@ -1,4 +1,4 @@
-import AtomicTransition
+public import AtomicTransition
 
 /// Used to define a transition that executes on push, and executes the mirrored version of said transition on pop.
 public struct MirrorPush<Transition: MirrorableAtomicTransition>: NavigationTransitionProtocol {
