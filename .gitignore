@@ -2,7 +2,6 @@
 /.build
 /.swiftpm
 /Packages
-/*.xcodeproj
 xcuserdata/
 DerivedData/
 .netrc
