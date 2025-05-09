@@ -1,4 +1,4 @@
-import Animator
+public import Animator
 public import UIKit
 
 /// A transition that changes the view layer’s position on the z axis.
