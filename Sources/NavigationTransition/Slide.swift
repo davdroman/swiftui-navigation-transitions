@@ -1,4 +1,4 @@
-import AtomicTransition
+internal import AtomicTransition
 public import SwiftUI
 
 extension AnyNavigationTransition {
