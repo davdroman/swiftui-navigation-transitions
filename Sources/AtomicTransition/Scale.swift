@@ -1,4 +1,4 @@
-import UIKit
+public import UIKit
 
 /// A transition that scales the view from `scale` to `1` on insertion, and from `1` to `scale` on removal.
 public struct Scale: MirrorableAtomicTransition {

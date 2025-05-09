@@ -1,3 +1,5 @@
+import IssueReporting
+
 extension AnyNavigationTransition {
 	/// Combines this transition with another, returning a new transition that is the result of both transitions
 	/// being applied.
@@ -18,7 +20,7 @@ extension AnyNavigationTransition {
 		case (.transient, .primitive),
 		     (.primitive, .transient),
 		     (.primitive, .primitive):
-			runtimeWarn(
+			reportIssue(
 				"""
 				Combining primitive and non-primitive or two primitive transitions via 'combine(with:)' is not allowed.
 

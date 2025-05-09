@@ -1,4 +1,4 @@
-import UIKit
+public import UIKit
 
 /// A transition that translates the view from offset to zero on insertion, and from zero to offset on removal.
 public struct Offset: MirrorableAtomicTransition {

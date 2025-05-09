@@ -1,4 +1,4 @@
-import class UIKit.UIView
+public import class UIKit.UIView
 
 /// A transition from transparent to opaque on insertion, and from opaque to transparent on removal.
 public struct Opacity: MirrorableAtomicTransition {

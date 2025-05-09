@@ -1,5 +1,5 @@
-import Animation
-import UIKit
+public import Animation
+package import UIKit
 
 public struct AnyNavigationTransition {
 	package typealias TransientHandler = (
@@ -10,9 +10,9 @@ public struct AnyNavigationTransition {
 	) -> Void
 
 	package typealias PrimitiveHandler = (
-		Animator,
+		any Animator,
 		NavigationTransitionOperation,
-		UIViewControllerContextTransitioning
+		any UIViewControllerContextTransitioning
 	) -> Void
 
 	package enum Handler {

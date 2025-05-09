@@ -1,5 +1,5 @@
-import AtomicTransition
-import SwiftUI
+internal import AtomicTransition
+public import SwiftUI
 
 extension AnyNavigationTransition {
 	/// A transition that moves both views in and out along the specified axis.

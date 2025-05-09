@@ -1,4 +1,4 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.0
 
 import PackageDescription
 
@@ -50,7 +50,8 @@ let package = Package(
 			.product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
 			"NavigationTransitions",
 		]),
-	]
+	],
+	swiftLanguageModes: [.v5]
 )
 
 // MARK: Dependencies
@@ -64,6 +65,7 @@ package.dependencies = [
 for target in package.targets {
 	target.swiftSettings = target.swiftSettings ?? []
 	target.swiftSettings? += [
-		.enableExperimentalFeature("AccessLevelOnImport"),
+		.enableUpcomingFeature("ExistentialAny"),
+		.enableUpcomingFeature("InternalImportsByDefault"),
 	]
 }

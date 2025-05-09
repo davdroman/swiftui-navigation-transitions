@@ -1,4 +1,4 @@
-import class UIKit.UIView
+public import class UIKit.UIView
 
 /// A composite transition that is the result of two or more transitions being applied.
 public struct Combined<TransitionA: AtomicTransition, TransitionB: AtomicTransition>: AtomicTransition {

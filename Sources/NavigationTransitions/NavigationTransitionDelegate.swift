@@ -1,14 +1,14 @@
-import Animation
-import Animator
-import NavigationTransition
-import UIKit
+internal import Animation
+internal import Animator
+internal import NavigationTransition
+internal import UIKit
 
 final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelegate {
 	var transition: AnyNavigationTransition
-	private weak var baseDelegate: UINavigationControllerDelegate?
+	private weak var baseDelegate: (any UINavigationControllerDelegate)?
 	var interactionController: UIPercentDrivenInteractiveTransition?
 
-	init(transition: AnyNavigationTransition, baseDelegate: UINavigationControllerDelegate?) {
+	init(transition: AnyNavigationTransition, baseDelegate: (any UINavigationControllerDelegate)?) {
 		self.transition = transition
 		self.baseDelegate = baseDelegate
 	}
@@ -21,7 +21,7 @@ final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelega
 		baseDelegate?.navigationController?(navigationController, didShow: viewController, animated: animated)
 	}
 
-	func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+	func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: any UIViewControllerAnimatedTransitioning) -> (any UIViewControllerInteractiveTransitioning)? {
 		if !transition.isDefault {
 			return interactionController
 		} else {
@@ -29,7 +29,7 @@ final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelega
 		}
 	}
 
-	func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+	func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> (any UIViewControllerAnimatedTransitioning)? {
 		if
 			!transition.isDefault,
 			let animation = transition.animation,
@@ -57,15 +57,15 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 		self.operation = operation
 	}
 
-	func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+	func transitionDuration(using transitionContext: (any UIViewControllerContextTransitioning)?) -> TimeInterval {
 		animation.duration
 	}
 
-	func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+	func animateTransition(using transitionContext: any UIViewControllerContextTransitioning) {
 		transitionAnimator(for: transitionContext).startAnimation()
 	}
 
-	func interruptibleAnimator(using transitionContext: UIViewControllerContextTransitioning) -> UIViewImplicitlyAnimating {
+	func interruptibleAnimator(using transitionContext: any UIViewControllerContextTransitioning) -> any UIViewImplicitlyAnimating {
 		transitionAnimator(for: transitionContext)
 	}
 
@@ -75,7 +75,7 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 
 	private var cachedAnimators: [ObjectIdentifier: UIViewPropertyAnimator] = .init(minimumCapacity: 1)
 
-	private func transitionAnimator(for transitionContext: UIViewControllerContextTransitioning) -> UIViewPropertyAnimator {
+	private func transitionAnimator(for transitionContext: any UIViewControllerContextTransitioning) -> UIViewPropertyAnimator {
 		if let cached = cachedAnimators[ObjectIdentifier(transitionContext)] {
 			return cached
 		}
@@ -140,7 +140,7 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 
 	private func transientViews(
 		for handler: AnyNavigationTransition.TransientHandler,
-		animator: Animator,
+		animator: any Animator,
 		context: (container: UIView, fromUIView: UIView, toUIView: UIView)
 	) -> (fromView: AnimatorTransientView, toView: AnimatorTransientView)? {
 		let (container, fromUIView, toUIView) = context

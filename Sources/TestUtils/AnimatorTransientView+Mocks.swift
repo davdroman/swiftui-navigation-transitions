@@ -1,6 +1,6 @@
-@testable import Animator
-import UIKit
-import XCTestDynamicOverlay
+@testable public import Animator
+public import UIKit
+import IssueReporting
 
 extension AnimatorTransientView {
 	public static var unimplemented: AnimatorTransientView {
@@ -11,36 +11,36 @@ extension AnimatorTransientView {
 final class UnimplementedAnimatorTransientView: AnimatorTransientView {
 	override public var initial: AnimatorTransientView.Properties {
 		get {
-			XCTFail("\(Self.self).\(#function) is unimplemented")
+			reportIssue("\(Self.self).\(#function) is unimplemented")
 			return .noop
 		}
 		set {
-			XCTFail("\(Self.self).\(#function) is unimplemented")
+			reportIssue("\(Self.self).\(#function) is unimplemented")
 		}
 	}
 
 	override public var animation: AnimatorTransientView.Properties {
 		get {
-			XCTFail("\(Self.self).\(#function) is unimplemented")
+			reportIssue("\(Self.self).\(#function) is unimplemented")
 			return .noop
 		}
 		set {
-			XCTFail("\(Self.self).\(#function) is unimplemented")
+			reportIssue("\(Self.self).\(#function) is unimplemented")
 		}
 	}
 
 	override public var completion: AnimatorTransientView.Properties {
 		get {
-			XCTFail("\(Self.self).\(#function) is unimplemented")
+			reportIssue("\(Self.self).\(#function) is unimplemented")
 			return .noop
 		}
 		set {
-			XCTFail("\(Self.self).\(#function) is unimplemented")
+			reportIssue("\(Self.self).\(#function) is unimplemented")
 		}
 	}
 
 	override public subscript<T>(dynamicMember keyPath: KeyPath<UIView, T>) -> T {
-		XCTFail("\(Self.self).\(#function) is unimplemented")
+		reportIssue("\(Self.self).\(#function) is unimplemented")
 		return uiView[keyPath: keyPath]
 	}
 
@@ -52,7 +52,7 @@ final class UnimplementedAnimatorTransientView: AnimatorTransientView {
 		to properties: KeyPath<AnimatorTransientView, AnimatorTransientView.Properties>,
 		force: Bool
 	) {
-		XCTFail("\(Self.self).\(#function) is unimplemented")
+		reportIssue("\(Self.self).\(#function) is unimplemented")
 	}
 }
 

@@ -1,4 +1,4 @@
-@testable import AtomicTransition
+@testable public import AtomicTransition
 
 public struct Spy: AtomicTransition {
 	public typealias Handler = (TransientView, TransitionOperation, Container) -> Void

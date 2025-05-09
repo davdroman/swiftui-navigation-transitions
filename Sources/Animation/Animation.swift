@@ -1,12 +1,12 @@
-import UIKit
+package import UIKit
 
 public struct Animation {
 	static var defaultDuration: Double { 0.35 }
 
 	package var duration: Double
-	package let timingParameters: UITimingCurveProvider
+	package let timingParameters: any UITimingCurveProvider
 
-	init(duration: Double, timingParameters: UITimingCurveProvider) {
+	init(duration: Double, timingParameters: any UITimingCurveProvider) {
 		self.duration = duration
 		self.timingParameters = timingParameters
 	}
