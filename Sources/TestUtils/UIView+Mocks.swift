@@ -1,4 +1,4 @@
-import UIKit
+public import UIKit
 
 extension UIView {
 	public static var unimplemented: UIView {
