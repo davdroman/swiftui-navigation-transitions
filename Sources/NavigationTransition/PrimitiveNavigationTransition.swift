@@ -1,5 +1,5 @@
 import Animator
-import UIKit
+public import UIKit
 
 /// Defines a transition which applies to two views: an origin ("from") view and a destination ("to") view.
 ///

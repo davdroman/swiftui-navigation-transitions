@@ -1,4 +1,4 @@
-import SwiftUI
+public import SwiftUI
 @_spi(Advanced) import SwiftUIIntrospect
 
 extension View {

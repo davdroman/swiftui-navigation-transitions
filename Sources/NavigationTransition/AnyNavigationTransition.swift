@@ -1,5 +1,5 @@
 import Animation
-import UIKit
+package import UIKit
 
 public struct AnyNavigationTransition {
 	package typealias TransientHandler = (

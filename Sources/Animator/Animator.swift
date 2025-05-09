@@ -1,4 +1,4 @@
-import SwiftUI
+public import SwiftUI
 
 /// Typealias for `Animator`. Useful for disambiguation.
 public typealias _Animator = Animator

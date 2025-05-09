@@ -1,7 +1,7 @@
 import NavigationTransition
 import RuntimeAssociation
 import RuntimeSwizzling
-import UIKit
+public import UIKit
 
 extension AnyNavigationTransition {
 	public enum Interactivity {

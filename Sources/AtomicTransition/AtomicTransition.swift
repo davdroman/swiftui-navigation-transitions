@@ -1,5 +1,5 @@
 import class Animator.AnimatorTransientView
-import class UIKit.UIView
+public import class UIKit.UIView
 
 /// Defines an atomic transition which applies to a single view. It is the core building block of
 /// `NavigationTransition`.

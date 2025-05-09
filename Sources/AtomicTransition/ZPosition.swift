@@ -1,5 +1,5 @@
 import Animator
-import UIKit
+public import UIKit
 
 /// A transition that changes the view layer’s position on the z axis.
 public struct ZPosition: MirrorableAtomicTransition {

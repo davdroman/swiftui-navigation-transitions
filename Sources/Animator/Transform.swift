@@ -1,4 +1,4 @@
-import UIKit
+public import UIKit
 
 @dynamicMemberLookup
 public struct Transform: Equatable {

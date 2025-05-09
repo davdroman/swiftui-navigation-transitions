@@ -1,4 +1,4 @@
-import SwiftUI
+public import SwiftUI
 
 /// A transition entering from `edge` on insertion, and exiting towards `edge` on removal.
 public struct Move: MirrorableAtomicTransition {

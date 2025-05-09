@@ -1,4 +1,4 @@
-import UIKit
+public import UIKit
 
 /// Defines the allowed mutable properties in a transient view throughout each stage of the transition.
 public struct AnimatorTransientViewProperties: Equatable {

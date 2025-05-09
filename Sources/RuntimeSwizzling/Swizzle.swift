@@ -1,4 +1,4 @@
-import ObjectiveC
+public import ObjectiveC
 
 public var swizzleLogs = false
 

@@ -1,5 +1,5 @@
 import Animator
-import SwiftUI
+public import SwiftUI
 
 /// A transition that rotates the view from `angle` to zero on insertion, and from zero to `angle` on removal.
 public struct Rotate3D: MirrorableAtomicTransition {

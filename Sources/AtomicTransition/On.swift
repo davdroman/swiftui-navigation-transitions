@@ -1,4 +1,4 @@
-import class UIKit.UIView
+public import class UIKit.UIView
 
 /// A transition that executes only on insertion.
 public struct OnInsertion<Transition: AtomicTransition>: AtomicTransition {
