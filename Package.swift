@@ -32,6 +32,7 @@ let package = Package(
 		.target(name: "NavigationTransition", dependencies: [
 			"Animation",
 			"AtomicTransition",
+			.product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
 		]),
 
 		.target(name: "NavigationTransitions", dependencies: [
