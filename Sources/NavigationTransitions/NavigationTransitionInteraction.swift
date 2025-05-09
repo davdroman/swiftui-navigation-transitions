@@ -1,4 +1,4 @@
-import UIKit
+internal import UIKit
 
 extension UINavigationController {
 	@objc func handleInteraction(_ gestureRecognizer: UIPanGestureRecognizer) {
