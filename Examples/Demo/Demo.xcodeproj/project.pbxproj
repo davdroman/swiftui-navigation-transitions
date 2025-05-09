@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		D52A95512DCEC08F00885069 /* SwiftUINavigationTransitions in Frameworks */ = {isa = PBXBuildFile; productRef = D52A95502DCEC08F00885069 /* SwiftUINavigationTransitions */; };
-		D52A95532DCEC22700885069 /* NavigationTransitions in Frameworks */ = {isa = PBXBuildFile; productRef = D553583E290E97C5009E5D72 /* NavigationTransitions */; };
 		D5535823290E9692009E5D72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5535822290E9692009E5D72 /* Assets.xcassets */; };
 		D5535826290E9692009E5D72 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5535825290E9692009E5D72 /* Preview Assets.xcassets */; };
 		D5535834290E9718009E5D72 /* Swing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D553582C290E9718009E5D72 /* Swing.swift */; };
@@ -50,7 +49,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D52A95532DCEC22700885069 /* NavigationTransitions in Frameworks */,
 				D52A95512DCEC08F00885069 /* SwiftUINavigationTransitions in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,7 +136,6 @@
 			);
 			name = Demo;
 			packageProductDependencies = (
-				D553583E290E97C5009E5D72 /* NavigationTransitions */,
 				D52A95502DCEC08F00885069 /* SwiftUINavigationTransitions */,
 			);
 			productName = Demo;
@@ -438,10 +435,6 @@
 		D52A95502DCEC08F00885069 /* SwiftUINavigationTransitions */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftUINavigationTransitions;
-		};
-		D553583E290E97C5009E5D72 /* NavigationTransitions */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = NavigationTransitions;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
