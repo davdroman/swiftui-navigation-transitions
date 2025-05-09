@@ -1,5 +1,5 @@
 import Foundation
-import NavigationTransitions
+import SwiftUINavigationTransitions
 
 final class AppState: ObservableObject {
 	enum Transition: CaseIterable, CustomStringConvertible, Hashable {

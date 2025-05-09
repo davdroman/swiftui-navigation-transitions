@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D52A95512DCEC08F00885069 /* SwiftUINavigationTransitions in Frameworks */ = {isa = PBXBuildFile; productRef = D52A95502DCEC08F00885069 /* SwiftUINavigationTransitions */; };
 		D5535823290E9692009E5D72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5535822290E9692009E5D72 /* Assets.xcassets */; };
 		D5535826290E9692009E5D72 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5535825290E9692009E5D72 /* Preview Assets.xcassets */; };
 		D5535834290E9718009E5D72 /* Swing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D553582C290E9718009E5D72 /* Swing.swift */; };
@@ -14,7 +15,6 @@
 		D5535836290E9718009E5D72 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D553582E290E9718009E5D72 /* SceneDelegate.swift */; };
 		D5535837290E9718009E5D72 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D553582F290E9718009E5D72 /* LaunchScreen.storyboard */; platformFilter = ios; };
 		D5535839290E9718009E5D72 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5535831290E9718009E5D72 /* AppDelegate.swift */; };
-		D553583F290E97C5009E5D72 /* NavigationTransitions in Frameworks */ = {isa = PBXBuildFile; productRef = D553583E290E97C5009E5D72 /* NavigationTransitions */; };
 		D5535843290F4BEA009E5D72 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5535842290F4BEA009E5D72 /* AppView.swift */; };
 		D5535845290F52F7009E5D72 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5535844290F52F7009E5D72 /* SettingsView.swift */; };
 		D5535847290F5E6F009E5D72 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5535846290F5E6F009E5D72 /* AppState.swift */; };
@@ -49,7 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D553583F290E97C5009E5D72 /* NavigationTransitions in Frameworks */,
+				D52A95512DCEC08F00885069 /* SwiftUINavigationTransitions in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,6 +137,7 @@
 			name = Demo;
 			packageProductDependencies = (
 				D553583E290E97C5009E5D72 /* NavigationTransitions */,
+				D52A95502DCEC08F00885069 /* SwiftUINavigationTransitions */,
 			);
 			productName = Demo;
 			productReference = D553581B290E9691009E5D72 /* Demo.app */;
@@ -432,6 +433,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D52A95502DCEC08F00885069 /* SwiftUINavigationTransitions */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftUINavigationTransitions;
+		};
 		D553583E290E97C5009E5D72 /* NavigationTransitions */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NavigationTransitions;
