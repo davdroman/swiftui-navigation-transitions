@@ -1,4 +1,4 @@
-import Animator
+public import Animator
 import UIKit
 import XCTestDynamicOverlay
 

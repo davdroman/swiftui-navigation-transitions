@@ -16,28 +16,28 @@ final class RotateTests: XCTestCase {
 
 		var initial = properties
 		initial.transform.rotate(by: .pi, z: 1)
-		XCTAssertNoDifference(viewUsed.initial, initial)
+		expectNoDifference(viewUsed.initial, initial)
 
 		var animation = properties
 		animation.transform.rotate(by: 0)
-		XCTAssertNoDifference(viewUsed.animation, animation)
+		expectNoDifference(viewUsed.animation, animation)
 
 		let completion = properties
-		XCTAssertNoDifference(viewUsed.completion, completion)
+		expectNoDifference(viewUsed.completion, completion)
 	}
 
 	func testRemoval() {
 		Rotate(.radians(.pi)).transition(viewUsed, for: .removal, in: containerUsed)
 
 		let initial = properties
-		XCTAssertNoDifference(viewUsed.initial, initial)
+		expectNoDifference(viewUsed.initial, initial)
 
 		var animation = properties
 		animation.transform.rotate(by: .pi, z: 1)
-		XCTAssertNoDifference(viewUsed.animation, animation)
+		expectNoDifference(viewUsed.animation, animation)
 
 		var completion = properties
 		completion.transform.rotate(by: 0)
-		XCTAssertNoDifference(viewUsed.completion, completion)
+		expectNoDifference(viewUsed.completion, completion)
 	}
 }

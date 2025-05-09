@@ -30,14 +30,14 @@ extension MoveTests {
 
 		var initial = properties
 		initial.transform.translate(x: 0, y: -200, z: 0)
-		XCTAssertNoDifference(viewUsed.initial, initial)
+		expectNoDifference(viewUsed.initial, initial)
 
 		var animation = properties
 		animation.transform.translate(x: 0, y: 0, z: 0)
-		XCTAssertNoDifference(viewUsed.animation, animation)
+		expectNoDifference(viewUsed.animation, animation)
 
 		let completion = properties
-		XCTAssertNoDifference(viewUsed.completion, completion)
+		expectNoDifference(viewUsed.completion, completion)
 	}
 
 	func testLeadingInsertion() {
@@ -45,14 +45,14 @@ extension MoveTests {
 
 		var initial = properties
 		initial.transform.translate(x: -100, y: 0, z: 0)
-		XCTAssertNoDifference(viewUsed.initial, initial)
+		expectNoDifference(viewUsed.initial, initial)
 
 		var animation = properties
 		animation.transform.translate(x: 0, y: 0, z: 0)
-		XCTAssertNoDifference(viewUsed.animation, animation)
+		expectNoDifference(viewUsed.animation, animation)
 
 		let completion = properties
-		XCTAssertNoDifference(viewUsed.completion, completion)
+		expectNoDifference(viewUsed.completion, completion)
 	}
 
 	func testTrailingInsertion() {
@@ -60,14 +60,14 @@ extension MoveTests {
 
 		var initial = properties
 		initial.transform.translate(x: 100, y: 0, z: 0)
-		XCTAssertNoDifference(viewUsed.initial, initial)
+		expectNoDifference(viewUsed.initial, initial)
 
 		var animation = properties
 		animation.transform.translate(x: 0, y: 0, z: 0)
-		XCTAssertNoDifference(viewUsed.animation, animation)
+		expectNoDifference(viewUsed.animation, animation)
 
 		let completion = properties
-		XCTAssertNoDifference(viewUsed.completion, completion)
+		expectNoDifference(viewUsed.completion, completion)
 	}
 
 	func testBottomInsertion() {
@@ -75,14 +75,14 @@ extension MoveTests {
 
 		var initial = properties
 		initial.transform.translate(x: 0, y: 200, z: 0)
-		XCTAssertNoDifference(viewUsed.initial, initial)
+		expectNoDifference(viewUsed.initial, initial)
 
 		var animation = properties
 		animation.transform.translate(x: 0, y: 0, z: 0)
-		XCTAssertNoDifference(viewUsed.animation, animation)
+		expectNoDifference(viewUsed.animation, animation)
 
 		let completion = properties
-		XCTAssertNoDifference(viewUsed.completion, completion)
+		expectNoDifference(viewUsed.completion, completion)
 	}
 }
 
@@ -91,59 +91,59 @@ extension MoveTests {
 		Move(edge: .top).transition(viewUsed, for: .removal, in: containerUsed)
 
 		let initial = properties
-		XCTAssertNoDifference(viewUsed.initial, initial)
+		expectNoDifference(viewUsed.initial, initial)
 
 		var animation = properties
 		animation.transform.translate(x: 0, y: -200)
-		XCTAssertNoDifference(viewUsed.animation, animation)
+		expectNoDifference(viewUsed.animation, animation)
 
 		var completion = properties
 		completion.transform.translate(x: 0, y: 0)
-		XCTAssertNoDifference(viewUsed.completion, completion)
+		expectNoDifference(viewUsed.completion, completion)
 	}
 
 	func testLeadingRemoval() {
 		Move(edge: .leading).transition(viewUsed, for: .removal, in: containerUsed)
 
 		let initial = properties
-		XCTAssertNoDifference(viewUsed.initial, initial)
+		expectNoDifference(viewUsed.initial, initial)
 
 		var animation = properties
 		animation.transform.translate(x: -100, y: 0)
-		XCTAssertNoDifference(viewUsed.animation, animation)
+		expectNoDifference(viewUsed.animation, animation)
 
 		var completion = properties
 		completion.transform.translate(x: 0, y: 0)
-		XCTAssertNoDifference(viewUsed.completion, completion)
+		expectNoDifference(viewUsed.completion, completion)
 	}
 
 	func testTrailingRemoval() {
 		Move(edge: .trailing).transition(viewUsed, for: .removal, in: containerUsed)
 
 		let initial = properties
-		XCTAssertNoDifference(viewUsed.initial, initial)
+		expectNoDifference(viewUsed.initial, initial)
 
 		var animation = properties
 		animation.transform.translate(x: 100, y: 0)
-		XCTAssertNoDifference(viewUsed.animation, animation)
+		expectNoDifference(viewUsed.animation, animation)
 
 		var completion = properties
 		completion.transform.translate(x: 0, y: 0)
-		XCTAssertNoDifference(viewUsed.completion, completion)
+		expectNoDifference(viewUsed.completion, completion)
 	}
 
 	func testBottomRemoval() {
 		Move(edge: .bottom).transition(viewUsed, for: .removal, in: containerUsed)
 
 		let initial = properties
-		XCTAssertNoDifference(viewUsed.initial, initial)
+		expectNoDifference(viewUsed.initial, initial)
 
 		var animation = properties
 		animation.transform.translate(x: 0, y: 200)
-		XCTAssertNoDifference(viewUsed.animation, animation)
+		expectNoDifference(viewUsed.animation, animation)
 
 		var completion = properties
 		completion.transform.translate(x: 0, y: 0)
-		XCTAssertNoDifference(viewUsed.completion, completion)
+		expectNoDifference(viewUsed.completion, completion)
 	}
 }

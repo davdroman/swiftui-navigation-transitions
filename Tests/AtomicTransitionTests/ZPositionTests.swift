@@ -15,30 +15,30 @@ final class ZPositionTests: XCTestCase {
 		ZPosition(2).transition(viewUsed, for: .insertion, in: containerUsed)
 
 		let initial = properties
-		XCTAssertNoDifference(viewUsed.initial, initial)
+		expectNoDifference(viewUsed.initial, initial)
 
 		var animation = properties
 		animation.zPosition = 2
-		XCTAssertNoDifference(viewUsed.animation, animation)
+		expectNoDifference(viewUsed.animation, animation)
 
 		var completion = properties
 		completion.zPosition = 0
-		XCTAssertNoDifference(viewUsed.completion, completion)
+		expectNoDifference(viewUsed.completion, completion)
 	}
 
 	func testRemoval() {
 		ZPosition(2).transition(viewUsed, for: .insertion, in: containerUsed)
 
 		let initial = properties
-		XCTAssertNoDifference(viewUsed.initial, initial)
+		expectNoDifference(viewUsed.initial, initial)
 
 		var animation = properties
 		animation.zPosition = 2
-		XCTAssertNoDifference(viewUsed.animation, animation)
+		expectNoDifference(viewUsed.animation, animation)
 
 		var completion = properties
 		completion.zPosition = 0
-		XCTAssertNoDifference(viewUsed.completion, completion)
+		expectNoDifference(viewUsed.completion, completion)
 	}
 }
 

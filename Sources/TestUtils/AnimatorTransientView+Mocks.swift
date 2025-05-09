@@ -1,4 +1,4 @@
-@testable import Animator
+@testable public import Animator
 import UIKit
 import XCTestDynamicOverlay
 

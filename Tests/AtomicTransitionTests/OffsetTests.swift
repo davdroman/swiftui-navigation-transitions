@@ -16,29 +16,29 @@ final class OffsetTests: XCTestCase {
 
 		var initial = properties
 		initial.transform.translate(x: 100, y: 200)
-		XCTAssertNoDifference(viewUsed.initial, initial)
+		expectNoDifference(viewUsed.initial, initial)
 
 		var animation = properties
 		animation.transform.translate(x: 0, y: 0)
-		XCTAssertNoDifference(viewUsed.animation, animation)
+		expectNoDifference(viewUsed.animation, animation)
 
 		let completion = properties
-		XCTAssertNoDifference(viewUsed.completion, completion)
+		expectNoDifference(viewUsed.completion, completion)
 	}
 
 	func testRemoval() {
 		Offset(x: 100, y: 200).transition(viewUsed, for: .removal, in: containerUsed)
 
 		let initial = properties
-		XCTAssertNoDifference(viewUsed.initial, initial)
+		expectNoDifference(viewUsed.initial, initial)
 
 		var animation = properties
 		animation.transform.translate(x: 100, y: 200)
-		XCTAssertNoDifference(viewUsed.animation, animation)
+		expectNoDifference(viewUsed.animation, animation)
 
 		var completion = properties
 		completion.transform.translate(x: 0, y: 0)
-		XCTAssertNoDifference(viewUsed.completion, completion)
+		expectNoDifference(viewUsed.completion, completion)
 	}
 
 	func testConveniences() {
