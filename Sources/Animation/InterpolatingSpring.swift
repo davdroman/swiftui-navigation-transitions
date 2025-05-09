@@ -1,4 +1,4 @@
-import UIKit
+internal import UIKit // TODO: remove internal from all imports when Swift 5.10 is dropped
 
 extension Animation {
 	public static func interpolatingSpring(
