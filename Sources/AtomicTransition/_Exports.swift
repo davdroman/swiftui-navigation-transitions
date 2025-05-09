@@ -1,1 +1,1 @@
-@_exported import Animator
+@_exported public import Animator
