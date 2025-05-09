@@ -1,4 +1,4 @@
-@_exported import Animation
-@_exported import Animator
-@_exported import AtomicTransition
-@_exported import NavigationTransition
+@_exported public import Animation
+@_exported public import Animator
+@_exported public import AtomicTransition
+@_exported public import NavigationTransition

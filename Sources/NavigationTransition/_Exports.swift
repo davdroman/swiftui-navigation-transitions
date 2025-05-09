@@ -1,2 +1,2 @@
-@_exported import Animation
-@_exported import AtomicTransition
+@_exported public import Animation
+@_exported public import AtomicTransition

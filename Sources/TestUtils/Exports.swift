@@ -1,3 +1,3 @@
-@_exported import CustomDump
-@_exported import UIKit
-@_exported import XCTest
+@_exported public import CustomDump
+@_exported public import UIKit
+@_exported public import XCTest
