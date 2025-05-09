@@ -1,4 +1,4 @@
-import Animation
+public import Animation
 package import UIKit
 
 public struct AnyNavigationTransition {
