@@ -1,4 +1,4 @@
-import NavigationTransition
+public import NavigationTransition
 import RuntimeAssociation
 import RuntimeSwizzling
 public import UIKit
