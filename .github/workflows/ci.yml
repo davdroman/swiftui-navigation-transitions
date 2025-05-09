@@ -17,7 +17,7 @@ concurrency:
 jobs:
   macOS:
     name: ${{ matrix.platform }} (Swift ${{ matrix.swift }})
-    runs-on: macos-14
+    runs-on: macos-15
     strategy:
       fail-fast: false
       matrix:
@@ -26,14 +26,16 @@ jobs:
           - mac-catalyst
           - tvOS
         swift:
-          - "5.9"
           - "5.10"
+          - "5.11"
+          - "6.0"
+          - "6.1"
     steps:
       - name: Git Checkout
         uses: actions/checkout@v4
 
       - name: Test Library
-        uses: mxcl/xcodebuild@v2
+        uses: mxcl/xcodebuild@v3
         with:
           platform: ${{ matrix.platform }}
           swift: ~${{ matrix.swift }}
@@ -41,7 +43,7 @@ jobs:
           scheme: NavigationTransitions
 
       - name: Build Examples/Demo
-        uses: mxcl/xcodebuild@v2
+        uses: mxcl/xcodebuild@v3
         with:
           platform: ${{ matrix.platform }}
           swift: ~${{ matrix.swift }}
