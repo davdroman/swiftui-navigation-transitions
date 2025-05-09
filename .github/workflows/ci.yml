@@ -39,7 +39,7 @@ jobs:
           platform: ${{ matrix.platform }}
           swift: ~${{ matrix.swift }}
           action: test
-          scheme: NavigationTransitions
+          scheme: SwiftUINavigationTransitions
 
       - name: Build Examples/Demo
         uses: mxcl/xcodebuild@v3
