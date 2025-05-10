@@ -1,5 +1,5 @@
 @testable public import Animator
-public import UIKit
+internal import UIKit
 import IssueReporting
 
 extension AnimatorTransientView {

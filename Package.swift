@@ -10,7 +10,8 @@ let package = Package(
 		.tvOS(.v13),
 	],
 	products: [
-		.library(name: "NavigationTransitions", targets: ["NavigationTransitions"]),
+		.library(name: "SwiftUINavigationTransitions", targets: ["SwiftUINavigationTransitions"]),
+		.library(name: "UIKitNavigationTransitions", targets: ["UIKitNavigationTransitions"]),
 	],
 	targets: [
 		.target(name: "Animation"),
@@ -35,10 +36,17 @@ let package = Package(
 			.product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
 		]),
 
-		.target(name: "NavigationTransitions", dependencies: [
+		.target(name: "UIKitNavigationTransitions", dependencies: [
 			"NavigationTransition",
 			"RuntimeAssociation",
 			"RuntimeSwizzling",
+		]),
+
+		.target(name: "SwiftUINavigationTransitions", dependencies: [
+			"NavigationTransition",
+			"RuntimeAssociation",
+			"RuntimeSwizzling",
+			"UIKitNavigationTransitions",
 			.product(name: "SwiftUIIntrospect", package: "swiftui-introspect"),
 		]),
 
@@ -48,7 +56,7 @@ let package = Package(
 		.target(name: "TestUtils", dependencies: [
 			.product(name: "CustomDump", package: "swift-custom-dump"),
 			.product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
-			"NavigationTransitions",
+			"SwiftUINavigationTransitions",
 		]),
 	]
 )

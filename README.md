@@ -15,7 +15,7 @@
 
 ## Overview
 
-Instead of reinventing the entire navigation stack just to control its transitions, `NavigationTransitions` ships with a **simple modifier** that can be applied directly to SwiftUI's very own **first-party navigation** components.
+Instead of reinventing the entire navigation stack just to control its transitions, this library ships with a **simple modifier** that can be applied directly to SwiftUI's very own **first-party navigation** components.
 
 ### The Basics
 

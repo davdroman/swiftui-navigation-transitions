@@ -15,9 +15,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "NavigationTransitions"
-               BuildableName = "NavigationTransitions"
-               BlueprintName = "NavigationTransitions"
+               BlueprintIdentifier = "SwiftUINavigationTransitions"
+               BuildableName = "SwiftUINavigationTransitions"
+               BlueprintName = "SwiftUINavigationTransitions"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -30,7 +30,7 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:Tests/TestPlans/NavigationTransitions.xctestplan"
+            reference = "container:Tests/TestPlans/SwiftUINavigationTransitions.xctestplan"
             default = "YES">
          </TestPlanReference>
       </TestPlans>
@@ -55,9 +55,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "NavigationTransitions"
-            BuildableName = "NavigationTransitions"
-            BlueprintName = "NavigationTransitions"
+            BlueprintIdentifier = "SwiftUINavigationTransitions"
+            BuildableName = "SwiftUINavigationTransitions"
+            BlueprintName = "SwiftUINavigationTransitions"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>

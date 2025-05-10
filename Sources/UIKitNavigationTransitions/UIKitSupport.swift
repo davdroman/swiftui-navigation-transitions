@@ -3,19 +3,6 @@ import RuntimeAssociation
 import RuntimeSwizzling
 public import UIKit
 
-extension AnyNavigationTransition {
-	public enum Interactivity {
-		case disabled
-		case edgePan
-		case pan
-
-		@inlinable
-		public static var `default`: Self {
-			.edgePan
-		}
-	}
-}
-
 public struct UISplitViewControllerColumns: OptionSet {
 	public static let primary = Self(rawValue: 1)
 	public static let supplementary = Self(rawValue: 1 << 1)

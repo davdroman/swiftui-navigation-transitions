@@ -3,7 +3,7 @@ import SwiftUI
 struct PageOne: View {
 	var body: some View {
 		let content = Group {
-			Text("**NavigationTransitions** is a library that integrates seamlessly with SwiftUI's **Navigation** views, allowing complete customization over **push and pop transitions**!")
+			Text("**SwiftUINavigationTransitions** is a library that integrates seamlessly with SwiftUI's **Navigation** views, allowing complete customization over **push and pop transitions**!")
 		}
 
 		PageView(number: 1, title: "Welcome", color: .orange) {
