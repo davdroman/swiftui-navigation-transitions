@@ -39,7 +39,8 @@ jobs:
           platform: ${{ matrix.platform }}
           swift: ~${{ matrix.swift }}
           action: test
-          scheme: NavigationTransitions
+          workspace: SwiftUINavigationTransitions.xcworkspace
+          scheme: SwiftUINavigationTransitions
 
       - name: Build Examples/Demo
         uses: mxcl/xcodebuild@v3
@@ -47,4 +48,5 @@ jobs:
           platform: ${{ matrix.platform }}
           swift: ~${{ matrix.swift }}
           action: build
+          workspace: SwiftUINavigationTransitions.xcworkspace
           scheme: Demo

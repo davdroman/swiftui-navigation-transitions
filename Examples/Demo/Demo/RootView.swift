@@ -1,5 +1,5 @@
-import NavigationTransitions
 import SwiftUI
+import SwiftUINavigationTransitions
 
 struct RootView: View {
 	@EnvironmentObject var appState: AppState

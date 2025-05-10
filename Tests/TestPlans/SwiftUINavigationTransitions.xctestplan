@@ -1,7 +1,7 @@
 {
   "configurations" : [
     {
-      "id" : "8246DD19-912B-4BFD-B95F-A885D62913FC",
+      "id" : "8C608A98-3C43-44EC-9508-ECA482696F28",
       "name" : "Test Scheme Action",
       "options" : {
 
@@ -16,15 +16,15 @@
     {
       "target" : {
         "containerPath" : "container:",
-        "identifier" : "AtomicTransitionTests",
-        "name" : "AtomicTransitionTests"
+        "identifier" : "AnimatorTests",
+        "name" : "AnimatorTests"
       }
     },
     {
       "target" : {
         "containerPath" : "container:",
-        "identifier" : "AnimatorTests",
-        "name" : "AnimatorTests"
+        "identifier" : "AtomicTransitionTests",
+        "name" : "AtomicTransitionTests"
       }
     }
   ],
