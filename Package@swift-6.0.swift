@@ -11,6 +11,7 @@ let package = Package(
 	],
 	products: [
 		.library(name: "SwiftUINavigationTransitions", targets: ["SwiftUINavigationTransitions"]),
+		.library(name: "UIKitNavigationTransitions", targets: ["UIKitNavigationTransitions"]),
 	],
 	targets: [
 		.target(name: "Animation"),
