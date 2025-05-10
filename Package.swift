@@ -35,17 +35,17 @@ let package = Package(
 			.product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
 		]),
 
-//		.target(name: "UIKitNavigationTransitions", dependencies: [
-//			"NavigationTransition",
-//			"RuntimeAssociation",
-//			"RuntimeSwizzling",
-//		]),
+		.target(name: "UIKitNavigationTransitions", dependencies: [
+			"NavigationTransition",
+			"RuntimeAssociation",
+			"RuntimeSwizzling",
+		]),
 
 		.target(name: "SwiftUINavigationTransitions", dependencies: [
 			"NavigationTransition",
 			"RuntimeAssociation",
 			"RuntimeSwizzling",
-//			"UIKitNavigationTransitions",
+			"UIKitNavigationTransitions",
 			.product(name: "SwiftUIIntrospect", package: "swiftui-introspect"),
 		]),
 

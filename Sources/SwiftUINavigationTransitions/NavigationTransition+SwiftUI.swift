@@ -1,3 +1,4 @@
+public import UIKitNavigationTransitions
 public import SwiftUI
 @_spi(Advanced) import SwiftUIIntrospect
 
