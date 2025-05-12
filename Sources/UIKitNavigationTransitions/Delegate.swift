@@ -1,7 +1,7 @@
-internal import Animation
-internal import Animator
-internal import NavigationTransition
-internal import UIKit
+import Animation
+import Animator
+import NavigationTransition
+import UIKit
 
 final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelegate {
 	var transition: AnyNavigationTransition
