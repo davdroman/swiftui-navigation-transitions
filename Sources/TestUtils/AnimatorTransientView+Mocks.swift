@@ -1,6 +1,6 @@
 @testable public import Animator
-import UIKit
 import IssueReporting
+import UIKit
 
 extension AnimatorTransientView {
 	public static var unimplemented: AnimatorTransientView {
