@@ -1,6 +1,15 @@
 {
-  "originHash" : "6055238988eaf036fed98cc74283a630a84b8b7c28e6fa1948e8e7d489cf9dbe",
+  "originHash" : "080f172f15576ef359f4e72c35d09d535df13de1864cd3ff455781f048009756",
   "pins" : [
+    {
+      "identity" : "objc-runtime-tools",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/davdroman/objc-runtime-tools",
+      "state" : {
+        "revision" : "c05d245cbb8d289a6bbc184fd2d1605b70ec65f3",
+        "version" : "0.1.0"
+      }
+    },
     {
       "identity" : "swift-custom-dump",
       "kind" : "remoteSourceControl",
@@ -8,6 +17,15 @@
       "state" : {
         "revision" : "82645ec760917961cfa08c9c0c7104a57a0fa4b1",
         "version" : "1.3.3"
+      }
+    },
+    {
+      "identity" : "swift-syntax",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-syntax",
+      "state" : {
+        "revision" : "f99ae8aa18f0cf0d53481901f88a0991dc3bd4a2",
+        "version" : "601.0.1"
       }
     },
     {

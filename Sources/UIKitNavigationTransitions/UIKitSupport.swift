@@ -1,6 +1,5 @@
 public import NavigationTransition
-import RuntimeAssociation
-import RuntimeSwizzling
+import ObjCRuntimeTools
 public import UIKit
 
 public struct UISplitViewControllerColumns: OptionSet {

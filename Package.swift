@@ -38,14 +38,10 @@ let package = Package(
 
 		.target(name: "UIKitNavigationTransitions", dependencies: [
 			"NavigationTransition",
-			"RuntimeAssociation",
-			"RuntimeSwizzling",
+			.product(name: "ObjCRuntimeTools", package: "objc-runtime-tools"),
 		]),
 
 		.target(name: "SwiftUINavigationTransitions", dependencies: [
-			"NavigationTransition",
-			"RuntimeAssociation",
-			"RuntimeSwizzling",
 			"UIKitNavigationTransitions",
 			.product(name: "SwiftUIIntrospect", package: "swiftui-introspect"),
 		]),
@@ -65,6 +61,7 @@ let package = Package(
 // MARK: Dependencies
 
 package.dependencies = [
+	.package(url: "https://github.com/davdroman/objc-runtime-tools", from: "0.1.0"),
 	.package(url: "https://github.com/pointfreeco/swift-custom-dump", from: "1.0.0"), // dev
 	.package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "1.0.0"),
 	.package(url: "https://github.com/siteline/swiftui-introspect", from: "1.0.0"),
