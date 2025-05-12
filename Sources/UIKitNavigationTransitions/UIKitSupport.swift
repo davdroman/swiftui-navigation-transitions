@@ -104,16 +104,13 @@ extension RandomAccessCollection where Index == Int {
 }
 
 extension UINavigationController {
-	private var defaultDelegate: (any UINavigationControllerDelegate)! {
-		get { self[] }
-		set { self[] = newValue }
-	}
+	@Associated(.retain(.nonatomic))
+	private var defaultDelegate: (any UINavigationControllerDelegate)!
 
-	var customDelegate: NavigationTransitionDelegate! {
-		get { self[] }
-		set {
-			self[] = newValue
-			delegate = newValue
+	@Associated(.retain(.nonatomic))
+	var customDelegate: NavigationTransitionDelegate? {
+		didSet {
+			delegate = customDelegate
 		}
 	}
 
@@ -125,10 +122,10 @@ extension UINavigationController {
 			defaultDelegate = delegate
 		}
 
-		if customDelegate == nil {
-			customDelegate = NavigationTransitionDelegate(transition: transition, baseDelegate: defaultDelegate)
-		} else {
+		if let customDelegate {
 			customDelegate.transition = transition
+		} else {
+			customDelegate = NavigationTransitionDelegate(transition: transition, baseDelegate: defaultDelegate)
 		}
 
 		swizzle(
@@ -272,29 +269,22 @@ extension UINavigationController {
 		interactivePopGestureRecognizer as? UIScreenEdgePanGestureRecognizer
 	}
 
-	var defaultPanRecognizer: UIPanGestureRecognizer! {
-		get { self[] }
-		set { self[] = newValue }
-	}
+	@Associated(.retain(.nonatomic))
+	var defaultPanRecognizer: UIPanGestureRecognizer!
 
-	var edgePanRecognizer: UIScreenEdgePanGestureRecognizer! {
-		get { self[] }
-		set { self[] = newValue }
-	}
+	@Associated(.retain(.nonatomic))
+	var edgePanRecognizer: UIScreenEdgePanGestureRecognizer!
 
-	var panRecognizer: UIPanGestureRecognizer! {
-		get { self[] }
-		set { self[] = newValue }
-	}
+	@Associated(.retain(.nonatomic))
+	var panRecognizer: UIPanGestureRecognizer!
 }
 
 @available(tvOS, unavailable)
 extension UIGestureRecognizer {
+	@Associated(.retain(.nonatomic))
 	var strongDelegate: (any UIGestureRecognizerDelegate)? {
-		get { self[] }
-		set {
-			self[] = newValue
-			delegate = newValue
+		didSet {
+			delegate = strongDelegate
 		}
 	}
 
