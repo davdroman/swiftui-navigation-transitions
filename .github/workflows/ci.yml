@@ -26,7 +26,6 @@ jobs:
           - mac-catalyst
           - tvOS
         swift:
-          - "5.10"
           - "6.0"
           - "6.1"
     steps:
