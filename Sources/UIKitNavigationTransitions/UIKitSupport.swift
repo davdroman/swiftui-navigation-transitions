@@ -131,47 +131,7 @@ extension UINavigationController {
 		}
 
 		do {
-			try #once {
-				try #swizzle(UINavigationController.setViewControllers, params: [UIViewController].self, Bool.self) { $self, viewControllers, animated in
-					if let transitionDelegate = self.customDelegate {
-						self.setViewControllers(viewControllers, animated: transitionDelegate.transition.animation != nil)
-					} else {
-						self.setViewControllers(viewControllers, animated: animated)
-					}
-				}
-
-				try #swizzle(UINavigationController.pushViewController, params: UIViewController.self, Bool.self) { $self, viewController, animated in
-					if let transitionDelegate = self.customDelegate {
-						self.pushViewController(viewController, animated: transitionDelegate.transition.animation != nil)
-					} else {
-						self.pushViewController(viewController, animated: animated)
-					}
-				}
-
-				try #swizzle(UINavigationController.popViewController, params: Bool.self, returning: UIViewController?.self) { $self, animated in
-					if let transitionDelegate = self.customDelegate {
-						self.popViewController(animated: transitionDelegate.transition.animation != nil)
-					} else {
-						self.popViewController(animated: animated)
-					}
-				}
-
-				try #swizzle(UINavigationController.popToViewController, params: UIViewController.self, Bool.self, returning: [UIViewController]?.self) { $self, viewController, animated in
-					if let transitionDelegate = self.customDelegate {
-						self.popToViewController(viewController, animated: transitionDelegate.transition.animation != nil)
-					} else {
-						self.popToViewController(viewController, animated: animated)
-					}
-				}
-
-				try #swizzle(UINavigationController.popToRootViewController, params: Bool.self, returning: [UIViewController]?.self) { $self, animated in
-					if let transitionDelegate = self.customDelegate {
-						self.popToRootViewController(animated: transitionDelegate.transition.animation != nil)
-					} else {
-						self.popToRootViewController(animated: animated)
-					}
-				}
-			}
+			try UINavigationController.swizzle()
 		} catch {
 			reportIssue(error, "Failed to swizzle required UINavigationController methods")
 		}
@@ -223,6 +183,68 @@ extension UINavigationController {
 			}
 		}
 		#endif
+	}
+
+	private static func swizzle() throws {
+		try #once {
+			try #swizzle(
+				UINavigationController.setViewControllers,
+				params: [UIViewController].self, Bool.self
+			) { $self, viewControllers, animated in
+				if let transitionDelegate = self.customDelegate {
+					self.setViewControllers(viewControllers, animated: transitionDelegate.transition.animation != nil)
+				} else {
+					self.setViewControllers(viewControllers, animated: animated)
+				}
+			}
+
+			try #swizzle(
+				UINavigationController.pushViewController,
+				params: UIViewController.self, Bool.self
+			) { $self, viewController, animated in
+				if let transitionDelegate = self.customDelegate {
+					self.pushViewController(viewController, animated: transitionDelegate.transition.animation != nil)
+				} else {
+					self.pushViewController(viewController, animated: animated)
+				}
+			}
+
+			try #swizzle(
+				UINavigationController.popViewController,
+				params: Bool.self,
+				returning: UIViewController?.self
+			) { $self, animated in
+				if let transitionDelegate = self.customDelegate {
+					self.popViewController(animated: transitionDelegate.transition.animation != nil)
+				} else {
+					self.popViewController(animated: animated)
+				}
+			}
+
+			try #swizzle(
+				UINavigationController.popToViewController,
+				params: UIViewController.self, Bool.self,
+				returning: [UIViewController]?.self
+			) { $self, viewController, animated in
+				if let transitionDelegate = self.customDelegate {
+					self.popToViewController(viewController, animated: transitionDelegate.transition.animation != nil)
+				} else {
+					self.popToViewController(viewController, animated: animated)
+				}
+			}
+
+			try #swizzle(
+				UINavigationController.popToRootViewController,
+				params: Bool.self,
+				returning: [UIViewController]?.self
+			) { $self, animated in
+				if let transitionDelegate = self.customDelegate {
+					self.popToRootViewController(animated: transitionDelegate.transition.animation != nil)
+				} else {
+					self.popToRootViewController(animated: animated)
+				}
+			}
+		}
 	}
 
 	@available(tvOS, unavailable)
