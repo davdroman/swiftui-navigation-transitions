@@ -120,6 +120,12 @@ extension UINavigationController {
 		_ transition: AnyNavigationTransition,
 		interactivity: AnyNavigationTransition.Interactivity = .default
 	) {
+		do {
+			try UINavigationController.swizzle()
+		} catch {
+			reportIssue(error, "Failed to swizzle required UINavigationController methods")
+		}
+
 		if defaultDelegate == nil {
 			defaultDelegate = delegate
 		}
@@ -128,12 +134,6 @@ extension UINavigationController {
 			customDelegate.transition = transition
 		} else {
 			customDelegate = NavigationTransitionDelegate(transition: transition, baseDelegate: defaultDelegate)
-		}
-
-		do {
-			try UINavigationController.swizzle()
-		} catch {
-			reportIssue(error, "Failed to swizzle required UINavigationController methods")
 		}
 
 		#if !os(tvOS) && !os(visionOS)
