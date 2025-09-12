@@ -41,6 +41,7 @@ jobs:
       - name: Select Xcode version
         uses: mxcl/xcodebuild@v3
         with:
+          swift: ${{ matrix.swift }}
           action: none
 
       - name: List Runtimes
