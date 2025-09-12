@@ -49,8 +49,7 @@ jobs:
 
       - if: matrix.platform != 'mac-catalyst'
         name: Download Required Runtimes
-        run: |
-          xcodebuild -downloadPlatform ${{ matrix.platform }}
+        run: xcodebuild -downloadPlatform ${{ matrix.platform }}
 
       - name: Test Library
         uses: mxcl/xcodebuild@v3
