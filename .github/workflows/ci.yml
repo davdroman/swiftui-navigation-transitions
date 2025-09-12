@@ -28,6 +28,7 @@ jobs:
         swift:
           - "6.0"
           - "6.1"
+          - "6.2"
     steps:
       - name: Git Checkout
         uses: actions/checkout@v4
@@ -36,6 +37,25 @@ jobs:
         run: |
           defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
           defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidatation -bool YES
+
+      - if: matrix.platform == 'iOS' || matrix.platform == 'tvOS'
+        name: Create Simulator
+        run: |
+          sudo xcodes select 26.0
+          xcrun simctl delete all
+          if [[ "${{ matrix.swift }}" == "6.2" ]]; then
+            if [[ "${{ matrix.platform }}" == "iOS" ]]; then
+              xcrun simctl create "CI iPhone 16 Pro" "com.apple.CoreSimulator.SimDeviceType.iPhone-16-Pro" "com.apple.CoreSimulator.SimRuntime.iOS-26-0"
+            else
+              xcrun simctl create "CI Apple TV 4K (3rd generation)" "com.apple.CoreSimulator.SimDeviceType.Apple-TV-4K-3rd-generation-4K" "com.apple.CoreSimulator.SimRuntime.tvOS-26-0"
+            fi
+          else
+            if [[ "${{ matrix.platform }}" == "iOS" ]]; then
+              xcrun simctl create "CI iPhone 15 Pro" "com.apple.CoreSimulator.SimDeviceType.iPhone-15-Pro" "com.apple.CoreSimulator.SimRuntime.iOS-18-6"
+            else
+              xcrun simctl create "CI Apple TV 4K (3rd generation)" "com.apple.CoreSimulator.SimDeviceType.Apple-TV-4K-3rd-generation-4K" "com.apple.CoreSimulator.SimRuntime.tvOS-18-5"
+            fi
+          fi
 
       - name: Test Library
         uses: mxcl/xcodebuild@v3
