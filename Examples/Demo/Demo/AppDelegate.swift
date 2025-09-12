@@ -32,9 +32,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		let proxy = UITabBar.appearance()
 		proxy.standardAppearance = customAppearance
-		if #available(iOS 15, tvOS 15, *) {
-			proxy.scrollEdgeAppearance = customAppearance
-		}
+		proxy.scrollEdgeAppearance = customAppearance
 	}
 	#endif
 
