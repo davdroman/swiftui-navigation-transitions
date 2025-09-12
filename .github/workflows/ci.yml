@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   macOS:
-    name: ${{ matrix.platform }} (Swift ${{ matrix.swift }})
+    name: ${{ matrix.platform }}
     runs-on: macos-15
     strategy:
       fail-fast: false
@@ -25,9 +25,6 @@ jobs:
           - iOS
           - mac-catalyst
           - tvOS
-        swift:
-          - "6.0"
-          - "6.1"
     steps:
       - name: Git Checkout
         uses: actions/checkout@v4
@@ -37,11 +34,27 @@ jobs:
           defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
           defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidatation -bool YES
 
+      - if: matrix.platform != 'mac-catalyst'
+        name: Create Simulators
+        run: |
+          set -eo pipefail
+          xcrun simctl delete all
+          if [[ "${{ matrix.platform }}" == "iOS" ]]; then
+            xcrun simctl create "CI iPhone 17 Pro" "com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro" "com.apple.CoreSimulator.SimRuntime.iOS-26-0"
+          elif [[ "${{ matrix.platform }}" == "tvOS" ]]; then
+            xcrun simctl create "CI Apple TV 4K (3rd generation)" "com.apple.CoreSimulator.SimDeviceType.Apple-TV-4K-3rd-generation-4K" "com.apple.CoreSimulator.SimRuntime.tvOS-26-0"
+          fi
+
+      - name: List Simulators
+        run: |
+          xcrun simctl list
+          xcodebuild -scheme "SwiftUINavigationTransitions" -showdestinations
+
       - name: Test Library
         uses: mxcl/xcodebuild@v3
         with:
           platform: ${{ matrix.platform }}
-          swift: ~${{ matrix.swift }}
+          xcode: ~26.0
           action: test
           workspace: SwiftUINavigationTransitions.xcworkspace
           scheme: SwiftUINavigationTransitions
@@ -50,7 +63,7 @@ jobs:
         uses: mxcl/xcodebuild@v3
         with:
           platform: ${{ matrix.platform }}
-          swift: ~${{ matrix.swift }}
+          xcode: ~26.0
           action: build
           workspace: SwiftUINavigationTransitions.xcworkspace
           scheme: Demo
