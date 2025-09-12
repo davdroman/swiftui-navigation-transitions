@@ -68,9 +68,9 @@ jobs:
           sudo xcodes select ${{ matrix.xcode }}
           xcrun simctl delete all
           xcrun simctl create \
-            "${{ fromJSON(env.SIMULATORS_JSON)[matrix.platform].name }}" \
-            "${{ fromJSON(env.SIMULATORS_JSON)[matrix.platform].type }}" \
-            "${{ fromJSON(env.SIMULATORS_JSON)[matrix.platform].runtime }}"
+            "${{ fromJSON(env.SIMULATORS_JSON)[matrix.xcode][matrix.platform].name }}" \
+            "${{ fromJSON(env.SIMULATORS_JSON)[matrix.xcode][matrix.platform].type }}" \
+            "${{ fromJSON(env.SIMULATORS_JSON)[matrix.xcode][matrix.platform].runtime }}"
 
       - name: Test Library
         uses: mxcl/xcodebuild@v3
