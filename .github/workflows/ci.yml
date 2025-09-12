@@ -52,8 +52,8 @@ jobs:
       - name: Select Xcode version
         run: sudo xcodes select ${{ matrix.xcode }}
 
-      - name: List Runtimes & Simulators
-        run: xcrun simctl list
+      - name: List Runtimes
+        run: xcrun simctl list runtimes
 
       - if: matrix.platform != 'mac-catalyst'
         name: Download Required Runtimes
