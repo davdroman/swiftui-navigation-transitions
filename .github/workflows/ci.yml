@@ -33,10 +33,6 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v4
 
-      - name: Load Simulator Lookup Tables
-        run: |
-          echo "SIMULATORS_JSON=$(jq -c . .github/workflows/xcode-simulators.json)" >> $GITHUB_ENV
-
       - name: Disable Macro Fingerprint Validation
         run: |
           defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
