@@ -26,16 +26,9 @@ jobs:
           - mac-catalyst
           - tvOS
         swift:
-          - "6.0"
-          - "6.1"
-          - "6.2"
-        include:
-          - swift: "6.0"
-            xcode: "16.2"
-          - swift: "6.1"
-            xcode: "16.4"
-          - swift: "6.2"
-            xcode: "26.0"
+          - ~6.0 # Xcode 16.2
+          - ~6.1 # Xcode 16.4
+          - ~6.2 # Xcode 26.0
     steps:
       - name: Git Checkout
         uses: actions/checkout@v4
@@ -58,34 +51,13 @@ jobs:
       - if: matrix.platform != 'mac-catalyst'
         name: Download Required Runtimes
         run: |
-          sudo xcodes select ${{ matrix.xcode }}
-          RUNTIME="${{ fromJSON(env.SIMULATORS_JSON)[matrix.xcode][matrix.platform].runtime }}"
-          if ! xcrun simctl list runtimes | grep -q "$RUNTIME"; then
-            if ! xcodebuild -downloadPlatform ${{ matrix.platform }}; then
-              code=$?
-              if [ $code -ne 70 ]; then
-                exit $code
-              else
-                echo "Ignoring exit code 70 from xcodebuild -downloadPlatform"
-              fi
-            fi
-          fi
-
-      - if: matrix.platform != 'mac-catalyst'
-        name: Create Simulator
-        run: |
-          sudo xcodes select ${{ matrix.xcode }}
-          xcrun simctl delete all
-          xcrun simctl create \
-            "${{ fromJSON(env.SIMULATORS_JSON)[matrix.xcode][matrix.platform].name }}" \
-            "${{ fromJSON(env.SIMULATORS_JSON)[matrix.xcode][matrix.platform].type }}" \
-            "${{ fromJSON(env.SIMULATORS_JSON)[matrix.xcode][matrix.platform].runtime }}"
+          xcodebuild -downloadPlatform ${{ matrix.platform }}
 
       - name: Test Library
         uses: mxcl/xcodebuild@v3
         with:
           platform: ${{ matrix.platform }}
-          xcode: ${{ matrix.xcode }}
+          swift: ${{ matrix.swift }}
           action: test
           workspace: SwiftUINavigationTransitions.xcworkspace
           scheme: SwiftUINavigationTransitions
@@ -94,7 +66,7 @@ jobs:
         uses: mxcl/xcodebuild@v3
         with:
           platform: ${{ matrix.platform }}
-          xcode: ${{ matrix.xcode }}
+          swift: ${{ matrix.swift }}
           action: build
           workspace: SwiftUINavigationTransitions.xcworkspace
           scheme: Demo
