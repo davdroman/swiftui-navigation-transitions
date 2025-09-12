@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		D52A95512DCEC08F00885069 /* SwiftUINavigationTransitions in Frameworks */ = {isa = PBXBuildFile; productRef = D52A95502DCEC08F00885069 /* SwiftUINavigationTransitions */; };
 		D5535823290E9692009E5D72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5535822290E9692009E5D72 /* Assets.xcassets */; };
-		D5535826290E9692009E5D72 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5535825290E9692009E5D72 /* Preview Assets.xcassets */; };
 		D5535834290E9718009E5D72 /* Swing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D553582C290E9718009E5D72 /* Swing.swift */; };
 		D5535835290E9718009E5D72 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D553582D290E9718009E5D72 /* RootView.swift */; };
 		D5535839290E9718009E5D72 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5535831290E9718009E5D72 /* App.swift */; };
@@ -25,11 +24,9 @@
 /* Begin PBXFileReference section */
 		D553581B290E9691009E5D72 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5535822290E9692009E5D72 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		D5535825290E9692009E5D72 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D553582C290E9718009E5D72 /* Swing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swing.swift; sourceTree = "<group>"; };
 		D553582D290E9718009E5D72 /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		D5535831290E9718009E5D72 /* App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
-		D553583C290E978C009E5D72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D5535842290F4BEA009E5D72 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		D5535844290F52F7009E5D72 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D5535846290F5E6F009E5D72 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
@@ -71,7 +68,6 @@
 		D553581D290E9691009E5D72 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				D553583C290E978C009E5D72 /* Info.plist */,
 				D5535831290E9718009E5D72 /* App.swift */,
 				D5535842290F4BEA009E5D72 /* AppView.swift */,
 				D5535846290F5E6F009E5D72 /* AppState.swift */,
@@ -81,17 +77,8 @@
 				D5535844290F52F7009E5D72 /* SettingsView.swift */,
 				D58D8040292176EE00D9FEAE /* Custom Transitions */,
 				D5535822290E9692009E5D72 /* Assets.xcassets */,
-				D5535824290E9692009E5D72 /* Preview Content */,
 			);
 			path = Demo;
-			sourceTree = "<group>";
-		};
-		D5535824290E9692009E5D72 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				D5535825290E9692009E5D72 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		D553583D290E97C5009E5D72 /* Frameworks */ = {
@@ -175,7 +162,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5535826290E9692009E5D72 /* Preview Assets.xcassets in Resources */,
 				D5535823290E9692009E5D72 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -337,12 +323,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Demo/Preview Content\"";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Demo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -373,12 +357,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Demo/Preview Content\"";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Demo/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
