@@ -1,9 +1,9 @@
 import SwiftUI
 
 @main
-final class AppDelegate: UIResponder, UIApplicationDelegate {
+struct App: SwiftUI.App {
 	#if !os(tvOS)
-	func applicationDidFinishLaunching(_ application: UIApplication) {
+	init() {
 		customizeNavigationBarAppearance()
 		customizeTabBarAppearance()
 	}
@@ -36,7 +36,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 	#endif
 
-	func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-		UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+	var body: some Scene {
+		WindowGroup {
+			AppView()
+		}
 	}
 }
