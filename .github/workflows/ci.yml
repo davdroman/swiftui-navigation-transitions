@@ -38,7 +38,13 @@ jobs:
           defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
           defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidatation -bool YES
 
-      - if: matrix.platform == 'iOS' || matrix.platform == 'tvOS'
+      - if: matrix.swift == '6.2' && matrix.platform != 'mac-catalyst'
+        name: Select Xcode version
+        run: |
+          sudo xcodes select 26.0
+          xcodebuild -downloadPlatform ${{ matrix.runtime }}
+
+      - if: matrix.platform != 'mac-catalyst'
         name: Create Simulator
         run: |
           sudo xcodes select 26.0
