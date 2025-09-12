@@ -1,6 +1,7 @@
+import IssueReporting
 public import NavigationTransition
-import RuntimeAssociation
-import RuntimeSwizzling
+import ObjCRuntimeTools
+import Once
 public import UIKit
 
 public struct UISplitViewControllerColumns: OptionSet {
@@ -105,16 +106,13 @@ extension RandomAccessCollection where Index == Int {
 }
 
 extension UINavigationController {
-	private var defaultDelegate: (any UINavigationControllerDelegate)! {
-		get { self[] }
-		set { self[] = newValue }
-	}
+	@Associated(.retain(.nonatomic))
+	private var defaultDelegate: (any UINavigationControllerDelegate)!
 
-	var customDelegate: NavigationTransitionDelegate! {
-		get { self[] }
-		set {
-			self[] = newValue
-			delegate = newValue
+	@Associated(.retain(.nonatomic))
+	var customDelegate: NavigationTransitionDelegate? {
+		didSet {
+			delegate = customDelegate
 		}
 	}
 
@@ -122,45 +120,21 @@ extension UINavigationController {
 		_ transition: AnyNavigationTransition,
 		interactivity: AnyNavigationTransition.Interactivity = .default
 	) {
+		do {
+			try UINavigationController.swizzle()
+		} catch {
+			reportIssue(error, "Failed to swizzle required UINavigationController methods")
+		}
+
 		if defaultDelegate == nil {
 			defaultDelegate = delegate
 		}
 
-		if customDelegate == nil {
-			customDelegate = NavigationTransitionDelegate(transition: transition, baseDelegate: defaultDelegate)
-		} else {
+		if let customDelegate {
 			customDelegate.transition = transition
+		} else {
+			customDelegate = NavigationTransitionDelegate(transition: transition, baseDelegate: defaultDelegate)
 		}
-
-		swizzle(
-			UINavigationController.self,
-			#selector(UINavigationController.setViewControllers),
-			#selector(UINavigationController.setViewControllers_animateIfNeeded)
-		)
-
-		swizzle(
-			UINavigationController.self,
-			#selector(UINavigationController.pushViewController),
-			#selector(UINavigationController.pushViewController_animateIfNeeded)
-		)
-
-		swizzle(
-			UINavigationController.self,
-			#selector(UINavigationController.popViewController),
-			#selector(UINavigationController.popViewController_animateIfNeeded)
-		)
-
-		swizzle(
-			UINavigationController.self,
-			#selector(UINavigationController.popToViewController),
-			#selector(UINavigationController.popToViewController_animateIfNeeded)
-		)
-
-		swizzle(
-			UINavigationController.self,
-			#selector(UINavigationController.popToRootViewController),
-			#selector(UINavigationController.popToRootViewController_animateIfNeeded)
-		)
 
 		#if !os(tvOS) && !os(visionOS)
 		if defaultEdgePanRecognizer.strongDelegate == nil {
@@ -211,6 +185,68 @@ extension UINavigationController {
 		#endif
 	}
 
+	private static func swizzle() throws {
+		try #once {
+			try #swizzle(
+				UINavigationController.setViewControllers,
+				params: [UIViewController].self, Bool.self
+			) { $self, viewControllers, animated in
+				if let transitionDelegate = self.customDelegate {
+					self.setViewControllers(viewControllers, animated: transitionDelegate.transition.animation != nil)
+				} else {
+					self.setViewControllers(viewControllers, animated: animated)
+				}
+			}
+
+			try #swizzle(
+				UINavigationController.pushViewController,
+				params: UIViewController.self, Bool.self
+			) { $self, viewController, animated in
+				if let transitionDelegate = self.customDelegate {
+					self.pushViewController(viewController, animated: transitionDelegate.transition.animation != nil)
+				} else {
+					self.pushViewController(viewController, animated: animated)
+				}
+			}
+
+			try #swizzle(
+				UINavigationController.popViewController,
+				params: Bool.self,
+				returning: UIViewController?.self
+			) { $self, animated in
+				if let transitionDelegate = self.customDelegate {
+					self.popViewController(animated: transitionDelegate.transition.animation != nil)
+				} else {
+					self.popViewController(animated: animated)
+				}
+			}
+
+			try #swizzle(
+				UINavigationController.popToViewController,
+				params: UIViewController.self, Bool.self,
+				returning: [UIViewController]?.self
+			) { $self, viewController, animated in
+				if let transitionDelegate = self.customDelegate {
+					self.popToViewController(viewController, animated: transitionDelegate.transition.animation != nil)
+				} else {
+					self.popToViewController(viewController, animated: animated)
+				}
+			}
+
+			try #swizzle(
+				UINavigationController.popToRootViewController,
+				params: Bool.self,
+				returning: [UIViewController]?.self
+			) { $self, animated in
+				if let transitionDelegate = self.customDelegate {
+					self.popToRootViewController(animated: transitionDelegate.transition.animation != nil)
+				} else {
+					self.popToRootViewController(animated: animated)
+				}
+			}
+		}
+	}
+
 	@available(tvOS, unavailable)
 	@available(visionOS, unavailable)
 	private func exclusivelyEnableGestureRecognizer(_ gestureRecognizer: UIPanGestureRecognizer?) {
@@ -224,48 +260,6 @@ extension UINavigationController {
 	}
 }
 
-extension UINavigationController {
-	@objc private func setViewControllers_animateIfNeeded(_ viewControllers: [UIViewController], animated: Bool) {
-		if let transitionDelegate = customDelegate {
-			setViewControllers_animateIfNeeded(viewControllers, animated: transitionDelegate.transition.animation != nil)
-		} else {
-			setViewControllers_animateIfNeeded(viewControllers, animated: animated)
-		}
-	}
-
-	@objc private func pushViewController_animateIfNeeded(_ viewController: UIViewController, animated: Bool) {
-		if let transitionDelegate = customDelegate {
-			pushViewController_animateIfNeeded(viewController, animated: transitionDelegate.transition.animation != nil)
-		} else {
-			pushViewController_animateIfNeeded(viewController, animated: animated)
-		}
-	}
-
-	@objc private func popViewController_animateIfNeeded(animated: Bool) -> UIViewController? {
-		if let transitionDelegate = customDelegate {
-			popViewController_animateIfNeeded(animated: transitionDelegate.transition.animation != nil)
-		} else {
-			popViewController_animateIfNeeded(animated: animated)
-		}
-	}
-
-	@objc private func popToViewController_animateIfNeeded(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
-		if let transitionDelegate = customDelegate {
-			popToViewController_animateIfNeeded(viewController, animated: transitionDelegate.transition.animation != nil)
-		} else {
-			popToViewController_animateIfNeeded(viewController, animated: animated)
-		}
-	}
-
-	@objc private func popToRootViewController_animateIfNeeded(animated: Bool) -> UIViewController? {
-		if let transitionDelegate = customDelegate {
-			popToRootViewController_animateIfNeeded(animated: transitionDelegate.transition.animation != nil)
-		} else {
-			popToRootViewController_animateIfNeeded(animated: animated)
-		}
-	}
-}
-
 @available(tvOS, unavailable)
 @available(visionOS, unavailable)
 extension UINavigationController {
@@ -273,29 +267,22 @@ extension UINavigationController {
 		interactivePopGestureRecognizer as? UIScreenEdgePanGestureRecognizer
 	}
 
-	var defaultPanRecognizer: UIPanGestureRecognizer! {
-		get { self[] }
-		set { self[] = newValue }
-	}
+	@Associated(.retain(.nonatomic))
+	var defaultPanRecognizer: UIPanGestureRecognizer!
 
-	var edgePanRecognizer: UIScreenEdgePanGestureRecognizer! {
-		get { self[] }
-		set { self[] = newValue }
-	}
+	@Associated(.retain(.nonatomic))
+	var edgePanRecognizer: UIScreenEdgePanGestureRecognizer!
 
-	var panRecognizer: UIPanGestureRecognizer! {
-		get { self[] }
-		set { self[] = newValue }
-	}
+	@Associated(.retain(.nonatomic))
+	var panRecognizer: UIPanGestureRecognizer!
 }
 
 @available(tvOS, unavailable)
 extension UIGestureRecognizer {
+	@Associated(.retain(.nonatomic))
 	var strongDelegate: (any UIGestureRecognizerDelegate)? {
-		get { self[] }
-		set {
-			self[] = newValue
-			delegate = newValue
+		didSet {
+			delegate = strongDelegate
 		}
 	}
 

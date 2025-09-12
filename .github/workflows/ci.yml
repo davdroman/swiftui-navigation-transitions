@@ -26,12 +26,30 @@ jobs:
           - mac-catalyst
           - tvOS
         swift:
-          - "5.10"
-          - "6.0"
-          - "6.1"
+          - "6.0" # Xcode 16.2
+          - "6.1" # Xcode 16.4
+          - "6.2" # Xcode 26.0
     steps:
       - name: Git Checkout
         uses: actions/checkout@v4
+
+      - name: Disable Macro Fingerprint Validation
+        run: |
+          defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
+          defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidatation -bool YES
+
+      - name: Select Xcode version
+        uses: mxcl/xcodebuild@v3
+        with:
+          swift: ${{ matrix.swift }}
+          action: none
+
+      - name: List Runtimes
+        run: xcrun simctl list runtimes
+
+      - if: matrix.platform != 'mac-catalyst'
+        name: Download Required Runtimes
+        run: xcodebuild -downloadPlatform ${{ matrix.platform }}
 
       - name: Test Library
         uses: mxcl/xcodebuild@v3
