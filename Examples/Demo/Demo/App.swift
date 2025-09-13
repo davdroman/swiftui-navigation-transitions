@@ -19,9 +19,7 @@ struct App: SwiftUI.App {
 		proxy.scrollEdgeAppearance = customAppearance
 		proxy.compactAppearance = customAppearance
 		proxy.standardAppearance = customAppearance
-		if #available(iOS 15.0, tvOS 15, *) {
-			proxy.compactScrollEdgeAppearance = customAppearance
-		}
+		proxy.compactScrollEdgeAppearance = customAppearance
 	}
 
 	func customizeTabBarAppearance() {
