@@ -9,7 +9,7 @@ extension AnimatorTransientView {
 }
 
 final class UnimplementedAnimatorTransientView: AnimatorTransientView {
-	override public var initial: AnimatorTransientView.Properties {
+	override var initial: AnimatorTransientView.Properties {
 		get {
 			reportIssue("\(Self.self).\(#function) is unimplemented")
 			return .noop
@@ -19,7 +19,7 @@ final class UnimplementedAnimatorTransientView: AnimatorTransientView {
 		}
 	}
 
-	override public var animation: AnimatorTransientView.Properties {
+	override var animation: AnimatorTransientView.Properties {
 		get {
 			reportIssue("\(Self.self).\(#function) is unimplemented")
 			return .noop
@@ -29,7 +29,7 @@ final class UnimplementedAnimatorTransientView: AnimatorTransientView {
 		}
 	}
 
-	override public var completion: AnimatorTransientView.Properties {
+	override var completion: AnimatorTransientView.Properties {
 		get {
 			reportIssue("\(Self.self).\(#function) is unimplemented")
 			return .noop
@@ -39,16 +39,16 @@ final class UnimplementedAnimatorTransientView: AnimatorTransientView {
 		}
 	}
 
-	override public subscript<T>(dynamicMember keyPath: KeyPath<UIView, T>) -> T {
+	override subscript<T>(dynamicMember keyPath: KeyPath<UIView, T>) -> T {
 		reportIssue("\(Self.self).\(#function) is unimplemented")
 		return uiView[keyPath: keyPath]
 	}
 
-	public init() {
+	init() {
 		super.init(UIView())
 	}
 
-	override public func setUIViewProperties(
+	override func setUIViewProperties(
 		to properties: KeyPath<AnimatorTransientView, AnimatorTransientView.Properties>,
 		force: Bool
 	) {
