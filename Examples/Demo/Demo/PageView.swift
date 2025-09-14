@@ -59,14 +59,7 @@ struct PageView<Content: View, Link: View, Destination: View>: View {
 		#endif
 		.navigationBarItems(
 			trailing: Button(action: { appState.isPresentingSettings = true }) {
-				Group {
-					if #available(iOS 14, tvOS 16, *) {
-						Image(systemName: "gearshape")
-					} else {
-						Image(systemName: "gear")
-					}
-				}
-				.font(.system(size: 16, weight: .semibold))
+				Image(systemName: "gearshape").font(.system(size: 16, weight: .semibold))
 			}
 		)
 	}
