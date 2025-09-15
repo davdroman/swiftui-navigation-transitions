@@ -65,7 +65,7 @@ package.dependencies = [
 	.package(url: "https://github.com/davdroman/swift-once-macro", from: "1.0.0"),
 	.package(url: "https://github.com/pointfreeco/swift-custom-dump", from: "1.0.0"), // dev
 	.package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "1.0.0"),
-	.package(url: "https://github.com/siteline/swiftui-introspect", from: "1.0.0"),
+	.package(url: "https://github.com/siteline/swiftui-introspect", "1.3.0"..<"27.0.0"),
 ]
 
 for target in package.targets {
