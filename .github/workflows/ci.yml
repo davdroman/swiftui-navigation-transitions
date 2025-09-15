@@ -16,6 +16,7 @@ concurrency:
 
 jobs:
   macOS:
+    if: github.event_name != 'pull_request' || !contains(github.event.pull_request.title, '[skip ci]')
     name: ${{ matrix.platform }} (Swift ${{ matrix.swift }})
     runs-on: macos-15
     strategy:
