@@ -165,13 +165,7 @@ struct Code<Content: StringProtocol>: View {
 			.background(shape.stroke(Color(white: 0.1).opacity(0.35), lineWidth: 1))
 			.background(Color(white: 0.94).opacity(0.6).clipShape(shape))
 		#if !os(tvOS)
-			.modifier {
-				if #available(iOS 15, *) {
-					$0.textSelection(.enabled)
-				} else {
-					$0
-				}
-			}
+			.textSelection(.enabled)
 		#endif
 	}
 }
