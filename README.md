@@ -121,7 +121,7 @@ Add the package via Swift Package Manager:
 
 ``` swift
 dependencies: [
-    .package(url: "https://github.com/davdroman/swiftui-navigation-transitions", from: "0.15.0"),
+    .package(url: "https://github.com/davdroman/swiftui-navigation-transitions", from: "0.16.0"),
 ]
 ```
 
@@ -134,13 +134,14 @@ dependencies: [
 The documentation for releases and `main` are available here:
 
 - [`main`](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/main/documentation/swiftuinavigationtransitions)
-- [0.15.1](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.15.1/documentation/swiftuinavigationtransitions)
+- [0.16.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.16.0/documentation/swiftuinavigationtransitions)
 
 <details>
 <summary>
 Other versions
 </summary>
 
+- [0.15.1](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.15.1/documentation/swiftuinavigationtransitions)
 - [0.9.3](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.9.3/documentation/navigationtransitions)
 - [0.9.2](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.9.2/documentation/navigationtransitions)
 - [0.9.1](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.9.1/documentation/navigationtransitions)
