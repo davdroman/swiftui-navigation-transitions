@@ -126,15 +126,15 @@ struct PageLink: View {
 	var body: some View {
 		ZStack {
 			RoundedRectangle(cornerRadius: 6, style: .continuous)
-			#if !os(tvOS) && !os(visionOS)
+				#if !os(tvOS) && !os(visionOS)
 				.fill(Color.blue.opacity(0.8))
-			#else
+				#else
 				.fill(Color.clear)
-			#endif
+				#endif
 			Text(title)
-			#if !os(tvOS)
+				#if !os(tvOS)
 				.foregroundColor(.white)
-			#endif
+				#endif
 				.font(.system(size: 18, weight: .medium, design: .rounded))
 		}
 		.frame(maxHeight: 50)
@@ -163,9 +163,9 @@ struct Code<Content: StringProtocol>: View {
 			.minimumScaleFactor(0.5)
 			.font(.system(size: 14, design: .monospaced))
 			.background(shape.stroke(Color(white: 0.1).opacity(0.35), lineWidth: 1))
-			.background(Color(white: 0.94).opacity(0.6).clipShape(shape))
-		#if !os(tvOS)
+			#if !os(tvOS)
 			.textSelection(.enabled)
-		#endif
+			#endif
+			.background(Color(white: 0.94).opacity(0.6).clipShape(shape))
 	}
 }

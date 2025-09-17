@@ -1,7 +1,7 @@
---disable redundantNilInit,redundantSelf,redundantType,unusedArguments
+--disable redundantNilInit,redundantSelf,redundantType,unusedArguments,indent
 
 --header strip
---indent tab
---ifdef no-indent
 --extensionacl on-declarations
 --patternlet inline
+--ranges no-space
+--trailing-commas always
