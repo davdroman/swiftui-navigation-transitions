@@ -5,3 +5,4 @@
 --ifdef no-indent
 --extensionacl on-declarations
 --patternlet inline
+--ranges no-space
