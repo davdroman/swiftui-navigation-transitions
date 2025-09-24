@@ -1,7 +1,5 @@
 import IssueReporting
 public import NavigationTransition
-import ObjCRuntimeTools
-import Once
 public import UIKit
 
 public struct UISplitViewControllerColumns: OptionSet {
@@ -105,26 +103,40 @@ extension RandomAccessCollection where Index == Int {
 	}
 }
 
-extension UINavigationController {
-	@Associated(.retain(.nonatomic))
-	private var defaultDelegate: (any UINavigationControllerDelegate)!
+private struct AssociatedKeys {
+    static var defaultDelegate: UInt8 = 0
+    static var customDelegate: UInt8 = 0
+    static var defaultPanRecognizer: UInt8 = 0
+    static var edgePanRecognizer: UInt8 = 0
+    static var panRecognizer: UInt8 = 0
+    static var strongDelegate: UInt8 = 0
+}
 
-	@Associated(.retain(.nonatomic))
-	var customDelegate: NavigationTransitionDelegate? {
-		didSet {
-			delegate = customDelegate
-		}
-	}
+extension UINavigationController {
+    var defaultDelegate: (any UINavigationControllerDelegate)? {
+        get {
+            return objc_getAssociatedObject(self, &AssociatedKeys.defaultDelegate) as? any UINavigationControllerDelegate
+        }
+        set {
+            objc_setAssociatedObject(self, &AssociatedKeys.defaultDelegate, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+
+    var customDelegate: NavigationTransitionDelegate? {
+        get {
+            return objc_getAssociatedObject(self, &AssociatedKeys.customDelegate) as? NavigationTransitionDelegate
+        }
+        set {
+            delegate = newValue
+            objc_setAssociatedObject(self, &AssociatedKeys.customDelegate, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
 
 	public func setNavigationTransition(
 		_ transition: AnyNavigationTransition,
 		interactivity: AnyNavigationTransition.Interactivity = .default
 	) {
-		do {
-			try UINavigationController.swizzle()
-		} catch {
-			reportIssue(error, "Failed to swizzle required UINavigationController methods")
-		}
+        UINavigationController.enableCustomTransitions()
 
 		if defaultDelegate == nil {
 			defaultDelegate = delegate
@@ -185,67 +197,72 @@ extension UINavigationController {
 		#endif
 	}
 
-	private static func swizzle() throws {
-		try #once {
-			try #swizzle(
-				UINavigationController.setViewControllers,
-				params: [UIViewController].self, Bool.self
-			) { $self, viewControllers, animated in
-				if let transitionDelegate = self.customDelegate {
-					self.setViewControllers(viewControllers, animated: transitionDelegate.transition.animation != nil)
-				} else {
-					self.setViewControllers(viewControllers, animated: animated)
-				}
-			}
+    public static func enableCustomTransitions() {
+        _ = swizzleOnce
+    }
 
-			try #swizzle(
-				UINavigationController.pushViewController,
-				params: UIViewController.self, Bool.self
-			) { $self, viewController, animated in
-				if let transitionDelegate = self.customDelegate {
-					self.pushViewController(viewController, animated: transitionDelegate.transition.animation != nil)
-				} else {
-					self.pushViewController(viewController, animated: animated)
-				}
-			}
+    private static let swizzleOnce: Void = {
+        swizzle()
+    }()
 
-			try #swizzle(
-				UINavigationController.popViewController,
-				params: Bool.self,
-				returning: UIViewController?.self
-			) { $self, animated in
-				if let transitionDelegate = self.customDelegate {
-					self.popViewController(animated: transitionDelegate.transition.animation != nil)
-				} else {
-					self.popViewController(animated: animated)
-				}
-			}
+    private static func swizzle() {
+        let originalMethods: [(Selector, Selector)] = [
+            (#selector(UINavigationController.setViewControllers(_:animated:)), #selector(swizzled_setViewControllers(_:animated:))),
+            (#selector(UINavigationController.pushViewController(_:animated:)), #selector(swizzled_pushViewController(_:animated:))),
+            (#selector(UINavigationController.popViewController(animated:)), #selector(swizzled_popViewController(animated:))),
+            (#selector(UINavigationController.popToViewController(_:animated:)), #selector(swizzled_popToViewController(_:animated:))),
+            (#selector(UINavigationController.popToRootViewController(animated:)), #selector(swizzled_popToRootViewController(animated:)))
+        ]
 
-			try #swizzle(
-				UINavigationController.popToViewController,
-				params: UIViewController.self, Bool.self,
-				returning: [UIViewController]?.self
-			) { $self, viewController, animated in
-				if let transitionDelegate = self.customDelegate {
-					self.popToViewController(viewController, animated: transitionDelegate.transition.animation != nil)
-				} else {
-					self.popToViewController(viewController, animated: animated)
-				}
-			}
+        originalMethods.forEach { originalSelector, swizzledSelector in
+            guard let originalMethod = class_getInstanceMethod(self, originalSelector),
+                  let swizzledMethod = class_getInstanceMethod(self, swizzledSelector) else {
+                return
+            }
+            method_exchangeImplementations(originalMethod, swizzledMethod)
+        }
+    }
 
-			try #swizzle(
-				UINavigationController.popToRootViewController,
-				params: Bool.self,
-				returning: [UIViewController]?.self
-			) { $self, animated in
-				if let transitionDelegate = self.customDelegate {
-					self.popToRootViewController(animated: transitionDelegate.transition.animation != nil)
-				} else {
-					self.popToRootViewController(animated: animated)
-				}
-			}
-		}
-	}
+    @objc private func swizzled_setViewControllers(_ viewControllers: [UIViewController], animated: Bool) {
+        if let transitionDelegate = self.customDelegate {
+            self.swizzled_setViewControllers(viewControllers, animated: transitionDelegate.transition.animation != nil)
+        } else {
+            self.swizzled_setViewControllers(viewControllers, animated: animated)
+        }
+    }
+
+    @objc private func swizzled_pushViewController(_ viewController: UIViewController, animated: Bool) {
+        if let transitionDelegate = self.customDelegate {
+            self.swizzled_pushViewController(viewController, animated: transitionDelegate.transition.animation != nil)
+        } else {
+            self.swizzled_pushViewController(viewController, animated: animated)
+        }
+    }
+
+    @objc private func swizzled_popViewController(animated: Bool) -> UIViewController? {
+        if let transitionDelegate = self.customDelegate {
+            return self.swizzled_popViewController(animated: transitionDelegate.transition.animation != nil)
+        } else {
+            return self.swizzled_popViewController(animated: animated)
+        }
+    }
+
+    @objc private func swizzled_popToViewController(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
+        if let transitionDelegate = self.customDelegate {
+            return self.swizzled_popToViewController(viewController, animated: transitionDelegate.transition.animation != nil)
+        } else {
+            return self.swizzled_popToViewController(viewController, animated: animated)
+        }
+    }
+
+    @objc private func swizzled_popToRootViewController(animated: Bool) -> [UIViewController]? {
+        if let transitionDelegate = self.customDelegate {
+            return self.swizzled_popToRootViewController(animated: transitionDelegate.transition.animation != nil)
+        } else {
+            return self.swizzled_popToRootViewController(animated: animated)
+        }
+    }
+
 
 	@available(tvOS, unavailable)
 	@available(visionOS, unavailable)
@@ -263,28 +280,49 @@ extension UINavigationController {
 @available(tvOS, unavailable)
 @available(visionOS, unavailable)
 extension UINavigationController {
-	var defaultEdgePanRecognizer: UIScreenEdgePanGestureRecognizer! {
-		interactivePopGestureRecognizer as? UIScreenEdgePanGestureRecognizer
-	}
+    var defaultEdgePanRecognizer: UIScreenEdgePanGestureRecognizer! {
+        interactivePopGestureRecognizer as? UIScreenEdgePanGestureRecognizer
+    }
 
-	@Associated(.retain(.nonatomic))
-	var defaultPanRecognizer: UIPanGestureRecognizer!
+    var defaultPanRecognizer: UIPanGestureRecognizer! {
+        get {
+            return objc_getAssociatedObject(self, &AssociatedKeys.defaultPanRecognizer) as? UIPanGestureRecognizer
+        }
+        set {
+            objc_setAssociatedObject(self, &AssociatedKeys.defaultPanRecognizer, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
 
-	@Associated(.retain(.nonatomic))
-	var edgePanRecognizer: UIScreenEdgePanGestureRecognizer!
+    var edgePanRecognizer: UIScreenEdgePanGestureRecognizer! {
+        get {
+            return objc_getAssociatedObject(self, &AssociatedKeys.edgePanRecognizer) as? UIScreenEdgePanGestureRecognizer
+        }
+        set {
+            objc_setAssociatedObject(self, &AssociatedKeys.edgePanRecognizer, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
 
-	@Associated(.retain(.nonatomic))
-	var panRecognizer: UIPanGestureRecognizer!
+    var panRecognizer: UIPanGestureRecognizer! {
+        get {
+            return objc_getAssociatedObject(self, &AssociatedKeys.panRecognizer) as? UIPanGestureRecognizer
+        }
+        set {
+            objc_setAssociatedObject(self, &AssociatedKeys.panRecognizer, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
 }
-
 @available(tvOS, unavailable)
 extension UIGestureRecognizer {
-	@Associated(.retain(.nonatomic))
-	var strongDelegate: (any UIGestureRecognizerDelegate)? {
-		didSet {
-			delegate = strongDelegate
-		}
-	}
+    var strongDelegate: (any UIGestureRecognizerDelegate)? {
+        get {
+            return objc_getAssociatedObject(self, &AssociatedKeys.strongDelegate) as? any UIGestureRecognizerDelegate
+        }
+        set {
+            self.delegate = newValue
+
+            objc_setAssociatedObject(self, &AssociatedKeys.strongDelegate, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
 
 	var targets: Any? {
 		get {
