@@ -27,9 +27,9 @@ jobs:
           - mac-catalyst
           - tvOS
         swift:
-          - "6.0" # Xcode 16.2
-          - "6.1" # Xcode 16.4
-          - "6.2" # Xcode 26.0
+          - "6.0"
+          - "6.1"
+          - "6.2"
     steps:
       - name: Git Checkout
         uses: actions/checkout@v4
@@ -60,6 +60,7 @@ jobs:
           action: test
           workspace: SwiftUINavigationTransitions.xcworkspace
           scheme: SwiftUINavigationTransitions
+          verbosity: xcbeautify
 
       - name: Build Examples/Demo
         uses: mxcl/xcodebuild@v3
@@ -69,3 +70,4 @@ jobs:
           action: build
           workspace: SwiftUINavigationTransitions.xcworkspace
           scheme: Demo
+          verbosity: xcbeautify
