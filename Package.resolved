@@ -1,13 +1,13 @@
 {
-  "originHash" : "de52879098e62dfdc6d2f3ee86a57cec60782ebfc08f8b80a43c1f37386a3976",
+  "originHash" : "1b11beb2f201fc8f2bec5bfb1c3589ad1cdf95c31b44bf7714b7d2bbc93f03af",
   "pins" : [
     {
       "identity" : "objc-runtime-tools",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/davdroman/objc-runtime-tools",
       "state" : {
-        "revision" : "c05d245cbb8d289a6bbc184fd2d1605b70ec65f3",
-        "version" : "0.1.0"
+        "revision" : "b3003b43d88ac15ca82aa339cc2536adf2c0e159",
+        "version" : "0.1.1"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/davdroman/swift-once-macro",
       "state" : {
-        "revision" : "2bfa91668d16723902cdc558c1a736e8787c91c6",
-        "version" : "1.0.0"
+        "revision" : "d7c66418a3a22588decd8faafca13bed72ee0421",
+        "version" : "1.0.1"
       }
     },
     {
@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swiftlang/swift-syntax",
       "state" : {
-        "revision" : "f99ae8aa18f0cf0d53481901f88a0991dc3bd4a2",
-        "version" : "601.0.1"
+        "revision" : "4799286537280063c85a32f09884cfbca301b1a1",
+        "version" : "602.0.0"
       }
     },
     {
@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/xctest-dynamic-overlay",
       "state" : {
-        "revision" : "b2ed9eabefe56202ee4939dd9fc46b6241c88317",
-        "version" : "1.6.1"
+        "revision" : "4c27acf5394b645b70d8ba19dc249c0472d5f618",
+        "version" : "1.7.0"
       }
     }
   ],
