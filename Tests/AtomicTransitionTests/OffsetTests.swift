@@ -1,6 +1,6 @@
-@testable import Animator
 import AtomicTransition
 import TestUtils
+@testable import Animator
 
 final class OffsetTests: XCTestCase {
 	let viewUsed = AnimatorTransientView(UIView())

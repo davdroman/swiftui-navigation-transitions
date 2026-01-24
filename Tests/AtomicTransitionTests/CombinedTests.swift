@@ -1,5 +1,5 @@
-@testable import AtomicTransition
 import TestUtils
+@testable import AtomicTransition
 
 final class CombinedTests: XCTestCase {
 	func testTwo() {

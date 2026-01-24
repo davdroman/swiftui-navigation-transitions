@@ -5,7 +5,7 @@ extension AnyNavigationTransition {
 	/// being applied.
 	public func combined(with other: Self) -> Self {
 		switch (self.handler, other.handler) {
-		case (.transient(let lhsHandler), .transient(let rhsHandler)):
+		case let (.transient(lhsHandler), .transient(rhsHandler)):
 			struct Erased: NavigationTransitionProtocol {
 				let handler: AnyNavigationTransition.TransientHandler
 
