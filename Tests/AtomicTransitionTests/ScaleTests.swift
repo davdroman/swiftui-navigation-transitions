@@ -1,6 +1,6 @@
-@testable import Animator
 import AtomicTransition
 import TestUtils
+@testable import Animator
 
 final class ScaleTests: XCTestCase {
 	let viewUsed = AnimatorTransientView(UIView())

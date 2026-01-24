@@ -64,9 +64,9 @@ public struct _ConditionalTransition<TrueTransition: AtomicTransition, FalseTran
 
 	public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
 		switch transition {
-		case .left(let trueTransition):
+		case let .left(trueTransition):
 			trueTransition.transition(view, for: operation, in: container)
-		case .right(let falseTransition):
+		case let .right(falseTransition):
 			falseTransition.transition(view, for: operation, in: container)
 		}
 	}
@@ -75,9 +75,9 @@ public struct _ConditionalTransition<TrueTransition: AtomicTransition, FalseTran
 extension _ConditionalTransition: MirrorableAtomicTransition where TrueTransition: MirrorableAtomicTransition, FalseTransition: MirrorableAtomicTransition {
 	public func mirrored() -> _ConditionalTransition<TrueTransition.Mirrored, FalseTransition.Mirrored> {
 		switch transition {
-		case .left(let trueTransition):
+		case let .left(trueTransition):
 			.init(trueTransition: trueTransition.mirrored())
-		case .right(let falseTransition):
+		case let .right(falseTransition):
 			.init(falseTransition: falseTransition.mirrored())
 		}
 	}

@@ -1,6 +1,6 @@
-@testable import Animator
 import AtomicTransition
 import TestUtils
+@testable import Animator
 
 final class OpacityTests: XCTestCase {
 	let viewUsed = AnimatorTransientView(UIView())

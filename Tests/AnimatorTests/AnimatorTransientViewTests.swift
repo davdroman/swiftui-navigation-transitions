@@ -1,5 +1,5 @@
-@testable import Animator
 import TestUtils
+@testable import Animator
 
 final class AnimatorTransientViewTests: XCTestCase {}
 

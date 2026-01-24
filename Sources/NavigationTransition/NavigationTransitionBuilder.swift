@@ -61,9 +61,9 @@ public struct _ConditionalTransition<TrueTransition: NavigationTransitionProtoco
 		in container: Container
 	) {
 		switch transition {
-		case .left(let trueTransition):
+		case let .left(trueTransition):
 			trueTransition.transition(from: fromView, to: toView, for: operation, in: container)
-		case .right(let falseTransition):
+		case let .right(falseTransition):
 			falseTransition.transition(from: fromView, to: toView, for: operation, in: container)
 		}
 	}
