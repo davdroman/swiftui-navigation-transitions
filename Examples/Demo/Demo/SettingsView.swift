@@ -33,7 +33,7 @@ struct SettingsView: View {
 			#endif
 			.navigationBarItems(
 				leading: Button("Shuffle", action: shuffle),
-				trailing: Button(action: dismiss) { Text("Done").bold() }
+				trailing: Button(action: dismiss) { Text("Done").bold() },
 			)
 		}
 		.navigationViewStyle(.stack)
@@ -47,18 +47,18 @@ struct SettingsView: View {
 			• Disabled.
 			• Edge Pan: recognized from the edge of the screen only.
 			• Pan: recognized anywhere on the screen! ✨
-			"""
+			""",
 		)
 	}
 
 	@ViewBuilder
 	func picker<Selection: CaseIterable & Hashable & CustomStringConvertible>(
 		_ label: String,
-		_ selection: Binding<Selection>
+		_ selection: Binding<Selection>,
 	) -> some View where Selection.AllCases: RandomAccessCollection {
 		Picker(
 			selection: selection,
-			label: Text(label)
+			label: Text(label),
 		) {
 			ForEach(Selection.allCases, id: \.self) {
 				Text($0.description).tag($0)

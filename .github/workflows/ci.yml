@@ -45,10 +45,13 @@ jobs:
         swift:
           - "6.1"
           - "6.2"
+          - "6.3"
         include:
           - swift: "6.1"
             runner: macos-15
           - swift: "6.2"
+            runner: macos-26
+          - swift: "6.3"
             runner: macos-26
     steps:
       - name: Git Checkout

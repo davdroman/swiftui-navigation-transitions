@@ -12,7 +12,7 @@ public struct OnPush<Transition: AtomicTransition>: NavigationTransitionProtocol
 		from fromView: TransientView,
 		to toView: TransientView,
 		for operation: TransitionOperation,
-		in container: Container
+		in container: Container,
 	) {
 		switch operation {
 		case .push:
@@ -39,7 +39,7 @@ public struct OnPop<Transition: AtomicTransition>: NavigationTransitionProtocol 
 		from fromView: TransientView,
 		to toView: TransientView,
 		for operation: TransitionOperation,
-		in container: Container
+		in container: Container,
 	) {
 		switch operation {
 		case .push:

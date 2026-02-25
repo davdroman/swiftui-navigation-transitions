@@ -10,7 +10,7 @@ public struct PickPush<Transition: NavigationTransitionProtocol>: NavigationTran
 		from fromView: TransientView,
 		to toView: TransientView,
 		for operation: TransitionOperation,
-		in container: Container
+		in container: Container,
 	) {
 		switch operation {
 		case .push:
@@ -36,7 +36,7 @@ public struct PickPop<Transition: NavigationTransitionProtocol>: NavigationTrans
 		from fromView: TransientView,
 		to toView: TransientView,
 		for operation: TransitionOperation,
-		in container: Container
+		in container: Container,
 	) {
 		switch operation {
 		case .push:

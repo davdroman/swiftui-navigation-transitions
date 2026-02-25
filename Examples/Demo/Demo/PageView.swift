@@ -60,7 +60,7 @@ struct PageView<Content: View, Link: View, Destination: View>: View {
 		.navigationBarItems(
 			trailing: Button(action: { appState.isPresentingSettings = true }) {
 				Image(systemName: "gearshape").font(.system(size: 16, weight: .semibold))
-			}
+			},
 		)
 	}
 }
@@ -72,7 +72,7 @@ extension PageView {
 		color: Color,
 		@ViewBuilder content: () -> Content,
 		@ViewBuilder link: () -> Link,
-		@ViewBuilder destination: () -> Destination = { EmptyView() }
+		@ViewBuilder destination: () -> Destination = { EmptyView() },
 	) {
 		self.init(
 			number: number,
@@ -80,7 +80,7 @@ extension PageView {
 			color: color,
 			content: content(),
 			link: link(),
-			destination: destination()
+			destination: destination(),
 		)
 	}
 }
@@ -90,7 +90,7 @@ extension PageView where Link == EmptyView, Destination == EmptyView {
 		number: Int,
 		title: String,
 		color: Color,
-		@ViewBuilder content: () -> Content
+		@ViewBuilder content: () -> Content,
 	) -> some View {
 		Self(
 			number: number,
@@ -98,7 +98,7 @@ extension PageView where Link == EmptyView, Destination == EmptyView {
 			color: color,
 			content: content(),
 			link: nil,
-			destination: nil
+			destination: nil,
 		)
 	}
 }
@@ -113,7 +113,7 @@ extension View {
 	/// - Note: Useful only when you don't need to reuse the closure.
 	/// If you do, turn the closure into a proper modifier.
 	public func modifier<ModifiedContent: View>(
-		@ViewBuilder _ modifier: (Self) -> ModifiedContent
+		@ViewBuilder _ modifier: (Self) -> ModifiedContent,
 	) -> ModifiedContent {
 		modifier(self)
 	}

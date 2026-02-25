@@ -92,7 +92,7 @@ final class AppState: ObservableObject {
 		func callAsFunction(
 			duration: Duration,
 			stiffness: Stiffness,
-			damping: Damping
+			damping: Damping,
 		) -> AnyNavigationTransition.Animation? {
 			switch self {
 			case .none:

@@ -7,7 +7,7 @@ final class OffsetTests: XCTestCase {
 	let properties = AnimatorTransientViewProperties(
 		alpha: 1,
 		transform: .identity,
-		zPosition: 0
+		zPosition: 0,
 	)
 	let containerUsed = UIView()
 

@@ -55,7 +55,7 @@ let package = Package(
 			"SwiftUINavigationTransitions",
 		]),
 	],
-	swiftLanguageModes: [.v5]
+	swiftLanguageModes: [.v5],
 )
 
 // MARK: Dependencies

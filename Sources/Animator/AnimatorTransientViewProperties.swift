@@ -19,14 +19,14 @@ extension AnimatorTransientViewProperties {
 	static let `default` = Self(
 		alpha: 1,
 		transform: .identity,
-		zPosition: 0
+		zPosition: 0,
 	)
 
 	init(of uiView: UIView) {
 		self.init(
 			alpha: uiView.alpha,
 			transform: .init(uiView.transform3D),
-			zPosition: uiView.layer.zPosition
+			zPosition: uiView.layer.zPosition,
 		)
 	}
 
