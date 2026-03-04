@@ -1,4 +1,5 @@
 import AtomicTransition
+import SwiftUI
 import TestUtils
 @testable import Animator
 
