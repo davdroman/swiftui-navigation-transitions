@@ -1,3 +1,5 @@
+import UIKit
+
 extension Animation {
 	public static func easeOut(duration: Double) -> Self {
 		.init(duration: duration, curve: .easeOut)
