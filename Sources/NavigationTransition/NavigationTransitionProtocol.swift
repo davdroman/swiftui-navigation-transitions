@@ -38,7 +38,7 @@ public protocol NavigationTransitionProtocol {
 		from fromView: TransientView,
 		to toView: TransientView,
 		for operation: TransitionOperation,
-		in container: Container
+		in container: Container,
 	)
 
 	/// The content of a navigation transition that is composed from other transitions.
@@ -61,7 +61,7 @@ extension NavigationTransitionProtocol where Body: NavigationTransitionProtocol 
 		from fromView: TransientView,
 		to toView: TransientView,
 		for operation: TransitionOperation,
-		in container: Container
+		in container: Container,
 	) {
 		self.body.transition(from: fromView, to: toView, for: operation, in: container)
 	}
@@ -77,7 +77,7 @@ extension NavigationTransitionProtocol where Body == Never {
 			"""
 			'\(Self.self)' has no body. …
 			Do not access a transition's 'body' property directly, as it may not exist.
-			"""
+			""",
 		)
 	}
 }

@@ -49,7 +49,7 @@ public class AnimatorTransientView {
 
 	package func setUIViewProperties(
 		to properties: KeyPath<AnimatorTransientView, Properties>,
-		force: Bool = false
+		force: Bool = false,
 	) {
 		self[keyPath: properties].assignToUIView(uiView, force: force)
 	}

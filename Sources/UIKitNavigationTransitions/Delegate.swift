@@ -38,7 +38,7 @@ final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelega
 			NavigationTransitionAnimatorProvider(
 				transition: transition,
 				animation: animation,
-				operation: operation
+				operation: operation,
 			)
 		} else {
 			nil
@@ -81,7 +81,7 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 		}
 		let animator = UIViewPropertyAnimator(
 			duration: transitionDuration(using: transitionContext),
-			timingParameters: animation.timingParameters
+			timingParameters: animation.timingParameters,
 		)
 		cachedAnimators[ObjectIdentifier(transitionContext)] = animator
 
@@ -102,7 +102,7 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 				let (fromView, toView) = transientViews(
 					for: handler,
 					animator: animator,
-					context: (container, fromUIView, toUIView)
+					context: (container, fromUIView, toUIView),
 				)
 			{
 				for view in [fromView, toView] {
@@ -143,7 +143,7 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 	private func transientViews(
 		for handler: AnyNavigationTransition.TransientHandler,
 		animator: any Animator,
-		context: (container: UIView, fromUIView: UIView, toUIView: UIView)
+		context: (container: UIView, fromUIView: UIView, toUIView: UIView),
 	) -> (fromView: AnimatorTransientView, toView: AnimatorTransientView)? {
 		let (container, fromUIView, toUIView) = context
 

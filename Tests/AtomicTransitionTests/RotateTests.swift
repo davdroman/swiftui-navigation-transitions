@@ -1,4 +1,5 @@
 import AtomicTransition
+import SwiftUI
 import TestUtils
 @testable import Animator
 
@@ -7,7 +8,7 @@ final class RotateTests: XCTestCase {
 	let properties = AnimatorTransientViewProperties(
 		alpha: 1,
 		transform: .identity,
-		zPosition: 0
+		zPosition: 0,
 	)
 	let containerUsed = UIView()
 

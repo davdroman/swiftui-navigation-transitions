@@ -6,7 +6,7 @@ struct Identity: NavigationTransitionProtocol {
 		from fromView: TransientView,
 		to toView: TransientView,
 		for operation: TransitionOperation,
-		in container: Container
+		in container: Container,
 	) {
 		// NO-OP
 	}

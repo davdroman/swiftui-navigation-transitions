@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.1
 
 import PackageDescription
 
@@ -55,7 +55,7 @@ let package = Package(
 			"SwiftUINavigationTransitions",
 		]),
 	],
-	swiftLanguageModes: [.v5]
+	swiftLanguageModes: [.v5],
 )
 
 // MARK: Dependencies
@@ -73,5 +73,6 @@ for target in package.targets {
 	target.swiftSettings? += [
 		.enableUpcomingFeature("ExistentialAny"),
 		.enableUpcomingFeature("InternalImportsByDefault"),
+		.enableUpcomingFeature("MemberImportVisibility"),
 	]
 }

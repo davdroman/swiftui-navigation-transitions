@@ -1,13 +1,13 @@
 {
-  "originHash" : "1b11beb2f201fc8f2bec5bfb1c3589ad1cdf95c31b44bf7714b7d2bbc93f03af",
+  "originHash" : "4a3e5ca863a90866c5b19e82f3beee84ae426a8b592d50ad19fd9d82bd8d925c",
   "pins" : [
     {
       "identity" : "objc-runtime-tools",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/davdroman/objc-runtime-tools",
       "state" : {
-        "revision" : "b3003b43d88ac15ca82aa339cc2536adf2c0e159",
-        "version" : "0.1.1"
+        "revision" : "d9e3aa914fbe37eb9328505507deab618548873f",
+        "version" : "0.2.0"
       }
     },
     {
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-custom-dump",
       "state" : {
-        "revision" : "82645ec760917961cfa08c9c0c7104a57a0fa4b1",
-        "version" : "1.3.3"
+        "revision" : "06c57924455064182d6b217f06ebc05d00cb2990",
+        "version" : "1.5.0"
       }
     },
     {
@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/xctest-dynamic-overlay",
       "state" : {
-        "revision" : "4c27acf5394b645b70d8ba19dc249c0472d5f618",
-        "version" : "1.7.0"
+        "revision" : "dfd70507def84cb5fb821278448a262c6ff2bbad",
+        "version" : "1.9.0"
       }
     }
   ],

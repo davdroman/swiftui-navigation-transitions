@@ -15,7 +15,7 @@ extension AnyNavigationTransition {
 				}
 			}
 			return AnyNavigationTransition(
-				Combined(Erased(handler: lhsHandler), Erased(handler: rhsHandler))
+				Combined(Erased(handler: lhsHandler), Erased(handler: rhsHandler)),
 			)
 		case (.transient, .primitive),
 		     (.primitive, .transient),
@@ -25,7 +25,7 @@ extension AnyNavigationTransition {
 				Combining primitive and non-primitive or two primitive transitions via 'combine(with:)' is not allowed.
 
 				The left-hand side transition will be left unmodified and the right-hand side transition will be discarded.
-				"""
+				""",
 			)
 			return self
 		}
@@ -49,7 +49,7 @@ public struct Combined<TransitionA: NavigationTransitionProtocol, TransitionB: N
 		from fromView: TransientView,
 		to toView: TransientView,
 		for operation: TransitionOperation,
-		in container: Container
+		in container: Container,
 	) {
 		transitionA.transition(from: fromView, to: toView, for: operation, in: container)
 		transitionB.transition(from: fromView, to: toView, for: operation, in: container)

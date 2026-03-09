@@ -50,7 +50,7 @@ final class UnimplementedAnimatorTransientView: AnimatorTransientView {
 
 	override func setUIViewProperties(
 		to properties: KeyPath<AnimatorTransientView, AnimatorTransientView.Properties>,
-		force: Bool
+		force: Bool,
 	) {
 		reportIssue("\(Self.self).\(#function) is unimplemented")
 	}
@@ -60,6 +60,6 @@ extension AnimatorTransientView.Properties {
 	fileprivate static let noop = Self(
 		alpha: 0,
 		transform: .init(.init()),
-		zPosition: 0
+		zPosition: 0,
 	)
 }

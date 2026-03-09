@@ -31,7 +31,7 @@ struct RootView: View {
 		appState.animation(
 			duration: appState.duration,
 			stiffness: appState.stiffness,
-			damping: appState.damping
+			damping: appState.damping,
 		)
 	}
 

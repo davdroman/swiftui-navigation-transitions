@@ -43,7 +43,7 @@ struct PageTwo: View {
 				...
 				}
 				.navigationTransition(.slide)
-				"""
+				""",
 			)
 		}
 
@@ -69,7 +69,7 @@ struct PageThree: View {
 						.easeInOut(duration: 0.3)
 					)
 				)
-				"""
+				""",
 			)
 			Text("... and you can even **combine** them too:")
 			Code(
@@ -77,7 +77,7 @@ struct PageThree: View {
 				.navigationTransition(
 					.slide.combined(with: .fade(.in))
 				)
-				"""
+				""",
 			)
 		}
 
