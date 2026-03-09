@@ -1,5 +1,5 @@
 {
-  "originHash" : "1b11beb2f201fc8f2bec5bfb1c3589ad1cdf95c31b44bf7714b7d2bbc93f03af",
+  "originHash" : "4a3e5ca863a90866c5b19e82f3beee84ae426a8b592d50ad19fd9d82bd8d925c",
   "pins" : [
     {
       "identity" : "objc-runtime-tools",
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-custom-dump",
       "state" : {
-        "revision" : "2a2a938798236b8fa0bc57c453ee9de9f9ec3ab0",
-        "version" : "1.4.1"
+        "revision" : "06c57924455064182d6b217f06ebc05d00cb2990",
+        "version" : "1.5.0"
       }
     },
     {
