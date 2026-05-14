@@ -96,7 +96,7 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 		cachedAnimators[ObjectIdentifier(transitionContext)] = animator
 
 		let container = transitionContext.containerView
-		rguard
+		guard
 			let fromUIView = transitionContext.view(forKey: .from),
 			let toUIView = transitionContext.view(forKey: .to)
 		else {
