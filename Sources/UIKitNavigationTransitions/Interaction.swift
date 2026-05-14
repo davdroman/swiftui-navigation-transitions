@@ -26,6 +26,17 @@ extension UINavigationController {
 			delegate.interactionController?.update(percent)
 			interactiveProgressObserver?(percent)
 
+			// Observe transition coordinator to get accurate completion/cancel result
+			if let coordinator = transitionCoordinator {
+				coordinator.notifyWhenInteractionChanges { context in
+					DispatchQueue.main.async {
+						self.interactiveCompletionObserver?(!context.isCancelled)
+						// Mark handled so didShow fallback doesn't double-report
+						self.interactiveInitialViewControllerCount = nil
+					}
+				}
+			}
+
 		case .changed:
 			delegate.interactionController?.update(percent)
 			interactiveProgressObserver?(percent)
@@ -46,7 +57,7 @@ extension UINavigationController {
 			}
 
 			delegate.interactionController = nil
-			// final progress already reported via observeInteraction / didShow
+			// final progress already reported via observeInteraction / didShow or coordinator
 
 		case .failed, .cancelled:
 			delegate.interactionController?.cancel()
