@@ -41,19 +41,19 @@ struct RootView: View {
 			VStack(spacing: 6) {
 				HStack {
 					Text("Progress: \(Int((interactiveProgress * 100).rounded()))%")
-						.font(.subheadline).bold()
 					Spacer()
 				}
 				HStack {
 					Text(lastInteractiveResult)
-						.font(.subheadline)
 					Spacer()
 				}
 			}
+			.font(.caption2)
 			.padding()
 			.background(.ultraThinMaterial)
 			.cornerRadius(12)
 			.padding([.horizontal, .bottom], 16)
+			.ignoresSafeArea()
 		}
 		.sheet(isPresented: $appState.isPresentingSettings) {
 			SettingsView().environmentObject(appState)

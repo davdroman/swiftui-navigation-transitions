@@ -118,10 +118,10 @@ extension UINavigationController {
 
 	// Interactive observers
 	@Associated(.retain(.nonatomic))
-	var interactiveProgressObserver: ((CGFloat) -> Void)?
+	package var interactiveProgressObserver: ((CGFloat) -> Void)?
 
 	@Associated(.retain(.nonatomic))
-	var interactiveCompletionObserver: ((Bool) -> Void)?
+	package var interactiveCompletionObserver: ((Bool) -> Void)?
 
 	@Associated(.retain(.nonatomic))
 	var interactiveInitialViewControllerCount: Int?

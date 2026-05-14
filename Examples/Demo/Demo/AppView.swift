@@ -7,3 +7,7 @@ struct AppView: View {
 		RootView().environmentObject(appState)
 	}
 }
+
+#Preview {
+	AppView()
+}
