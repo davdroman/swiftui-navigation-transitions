@@ -7,12 +7,16 @@ extension View {
 	public func navigationTransition(
 		_ transition: AnyNavigationTransition,
 		interactivity: AnyNavigationTransition.Interactivity = .default,
+		onInteractiveProgress: ((CGFloat) -> Void)? = nil,
+		onInteractiveCompletion: ((Bool) -> Void)? = nil,
 	) -> some View {
 		self.introspect(
 			.navigationView(style: .stack),
 			on: .iOS(.v13...), .tvOS(.v13...), .visionOS(.v1...),
 			scope: [.receiver, .ancestor],
 		) { controller in
+			controller.interactiveProgressObserver = onInteractiveProgress
+			controller.interactiveCompletionObserver = onInteractiveCompletion
 			controller.setNavigationTransition(transition, interactivity: interactivity)
 		}
 	}

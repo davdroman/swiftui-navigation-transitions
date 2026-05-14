@@ -12,19 +12,23 @@ extension UINavigationController {
 
 		let translation = gestureRecognizer.translation(in: gestureRecognizerView).x
 		let width = gestureRecognizerView.bounds.size.width
-		let percent = translation / width
+		let percent = max(0.0, min(1.0, translation / width))
 
 		switch gestureRecognizer.state {
 		case .possible:
 			break
 
 		case .began:
+			// record initial count for completion decision
+			interactiveInitialViewControllerCount = viewControllers.count
 			delegate.interactionController = UIPercentDrivenInteractiveTransition()
 			popViewController(animated: true)
 			delegate.interactionController?.update(percent)
+			interactiveProgressObserver?(percent)
 
 		case .changed:
 			delegate.interactionController?.update(percent)
+			interactiveProgressObserver?(percent)
 
 		case .ended:
 			let velocity = gestureRecognizer.velocity(in: gestureRecognizerView).x
@@ -42,10 +46,12 @@ extension UINavigationController {
 			}
 
 			delegate.interactionController = nil
+			// final progress already reported via observeInteraction / didShow
 
 		case .failed, .cancelled:
 			delegate.interactionController?.cancel()
 			delegate.interactionController = nil
+			interactiveProgressObserver?(0)
 
 		@unknown default:
 			break

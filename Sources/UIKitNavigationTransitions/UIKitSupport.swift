@@ -116,6 +116,16 @@ extension UINavigationController {
 		}
 	}
 
+	// Interactive observers
+	@Associated(.retain(.nonatomic))
+	var interactiveProgressObserver: ((CGFloat) -> Void)?
+
+	@Associated(.retain(.nonatomic))
+	var interactiveCompletionObserver: ((Bool) -> Void)?
+
+	@Associated(.retain(.nonatomic))
+	var interactiveInitialViewControllerCount: Int?
+
 	public func setNavigationTransition(
 		_ transition: AnyNavigationTransition,
 		interactivity: AnyNavigationTransition.Interactivity = .default,
@@ -145,6 +155,8 @@ extension UINavigationController {
 			defaultPanRecognizer = UIPanGestureRecognizer()
 			defaultPanRecognizer.targets = defaultEdgePanRecognizer.targets // https://stackoverflow.com/a/60526328/1922543
 			defaultPanRecognizer.strongDelegate = NavigationGestureRecognizerDelegate(controller: self)
+			// observe system-copied pan
+			defaultPanRecognizer.addTarget(self, action: #selector(observeInteraction(_:)))
 			view.addGestureRecognizer(defaultPanRecognizer)
 		}
 
@@ -160,6 +172,8 @@ extension UINavigationController {
 			panRecognizer = UIPanGestureRecognizer()
 			panRecognizer.addTarget(self, action: #selector(handleInteraction))
 			panRecognizer.strongDelegate = NavigationGestureRecognizerDelegate(controller: self)
+			// observe custom pan as well
+			panRecognizer.addTarget(self, action: #selector(observeInteraction(_:)))
 			view.addGestureRecognizer(panRecognizer)
 		}
 
@@ -183,6 +197,28 @@ extension UINavigationController {
 			}
 		}
 		#endif
+	}
+
+	@available(tvOS, unavailable)
+	@available(visionOS, unavailable)
+	@objc func observeInteraction(_ gesture: UIPanGestureRecognizer) {
+		guard let view = gesture.view else { return }
+		let translation = gesture.translation(in: view).x
+		let width = view.bounds.size.width
+		let rawPercent = translation / width
+		let percent = max(0.0, min(1.0, rawPercent))
+
+		switch gesture.state {
+		case .began:
+			interactiveInitialViewControllerCount = viewControllers.count
+			interactiveProgressObserver?(percent)
+		case .changed:
+			interactiveProgressObserver?(percent)
+		case .ended, .cancelled, .failed:
+			interactiveProgressObserver?(percent)
+		default:
+			break
+		}
 	}
 
 	private static func swizzle() throws {
