@@ -42,6 +42,7 @@ final class AppState: ObservableObject {
 			}
 		}
 
+		@MainActor
 		func callAsFunction() -> AnyNavigationTransition {
 			switch self {
 			case .default:
@@ -89,6 +90,7 @@ final class AppState: ObservableObject {
 			}
 		}
 
+		@MainActor
 		func callAsFunction(
 			duration: Duration,
 			stiffness: Stiffness,

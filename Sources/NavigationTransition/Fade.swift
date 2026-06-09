@@ -3,6 +3,7 @@ import UIKit
 
 extension AnyNavigationTransition {
 	/// A transition that fades the pushed view in, fades the popped view out, or cross-fades both views.
+	@MainActor
 	public static func fade(_ style: Fade.Style) -> Self {
 		.init(Fade(style))
 	}

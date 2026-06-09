@@ -3,6 +3,7 @@ import SwiftUI
 import TestUtils
 @testable import Animator
 
+@MainActor
 final class MoveTests: XCTestCase {
 	let viewUsed = AnimatorTransientView(UIView())
 	let properties = AnimatorTransientViewProperties(

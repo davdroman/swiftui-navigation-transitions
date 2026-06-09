@@ -1,6 +1,7 @@
 import UIKit
 
 extension Animation {
+	@MainActor
 	public static func interpolatingSpring(
 		mass: Double = 1.0,
 		stiffness: Double,

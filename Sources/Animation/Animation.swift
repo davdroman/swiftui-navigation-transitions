@@ -11,6 +11,7 @@ public struct Animation {
 		self.timingParameters = timingParameters
 	}
 
+	@MainActor
 	init(duration: Double, curve: UIView.AnimationCurve) {
 		self.init(duration: duration, timingParameters: UICubicTimingParameters(animationCurve: curve))
 	}

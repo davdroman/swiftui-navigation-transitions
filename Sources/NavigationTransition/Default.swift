@@ -12,6 +12,7 @@ extension AnyNavigationTransition {
 	///   ```
 	///
 	/// - Note: The animation for `default` cannot be customized via ``animation(_:)``.
+	@MainActor
 	public static var `default`: Self {
 		.init(Default())
 	}

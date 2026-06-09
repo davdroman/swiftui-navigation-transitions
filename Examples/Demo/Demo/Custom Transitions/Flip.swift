@@ -2,10 +2,12 @@ import NavigationTransition
 import SwiftUI
 
 extension AnyNavigationTransition {
+	@MainActor
 	static func flip(axis: Axis) -> Self {
 		.init(Flip(axis: axis))
 	}
 
+	@MainActor
 	static var flip: Self {
 		.flip(axis: .horizontal)
 	}

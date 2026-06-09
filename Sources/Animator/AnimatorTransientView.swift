@@ -35,10 +35,12 @@ public class AnimatorTransientView {
 	package let uiView: UIView
 
 	/// Read-only proxy to underlying `UIView` properties.
+	@MainActor
 	public subscript<T>(dynamicMember keyPath: KeyPath<UIView, T>) -> T {
 		uiView[keyPath: keyPath]
 	}
 
+	@MainActor
 	package init(_ uiView: UIView) {
 		self.initial = Properties(of: uiView)
 		self.animation = Properties(of: uiView)
@@ -47,6 +49,7 @@ public class AnimatorTransientView {
 		self.uiView = uiView
 	}
 
+	@MainActor
 	package func setUIViewProperties(
 		to properties: KeyPath<AnimatorTransientView, Properties>,
 		force: Bool = false,
@@ -54,6 +57,7 @@ public class AnimatorTransientView {
 		self[keyPath: properties].assignToUIView(uiView, force: force)
 	}
 
+	@MainActor
 	package func resetUIViewProperties() {
 		Properties.default.assignToUIView(uiView, force: true)
 	}

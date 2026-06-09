@@ -1,6 +1,7 @@
 import AtomicTransition
 import TestUtils
 
+@MainActor
 final class IdentityTests: XCTestCase {
 	func testInsertion() {
 		Identity().transition(.unimplemented, for: .insertion, in: .unimplemented)

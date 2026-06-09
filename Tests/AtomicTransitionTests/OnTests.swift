@@ -1,6 +1,7 @@
 import AtomicTransition
 import TestUtils
 
+@MainActor
 final class OnInsertionTests: XCTestCase {
 	func testInsertion() {
 		let expectation = expectation(description: "Handler called")
@@ -15,6 +16,7 @@ final class OnInsertionTests: XCTestCase {
 	}
 }
 
+@MainActor
 final class OnRemovalTests: XCTestCase {
 	func testInsertion() {
 		let sut = OnRemoval { Spy { XCTFail() } }

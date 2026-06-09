@@ -2,6 +2,7 @@ import NavigationTransition
 import SwiftUI
 
 extension AnyNavigationTransition {
+	@MainActor
 	static var zoom: Self {
 		.init(Zoom())
 	}
