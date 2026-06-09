@@ -74,7 +74,7 @@ The library ships with some **standard transitions** out of the box:
 - [`fade(_:)`](Sources/NavigationTransition/Fade.swift)
 - [`slide(axis:)`](Sources/NavigationTransition/Slide.swift)
 
-In addition to these, you can create fully [**custom transitions**](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/main/documentation/navigationtransitions/custom-transitions) in just a few lines of SwiftUI-like code!
+In addition to these, you can create fully [**custom transitions**](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/main/documentation/swiftuinavigationtransitions/custom-transitions) in just a few lines of SwiftUI-like code!
 
 ```swift
 struct Swing: NavigationTransitionProtocol {
@@ -121,7 +121,7 @@ Add the package via Swift Package Manager:
 
 ``` swift
 dependencies: [
-    .package(url: "https://github.com/davdroman/swiftui-navigation-transitions", from: "0.16.0"),
+    .package(url: "https://github.com/davdroman/swiftui-navigation-transitions", from: "0.18.0"),
 ]
 ```
 
@@ -134,13 +134,16 @@ dependencies: [
 The documentation for releases and `main` are available here:
 
 - [`main`](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/main/documentation/swiftuinavigationtransitions)
-- [0.16.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.16.0/documentation/swiftuinavigationtransitions)
+- [0.18.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.18.0/documentation/swiftuinavigationtransitions)
 
 <details>
 <summary>
 Other versions
 </summary>
 
+- [0.17.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.17.0/documentation/swiftuinavigationtransitions)
+- [0.16.1](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.16.1/documentation/swiftuinavigationtransitions)
+- [0.16.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.16.0/documentation/swiftuinavigationtransitions)
 - [0.15.1](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.15.1/documentation/swiftuinavigationtransitions)
 - [0.9.3](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.9.3/documentation/navigationtransitions)
 - [0.9.2](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.9.2/documentation/navigationtransitions)
