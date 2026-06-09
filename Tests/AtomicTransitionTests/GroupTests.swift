@@ -1,6 +1,7 @@
 import AtomicTransition
 import TestUtils
 
+@MainActor
 final class GroupTests: XCTestCase {
 	func testEmpty() {
 		XCTAssert(Group {} is Group<Identity>)

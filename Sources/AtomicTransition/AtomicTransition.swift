@@ -23,6 +23,7 @@ public protocol AtomicTransition {
 	///   - operation: The ``TransitionOperation``. Possible values are `insertion` or `removal`.
 	///   It's recommended that you customize the behavior of your transition based on this parameter.
 	///   - container: The raw `UIView` containing the transitioning views.
+	@MainActor
 	func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container)
 }
 
