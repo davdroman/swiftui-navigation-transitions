@@ -2,14 +2,14 @@ public import Animation
 package import UIKit
 
 public struct AnyNavigationTransition {
-	package typealias TransientHandler = (
+	package typealias TransientHandler = @MainActor (
 		AnimatorTransientView,
 		AnimatorTransientView,
 		NavigationTransitionOperation,
 		UIView
 	) -> Void
 
-	package typealias PrimitiveHandler = (
+	package typealias PrimitiveHandler = @MainActor (
 		any Animator,
 		NavigationTransitionOperation,
 		any UIViewControllerContextTransitioning
@@ -22,16 +22,20 @@ public struct AnyNavigationTransition {
 
 	package let isDefault: Bool
 	package let handler: Handler
-	package var animation: Animation? = .default
+	package var animation: Animation?
 
+	@MainActor
 	public init(_ transition: some NavigationTransitionProtocol) {
 		self.isDefault = false
 		self.handler = .transient(transition.transition(from:to:for:in:))
+		self.animation = .default
 	}
 
+	@MainActor
 	public init(_ transition: some PrimitiveNavigationTransition) {
 		self.isDefault = transition is Default
 		self.handler = .primitive(transition.transition(with:for:in:))
+		self.animation = .default
 	}
 }
 
