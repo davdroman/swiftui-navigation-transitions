@@ -43,7 +43,7 @@ extension CATransform3D: @retroactive Equatable {
 	}
 }
 
-extension CATransform3D: @unchecked @retroactive Sendable {}
+extension CATransform3D: @retroactive @unchecked Sendable {}
 
 extension Transform {
 	public static var identity: Self {
