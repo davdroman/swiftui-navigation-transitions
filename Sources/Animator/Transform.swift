@@ -36,16 +36,14 @@ extension CATransform3D {
 	}
 }
 
-extension CATransform3D: @retroactive Equatable {}
-
-extension CATransform3D: @unchecked @retroactive Sendable {}
-
-extension CATransform3D {
+extension CATransform3D: @retroactive Equatable {
 	@inlinable
 	public static func == (lhs: Self, rhs: Self) -> Bool {
 		CATransform3DEqualToTransform(lhs, rhs)
 	}
 }
+
+extension CATransform3D: @unchecked @retroactive Sendable {}
 
 extension Transform {
 	public static var identity: Self {
