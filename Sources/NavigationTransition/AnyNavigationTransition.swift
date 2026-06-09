@@ -27,14 +27,18 @@ public struct AnyNavigationTransition {
 	@MainActor
 	public init(_ transition: some NavigationTransitionProtocol) {
 		self.isDefault = false
-		self.handler = .transient(transition.transition(from:to:for:in:))
+		self.handler = .transient { fromView, toView, operation, container in
+			transition.transition(from: fromView, to: toView, for: operation, in: container)
+		}
 		self.animation = .default
 	}
 
 	@MainActor
 	public init(_ transition: some PrimitiveNavigationTransition) {
 		self.isDefault = transition is Default
-		self.handler = .primitive(transition.transition(with:for:in:))
+		self.handler = .primitive { animator, operation, context in
+			transition.transition(with: animator, for: operation, in: context)
+		}
 		self.animation = .default
 	}
 }
