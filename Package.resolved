@@ -1,13 +1,13 @@
 {
-  "originHash" : "4a3e5ca863a90866c5b19e82f3beee84ae426a8b592d50ad19fd9d82bd8d925c",
+  "originHash" : "b671445540a142c534d0debef5c16c491bc222b4e889f7c29d836ac6f34216ef",
   "pins" : [
     {
       "identity" : "objc-runtime-tools",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/davdroman/objc-runtime-tools",
       "state" : {
-        "revision" : "d9e3aa914fbe37eb9328505507deab618548873f",
-        "version" : "0.2.0"
+        "revision" : "04715d0c98d366d7000be32c0c81b4ba87001910",
+        "version" : "0.5.1"
       }
     },
     {
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-custom-dump",
       "state" : {
-        "revision" : "06c57924455064182d6b217f06ebc05d00cb2990",
-        "version" : "1.5.0"
+        "revision" : "b9b59eb58c946236d6f16305c576ad194c36444e",
+        "version" : "1.6.0"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/davdroman/swift-once-macro",
       "state" : {
-        "revision" : "d7c66418a3a22588decd8faafca13bed72ee0421",
-        "version" : "1.0.1"
+        "revision" : "5f9d4e77cd95335fe14b44064fcf7f96e8ed56a0",
+        "version" : "1.1.1"
       }
     },
     {
@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swiftlang/swift-syntax",
       "state" : {
-        "revision" : "4799286537280063c85a32f09884cfbca301b1a1",
-        "version" : "602.0.0"
+        "revision" : "79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1",
+        "version" : "603.0.2"
       }
     },
     {
@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/siteline/swiftui-introspect",
       "state" : {
-        "revision" : "a08b87f96b41055577721a6e397562b21ad52454",
-        "version" : "26.0.0"
+        "revision" : "aead9358a55f635d62d885aeb9105752c0213aec",
+        "version" : "27.0.0-beta.1"
       }
     },
     {
