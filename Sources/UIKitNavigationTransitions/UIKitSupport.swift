@@ -4,7 +4,7 @@ import ObjCRuntimeTools
 import Once
 public import UIKit
 
-public struct UISplitViewControllerColumns: OptionSet {
+public struct UISplitViewControllerColumns: OptionSet, Sendable {
 	public static let primary = Self(rawValue: 1)
 	public static let supplementary = Self(rawValue: 1 << 1)
 	public static let secondary = Self(rawValue: 1 << 2)

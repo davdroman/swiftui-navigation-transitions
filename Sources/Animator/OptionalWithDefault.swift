@@ -16,6 +16,7 @@ public struct OptionalWithDefault<Value> {
 }
 
 extension OptionalWithDefault: Equatable where Value: Equatable {}
+extension OptionalWithDefault: Sendable where Value: Sendable {}
 
 extension OptionalWithDefault {
 	func assign<Root: AnyObject>(to root: Root, _ valueKeyPath: ReferenceWritableKeyPath<Root, Value>, force: Bool) {

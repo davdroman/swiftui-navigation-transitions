@@ -1,6 +1,7 @@
 import TestUtils
 @testable import AtomicTransition
 
+@MainActor
 final class CombinedTests: XCTestCase {
 	func testTwo() {
 		enum A {}; enum B {}

@@ -21,6 +21,7 @@ public typealias _Animator = Animator
 	/// for a view-based animation.
 	///
 	/// You can call this method multiple times to add multiple blocks to the animator.
+	@MainActor
 	func addAnimations(_ animation: @escaping () -> Void)
 
 	/// Adds the specified completion block to the animator.
@@ -35,14 +36,17 @@ public typealias _Animator = Animator
 	///
 	///     The ending position of the animations. Use this value to determine whether the animations stopped at
 	///     the beginning, end, or somewhere in the middle.
+	@MainActor
 	func addCompletion(_ completion: @escaping (UIViewAnimatingPosition) -> Void)
 }
 
 extension Animator where Self: UIViewImplicitlyAnimating {
+	@MainActor
 	public func addAnimations(_ animation: @escaping () -> Void) {
 		addAnimations?(animation)
 	}
 
+	@MainActor
 	public func addCompletion(_ completion: @escaping (UIViewAnimatingPosition) -> Void) {
 		addCompletion?(completion)
 	}

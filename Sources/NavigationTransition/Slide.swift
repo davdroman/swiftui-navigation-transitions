@@ -7,6 +7,7 @@ extension AnyNavigationTransition {
 	/// This transition:
 	/// - Pushes views right-to-left and pops views left-to-right when `axis` is `horizontal`.
 	/// - Pushes views bottom-to-top and pops views top-to-bottom when `axis` is `vertical`.
+	@MainActor
 	public static func slide(axis: Axis) -> Self {
 		.init(Slide(axis: axis))
 	}
@@ -14,6 +15,7 @@ extension AnyNavigationTransition {
 
 extension AnyNavigationTransition {
 	/// Equivalent to `slide(axis: .horizontal)`.
+	@MainActor
 	@inlinable
 	public static var slide: Self {
 		.slide(axis: .horizontal)

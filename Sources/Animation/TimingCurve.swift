@@ -1,6 +1,7 @@
 import UIKit
 
 extension Animation {
+	@MainActor
 	public static func timingCurve(
 		_ c0x: Double,
 		_ c0y: Double,
@@ -17,6 +18,7 @@ extension Animation {
 		)
 	}
 
+	@MainActor
 	public static func timingCurve(
 		_ c0x: Double,
 		_ c0y: Double,
