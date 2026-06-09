@@ -26,7 +26,7 @@ NavigationView {
   // ...
 }
 .navigationViewStyle(.stack)
-.navigationTransition(.slide)
+.customNavigationTransition(.slide)
 ```
 
 #### iOS 16+
@@ -35,7 +35,7 @@ NavigationView {
 NavigationStack {
   // ...
 }
-.navigationTransition(.slide)
+.customNavigationTransition(.slide)
 ```
 
 ---
@@ -45,7 +45,7 @@ The API is designed to resemble that of built-in SwiftUI Transitions for maximum
 You can apply **custom animations** just like with standard SwiftUI transitions:
 
 ```swift
-.navigationTransition(
+.customNavigationTransition(
     .fade(.in).animation(.easeInOut(duration: 0.3))
 )
 ```
@@ -53,7 +53,7 @@ You can apply **custom animations** just like with standard SwiftUI transitions:
 You can **combine** them:
 
 ```swift
-.navigationTransition(
+.customNavigationTransition(
     .slide.combined(with: .fade(.in))
 )
 ```
@@ -61,7 +61,7 @@ You can **combine** them:
 And you can **dynamically** choose between transitions based on logic:
 
 ```swift
-.navigationTransition(
+.customNavigationTransition(
     reduceMotion ? .fade(.in).animation(.linear) : .slide(.vertical)
 )
 ```
@@ -106,13 +106,13 @@ The [**Demo**](Examples/Demo) app showcases some of these transitions in action.
 A sweet additional feature is the ability to override the behavior of the **pop gesture** on the navigation view:
 
 ```swift
-.navigationTransition(.slide, interactivity: .pan) // full-pan screen gestures!
+.customNavigationTransition(.slide, interactivity: .pan) // full-pan screen gestures!
 ```
 
 This even works to override its behavior while maintaining the **default system transition** in iOS:
 
 ```swift
-.navigationTransition(.default, interactivity: .pan) // ✨
+.customNavigationTransition(.default, interactivity: .pan) // ✨
 ```
 
 ## Installation

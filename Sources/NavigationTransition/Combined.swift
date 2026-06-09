@@ -1,6 +1,6 @@
 import IssueReporting
 
-extension AnyNavigationTransition {
+extension CustomNavigationTransition {
 	/// Combines this transition with another, returning a new transition that is the result of both transitions
 	/// being applied.
 	@MainActor
@@ -8,14 +8,14 @@ extension AnyNavigationTransition {
 		switch (self.handler, other.handler) {
 		case let (.transient(lhsHandler), .transient(rhsHandler)):
 			struct Erased: NavigationTransitionProtocol {
-				let handler: AnyNavigationTransition.TransientHandler
+				let handler: CustomNavigationTransition.TransientHandler
 
 				@inlinable
 				func transition(from fromView: TransientView, to toView: TransientView, for operation: TransitionOperation, in container: Container) {
 					handler(fromView, toView, operation, container)
 				}
 			}
-			return AnyNavigationTransition(
+			return CustomNavigationTransition(
 				Combined(Erased(handler: lhsHandler), Erased(handler: rhsHandler)),
 			)
 		case (.transient, .primitive),

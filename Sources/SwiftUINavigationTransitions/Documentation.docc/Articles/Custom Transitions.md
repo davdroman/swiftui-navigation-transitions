@@ -17,14 +17,14 @@ As a first time reader, it is highly recommended that you read **Core Concepts**
 
 ### `NavigationTransitionProtocol`
 
-The main construct the library leverages is called `AnyNavigationTransition`. You may have seen some instances of this type in the README's code samples (e.g. `.slide`).
+The main construct the library leverages is called `CustomNavigationTransition`. You may have seen some instances of this type in the README's code samples (e.g. `.slide`).
 
- `AnyNavigationTransition` instances describe both `push` and `pop` transitions for both *origin* and *destination* views.
+ `CustomNavigationTransition` instances describe both `push` and `pop` transitions for both *origin* and *destination* views.
 
-If we dive into the implementation of `AnyNavigationTransition.slide`, we'll find this:
+If we dive into the implementation of `CustomNavigationTransition.slide`, we'll find this:
 
 ```swift
-extension AnyNavigationTransition {
+extension CustomNavigationTransition {
     /// [...]
     public static func slide(axis: Axis) -> Self {
         .init(Slide(axis: axis))
@@ -32,7 +32,7 @@ extension AnyNavigationTransition {
 }
 ```
 
-As you can see, there's not much going on here. The reason is that `AnyNavigationTransition` is actually just a type erasing wrapper around the real meat and potatoes: the protocol `NavigationTransitionProtocol`.
+As you can see, there's not much going on here. The reason is that `CustomNavigationTransition` is actually just a type erasing wrapper around the real meat and potatoes: the protocol `NavigationTransitionProtocol`.
 
 Let's take a look at what (capital "S") `Slide` is:
 
@@ -137,15 +137,15 @@ We'll be covering what these are in just a moment, but as a closing thought befo
 
 ### Basic
 
-#### `AnyNavigationTransition.combined(with:)`
+#### `CustomNavigationTransition.combined(with:)`
 
-You can create a custom `AnyNavigationTransition` by combining two existing transitions:
+You can declare a `CustomNavigationTransition` by combining two existing transitions:
 
 ```swift
 .slide.combined(with: .fade(.in))
 ```
 
-It is rarely the case where you'd want to combine `AnyNavigationTransition`s in this manner due to their nature as high level abstractions. In fact, most of the time they won't combine very well at all, and will produce glitchy or weird effects. This is because two or more fully-fledged transitions tend to override the same view properties with different values, producing unexpected outcomes.
+It is rarely the case where you'd want to combine `CustomNavigationTransition`s in this manner due to their nature as high level abstractions. In fact, most of the time they won't combine very well at all, and will produce glitchy or weird effects. This is because two or more fully-fledged transitions tend to override the same view properties with different values, producing unexpected outcomes.
 
 Instead, most combinations should happen at lowers level, in `NavigationTransitionProtocol` and `AtomicTransition` conformances.
 

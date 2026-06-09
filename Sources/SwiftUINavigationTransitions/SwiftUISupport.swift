@@ -1,12 +1,12 @@
-public import UIKitNavigationTransitions
 public import SwiftUI
+public import UIKitNavigationTransitions
 @_spi(Advanced) import SwiftUIIntrospect
 
 extension View {
 	@MainActor
-	public func navigationTransition(
-		_ transition: AnyNavigationTransition,
-		interactivity: AnyNavigationTransition.Interactivity = .default,
+	public func customNavigationTransition(
+		_ transition: CustomNavigationTransition,
+		interactivity: CustomNavigationTransition.Interactivity = .default,
 	) -> some View {
 		self.introspect(
 			.navigationView(style: .stack),

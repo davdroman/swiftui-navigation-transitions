@@ -43,7 +43,7 @@ final class AppState: ObservableObject {
 		}
 
 		@MainActor
-		func callAsFunction() -> AnyNavigationTransition {
+		func callAsFunction() -> CustomNavigationTransition {
 			switch self {
 			case .default:
 				.default
@@ -95,7 +95,7 @@ final class AppState: ObservableObject {
 			duration: Duration,
 			stiffness: Stiffness,
 			damping: Damping,
-		) -> AnyNavigationTransition.Animation? {
+		) -> CustomNavigationTransition.Animation? {
 			switch self {
 			case .none:
 				.none
@@ -214,7 +214,7 @@ final class AppState: ObservableObject {
 			}
 		}
 
-		func callAsFunction() -> AnyNavigationTransition.Interactivity {
+		func callAsFunction() -> CustomNavigationTransition.Interactivity {
 			switch self {
 			case .disabled:
 				.disabled

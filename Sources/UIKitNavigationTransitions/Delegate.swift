@@ -4,11 +4,11 @@ import NavigationTransition
 import UIKit
 
 final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelegate {
-	var transition: AnyNavigationTransition
+	var transition: CustomNavigationTransition
 	private weak var baseDelegate: (any UINavigationControllerDelegate)? = nil
 	var interactionController: UIPercentDrivenInteractiveTransition? = nil
 
-	init(transition: AnyNavigationTransition, baseDelegate: (any UINavigationControllerDelegate)?) {
+	init(transition: CustomNavigationTransition, baseDelegate: (any UINavigationControllerDelegate)?) {
 		self.transition = transition
 		self.baseDelegate = baseDelegate
 	}
@@ -47,11 +47,11 @@ final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelega
 }
 
 final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnimatedTransitioning {
-	let transition: AnyNavigationTransition
+	let transition: CustomNavigationTransition
 	let animation: Animation
 	let operation: NavigationTransitionOperation
 
-	init(transition: AnyNavigationTransition, animation: Animation, operation: NavigationTransitionOperation) {
+	init(transition: CustomNavigationTransition, animation: Animation, operation: NavigationTransitionOperation) {
 		self.transition = transition
 		self.animation = animation
 		self.operation = operation
@@ -141,7 +141,7 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 	}
 
 	private func transientViews(
-		for handler: AnyNavigationTransition.TransientHandler,
+		for handler: CustomNavigationTransition.TransientHandler,
 		animator: any Animator,
 		context: (container: UIView, fromUIView: UIView, toUIView: UIView),
 	) -> (fromView: AnimatorTransientView, toView: AnimatorTransientView)? {
