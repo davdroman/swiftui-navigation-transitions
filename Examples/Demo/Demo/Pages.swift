@@ -42,7 +42,7 @@ struct PageTwo: View {
 				NavigationStack {
 				...
 				}
-				.navigationTransition(.slide)
+				.customNavigationTransition(.slide)
 				""",
 			)
 		}
@@ -64,7 +64,7 @@ struct PageThree: View {
 			Text("You can apply **custom animations** just like with standard SwiftUI transitions:")
 			Code(
 				"""
-				.navigationTransition(
+				.customNavigationTransition(
 					.fade(.in).animation(
 						.easeInOut(duration: 0.3)
 					)
@@ -74,7 +74,7 @@ struct PageThree: View {
 			Text("... and you can even **combine** them too:")
 			Code(
 				"""
-				.navigationTransition(
+				.customNavigationTransition(
 					.slide.combined(with: .fade(.in))
 				)
 				""",

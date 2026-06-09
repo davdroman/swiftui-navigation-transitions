@@ -1,7 +1,7 @@
 public import Animation
 package import UIKit
 
-public struct AnyNavigationTransition {
+public struct CustomNavigationTransition {
 	package typealias TransientHandler = @MainActor (
 		AnimatorTransientView,
 		AnimatorTransientView,
@@ -45,7 +45,7 @@ public struct AnyNavigationTransition {
 
 public typealias _Animation = Animation
 
-extension AnyNavigationTransition {
+extension CustomNavigationTransition {
 	/// Typealias for `Animation`.
 	public typealias Animation = _Animation
 

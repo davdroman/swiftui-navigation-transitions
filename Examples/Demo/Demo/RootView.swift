@@ -17,17 +17,17 @@ struct RootView: View {
 				.navigationViewStyle(.stack)
 			}
 		}
-		.navigationTransition(transition.animation(animation), interactivity: interactivity)
+		.customNavigationTransition(transition.animation(animation), interactivity: interactivity)
 		.sheet(isPresented: $appState.isPresentingSettings) {
 			SettingsView().environmentObject(appState)
 		}
 	}
 
-	var transition: AnyNavigationTransition {
+	var transition: CustomNavigationTransition {
 		appState.transition()
 	}
 
-	var animation: AnyNavigationTransition.Animation? {
+	var animation: CustomNavigationTransition.Animation? {
 		appState.animation(
 			duration: appState.duration,
 			stiffness: appState.stiffness,
@@ -35,7 +35,7 @@ struct RootView: View {
 		)
 	}
 
-	var interactivity: AnyNavigationTransition.Interactivity {
+	var interactivity: CustomNavigationTransition.Interactivity {
 		appState.interactivity()
 	}
 }

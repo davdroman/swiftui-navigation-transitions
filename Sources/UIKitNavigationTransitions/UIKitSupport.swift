@@ -22,9 +22,9 @@ public struct UISplitViewControllerColumns: OptionSet, Sendable {
 
 extension UISplitViewController {
 	public func setNavigationTransition(
-		_ transition: AnyNavigationTransition,
+		_ transition: CustomNavigationTransition,
 		forColumns columns: UISplitViewControllerColumns,
-		interactivity: AnyNavigationTransition.Interactivity = .default,
+		interactivity: CustomNavigationTransition.Interactivity = .default,
 	) {
 		if columns.contains(.compact), let compact = compactViewController as? UINavigationController {
 			compact.setNavigationTransition(transition, interactivity: interactivity)
@@ -117,8 +117,8 @@ extension UINavigationController {
 	}
 
 	public func setNavigationTransition(
-		_ transition: AnyNavigationTransition,
-		interactivity: AnyNavigationTransition.Interactivity = .default,
+		_ transition: CustomNavigationTransition,
+		interactivity: CustomNavigationTransition.Interactivity = .default,
 	) {
 		do {
 			try UINavigationController.swizzle()

@@ -1,7 +1,7 @@
 import NavigationTransition
 import SwiftUI
 
-extension AnyNavigationTransition {
+extension CustomNavigationTransition {
 	@MainActor
 	static var swing: Self {
 		.init(Swing())

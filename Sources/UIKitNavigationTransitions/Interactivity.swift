@@ -1,6 +1,6 @@
 public import NavigationTransition
 
-extension AnyNavigationTransition {
+extension CustomNavigationTransition {
 	public enum Interactivity {
 		case disabled
 		case edgePan
