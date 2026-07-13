@@ -34,7 +34,7 @@ jobs:
   apple:
     if: github.event_name != 'pull_request' || !contains(github.event.pull_request.title, '[skip ci]')
     name: ${{ matrix.platform }} (Swift ${{ matrix.swift }})
-    runs-on: ${{ matrix.runner }}
+    runs-on: macos-26
     strategy:
       fail-fast: false
       matrix:
@@ -45,11 +45,6 @@ jobs:
         swift:
           - "6.2"
           - "6.3"
-        include:
-          - swift: "6.2"
-            runner: macos-26
-          - swift: "6.3"
-            runner: macos-26
     steps:
       - name: Git Checkout
         uses: actions/checkout@v5
