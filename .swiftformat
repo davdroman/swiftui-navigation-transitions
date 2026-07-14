@@ -8,7 +8,7 @@
 --extensionacl on-declarations
 --trailing-commas always
 --nil-init insert
---import-grouping testable-last
+--import-grouping alpha
 --wrap-conditions before-first
 --guard-else next-line
 
@@ -21,6 +21,7 @@
 --disable redundantRawValues
 --disable redundantSelf
 --disable redundantStaticSelf
+--disable redundantSwiftTestingSuite
 --disable redundantType
 --disable redundantTypedThrows
 --disable redundantViewBuilder
