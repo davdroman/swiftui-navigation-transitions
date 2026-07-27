@@ -1,9 +1,9 @@
 # SwiftUINavigationTransitions
 
+[![](https://img.shields.io/badge/Documentation-gray?logo=googledocs&logoColor=white)](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/main/documentation/swiftuinavigationtransitions)
 [![CI](https://github.com/davdroman/swiftui-navigation-transitions/actions/workflows/ci.yml/badge.svg)](https://github.com/davdroman/swiftui-navigation-transitions/actions/workflows/ci.yml)
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fdavdroman%2Fswiftui-navigation-transitions%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions)
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fdavdroman%2Fswiftui-navigation-transitions%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions)
-[![](https://img.shields.io/badge/Documentation-gray?logo=swift&logoColor=white)](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/main/documentation/swiftuinavigationtransitions)
 
 <p align="center">
 <img width="320" src="https://user-images.githubusercontent.com/2538074/201549712-4234ca45-bdeb-42c4-9ee9-8d44b346ecdd.gif">
@@ -128,41 +128,10 @@ Add the package via Swift Package Manager:
 
 ``` swift
 dependencies: [
-    .package(url: "https://github.com/davdroman/swiftui-navigation-transitions", from: "0.18.0"),
+    .package(url: "https://github.com/davdroman/swiftui-navigation-transitions", from: "0.19.0"),
 ]
 ```
 
 ```swift
 .product(name: "SwiftUINavigationTransitions", package: "swiftui-navigation-transitions"),
 ```
-
-## Documentation
-
-The documentation for releases and `main` are available here:
-
-- [`main`](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/main/documentation/swiftuinavigationtransitions)
-- [0.18.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.18.0/documentation/swiftuinavigationtransitions)
-
-<details>
-<summary>
-Other versions
-</summary>
-
-- [0.17.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.17.0/documentation/swiftuinavigationtransitions)
-- [0.16.1](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.16.1/documentation/swiftuinavigationtransitions)
-- [0.16.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.16.0/documentation/swiftuinavigationtransitions)
-- [0.15.1](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.15.1/documentation/swiftuinavigationtransitions)
-- [0.9.3](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.9.3/documentation/navigationtransitions)
-- [0.9.2](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.9.2/documentation/navigationtransitions)
-- [0.9.1](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.9.1/documentation/navigationtransitions)
-- [0.9.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.9.0/documentation/navigationtransitions)
-- [0.8.1](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.8.1/documentation/navigationtransitions)
-- [0.8.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.8.0/documentation/navigationtransitions)
-- [0.7.4](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.7.4/documentation/navigationtransitions)
-- [0.7.3](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.7.3/documentation/navigationtransitions)
-- [0.7.2](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.7.2/documentation/navigationtransitions)
-- [0.7.1](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.7.1/documentation/navigationtransitions)
-- [0.7.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.7.0/documentation/navigationtransitions)
-- [0.6.0](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.6.0/documentation/navigationtransitions)
-- [0.5.1](https://swiftpackageindex.com/davdroman/swiftui-navigation-transitions/0.5.1/documentation/navigationtransitions)
-</details>
