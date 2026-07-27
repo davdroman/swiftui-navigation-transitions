@@ -46,7 +46,7 @@ struct SettingsView: View {
 
 			• Disabled.
 			• Edge Pan: recognized from the edge of the screen only.
-			• Pan: recognized anywhere on the screen! ✨
+			• Content Pan: recognized anywhere on the screen.
 			""",
 		)
 	}

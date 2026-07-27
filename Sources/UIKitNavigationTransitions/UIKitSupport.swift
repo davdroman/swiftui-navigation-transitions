@@ -137,15 +137,17 @@ extension UINavigationController {
 		}
 
 		#if !os(tvOS) && !os(visionOS)
-		if defaultEdgePanRecognizer.strongDelegate == nil {
-			defaultEdgePanRecognizer.strongDelegate = NavigationGestureRecognizerDelegate(controller: self)
-		}
+		if #unavailable(iOS 26, macCatalyst 26) {
+			if defaultEdgePanRecognizer.strongDelegate == nil {
+				defaultEdgePanRecognizer.strongDelegate = NavigationGestureRecognizerDelegate(controller: self)
+			}
 
-		if defaultPanRecognizer == nil {
-			defaultPanRecognizer = UIPanGestureRecognizer()
-			defaultPanRecognizer.targets = defaultEdgePanRecognizer.targets // https://stackoverflow.com/a/60526328/1922543
-			defaultPanRecognizer.strongDelegate = NavigationGestureRecognizerDelegate(controller: self)
-			view.addGestureRecognizer(defaultPanRecognizer)
+			if defaultPanRecognizer == nil {
+				defaultPanRecognizer = UIPanGestureRecognizer()
+				defaultPanRecognizer.targets = defaultEdgePanRecognizer.targets // https://stackoverflow.com/a/60526328/1922543
+				defaultPanRecognizer.strongDelegate = NavigationGestureRecognizerDelegate(controller: self)
+				view.addGestureRecognizer(defaultPanRecognizer)
+			}
 		}
 
 		if edgePanRecognizer == nil {
@@ -166,20 +168,27 @@ extension UINavigationController {
 		if transition.isDefault {
 			switch interactivity {
 			case .disabled:
-				exclusivelyEnableGestureRecognizer(.none)
+				exclusivelyEnableGestureRecognizers([])
 			case .edgePan:
-				exclusivelyEnableGestureRecognizer(defaultEdgePanRecognizer)
-			case .pan:
-				exclusivelyEnableGestureRecognizer(defaultPanRecognizer)
+				exclusivelyEnableGestureRecognizers([defaultEdgePanRecognizer])
+			case .contentPan:
+				if #available(iOS 26, macCatalyst 26, *) {
+					exclusivelyEnableGestureRecognizers([
+						defaultEdgePanRecognizer,
+						interactiveContentPopGestureRecognizer,
+					].compactMap { $0 })
+				} else {
+					exclusivelyEnableGestureRecognizers([defaultPanRecognizer])
+				}
 			}
 		} else {
 			switch interactivity {
 			case .disabled:
-				exclusivelyEnableGestureRecognizer(.none)
+				exclusivelyEnableGestureRecognizers([])
 			case .edgePan:
-				exclusivelyEnableGestureRecognizer(edgePanRecognizer)
-			case .pan:
-				exclusivelyEnableGestureRecognizer(panRecognizer)
+				exclusivelyEnableGestureRecognizers([edgePanRecognizer])
+			case .contentPan:
+				exclusivelyEnableGestureRecognizers([panRecognizer])
 			}
 		}
 		#endif
@@ -249,13 +258,22 @@ extension UINavigationController {
 
 	@available(tvOS, unavailable)
 	@available(visionOS, unavailable)
-	private func exclusivelyEnableGestureRecognizer(_ gestureRecognizer: UIPanGestureRecognizer?) {
-		for recognizer in [defaultEdgePanRecognizer!, defaultPanRecognizer!, edgePanRecognizer!, panRecognizer!] {
-			if let gestureRecognizer, recognizer === gestureRecognizer {
-				recognizer.isEnabled = true
-			} else {
-				recognizer.isEnabled = false
+	private func exclusivelyEnableGestureRecognizers(_ enabledGestureRecognizers: [UIGestureRecognizer]) {
+		var gestureRecognizers: [UIGestureRecognizer] = [
+			defaultEdgePanRecognizer,
+			defaultPanRecognizer,
+			edgePanRecognizer,
+			panRecognizer,
+		].compactMap { $0 }
+
+		if #available(iOS 26, macCatalyst 26, *) {
+			if let interactiveContentPopGestureRecognizer {
+				gestureRecognizers.append(interactiveContentPopGestureRecognizer)
 			}
+		}
+
+		for gestureRecognizer in gestureRecognizers {
+			gestureRecognizer.isEnabled = enabledGestureRecognizers.contains { gestureRecognizer === $0 }
 		}
 	}
 }
