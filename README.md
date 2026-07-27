@@ -104,16 +104,22 @@ The [**Demo**](Examples/Demo) app showcases some of these transitions in action.
 
 ### Interactivity
 
-A sweet additional feature is the ability to override the behavior of the **pop gesture** on the navigation view:
+Choose from three interactivity options: `.disabled`, `.edgePan`, or `.contentPan`:
 
 ```swift
-.customNavigationTransition(.slide, interactivity: .pan) // full-pan screen gestures!
+.customNavigationTransition(.slide, interactivity: .disabled) // disables back swipes
 ```
 
-This even works to override its behavior while maintaining the **default system transition** in iOS:
+`.contentPan` back-deploys iOS 26 full-screen **pop gestures** all the way to iOS 13:
 
 ```swift
-.customNavigationTransition(.default, interactivity: .pan) // ✨
+.customNavigationTransition(.slide, interactivity: .contentPan) // works on iOS 13-26!
+```
+
+This also works while maintaining the **default system transition**:
+
+```swift
+.customNavigationTransition(.default, interactivity: .contentPan) // works on iOS 13-26!
 ```
 
 ## Installation

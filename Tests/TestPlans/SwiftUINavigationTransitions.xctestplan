@@ -26,6 +26,13 @@
         "identifier" : "AtomicTransitionTests",
         "name" : "AtomicTransitionTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "UIKitNavigationTransitionsTests",
+        "name" : "UIKitNavigationTransitionsTests"
+      }
     }
   ],
   "version" : 1

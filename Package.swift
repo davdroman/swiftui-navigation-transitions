@@ -43,6 +43,9 @@ let package = Package(
 			.product(name: "ObjCRuntimeTools", package: "objc-runtime-tools"),
 			.product(name: "Once", package: "swift-once-macro"),
 		]),
+		.testTarget(name: "UIKitNavigationTransitionsTests", dependencies: [
+			"UIKitNavigationTransitions",
+		]),
 
 		.target(name: "SwiftUINavigationTransitions", dependencies: [
 			"UIKitNavigationTransitions",

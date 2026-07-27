@@ -8,7 +8,7 @@ extension CustomNavigationTransition {
 	///   NavigationStack {
 	///     // ...
 	///   }
-	///   .customNavigationTransition(.default, interactivity: .pan) // enables full-screen panning for system-provided pop
+	///   .customNavigationTransition(.default, interactivity: .disabled) // disables swipe back gesture
 	///   ```
 	///
 	/// - Note: The animation for `default` cannot be customized via ``animation(_:)``.
