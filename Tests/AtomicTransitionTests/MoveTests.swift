@@ -1,7 +1,7 @@
+@testable import Animator
 import AtomicTransition
 import SwiftUI
 import TestUtils
-@testable import Animator
 
 @MainActor
 final class MoveTests: XCTestCase {

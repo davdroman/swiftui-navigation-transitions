@@ -6,13 +6,13 @@ public struct CustomNavigationTransition {
 		AnimatorTransientView,
 		AnimatorTransientView,
 		NavigationTransitionOperation,
-		UIView
+		UIView,
 	) -> Void
 
 	package typealias PrimitiveHandler = @MainActor (
 		any Animator,
 		NavigationTransitionOperation,
-		any UIViewControllerContextTransitioning
+		any UIViewControllerContextTransitioning,
 	) -> Void
 
 	package enum Handler {
@@ -22,7 +22,7 @@ public struct CustomNavigationTransition {
 
 	package let isDefault: Bool
 	package let handler: Handler
-	package var animation: Animation?
+	package var animation: Animation? = nil
 
 	@MainActor
 	public init(_ transition: some NavigationTransitionProtocol) {

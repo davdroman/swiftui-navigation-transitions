@@ -1,5 +1,5 @@
-public import UIKit
 import IssueReporting
+public import UIKit
 
 public class UnimplementedUIKitContext: NSObject, UIViewControllerContextTransitioning {
 	public var containerView: UIView {
