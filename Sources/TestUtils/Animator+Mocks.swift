@@ -1,6 +1,6 @@
 public import Animator
-public import UIKit
 import IssueReporting
+public import UIKit
 
 public final class UnimplementedAnimator: Animator {
 	public init() {}

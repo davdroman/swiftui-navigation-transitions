@@ -7,13 +7,13 @@ import UIKit
 struct GestureRecognizerTests {
 	@available(iOS 26, macCatalyst 26, *)
 	@Test
-	func defaultInteractivityUsesSystemRecognizer() throws {
+	func `default interactivity uses system recognizer`() throws {
 		let navigationController = makeNavigationController()
 
 		navigationController.setNavigationTransition(.default)
 
 		let contentPopGestureRecognizer = try #require(
-			navigationController.interactiveContentPopGestureRecognizer
+			navigationController.interactiveContentPopGestureRecognizer,
 		)
 
 		#expect(navigationController.defaultEdgePanRecognizer.isEnabled)
@@ -25,13 +25,13 @@ struct GestureRecognizerTests {
 
 	@available(iOS 26, macCatalyst 26, *)
 	@Test
-	func defaultEdgePanDisablesContentRecognizer() throws {
+	func `default edge pan disables content recognizer`() throws {
 		let navigationController = makeNavigationController()
 
 		navigationController.setNavigationTransition(.default, interactivity: .edgePan)
 
 		let contentPopGestureRecognizer = try #require(
-			navigationController.interactiveContentPopGestureRecognizer
+			navigationController.interactiveContentPopGestureRecognizer,
 		)
 
 		#expect(navigationController.defaultEdgePanRecognizer.isEnabled)
@@ -42,13 +42,13 @@ struct GestureRecognizerTests {
 
 	@available(iOS 26, macCatalyst 26, *)
 	@Test
-	func disabledInteractivityDisablesSystemRecognizers() throws {
+	func `disabled interactivity disables system recognizers`() throws {
 		let navigationController = makeNavigationController()
 
 		navigationController.setNavigationTransition(.default, interactivity: .disabled)
 
 		let contentPopGestureRecognizer = try #require(
-			navigationController.interactiveContentPopGestureRecognizer
+			navigationController.interactiveContentPopGestureRecognizer,
 		)
 
 		#expect(!navigationController.defaultEdgePanRecognizer.isEnabled)
@@ -59,13 +59,13 @@ struct GestureRecognizerTests {
 
 	@available(iOS 26, macCatalyst 26, *)
 	@Test
-	func customContentPanUsesCustomRecognizer() throws {
+	func `custom content pan uses custom recognizer`() throws {
 		let navigationController = makeNavigationController()
 
 		navigationController.setNavigationTransition(.slide, interactivity: .contentPan)
 
 		let contentPopGestureRecognizer = try #require(
-			navigationController.interactiveContentPopGestureRecognizer
+			navigationController.interactiveContentPopGestureRecognizer,
 		)
 
 		#expect(!navigationController.defaultEdgePanRecognizer.isEnabled)

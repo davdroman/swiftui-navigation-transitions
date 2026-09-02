@@ -1,5 +1,5 @@
-import TestUtils
 @testable import AtomicTransition
+import TestUtils
 
 @MainActor
 final class CombinedTests: XCTestCase {

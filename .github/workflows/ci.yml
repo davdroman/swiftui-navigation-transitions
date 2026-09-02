@@ -14,22 +14,24 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
-  # TODO: Re-enable when --ifdef no-indent works as intended
-  # lint:
-  #   name: Lint
-  #   runs-on: macos-latest
-  #   steps:
-  #     - name: Git Checkout
-  #       uses: actions/checkout@v5
+  lint:
+    name: Lint
+    runs-on: macos-latest
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
 
-  #     - name: Install SwiftFormat
-  #       run: |
-  #         brew unlink swiftformat
-  #         brew install swiftformat --HEAD
+      - name: Install Mise tools
+        uses: jdx/mise-action@v3
 
-  #     - name: SwiftFormat Lint
-  #       run: swiftformat --lint . --reporter github-actions-log
+      - name: SwiftFormat Lint
+        run: mise exec -- swiftformat --lint . --reporter github-actions-log
 
   apple:
     if: github.event_name != 'pull_request' || !contains(github.event.pull_request.title, '[skip ci]')

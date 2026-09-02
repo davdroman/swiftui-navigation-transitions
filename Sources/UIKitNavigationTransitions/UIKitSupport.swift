@@ -176,7 +176,7 @@ extension UINavigationController {
 					exclusivelyEnableGestureRecognizers([
 						defaultEdgePanRecognizer,
 						interactiveContentPopGestureRecognizer,
-					].compactMap { $0 })
+					].compactMap(\.self))
 				} else {
 					exclusivelyEnableGestureRecognizers([defaultPanRecognizer])
 				}
@@ -264,7 +264,7 @@ extension UINavigationController {
 			defaultPanRecognizer,
 			edgePanRecognizer,
 			panRecognizer,
-		].compactMap { $0 }
+		].compactMap(\.self)
 
 		if #available(iOS 26, macCatalyst 26, *) {
 			if let interactiveContentPopGestureRecognizer {
