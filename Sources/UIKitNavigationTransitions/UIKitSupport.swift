@@ -198,8 +198,7 @@ extension UINavigationController {
 		try #once {
 			try #swizzle(
 				UINavigationController.setViewControllers,
-				params: [UIViewController].self,
-				Bool.self,
+				params: [UIViewController].self, Bool.self,
 			) { $self, viewControllers, animated in
 				if let transitionDelegate = self.customDelegate {
 					self.setViewControllers(viewControllers, animated: transitionDelegate.transition.animation != nil)
@@ -210,8 +209,7 @@ extension UINavigationController {
 
 			try #swizzle(
 				UINavigationController.pushViewController,
-				params: UIViewController.self,
-				Bool.self,
+				params: UIViewController.self, Bool.self,
 			) { $self, viewController, animated in
 				if let transitionDelegate = self.customDelegate {
 					self.pushViewController(viewController, animated: transitionDelegate.transition.animation != nil)
@@ -234,8 +232,7 @@ extension UINavigationController {
 
 			try #swizzle(
 				UINavigationController.popToViewController,
-				params: UIViewController.self,
-				Bool.self,
+				params: UIViewController.self, Bool.self,
 				returning: [UIViewController]?.self,
 			) { $self, viewController, animated in
 				if let transitionDelegate = self.customDelegate {
