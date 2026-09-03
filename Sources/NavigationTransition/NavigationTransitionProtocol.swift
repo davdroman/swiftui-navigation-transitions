@@ -50,8 +50,7 @@ public protocol NavigationTransitionProtocol {
 	/// Do not invoke this property directly.
 	///
 	/// - Important: If your transition implements the ``transition(from:to:for:in:)-22zdm`` method, it will take
-	/// precedence
-	///   over this property, and only ``transition(from:to:for:in:)-22zdm`` will be called by the animator.
+	///   precedence over this property, and only ``transition(from:to:for:in:)-22zdm`` will be called by the animator.
 	@NavigationTransitionBuilder
 	var body: Body { get }
 }

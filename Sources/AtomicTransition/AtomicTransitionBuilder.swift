@@ -8,9 +8,10 @@ public enum AtomicTransitionBuilder {
 		first
 	}
 
-	public static func buildPartialBlock<T1: AtomicTransition, T2: AtomicTransition>(accumulated: T1,
-	                                                                                 next: T2) -> Combined<T1, T2>
-	{
+	public static func buildPartialBlock<T1: AtomicTransition, T2: AtomicTransition>(
+		accumulated: T1,
+		next: T2,
+	) -> Combined<T1, T2> {
 		Combined(accumulated, next)
 	}
 
@@ -22,17 +23,21 @@ public enum AtomicTransitionBuilder {
 		}
 	}
 
-	public static func buildEither<TrueTransition: AtomicTransition,
-		FalseTransition: AtomicTransition>(first component: TrueTransition)
-		-> _ConditionalTransition<TrueTransition, FalseTransition>
-	{
+	public static func buildEither<
+		TrueTransition: AtomicTransition,
+		FalseTransition: AtomicTransition,
+	>(
+		first component: TrueTransition,
+	) -> _ConditionalTransition<TrueTransition, FalseTransition> {
 		_ConditionalTransition(trueTransition: component)
 	}
 
-	public static func buildEither<TrueTransition: AtomicTransition,
-		FalseTransition: AtomicTransition>(second component: FalseTransition)
-		-> _ConditionalTransition<TrueTransition, FalseTransition>
-	{
+	public static func buildEither<
+		TrueTransition: AtomicTransition,
+		FalseTransition: AtomicTransition,
+	>(
+		second component: FalseTransition,
+	) -> _ConditionalTransition<TrueTransition, FalseTransition> {
 		_ConditionalTransition(falseTransition: component)
 	}
 }

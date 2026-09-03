@@ -81,9 +81,9 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 		transitionAnimator(for: transitionContext).startAnimation()
 	}
 
-	func interruptibleAnimator(using transitionContext: any UIViewControllerContextTransitioning)
-		-> any UIViewImplicitlyAnimating
-	{
+	func interruptibleAnimator(
+		using transitionContext: any UIViewControllerContextTransitioning,
+	) -> any UIViewImplicitlyAnimating {
 		transitionAnimator(for: transitionContext)
 	}
 
@@ -93,9 +93,9 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 
 	private var cachedAnimators: [ObjectIdentifier: UIViewPropertyAnimator] = .init(minimumCapacity: 1)
 
-	private func transitionAnimator(for transitionContext: any UIViewControllerContextTransitioning)
-		-> UIViewPropertyAnimator
-	{
+	private func transitionAnimator(
+		for transitionContext: any UIViewControllerContextTransitioning,
+	) -> UIViewPropertyAnimator {
 		if let cached = cachedAnimators[ObjectIdentifier(transitionContext)] {
 			return cached
 		}
