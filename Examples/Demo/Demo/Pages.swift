@@ -5,8 +5,8 @@ struct PageOne: View {
 		let content = Group {
 			Text(
 				"""
-				**SwiftUINavigationTransitions** is a library that integrates seamlessly with \
-				SwiftUI's **Navigation** views, allowing complete customization over **push and pop transitions**!
+				**SwiftUINavigationTransitions** is a library that integrates seamlessly with SwiftUI's **Navigation** views, \
+				allowing complete customization over **push and pop transitions**!
 				""",
 			)
 		}
@@ -41,10 +41,7 @@ struct PageTwo: View {
 	var body: some View {
 		let content = Group {
 			Text(
-				"""
-				The library is fully compatible with **NavigationView** in iOS 13+, and the new \
-				**NavigationStack** in iOS 16.
-				""",
+				"The library is fully compatible with **NavigationView** in iOS 13+, and the new **NavigationStack** in iOS 16.",
 			)
 			Text("In fact, that entire transition you just saw can be implemented in **one line** of SwiftUI code:")
 			Code(
@@ -72,8 +69,8 @@ struct PageThree: View {
 		let content = Group {
 			Text(
 				"""
-				The API is designed to resemble that of built-in SwiftUI Transitions for maximum \
-				**familiarity** and **ease of use**.
+				The API is designed to resemble that of built-in SwiftUI Transitions for maximum **familiarity** and **ease of \
+				use**.
 				""",
 			)
 			Text("You can apply **custom animations** just like with standard SwiftUI transitions:")
@@ -111,8 +108,8 @@ struct PageFour: View {
 		let content = Group {
 			Text(
 				"""
-				The library ships with some standard transitions out of the box, however you can \
-				create fully **custom transitions** in just a few lines of code.
+				The library ships with some standard transitions out of the box, however you can create fully **custom \
+				transitions** in just a few lines of code.
 				""",
 			)
 			Text("This demo features some presets to play with. You'll find them in the **settings** menu at the top.")
@@ -133,16 +130,15 @@ struct PageFive: View {
 		let content = Group {
 			Text(
 				"""
-				The repository contains extensive [documentation](https://github.com/davdroman/\
-				swiftui-navigation-transitions/tree/main/Documentation) from how to get started to \
-				going fully custom, depending on your needs. 📖
+				The repository contains extensive \
+				[documentation](https://github.com/davdroman/swiftui-navigation-transitions/tree/main/Documentation) from how \
+				to get started to going fully custom, depending on your needs. 📖
 				""",
 			)
 			Text(
 				"""
 				Feel free to **post questions**, **ideas**, or any **cool transitions** you build in the \
-				[Discussions](https://github.com/davdroman/swiftui-navigation-transitions/discussions) \
-				section! 💬
+				[Discussions](https://github.com/davdroman/swiftui-navigation-transitions/discussions) section! 💬
 				""",
 			)
 			Text("I sincerely hope you enjoy using this library as much as I enjoyed building it.")
