@@ -20,7 +20,10 @@ extension AnimatorTransientViewTests {
 		XCTAssertEqual(sut.frame.origin.y, 20, accuracy: 0.000001)
 		XCTAssertEqual(sut.frame.size.width, 120, accuracy: 0.000001)
 		XCTAssertEqual(sut.frame.size.height, 160, accuracy: 0.000001)
-		XCTAssertEqual(sut.transform3D, .identity.translated(x: 50, y: 60, z: 0).scaled(4).rotated(by: .pi, x: 0, y: 0, z: 1))
+		XCTAssertEqual(
+			sut.transform3D,
+			.identity.translated(x: 50, y: 60, z: 0).scaled(4).rotated(by: .pi, x: 0, y: 0, z: 1),
+		)
 
 		let expectedProperties = AnimatorTransientView.Properties(
 			alpha: 0.5,

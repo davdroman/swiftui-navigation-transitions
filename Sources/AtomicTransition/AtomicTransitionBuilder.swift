@@ -8,7 +8,10 @@ public enum AtomicTransitionBuilder {
 		first
 	}
 
-	public static func buildPartialBlock<T1: AtomicTransition, T2: AtomicTransition>(accumulated: T1, next: T2) -> Combined<T1, T2> {
+	public static func buildPartialBlock<T1: AtomicTransition, T2: AtomicTransition>(
+		accumulated: T1,
+		next: T2,
+	) -> Combined<T1, T2> {
 		Combined(accumulated, next)
 	}
 
@@ -20,11 +23,21 @@ public enum AtomicTransitionBuilder {
 		}
 	}
 
-	public static func buildEither<TrueTransition: AtomicTransition, FalseTransition: AtomicTransition>(first component: TrueTransition) -> _ConditionalTransition<TrueTransition, FalseTransition> {
+	public static func buildEither<
+		TrueTransition: AtomicTransition,
+		FalseTransition: AtomicTransition,
+	>(
+		first component: TrueTransition,
+	) -> _ConditionalTransition<TrueTransition, FalseTransition> {
 		_ConditionalTransition(trueTransition: component)
 	}
 
-	public static func buildEither<TrueTransition: AtomicTransition, FalseTransition: AtomicTransition>(second component: FalseTransition) -> _ConditionalTransition<TrueTransition, FalseTransition> {
+	public static func buildEither<
+		TrueTransition: AtomicTransition,
+		FalseTransition: AtomicTransition,
+	>(
+		second component: FalseTransition,
+	) -> _ConditionalTransition<TrueTransition, FalseTransition> {
 		_ConditionalTransition(falseTransition: component)
 	}
 }
@@ -50,7 +63,10 @@ extension _OptionalTransition: MirrorableAtomicTransition where Transition: Mirr
 extension _OptionalTransition: Equatable where Transition: Equatable {}
 extension _OptionalTransition: Hashable where Transition: Hashable {}
 
-public struct _ConditionalTransition<TrueTransition: AtomicTransition, FalseTransition: AtomicTransition>: AtomicTransition {
+public struct _ConditionalTransition<
+	TrueTransition: AtomicTransition,
+	FalseTransition: AtomicTransition,
+>: AtomicTransition {
 	private typealias Transition = _Either<TrueTransition, FalseTransition>
 	private let transition: Transition
 
@@ -72,7 +88,10 @@ public struct _ConditionalTransition<TrueTransition: AtomicTransition, FalseTran
 	}
 }
 
-extension _ConditionalTransition: MirrorableAtomicTransition where TrueTransition: MirrorableAtomicTransition, FalseTransition: MirrorableAtomicTransition {
+extension _ConditionalTransition: MirrorableAtomicTransition where
+	TrueTransition: MirrorableAtomicTransition,
+	FalseTransition: MirrorableAtomicTransition
+{
 	public func mirrored() -> _ConditionalTransition<TrueTransition.Mirrored, FalseTransition.Mirrored> {
 		switch transition {
 		case let .left(trueTransition):

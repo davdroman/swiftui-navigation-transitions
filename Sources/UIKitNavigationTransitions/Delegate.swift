@@ -13,15 +13,26 @@ final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelega
 		self.baseDelegate = baseDelegate
 	}
 
-	func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+	func navigationController(
+		_ navigationController: UINavigationController,
+		willShow viewController: UIViewController,
+		animated: Bool,
+	) {
 		baseDelegate?.navigationController?(navigationController, willShow: viewController, animated: animated)
 	}
 
-	func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+	func navigationController(
+		_ navigationController: UINavigationController,
+		didShow viewController: UIViewController,
+		animated: Bool,
+	) {
 		baseDelegate?.navigationController?(navigationController, didShow: viewController, animated: animated)
 	}
 
-	func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: any UIViewControllerAnimatedTransitioning) -> (any UIViewControllerInteractiveTransitioning)? {
+	func navigationController(
+		_ navigationController: UINavigationController,
+		interactionControllerFor animationController: any UIViewControllerAnimatedTransitioning,
+	) -> (any UIViewControllerInteractiveTransitioning)? {
 		if !transition.isDefault {
 			interactionController
 		} else {
@@ -29,7 +40,12 @@ final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelega
 		}
 	}
 
-	func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> (any UIViewControllerAnimatedTransitioning)? {
+	func navigationController(
+		_ navigationController: UINavigationController,
+		animationControllerFor operation: UINavigationController.Operation,
+		from fromVC: UIViewController,
+		to toVC: UIViewController,
+	) -> (any UIViewControllerAnimatedTransitioning)? {
 		if
 			!transition.isDefault,
 			let animation = transition.animation,
@@ -65,7 +81,9 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 		transitionAnimator(for: transitionContext).startAnimation()
 	}
 
-	func interruptibleAnimator(using transitionContext: any UIViewControllerContextTransitioning) -> any UIViewImplicitlyAnimating {
+	func interruptibleAnimator(
+		using transitionContext: any UIViewControllerContextTransitioning,
+	) -> any UIViewImplicitlyAnimating {
 		transitionAnimator(for: transitionContext)
 	}
 
@@ -75,7 +93,9 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 
 	private var cachedAnimators: [ObjectIdentifier: UIViewPropertyAnimator] = .init(minimumCapacity: 1)
 
-	private func transitionAnimator(for transitionContext: any UIViewControllerContextTransitioning) -> UIViewPropertyAnimator {
+	private func transitionAnimator(
+		for transitionContext: any UIViewControllerContextTransitioning,
+	) -> UIViewPropertyAnimator {
 		if let cached = cachedAnimators[ObjectIdentifier(transitionContext)] {
 			return cached
 		}

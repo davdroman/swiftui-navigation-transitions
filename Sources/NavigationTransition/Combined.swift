@@ -11,7 +11,12 @@ extension CustomNavigationTransition {
 				let handler: CustomNavigationTransition.TransientHandler
 
 				@inlinable
-				func transition(from fromView: TransientView, to toView: TransientView, for operation: TransitionOperation, in container: Container) {
+				func transition(
+					from fromView: TransientView,
+					to toView: TransientView,
+					for operation: TransitionOperation,
+					in container: Container,
+				) {
 					handler(fromView, toView, operation, container)
 				}
 			}
@@ -33,7 +38,10 @@ extension CustomNavigationTransition {
 	}
 }
 
-public struct Combined<TransitionA: NavigationTransitionProtocol, TransitionB: NavigationTransitionProtocol>: NavigationTransitionProtocol {
+public struct Combined<
+	TransitionA: NavigationTransitionProtocol,
+	TransitionB: NavigationTransitionProtocol,
+>: NavigationTransitionProtocol {
 	private let transitionA: TransitionA
 	private let transitionB: TransitionB
 

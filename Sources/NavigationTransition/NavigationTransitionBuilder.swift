@@ -4,7 +4,10 @@ public enum NavigationTransitionBuilder {
 		first
 	}
 
-	public static func buildPartialBlock<T1: NavigationTransitionProtocol, T2: NavigationTransitionProtocol>(accumulated: T1, next: T2) -> Combined<T1, T2> {
+	public static func buildPartialBlock<T1: NavigationTransitionProtocol, T2: NavigationTransitionProtocol>(
+		accumulated: T1,
+		next: T2,
+	) -> Combined<T1, T2> {
 		Combined(accumulated, next)
 	}
 
@@ -16,11 +19,17 @@ public enum NavigationTransitionBuilder {
 		}
 	}
 
-	public static func buildEither<TrueTransition: NavigationTransitionProtocol, FalseTransition: NavigationTransitionProtocol>(first component: TrueTransition) -> _ConditionalTransition<TrueTransition, FalseTransition> {
+	public static func buildEither<
+		TrueTransition: NavigationTransitionProtocol,
+		FalseTransition: NavigationTransitionProtocol,
+	>(first component: TrueTransition) -> _ConditionalTransition<TrueTransition, FalseTransition> {
 		_ConditionalTransition(trueTransition: component)
 	}
 
-	public static func buildEither<TrueTransition: NavigationTransitionProtocol, FalseTransition: NavigationTransitionProtocol>(second component: FalseTransition) -> _ConditionalTransition<TrueTransition, FalseTransition> {
+	public static func buildEither<
+		TrueTransition: NavigationTransitionProtocol,
+		FalseTransition: NavigationTransitionProtocol,
+	>(second component: FalseTransition) -> _ConditionalTransition<TrueTransition, FalseTransition> {
 		_ConditionalTransition(falseTransition: component)
 	}
 }
@@ -42,7 +51,10 @@ public struct _OptionalTransition<Transition: NavigationTransitionProtocol>: Nav
 	}
 }
 
-public struct _ConditionalTransition<TrueTransition: NavigationTransitionProtocol, FalseTransition: NavigationTransitionProtocol>: NavigationTransitionProtocol {
+public struct _ConditionalTransition<
+	TrueTransition: NavigationTransitionProtocol,
+	FalseTransition: NavigationTransitionProtocol,
+>: NavigationTransitionProtocol {
 	private typealias Transition = _Either<TrueTransition, FalseTransition>
 	private let transition: Transition
 
