@@ -88,7 +88,8 @@ public struct _ConditionalTransition<
 	}
 }
 
-extension _ConditionalTransition: MirrorableAtomicTransition where TrueTransition: MirrorableAtomicTransition,
+extension _ConditionalTransition: MirrorableAtomicTransition where
+	TrueTransition: MirrorableAtomicTransition,
 	FalseTransition: MirrorableAtomicTransition
 {
 	public func mirrored() -> _ConditionalTransition<TrueTransition.Mirrored, FalseTransition.Mirrored> {
