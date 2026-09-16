@@ -1,3 +1,4 @@
+import struct NavigationTransition.AnyNavigationTransition
 import SwiftUI
 @_spi(Advanced) import SwiftUIIntrospect
 
