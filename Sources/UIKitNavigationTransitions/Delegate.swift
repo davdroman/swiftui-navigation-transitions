@@ -147,13 +147,20 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 			fromUIView.isUserInteractionEnabled = true
 			toUIView.isUserInteractionEnabled = true
 
-			// iOS 16 workaround to nudge views into becoming responsive after transition
-			if transitionContext.transitionWasCancelled {
-				fromUIView.removeFromSuperview()
-				container.addSubview(fromUIView)
-			} else {
-				toUIView.removeFromSuperview()
-				container.addSubview(toUIView)
+			// On iOS 16, cancelling swipe-back can leave the surviving view unresponsive;
+			// detaching and reattaching nudges it back into responding to interaction.
+			// Retain that workaround here, but avoid it on newer OS versions because
+			// reattachment resigns the first responder and dismisses the keyboard.
+			if #available(iOS 16, tvOS 16, *) {
+				if #unavailable(iOS 17, tvOS 17, visionOS 1) {
+					if transitionContext.transitionWasCancelled {
+						fromUIView.removeFromSuperview()
+						container.addSubview(fromUIView)
+					} else {
+						toUIView.removeFromSuperview()
+						container.addSubview(toUIView)
+					}
+				}
 			}
 		}
 
