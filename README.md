@@ -12,25 +12,15 @@
 <img width="320" src="https://user-images.githubusercontent.com/2538074/201550282-64ce0f8e-8f99-4fe2-baf8-583e35c0518a.gif">
 </p>
 
-**SwiftUINavigationTransitions** is a library that integrates seamlessly with SwiftUI's `NavigationView` and `NavigationStack`, allowing complete customization over **push and pop transitions**!
+**SwiftUINavigationTransitions** integrates with SwiftUI's `NavigationStack` to customize **push and pop transitions**.
+
+Requires iOS 16+, Mac Catalyst 16+, tvOS 16+, or visionOS 1+.
 
 ## Overview
 
-Instead of reinventing the entire navigation stack just to control its transitions, this library ships with a **simple modifier** that can be applied directly to SwiftUI's very own **first-party navigation** components.
+Apply a **single modifier** directly to `NavigationStack` to control its transitions.
 
 ### The Basics
-
-#### iOS 13+
-
-```swift
-NavigationView {
-  // ...
-}
-.navigationViewStyle(.stack)
-.customNavigationTransition(.slide)
-```
-
-#### iOS 16+
 
 ```swift
 NavigationStack {
@@ -110,16 +100,16 @@ Choose from three interactivity options: `.disabled`, `.edgePan`, or `.contentPa
 .customNavigationTransition(.slide, interactivity: .disabled) // disables back swipes
 ```
 
-`.contentPan` back-deploys iOS 26 full-screen **pop gestures** all the way to iOS 13:
+`.contentPan` supports full-screen **pop gestures** on iOS 16 and later:
 
 ```swift
-.customNavigationTransition(.slide, interactivity: .contentPan) // works on iOS 13-26!
+.customNavigationTransition(.slide, interactivity: .contentPan)
 ```
 
 This also works while maintaining the **default system transition**:
 
 ```swift
-.customNavigationTransition(.default, interactivity: .contentPan) // works on iOS 13-26!
+.customNavigationTransition(.default, interactivity: .contentPan)
 ```
 
 ## Installation

@@ -5,7 +5,7 @@ struct PageOne: View {
 		let content = Group {
 			Text(
 				"""
-				**SwiftUINavigationTransitions** is a library that integrates seamlessly with SwiftUI's **Navigation** views, \
+				**SwiftUINavigationTransitions** is a library that integrates with SwiftUI's **NavigationStack**, \
 				allowing complete customization over **push and pop transitions**!
 				""",
 			)
@@ -15,23 +15,15 @@ struct PageOne: View {
 			content
 		} link: {
 			PageLink(title: "Show me!")
-		} destination: {
-			PageTwo()
 		}
-		.modifier {
-			if #available(iOS 16, tvOS 16, *) {
-				$0.navigationDestination(for: Int.self) { number in
-					switch number {
-					case 1: PageOne()
-					case 2: PageTwo()
-					case 3: PageThree()
-					case 4: PageFour()
-					case 5: PageFive()
-					default: EmptyView()
-					}
-				}
-			} else {
-				$0
+		.navigationDestination(for: Int.self) { number in
+			switch number {
+			case 1: PageOne()
+			case 2: PageTwo()
+			case 3: PageThree()
+			case 4: PageFour()
+			case 5: PageFive()
+			default: EmptyView()
 			}
 		}
 	}
@@ -41,7 +33,7 @@ struct PageTwo: View {
 	var body: some View {
 		let content = Group {
 			Text(
-				"The library is fully compatible with **NavigationView** in iOS 13+, and the new **NavigationStack** in iOS 16.",
+				"Customize **NavigationStack** transitions on iOS 16+, Mac Catalyst 16+, tvOS 16+, and visionOS 1+.",
 			)
 			Text("In fact, that entire transition you just saw can be implemented in **one line** of SwiftUI code:")
 			Code(
@@ -58,8 +50,6 @@ struct PageTwo: View {
 			content
 		} link: {
 			PageLink(title: "🤯")
-		} destination: {
-			PageThree()
 		}
 	}
 }
@@ -97,8 +87,6 @@ struct PageThree: View {
 			content
 		} link: {
 			PageLink(title: "Sweet!")
-		} destination: {
-			PageFour()
 		}
 	}
 }
@@ -119,8 +107,6 @@ struct PageFour: View {
 			content
 		} link: {
 			PageLink(title: "Awesome!")
-		} destination: {
-			PageFive()
 		}
 	}
 }

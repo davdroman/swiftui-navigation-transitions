@@ -5,9 +5,9 @@ import PackageDescription
 let package = Package(
 	name: "swiftui-navigation-transitions",
 	platforms: [
-		.iOS(.v13),
-		.macCatalyst(.v13),
-		.tvOS(.v13),
+		.iOS(.v16),
+		.macCatalyst(.v16),
+		.tvOS(.v16),
 		.visionOS(.v1),
 	],
 	products: [

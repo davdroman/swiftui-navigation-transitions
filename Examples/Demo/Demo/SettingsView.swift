@@ -5,7 +5,7 @@ struct SettingsView: View {
 	@EnvironmentObject var appState: AppState
 
 	var body: some View {
-		NavigationView {
+		NavigationStack {
 			Form {
 				Section(header: Text("Transition")) {
 					picker("Transition", $appState.transition)
@@ -36,7 +36,6 @@ struct SettingsView: View {
 				trailing: Button(action: dismiss) { Text("Done").bold() },
 			)
 		}
-		.navigationViewStyle(.stack)
 	}
 
 	var interactivityFooter: some View {

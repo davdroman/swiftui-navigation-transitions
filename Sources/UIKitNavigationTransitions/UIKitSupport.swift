@@ -26,82 +26,21 @@ extension UISplitViewController {
 		forColumns columns: UISplitViewControllerColumns,
 		interactivity: CustomNavigationTransition.Interactivity = .default,
 	) {
-		if columns.contains(.compact), let compact = compactViewController as? UINavigationController {
+		if columns.contains(.compact), let compact = viewController(for: .compact) as? UINavigationController {
 			compact.setNavigationTransition(transition, interactivity: interactivity)
 		}
-		if columns.contains(.primary), let primary = primaryViewController as? UINavigationController {
+		if columns.contains(.primary), let primary = viewController(for: .primary) as? UINavigationController {
 			primary.setNavigationTransition(transition, interactivity: interactivity)
 		}
-		if columns.contains(.supplementary), let supplementary = supplementaryViewController as? UINavigationController {
+		if
+			columns.contains(.supplementary),
+			let supplementary = viewController(for: .supplementary) as? UINavigationController
+		{
 			supplementary.setNavigationTransition(transition, interactivity: interactivity)
 		}
-		if columns.contains(.secondary), let secondary = secondaryViewController as? UINavigationController {
+		if columns.contains(.secondary), let secondary = viewController(for: .secondary) as? UINavigationController {
 			secondary.setNavigationTransition(transition, interactivity: interactivity)
 		}
-	}
-}
-
-extension UISplitViewController {
-	var compactViewController: UIViewController? {
-		if #available(iOS 14, tvOS 14, *) {
-			viewController(for: .compact)
-		} else {
-			if isCollapsed {
-				viewControllers.first
-			} else {
-				nil
-			}
-		}
-	}
-
-	var primaryViewController: UIViewController? {
-		if #available(iOS 14, tvOS 14, *) {
-			viewController(for: .primary)
-		} else {
-			if !isCollapsed {
-				viewControllers.first
-			} else {
-				nil
-			}
-		}
-	}
-
-	var supplementaryViewController: UIViewController? {
-		if #available(iOS 14, tvOS 14, *) {
-			viewController(for: .supplementary)
-		} else {
-			if !isCollapsed {
-				if viewControllers.count >= 3 {
-					viewControllers[safe: 1]
-				} else {
-					nil
-				}
-			} else {
-				nil
-			}
-		}
-	}
-
-	var secondaryViewController: UIViewController? {
-		if #available(iOS 14, tvOS 14, *) {
-			viewController(for: .secondary)
-		} else {
-			if !isCollapsed {
-				if viewControllers.count >= 3 {
-					viewControllers[safe: 2]
-				} else {
-					viewControllers[safe: 1]
-				}
-			} else {
-				nil
-			}
-		}
-	}
-}
-
-extension RandomAccessCollection where Index == Int {
-	subscript(safe index: Index) -> Element? {
-		self.dropFirst(index).first
 	}
 }
 

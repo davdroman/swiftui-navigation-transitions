@@ -5,17 +5,8 @@ struct RootView: View {
 	@EnvironmentObject var appState: AppState
 
 	var body: some View {
-		Group {
-			if #available(iOS 16, tvOS 16, *) {
-				NavigationStack {
-					PageOne()
-				}
-			} else {
-				NavigationView {
-					PageOne()
-				}
-				.navigationViewStyle(.stack)
-			}
+		NavigationStack {
+			PageOne()
 		}
 		.customNavigationTransition(transition.animation(animation), interactivity: interactivity)
 		.sheet(isPresented: $appState.isPresentingSettings) {

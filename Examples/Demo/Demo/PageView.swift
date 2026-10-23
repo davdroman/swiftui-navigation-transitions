@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct PageView<Content: View, Link: View, Destination: View>: View {
+struct PageView<Content: View, Link: View>: View {
 	@EnvironmentObject var appState: AppState
 
 	let number: Int
@@ -8,18 +8,11 @@ struct PageView<Content: View, Link: View, Destination: View>: View {
 	let color: Color
 	let content: Content
 	let link: Link?
-	let destination: Destination?
 
 	var body: some View {
 		ZStack {
 			Rectangle()
-				.modifier {
-					if #available(iOS 16, tvOS 16, *) {
-						$0.fill(color.gradient)
-					} else {
-						$0.fill(color)
-					}
-				}
+				.fill(color.gradient)
 				.frame(maxWidth: .infinity, maxHeight: .infinity)
 				.edgesIgnoringSafeArea(.all)
 				.opacity(0.45)
@@ -36,12 +29,8 @@ struct PageView<Content: View, Link: View, Destination: View>: View {
 				.frame(maxWidth: 1200)
 
 				Group {
-					if let link, let destination {
-						if #available(iOS 16, tvOS 16, *) {
-							NavigationLink(value: number + 1) { link }
-						} else {
-							NavigationLink(destination: destination) { link }
-						}
+					if let link {
+						NavigationLink(value: number + 1) { link }
 					}
 				}
 				#if os(tvOS)
@@ -72,7 +61,6 @@ extension PageView {
 		color: Color,
 		@ViewBuilder content: () -> Content,
 		@ViewBuilder link: () -> Link,
-		@ViewBuilder destination: () -> Destination = { EmptyView() },
 	) {
 		self.init(
 			number: number,
@@ -80,12 +68,11 @@ extension PageView {
 			color: color,
 			content: content(),
 			link: link(),
-			destination: destination(),
 		)
 	}
 }
 
-extension PageView where Link == EmptyView, Destination == EmptyView {
+extension PageView where Link == EmptyView {
 	static func final(
 		number: Int,
 		title: String,
@@ -98,23 +85,6 @@ extension PageView where Link == EmptyView, Destination == EmptyView {
 			color: color,
 			content: content(),
 			link: nil,
-			destination: nil,
 		)
-	}
-}
-
-extension View {
-	/// Modify a view with a `ViewBuilder` closure.
-	///
-	/// This represents a streamlining of the
-	/// [`modifier`](https://developer.apple.com/documentation/swiftui/view/modifier(_:)) +
-	/// [`ViewModifier`](https://developer.apple.com/documentation/swiftui/viewmodifier) pattern.
-	///
-	/// - Note: Useful only when you don't need to reuse the closure.
-	/// If you do, turn the closure into a proper modifier.
-	public func modifier<ModifiedContent: View>(
-		@ViewBuilder _ modifier: (Self) -> ModifiedContent,
-	) -> ModifiedContent {
-		modifier(self)
 	}
 }

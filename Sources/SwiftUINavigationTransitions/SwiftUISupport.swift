@@ -9,8 +9,8 @@ extension View {
 		interactivity: CustomNavigationTransition.Interactivity = .default,
 	) -> some View {
 		self.introspect(
-			.navigationView(style: .stack),
-			on: .iOS(.v13...), .tvOS(.v13...), .visionOS(.v1...),
+			.navigationStack,
+			on: .iOS(.v16...), .tvOS(.v16...), .visionOS(.v1...),
 			scope: [.receiver, .ancestor],
 		) { controller in
 			controller.setNavigationTransition(transition, interactivity: interactivity)
