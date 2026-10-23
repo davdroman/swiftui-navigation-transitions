@@ -3,6 +3,7 @@ name: CI
 on:
   push:
     branches:
+      - ci/platform-version-matrix
       - main
   pull_request:
     branches:
@@ -35,18 +36,32 @@ jobs:
 
   apple:
     if: github.event_name != 'pull_request' || !contains(github.event.pull_request.title, '[skip ci]')
-    name: ${{ matrix.platform }} (Swift ${{ matrix.swift }})
-    runs-on: macos-26
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.runner || 'macos-26' }}
     strategy:
       fail-fast: false
       matrix:
-        platform:
-          - iOS
-          - mac-catalyst
-          - tvOS
-        swift:
-          - "6.2"
-          - "6.3"
+        include:
+          # One representative simulator runtime per supported OS major.
+          - { name: "iOS 16.4", runtime: "iOS 16.4", device: "iPhone 14 Pro" }
+          - { name: "iOS 17.5", runtime: "iOS 17.5", device: "iPhone 15 Pro" }
+          - { name: "iOS 18.5", runtime: "iOS 18.5", device: "iPhone 16 Pro" }
+          - { name: "iOS 26.5", runtime: "iOS 26.5", device: "iPhone 17 Pro" }
+          - { name: "iPadOS 16.4", runtime: "iOS 16.4", device: "iPad Pro (11-inch) (4th generation)" }
+          - { name: "iPadOS 17.5", runtime: "iOS 17.5", device: "iPad Pro 11-inch (M4)" }
+          - { name: "iPadOS 18.5", runtime: "iOS 18.5", device: "iPad Pro 11-inch (M4)" }
+          - { name: "iPadOS 26.5", runtime: "iOS 26.5", device: "iPad Pro 11-inch (M5)" }
+          # Catalyst runs on the host OS. CI covers macOS 15 and 26 hosts.
+          # Older hosts are not covered. The package requires Swift 6.2.
+          - { name: "macCatalyst 15", destination: "platform=macOS,variant=Mac Catalyst", runner: macos-15, xcode: "26.3" }
+          - { name: "macCatalyst 26", destination: "platform=macOS,variant=Mac Catalyst" }
+          - { name: "tvOS 16.4", runtime: "tvOS 16.4", device: "Apple TV" }
+          - { name: "tvOS 17.5", runtime: "tvOS 17.5", device: "Apple TV" }
+          - { name: "tvOS 18.5", runtime: "tvOS 18.5", device: "Apple TV" }
+          - { name: "tvOS 26.5", runtime: "tvOS 26.5", device: "Apple TV" }
+          - { name: "visionOS 1.2", runtime: "visionOS 1.2", device: "Apple Vision Pro (at 2732x2048)" }
+          - { name: "visionOS 2.5", runtime: "visionOS 2.5", device: "Apple Vision Pro (at 2732x2048)" }
+          - { name: "visionOS 26.4", runtime: "visionOS 26.4", device: "Apple Vision Pro" }
     steps:
       - name: Git Checkout
         uses: actions/checkout@v5
@@ -56,41 +71,84 @@ jobs:
           defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
           defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidatation -bool YES
 
-      - name: Select Xcode version
-        uses: mxcl/xcodebuild@v3
-        with:
-          swift: ~${{ matrix.swift }}
-          action: none
-          verbosity: xcbeautify
+      - name: Install xcodes
+        run: |
+          brew uninstall xcodes
+          brew install xcodesorg/made/xcodes
 
-      - if: ${{ matrix.platform != 'mac-catalyst' }}
-        name: Initialize Simulator Service
-        run: xcrun simctl list
+      - name: Select Xcode
+        run: sudo xcodes select ${{ matrix.xcode || '26.6' }}
 
-      - if: ${{ matrix.platform != 'mac-catalyst' }}
-        name: Download Default Runtime
+      - name: Install ${{ matrix.runtime }} Runtime
+        if: matrix.runtime
         uses: nick-fields/retry@v3
+        env:
+          RUNTIME: ${{ matrix.runtime }}
         with:
           timeout_minutes: 15
           max_attempts: 3
-          command: xcodebuild -downloadPlatform ${{ matrix.platform }}
+          command: |
+            set -eo pipefail
+            if xcrun simctl list runtimes -j | jq -e --arg name "$RUNTIME" '.runtimes[] | select(.isAvailable and .name == $name)' >/dev/null; then
+              echo "Runtime '$RUNTIME' is already installed."
+            else
+              sudo xcodes runtimes install "$RUNTIME" --aria2 "$(command -v aria2c)"
+            fi
+
+      - name: Create Simulator
+        if: matrix.device
+        env:
+          DEVICE: ${{ matrix.device }}
+          RUNTIME: ${{ matrix.runtime }}
+        run: |
+          set -eo pipefail
+          xcrun simctl delete all
+          RUNTIME_ID=$(xcrun simctl list runtimes -j | jq -er --arg name "$RUNTIME" '[.runtimes[] | select(.isAvailable and .name == $name) | .identifier] | if length == 1 then .[0] else error("Expected one available runtime: " + $name) end')
+          DEVICE_TYPE=$(xcrun simctl list devicetypes -j | jq -er --arg name "$DEVICE" '[.devicetypes[] | select(.name == $name) | .identifier] | if length == 1 then .[0] else error("Expected one device type: " + $name) end')
+          SIM_UDID=$(xcrun simctl create "$DEVICE" "$DEVICE_TYPE" "$RUNTIME_ID")
+          echo "SIM_UDID=$SIM_UDID" >> "$GITHUB_ENV"
+          echo "Created simulator: $DEVICE ($RUNTIME) -> $SIM_UDID"
 
       - name: Run Tests
-        uses: mxcl/xcodebuild@v3
-        with:
-          platform: ${{ matrix.platform }}
-          swift: ~${{ matrix.swift }}
-          action: test
-          workspace: SwiftUINavigationTransitions.xcworkspace
-          scheme: SwiftUINavigationTransitions
-          verbosity: xcbeautify
+        env:
+          DESTINATION: ${{ matrix.destination || format('id={0}', env.SIM_UDID) }}
+        run: |
+          set -eo pipefail
+          mkdir -p artifacts
+          SIGNING_ARGS=()
+          if [[ "$DESTINATION" == "platform=macOS,variant=Mac Catalyst" ]]; then
+            SIGNING_ARGS+=(CODE_SIGN_IDENTITY=-)
+          fi
+          xcodebuild test \
+            -workspace SwiftUINavigationTransitions.xcworkspace \
+            -scheme SwiftUINavigationTransitions \
+            -destination "$DESTINATION" \
+            -configuration Debug \
+            -resultBundlePath artifacts/Tests.xcresult \
+            "${SIGNING_ARGS[@]}" \
+            | tee artifacts/tests.log | xcbeautify
 
       - name: Build Demo
-        uses: mxcl/xcodebuild@v3
+        env:
+          DESTINATION: ${{ matrix.destination || format('id={0}', env.SIM_UDID) }}
+        run: |
+          set -eo pipefail
+          SIGNING_ARGS=()
+          if [[ "$DESTINATION" == "platform=macOS,variant=Mac Catalyst" ]]; then
+            SIGNING_ARGS+=(CODE_SIGN_IDENTITY=-)
+          fi
+          xcodebuild build \
+            -workspace SwiftUINavigationTransitions.xcworkspace \
+            -scheme Demo \
+            -destination "$DESTINATION" \
+            -configuration Debug \
+            "${SIGNING_ARGS[@]}" \
+            | tee artifacts/demo.log | xcbeautify
+
+      - name: Upload Failure Artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
         with:
-          platform: ${{ matrix.platform }}
-          swift: ~${{ matrix.swift }}
-          action: build
-          workspace: SwiftUINavigationTransitions.xcworkspace
-          scheme: Demo
-          verbosity: xcbeautify
+          name: ${{ matrix.name }}-failure
+          path: artifacts
+          if-no-files-found: ignore
