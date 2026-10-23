@@ -1,5 +1,6 @@
 import Animation
 import Animator
+import Foundation
 import NavigationTransition
 import UIKit
 
@@ -141,8 +142,19 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 			handler(animator, operation, transitionContext)
 		}
 
+		let diagnosticVariant = ProcessInfo.processInfo.environment["NAVIGATION_AB_VARIANT"]
 		animator.addCompletion { _ in
+			@MainActor func record(_ event: String) {
+				guard diagnosticVariant == "baseline" || diagnosticVariant == "no-reattach" else { return }
+				let entry = "\(ProcessInfo.processInfo.systemUptime) variant=\(diagnosticVariant ?? "unset") \(event) cancelled=\(transitionContext.transitionWasCancelled) from=\(diagnosticView(fromUIView)) to=\(diagnosticView(toUIView))"
+				NSLog("[NAV-AB-LIB] %@", entry)
+				var entries = UserDefaults.standard.stringArray(forKey: "NavigationABLibraryTrace") ?? []
+				entries.append(entry)
+				UserDefaults.standard.set(entries, forKey: "NavigationABLibraryTrace")
+			}
+			record("beforeCompleteTransition")
 			transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+			record("afterCompleteTransition")
 
 			fromUIView.isUserInteractionEnabled = true
 			toUIView.isUserInteractionEnabled = true
@@ -152,13 +164,21 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 			// Retain that workaround here, but avoid it on newer OS versions because
 			// reattachment resigns the first responder and dismisses the keyboard.
 			if #unavailable(iOS 17, tvOS 17, visionOS 1) {
+				if diagnosticVariant == "no-reattach" {
+					record("candidateSkippedReattachment")
+					return
+				}
+				record("beforeDetach")
 				if transitionContext.transitionWasCancelled {
 					fromUIView.removeFromSuperview()
+					record("afterDetach")
 					container.addSubview(fromUIView)
 				} else {
 					toUIView.removeFromSuperview()
+					record("afterDetach")
 					container.addSubview(toUIView)
 				}
+				record("afterReattach")
 			}
 		}
 
@@ -186,4 +206,13 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 
 		return (fromView, toView)
 	}
+}
+
+@MainActor
+private func diagnosticView(_ view: UIView) -> String {
+	func focused(_ view: UIView) -> UIView? {
+		if view.isFirstResponder { return view }
+		return view.subviews.lazy.compactMap { focused($0) }.first
+	}
+	return "view=\(ObjectIdentifier(view)) super=\(String(describing: view.superview.map(ObjectIdentifier.init))) window=\(view.window != nil) interactive=\(view.isUserInteractionEnabled) responder=\(String(describing: focused(view)))"
 }

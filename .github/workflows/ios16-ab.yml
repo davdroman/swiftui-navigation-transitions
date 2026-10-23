@@ -1,0 +1,91 @@
+name: iOS 16.4 reattachment A/B
+
+on:
+  push:
+    branches: [ci/platform-version-matrix]
+    paths:
+      - .github/workflows/ios16-ab.yml
+      - Diagnostics/NavigationAB/**
+      - Sources/UIKitNavigationTransitions/Delegate.swift
+
+permissions:
+  contents: read
+
+jobs:
+  diagnostic:
+    name: iOS 16.4 / ${{ matrix.test }}
+    runs-on: macos-26
+    strategy:
+      fail-fast: false
+      matrix:
+        test: [testBaseline, testWithoutReattachment]
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - name: Select Xcode
+        run: |
+          brew uninstall xcodes
+          brew install xcodesorg/made/xcodes
+          sudo xcodes select 26.6
+      - name: Install iOS 16.4
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 15
+          max_attempts: 3
+          command: |
+            set -eo pipefail
+            if ! xcrun simctl list runtimes -j | jq -e '.runtimes[] | select(.isAvailable and .name == "iOS 16.4")' >/dev/null; then
+              sudo xcodes runtimes install 'iOS 16.4' --aria2 "$(command -v aria2c)"
+            fi
+      - name: Create Simulator
+        run: |
+          set -eo pipefail
+          defaults write com.apple.iphonesimulator ConnectHardwareKeyboard -bool NO
+          RUNTIME_ID=$(xcrun simctl list runtimes -j | jq -er '.runtimes[] | select(.isAvailable and .name == "iOS 16.4") | .identifier')
+          DEVICE_TYPE=$(xcrun simctl list devicetypes -j | jq -er '.devicetypes[] | select(.name == "iPhone 14 Pro") | .identifier')
+          SIM_UDID=$(xcrun simctl create NavigationAB "$DEVICE_TYPE" "$RUNTIME_ID")
+          echo "SIM_UDID=$SIM_UDID" >> "$GITHUB_ENV"
+      - name: Run actual-input diagnostic
+        env:
+          TEST: ${{ matrix.test }}
+        run: |
+          set -eo pipefail
+          mkdir -p artifacts
+          xcodebuild test \
+            -project Diagnostics/NavigationAB/NavigationAB.xcodeproj \
+            -scheme NavigationAB \
+            -destination "id=$SIM_UDID" \
+            -parallel-testing-enabled NO \
+            -only-testing:"ProbeUITests/ProbeUITests/$TEST" \
+            -resultBundlePath artifacts/Tests.xcresult \
+            -skipMacroValidation -skipPackagePluginValidation \
+            2>&1 | tee artifacts/xcodebuild.log | xcbeautify
+      - name: Collect persisted app trace
+        if: always() && env.SIM_UDID != ''
+        run: |
+          mkdir -p artifacts
+          if xcrun simctl list devices -j | jq -e --arg id "$SIM_UDID" '.devices[][] | select(.udid == $id and .state == "Shutdown")' >/dev/null; then
+            xcrun simctl boot "$SIM_UDID" > artifacts/trace-simulator-boot.log 2>&1
+          fi
+          xcrun simctl bootstatus "$SIM_UDID" -b >> artifacts/trace-simulator-boot.log 2>&1
+          if CONTAINER=$(xcrun simctl get_app_container "$SIM_UDID" mn.dro.NavigationAB data 2> artifacts/container-error.log); then
+            PREFERENCES="$CONTAINER/Library/Preferences/mn.dro.NavigationAB.plist"
+            if [ -f "$PREFERENCES" ]; then
+              cp "$PREFERENCES" artifacts/app-preferences.plist
+              plutil -convert json -o artifacts/app-preferences.json "$PREFERENCES"
+            fi
+          fi
+      - name: Export diagnostic results
+        if: always()
+        run: |
+          if [ -d artifacts/Tests.xcresult ]; then
+            xcrun xcresulttool get test-results summary --path artifacts/Tests.xcresult > artifacts/summary.json
+            xcrun xcresulttool export attachments --path artifacts/Tests.xcresult --output-path artifacts/attachments
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: iOS16.4-${{ matrix.test }}
+          path: artifacts
+          if-no-files-found: warn
