@@ -11,15 +11,9 @@ final class InteractiveFocusTests: XCTestCase {
 		let observer = NavigationObserver()
 		navigation.delegate = observer
 		navigation.setNavigationTransition(.slide, interactivity: .edgePan)
-		let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 390, height: 844))
-		window.rootViewController = navigation
-		window.makeKeyAndVisible()
-		defer { window.isHidden = true }
-		window.layoutIfNeeded()
-		let rootVisible = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
-			MainActor.assumeIsolated { root.view.window === window }
-		}, object: nil)
-		await fulfillment(of: [rootVisible], timeout: 3)
+		let host = try await TestWindow(rootViewController: navigation, test: self)
+		defer { host.restore() }
+		let window = host.window
 
 		let pushed = expectation(description: "push completed")
 		observer.didShow = { controller in
@@ -27,6 +21,7 @@ final class InteractiveFocusTests: XCTestCase {
 		}
 		navigation.pushViewController(source, animated: true)
 		await fulfillment(of: [pushed], timeout: 3)
+		XCTAssertTrue(source.field.becomeFirstResponder())
 		XCTAssertTrue(source.field.isFirstResponder)
 
 		let interaction = UIPercentDrivenInteractiveTransition()
@@ -35,6 +30,8 @@ final class InteractiveFocusTests: XCTestCase {
 		observer.didShow = nil
 		navigation.popViewController(animated: true)
 		let coordinator = try XCTUnwrap(navigation.transitionCoordinator)
+		XCTAssertTrue(coordinator.viewController(forKey: .from) === source)
+		XCTAssertTrue(coordinator.viewController(forKey: .to) === root)
 		XCTAssertTrue(coordinator.isInteractive)
 		let started = expectation(description: "interactive pop started")
 		let cancelled = expectation(description: "interactive pop cancelled")
@@ -58,14 +55,17 @@ final class InteractiveFocusTests: XCTestCase {
 
 @MainActor
 private final class FocusController: UIViewController {
-	let field = UITextField(frame: CGRect(x: 20, y: 150, width: 250, height: 50))
+	let field = FocusResponder()
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		field.translatesAutoresizingMaskIntoConstraints = false
 		view.addSubview(field)
-	}
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-		field.becomeFirstResponder()
+		NSLayoutConstraint.activate([
+			field.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+			field.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+			field.widthAnchor.constraint(equalToConstant: 250),
+			field.heightAnchor.constraint(equalToConstant: 50),
+		])
 	}
 }
 

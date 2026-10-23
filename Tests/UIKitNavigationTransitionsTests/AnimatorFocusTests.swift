@@ -4,27 +4,27 @@ import XCTest
 
 @MainActor
 final class AnimatorFocusTests: XCTestCase {
-	func testCompletionPreservesDestinationFirstResponder() throws {
-		try checkFocus(cancelled: false)
+	func testCompletionPreservesDestinationFirstResponder() async throws {
+		try await checkFocus(cancelled: false)
 	}
 
-	func testCancellationPreservesSourceFirstResponder() throws {
-		try checkFocus(cancelled: true)
+	func testCancellationPreservesSourceFirstResponder() async throws {
+		try await checkFocus(cancelled: true)
 	}
 
-	private func checkFocus(cancelled: Bool) throws {
+	private func checkFocus(cancelled: Bool) async throws {
 		guard #available(iOS 17, tvOS 17, *) else {
 			throw XCTSkip("iOS 16 retains its legacy view-reattachment workaround")
 		}
-		let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 390, height: 844))
-		window.rootViewController = UIViewController()
-		window.makeKeyAndVisible()
-		defer { window.isHidden = true }
+		let root = UIViewController()
+		let host = try await TestWindow(rootViewController: root, test: self)
+		defer { host.restore() }
+		let window = host.window
 		let context = FocusTransitionContext(cancelled: cancelled)
 		context.containerView.frame = window.bounds
-		window.addSubview(context.containerView)
+		root.view.addSubview(context.containerView)
 		context.containerView.addSubview(context.from.view)
-		let field = UITextField(frame: CGRect(x: 20, y: 100, width: 200, height: 50))
+		let field = FocusResponder(frame: CGRect(x: 20, y: 100, width: 200, height: 50))
 		let focusedView = cancelled ? context.from.view! : context.to.view!
 		focusedView.addSubview(field)
 		let provider = NavigationTransitionAnimatorProvider(transition: .slide, animation: .default, operation: .push)
