@@ -46,10 +46,42 @@ final class ProbeModel: NSObject, ObservableObject, UINavigationControllerDelega
 			name: UIResponder.keyboardDidHideNotification,
 			object: nil,
 		)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(keyboardWillShow),
+			name: UIResponder.keyboardWillShowNotification,
+			object: nil,
+		)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(keyboardWillHide),
+			name: UIResponder.keyboardWillHideNotification,
+			object: nil,
+		)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(editingBegan(_:)),
+			name: UITextField.textDidBeginEditingNotification,
+			object: nil,
+		)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(editingEnded(_:)),
+			name: UITextField.textDidEndEditingNotification,
+			object: nil,
+		)
 	}
 
 	@objc private func keyboardShown() { keyboardVisible = true; record("keyboardDidShow") }
 	@objc private func keyboardHidden() { keyboardVisible = false; record("keyboardDidHide") }
+	@objc private func keyboardWillShow() { record("keyboardWillShow") }
+	@objc private func keyboardWillHide() { record("keyboardWillHide") }
+	@objc private func editingBegan(_ notification: Notification) {
+		record("editingDidBegin \(String(describing: notification.object))")
+	}
+	@objc private func editingEnded(_ notification: Notification) {
+		record("editingDidEnd \(String(describing: notification.object))")
+	}
 
 	func exportTrace() {
 		trace += "\nLIBRARY TRACE\n" + (UserDefaults.standard.stringArray(forKey: "NavigationABLibraryTrace") ?? [])
@@ -57,7 +89,8 @@ final class ProbeModel: NSObject, ObservableObject, UINavigationControllerDelega
 	}
 
 	func controller(_ name: String) -> UIViewController {
-		let controller = UIHostingController(rootView: ProbeScreen(model: self, name: name))
+		let controller = ProbeHostingController(rootView: ProbeScreen(model: self, name: name))
+		controller.model = self
 		controller.title = name
 		return controller
 	}
@@ -115,6 +148,10 @@ final class ProbeModel: NSObject, ObservableObject, UINavigationControllerDelega
 }
 
 extension UIView {
+	fileprivate var firstTextField: UITextField? {
+		if let field = self as? UITextField { return field }
+		return subviews.lazy.compactMap(\.firstTextField).first
+	}
 	fileprivate var diagnosticAncestry: String {
 		var current: UIView? = self
 		var entries: [String] = []
@@ -133,6 +170,21 @@ extension UIView {
 	fileprivate var firstResponder: UIView? {
 		if isFirstResponder { return self }
 		return subviews.lazy.compactMap(\.firstResponder).first
+	}
+}
+
+@MainActor
+final class ProbeHostingController: UIHostingController<ProbeScreen> {
+	weak var model: ProbeModel? = nil
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		if
+			ProcessInfo.processInfo.environment["NAVIGATION_AB_SCENARIO"] == "destination-focus",
+			let field = view.firstTextField
+		{
+			let acquired = field.becomeFirstResponder()
+			model?.record("destinationFocusAcquire \(title ?? "nil") result=\(acquired)")
+		}
 	}
 }
 
@@ -165,6 +217,12 @@ struct ProbeScreen: View {
 					.textInputAutocapitalization(.never)
 					.accessibilityIdentifier("field-\(name)")
 					.onChange(of: text) { _ in model.record("textChanged \(name)") }
+				if ProcessInfo.processInfo.environment["NAVIGATION_AB_SCENARIO"] == "dismissed" {
+					Button("Dismiss keyboard") {
+						model.navigation?.view.endEditing(true)
+						model.record("intentionalDismissal")
+					}.accessibilityIdentifier("dismiss")
+				}
 			}
 			Button("Tap \(name)") {
 				model.taps[name, default: 0] += 1

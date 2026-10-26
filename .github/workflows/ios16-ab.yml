@@ -6,6 +6,7 @@ on:
     paths:
       - .github/workflows/ios16-ab.yml
       - Diagnostics/NavigationAB/**
+      - Diagnostics/ResponderPolicy/**
       - Sources/UIKitNavigationTransitions/Delegate.swift
 
 permissions:
@@ -22,6 +23,10 @@ jobs:
           - testBaselineFocused
           - testBaselineUnfocused
           - testNativeUnfocused
+          - testRestoreDisplacedDestinationFocus
+          - testRestoreDisplacedFocused
+          - testRestoreDisplacedIntentionalDismissal
+          - testRestoreDisplacedUnfocused
           - testWithoutReattachmentFocused
           - testWithoutReattachmentUnfocused
     steps:
@@ -51,15 +56,34 @@ jobs:
           DEVICE_TYPE=$(xcrun simctl list devicetypes -j | jq -er '.devicetypes[] | select(.name == "iPhone 14 Pro") | .identifier')
           SIM_UDID=$(xcrun simctl create NavigationAB "$DEVICE_TYPE" "$RUNTIME_ID")
           echo "SIM_UDID=$SIM_UDID" >> "$GITHUB_ENV"
+      - name: Build actual-input diagnostic
+        run: |
+          set -eo pipefail
+          mkdir -p artifacts
+          xcodebuild build-for-testing \
+            -project Diagnostics/NavigationAB/NavigationAB.xcodeproj \
+            -scheme NavigationAB \
+            -destination "id=$SIM_UDID" \
+            -derivedDataPath "$RUNNER_TEMP/navigation-ab" \
+            -skipMacroValidation -skipPackagePluginValidation \
+            2>&1 | tee artifacts/build.log | xcbeautify
       - name: Run actual-input diagnostic
         env:
           TEST: ${{ matrix.test }}
         run: |
           set -eo pipefail
           mkdir -p artifacts
-          xcodebuild test \
+          if xcrun simctl list devices -j | jq -e --arg id "$SIM_UDID" '.devices[][] | select(.udid == $id and .state == "Shutdown")' >/dev/null; then
+            xcrun simctl boot "$SIM_UDID"
+          fi
+          xcrun simctl bootstatus "$SIM_UDID" -b
+          xcrun simctl io "$SIM_UDID" recordVideo --codec=h264 artifacts/screen.mp4 > artifacts/recording.log 2>&1 &
+          RECORDER_PID=$!
+          trap 'kill -INT "$RECORDER_PID" 2>/dev/null || true; wait "$RECORDER_PID" || true' EXIT
+          xcodebuild test-without-building \
             -project Diagnostics/NavigationAB/NavigationAB.xcodeproj \
             -scheme NavigationAB \
+            -derivedDataPath "$RUNNER_TEMP/navigation-ab" \
             -destination "id=$SIM_UDID" \
             -parallel-testing-enabled NO \
             -only-testing:"ProbeUITests/ProbeUITests/$TEST" \
@@ -94,3 +118,67 @@ jobs:
           name: iOS16.4-${{ matrix.test }}
           path: artifacts
           if-no-files-found: warn
+
+  responder-policy:
+    name: Responder policy / ${{ matrix.runtime }}
+    runs-on: macos-26
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { runtime: "iOS 16.4", device: "iPhone 14 Pro" }
+          - { runtime: "tvOS 16.4", device: "Apple TV" }
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - name: Select Xcode
+        run: |
+          brew uninstall xcodes
+          brew install xcodesorg/made/xcodes
+          sudo xcodes select 26.6
+      - name: Install Runtime
+        uses: nick-fields/retry@v3
+        env:
+          RUNTIME: ${{ matrix.runtime }}
+        with:
+          timeout_minutes: 15
+          max_attempts: 3
+          command: |
+            set -eo pipefail
+            if ! xcrun simctl list runtimes -j | jq -e --arg name "$RUNTIME" '.runtimes[] | select(.isAvailable and .name == $name)' >/dev/null; then
+              sudo xcodes runtimes install "$RUNTIME" --aria2 "$(command -v aria2c)"
+            fi
+      - name: Create Simulator
+        env:
+          DEVICE: ${{ matrix.device }}
+          RUNTIME: ${{ matrix.runtime }}
+        run: |
+          set -eo pipefail
+          RUNTIME_ID=$(xcrun simctl list runtimes -j | jq -er --arg name "$RUNTIME" '.runtimes[] | select(.isAvailable and .name == $name) | .identifier')
+          DEVICE_TYPE=$(xcrun simctl list devicetypes -j | jq -er --arg name "$DEVICE" '.devicetypes[] | select(.name == $name) | .identifier')
+          SIM_UDID=$(xcrun simctl create ResponderPolicy "$DEVICE_TYPE" "$RUNTIME_ID")
+          echo "SIM_UDID=$SIM_UDID" >> "$GITHUB_ENV"
+      - name: Run Hosted Responder Policy Tests
+        run: |
+          set -eo pipefail
+          mkdir -p artifacts
+          xcodebuild test \
+            -project Diagnostics/ResponderPolicy/ResponderPolicy.xcodeproj \
+            -scheme ResponderPolicy \
+            -destination "id=$SIM_UDID" \
+            -parallel-testing-enabled NO \
+            -resultBundlePath artifacts/Tests.xcresult \
+            -skipMacroValidation -skipPackagePluginValidation \
+            2>&1 | tee artifacts/xcodebuild.log | xcbeautify
+      - name: Export Results
+        if: always()
+        run: |
+          if [ -d artifacts/Tests.xcresult ]; then
+            xcrun xcresulttool get test-results summary --path artifacts/Tests.xcresult > artifacts/summary.json
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: responder-policy-${{ matrix.runtime }}
+          path: artifacts

@@ -143,10 +143,19 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 		}
 
 		let diagnosticVariant = ProcessInfo.processInfo.environment["NAVIGATION_AB_VARIANT"]
+		let diagnosticOperation = operation
+		let diagnosticForceLegacy = ProcessInfo.processInfo.environment["NAVIGATION_AB_FORCE_LEGACY"] == "1"
+			&& (diagnosticVariant == "baseline" || diagnosticVariant == "restore-displaced")
+		let usesLegacyReattachment: Bool =
+			if #unavailable(iOS 17, tvOS 17, visionOS 1) {
+				true
+			} else {
+				diagnosticForceLegacy
+			}
 		animator.addCompletion { _ in
 			@MainActor func record(_ event: String) {
-				guard diagnosticVariant == "baseline" || diagnosticVariant == "no-reattach" else { return }
-				let entry = "\(ProcessInfo.processInfo.systemUptime) variant=\(diagnosticVariant ?? "unset") \(event) cancelled=\(transitionContext.transitionWasCancelled) from=\(diagnosticView(fromUIView)) to=\(diagnosticView(toUIView))"
+				guard ["baseline", "no-reattach", "restore-displaced"].contains(diagnosticVariant ?? "") else { return }
+				let entry = "\(ProcessInfo.processInfo.systemUptime) variant=\(diagnosticVariant ?? "unset") forcedLegacy=\(diagnosticForceLegacy) operation=\(diagnosticOperation) \(event) cancelled=\(transitionContext.transitionWasCancelled) from=\(diagnosticView(fromUIView)) to=\(diagnosticView(toUIView))"
 				NSLog("[NAV-AB-LIB] %@", entry)
 				var entries = UserDefaults.standard.stringArray(forKey: "NavigationABLibraryTrace") ?? []
 				entries.append(entry)
@@ -163,11 +172,14 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 			// detaching and reattaching nudges it back into responding to interaction.
 			// Retain that workaround here, but avoid it on newer OS versions because
 			// reattachment resigns the first responder and dismisses the keyboard.
-			if #unavailable(iOS 17, tvOS 17, visionOS 1) {
+			if usesLegacyReattachment {
 				if diagnosticVariant == "no-reattach" {
 					record("candidateSkippedReattachment")
 					return
 				}
+				let survivor = transitionContext.transitionWasCancelled ? fromUIView : toUIView
+				let displaced = diagnosticVariant == "restore-displaced" ? diagnosticFirstResponder(survivor) : nil
+				let originalWindow = displaced?.window
 				record("beforeDetach")
 				if transitionContext.transitionWasCancelled {
 					fromUIView.removeFromSuperview()
@@ -179,6 +191,24 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 					container.addSubview(toUIView)
 				}
 				record("afterReattach")
+				if diagnosticVariant == "restore-displaced" {
+					if
+						let displaced,
+						let originalWindow,
+						originalWindow.isKeyWindow,
+						displaced.window === originalWindow,
+						displaced === survivor || displaced.isDescendant(of: survivor),
+						!displaced.isFirstResponder,
+						displaced.canBecomeFirstResponder,
+						diagnosticEligibleResponder(displaced),
+						diagnosticCurrentResponder() == nil
+					{
+						let restored = displaced.becomeFirstResponder()
+						record("restoreDisplaced result=\(restored)")
+					} else {
+						record("restoreSkipped")
+					}
+				}
 			}
 		}
 
@@ -210,9 +240,45 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 
 @MainActor
 private func diagnosticView(_ view: UIView) -> String {
-	func focused(_ view: UIView) -> UIView? {
-		if view.isFirstResponder { return view }
-		return view.subviews.lazy.compactMap { focused($0) }.first
+	"view=\(ObjectIdentifier(view)) super=\(String(describing: view.superview.map(ObjectIdentifier.init))) window=\(view.window != nil) interactive=\(view.isUserInteractionEnabled) responder=\(String(describing: diagnosticFirstResponder(view)))"
+}
+
+@MainActor
+private func diagnosticFirstResponder(_ view: UIView) -> UIView? {
+	if view.isFirstResponder { return view }
+	return view.subviews.lazy.compactMap { diagnosticFirstResponder($0) }.first
+}
+
+@MainActor
+private func diagnosticEligibleResponder(_ responder: UIView) -> Bool {
+	var current: UIView? = responder
+	while let view = current {
+		if view.isHidden || view.alpha == 0 || !view.isUserInteractionEnabled { return false }
+		if let control = view as? UIControl, !control.isEnabled { return false }
+		current = view.superview
 	}
-	return "view=\(ObjectIdentifier(view)) super=\(String(describing: view.superview.map(ObjectIdentifier.init))) window=\(view.window != nil) interactive=\(view.isUserInteractionEnabled) responder=\(String(describing: focused(view)))"
+	return true
+}
+
+@MainActor
+private final class DiagnosticResponderRequest: NSObject {
+	weak var responder: UIResponder? = nil
+}
+
+extension UIResponder {
+	@objc fileprivate func navigationTransitionsDiagnosticCaptureFirstResponder(_ request: DiagnosticResponderRequest) {
+		if isFirstResponder { request.responder = self }
+	}
+}
+
+@MainActor
+private func diagnosticCurrentResponder() -> UIResponder? {
+	let request = DiagnosticResponderRequest()
+	UIApplication.shared.sendAction(
+		#selector(UIResponder.navigationTransitionsDiagnosticCaptureFirstResponder(_:)),
+		to: nil,
+		from: request,
+		for: nil,
+	)
+	return request.responder
 }

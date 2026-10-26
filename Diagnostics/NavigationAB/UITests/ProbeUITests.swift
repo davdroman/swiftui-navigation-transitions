@@ -7,13 +7,143 @@ final class ProbeUITests: XCTestCase {
 	func testWithoutReattachmentFocused() { exercise(variant: "no-reattach", focused: true) }
 	func testWithoutReattachmentUnfocused() { exercise(variant: "no-reattach", focused: false) }
 	func testNativeUnfocused() { exercise(variant: "baseline", focused: false, native: true) }
+	func testRestoreDisplacedFocused() { exercise(variant: "restore-displaced", focused: true) }
+	func testRestoreDisplacedUnfocused() { exercise(variant: "restore-displaced", focused: false) }
+	func testLocalLegacyRestoreDisplacedFocused() { exercise(
+		variant: "restore-displaced",
+		focused: true,
+		forceLegacy: true,
+	) }
+	func testLocalLegacyRestoreDisplacedUnfocused() { exercise(
+		variant: "restore-displaced",
+		focused: false,
+		forceLegacy: true,
+	) }
+	func testLocalLegacyRestoreDisplacedIntentionalDismissal() { exercise(
+		variant: "restore-displaced",
+		focused: false,
+		dismissBeforeCancel: true,
+		forceLegacy: true,
+	) }
+	func testRestoreDisplacedIntentionalDismissal() { exercise(
+		variant: "restore-displaced",
+		focused: false,
+		dismissBeforeCancel: true,
+	) }
 
-	private func exercise(variant: String, focused: Bool, native: Bool = false) {
+	func testRestoreDisplacedDestinationFocus() { destinationFocus(forceLegacy: false) }
+	func testLocalLegacyRestoreDisplacedDestinationFocus() { destinationFocus(forceLegacy: true) }
+
+	private func destinationFocus(forceLegacy: Bool) {
 		continueAfterFailure = true
-		let scenario = focused ? "focused" : "unfocused"
+		let app = XCUIApplication()
+		app.launchEnvironment["NAVIGATION_AB_VARIANT"] = "restore-displaced"
+		app.launchEnvironment["NAVIGATION_AB_SCENARIO"] = "destination-focus"
+		if forceLegacy { app.launchEnvironment["NAVIGATION_AB_FORCE_LEGACY"] = "1" }
+		let expectsLegacy: Bool =
+			if #unavailable(iOS 17) {
+				true
+			} else {
+				forceLegacy
+			}
+		app.launch()
+		defer {
+			tapButton("export", in: app)
+			let events = app.staticTexts["trace"].label
+			XCTAssertTrue(events.contains("destinationFocusAcquire source result=true"))
+			XCTAssertTrue(events.contains("destinationFocusAcquire detail result=true"))
+			if expectsLegacy { XCTAssertTrue(events.contains("restoreDisplaced result=true")) }
+			let trace = XCTAttachment(string: events)
+			trace.name = "restore-displaced-destination-focus"
+			trace.lifetime = .keepAlways
+			add(trace)
+			let screenshot = XCTAttachment(screenshot: app.screenshot())
+			screenshot.lifetime = .keepAlways
+			add(screenshot)
+			app.terminate()
+		}
+		XCTAssertTrue(app.buttons["push-root"].waitForExistence(timeout: 10))
+		guard tapButton("push-root", in: app) else { return }
+		guard
+			expect(
+				app,
+				all: [
+					"depth=2;top=source;",
+					"completedTransitions=1;",
+					"focused=true;",
+					"coordinatorActive=false;transitionAnimations=0",
+				],
+			)
+		else { return }
+		XCTAssertTrue(app.keyboards.firstMatch.exists)
+		app.typeText("source")
+		XCTAssertEqual(app.textFields["field-source"].value as? String, "source")
+		guard tapButton("push-source", in: app) else { return }
+		guard
+			expect(
+				app,
+				all: [
+					"depth=3;top=detail;",
+					"completedTransitions=2;",
+					"focused=true;",
+					"coordinatorActive=false;transitionAnimations=0",
+				],
+			)
+		else { return }
+		app.typeText("detail")
+		XCTAssertEqual(app.textFields["field-detail"].value as? String, "detail")
+		guard tapButton("pop-detail", in: app) else { return }
+		guard
+			expect(
+				app,
+				all: [
+					"depth=2;top=source;",
+					"completedTransitions=3;",
+					"focused=true;",
+					"coordinatorActive=false;transitionAnimations=0",
+				],
+			)
+		else { return }
+		app.typeText("x")
+		XCTAssertEqual(app.textFields["field-source"].value as? String, "sourcex")
+		guard tapButton("tap-source", in: app) else { return }
+		XCTAssertEqual(app.staticTexts["count-source"].label, "1")
+		guard tapButton("pop-source", in: app) else { return }
+		guard
+			expect(
+				app,
+				all: [
+					"depth=1;top=root;",
+					"completedTransitions=4;",
+					"focused=false;",
+					"keyboard=false;",
+					"coordinatorActive=false;transitionAnimations=0",
+				],
+			)
+		else { return }
+		XCTAssertFalse(app.keyboards.firstMatch.exists)
+	}
+
+	private func exercise(
+		variant: String,
+		focused: Bool,
+		native: Bool = false,
+		dismissBeforeCancel: Bool = false,
+		forceLegacy: Bool = false,
+	) {
+		continueAfterFailure = true
+		let scenario = dismissBeforeCancel ? "dismissed" : focused ? "focused" : "unfocused"
 		let app = XCUIApplication()
 		app.launchEnvironment["NAVIGATION_AB_VARIANT"] = variant
 		app.launchEnvironment["NAVIGATION_AB_TRANSITION"] = native ? "native" : "custom"
+		app.launchEnvironment["NAVIGATION_AB_SCENARIO"] = scenario
+		if forceLegacy { app.launchEnvironment["NAVIGATION_AB_FORCE_LEGACY"] = "1" }
+		let expectsLegacy: Bool =
+			if #unavailable(iOS 17) {
+				true
+			} else {
+				forceLegacy
+			}
 		app.launch()
 		defer {
 			tapButton("export", in: app)
@@ -23,8 +153,17 @@ final class ProbeUITests: XCTestCase {
 			} else {
 				XCTAssertTrue(events.contains("beforeCompleteTransition"))
 				XCTAssertTrue(events.contains("variant=\(variant)"))
-				if #unavailable(iOS 17) {
-					XCTAssertTrue(events.contains(variant == "baseline" ? "afterReattach" : "candidateSkippedReattachment"))
+				if expectsLegacy {
+					XCTAssertTrue(events.contains(variant == "no-reattach" ? "candidateSkippedReattachment" : "afterReattach"))
+					if variant == "restore-displaced" {
+						XCTAssertTrue(events.contains(focused ? "restoreDisplaced result=true" : "restoreSkipped"))
+						if !focused {
+							XCTAssertFalse(
+								events.contains("restoreDisplaced result="),
+								"No restoration attempt may occur anywhere in a negative scenario, even if UIKit rejects it",
+							)
+						}
+					}
 				}
 			}
 			let trace = XCTAttachment(string: events)
@@ -53,7 +192,7 @@ final class ProbeUITests: XCTestCase {
 					],
 				)
 			else { return }
-			if focused {
+			if focused || dismissBeforeCancel {
 				field.tap()
 				let existingText = field.value as? String ?? ""
 				if existingText != "Input", !existingText.isEmpty {
@@ -66,6 +205,11 @@ final class ProbeUITests: XCTestCase {
 					expect(app, "focused=true"), field.value as? String == "seed",
 					app.keyboards.firstMatch.exists
 				else { return }
+				if dismissBeforeCancel {
+					guard tapButton("dismiss", in: app) else { return }
+					guard expect(app, all: ["focused=false;", "keyboard=false;"]) else { return }
+					XCTAssertFalse(app.keyboards.firstMatch.exists)
+				}
 			} else {
 				XCTAssertFalse(app.keyboards.firstMatch.exists)
 				guard

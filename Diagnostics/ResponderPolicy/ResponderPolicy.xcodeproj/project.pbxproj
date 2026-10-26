@@ -1,0 +1,169 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 77;
+	objects = {
+		A00000000000000000000001 = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A00000000000000000000011;
+			buildPhases = (A00000000000000000000021, A00000000000000000000022, A00000000000000000000023);
+			buildRules = ();
+			dependencies = ();
+			fileSystemSynchronizedGroups = (A00000000000000000000031);
+			name = TestsHostApp;
+			productName = TestsHostApp;
+			productReference = A00000000000000000000041;
+			productType = "com.apple.product-type.application";
+		};
+		A00000000000000000000002 = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A00000000000000000000012;
+			buildPhases = (A00000000000000000000024, A00000000000000000000025, A00000000000000000000026);
+			buildRules = ();
+			dependencies = (A00000000000000000000051);
+			fileSystemSynchronizedGroups = (A00000000000000000000032);
+			name = ResponderPolicyTests;
+			packageProductDependencies = (A00000000000000000000061);
+			productName = ResponderPolicyTests;
+			productReference = A00000000000000000000042;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A00000000000000000000003 = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					A00000000000000000000001 = { CreatedOnToolsVersion = 26.0; };
+					A00000000000000000000002 = { CreatedOnToolsVersion = 26.0; TestTargetID = A00000000000000000000001; };
+				};
+			};
+			buildConfigurationList = A00000000000000000000010;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (en, Base);
+			mainGroup = A00000000000000000000033;
+			packageReferences = (A00000000000000000000063);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = A00000000000000000000034;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (A00000000000000000000001, A00000000000000000000002);
+		};
+		A00000000000000000000010 = { isa = XCConfigurationList; buildConfigurations = (A00000000000000000000070, A00000000000000000000071); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		A00000000000000000000011 = { isa = XCConfigurationList; buildConfigurations = (A00000000000000000000072, A00000000000000000000073); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		A00000000000000000000012 = { isa = XCConfigurationList; buildConfigurations = (A00000000000000000000074, A00000000000000000000075); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		A00000000000000000000021 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		A00000000000000000000022 = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		A00000000000000000000023 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		A00000000000000000000024 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		A00000000000000000000025 = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (A00000000000000000000062); runOnlyForDeploymentPostprocessing = 0; };
+		A00000000000000000000026 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		A00000000000000000000031 = { isa = PBXFileSystemSynchronizedRootGroup; path = TestsHostApp; sourceTree = "<group>"; };
+		A00000000000000000000032 = { isa = PBXFileSystemSynchronizedRootGroup; path = ResponderPolicyTests; sourceTree = "<group>"; };
+		A00000000000000000000033 = { isa = PBXGroup; children = (A00000000000000000000031, A00000000000000000000032, A00000000000000000000034); sourceTree = "<group>"; };
+		A00000000000000000000034 = { isa = PBXGroup; children = (A00000000000000000000041, A00000000000000000000042); name = Products; sourceTree = "<group>"; };
+		A00000000000000000000041 = { isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestsHostApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A00000000000000000000042 = { isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ResponderPolicyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A00000000000000000000051 = { isa = PBXTargetDependency; target = A00000000000000000000001; targetProxy = A00000000000000000000052; };
+		A00000000000000000000052 = { isa = PBXContainerItemProxy; containerPortal = A00000000000000000000003; proxyType = 1; remoteGlobalIDString = A00000000000000000000001; remoteInfo = TestsHostApp; };
+		A00000000000000000000061 = { isa = XCSwiftPackageProductDependency; productName = UIKitNavigationTransitions; };
+		A00000000000000000000062 = { isa = PBXBuildFile; productRef = A00000000000000000000061; };
+		A00000000000000000000063 = { isa = XCLocalSwiftPackageReference; relativePath = ../..; };
+		A00000000000000000000070 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2,3,7";
+				TVOS_DEPLOYMENT_TARGET = 16.0;
+				XROS_DEPLOYMENT_TARGET = 1.0;
+			};
+			name = Debug;
+		};
+		A00000000000000000000071 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2,3,7";
+				TVOS_DEPLOYMENT_TARGET = 16.0;
+				XROS_DEPLOYMENT_TARGET = 1.0;
+			};
+			name = Release;
+		};
+		A00000000000000000000072 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mn.dro.ResponderPolicyHost;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A00000000000000000000073 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mn.dro.ResponderPolicyHost;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		A00000000000000000000074 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				PRODUCT_BUNDLE_IDENTIFIER = mn.dro.ResponderPolicyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestsHostApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TestsHostApp";
+			};
+			name = Debug;
+		};
+		A00000000000000000000075 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				PRODUCT_BUNDLE_IDENTIFIER = mn.dro.ResponderPolicyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestsHostApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TestsHostApp";
+			};
+			name = Release;
+		};
+	};
+	rootObject = A00000000000000000000003;
+}
