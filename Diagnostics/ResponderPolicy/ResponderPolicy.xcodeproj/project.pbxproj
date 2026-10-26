@@ -62,7 +62,7 @@
 		A00000000000000000000026 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
 		A00000000000000000000031 = { isa = PBXFileSystemSynchronizedRootGroup; path = TestsHostApp; sourceTree = "<group>"; };
 		A00000000000000000000032 = { isa = PBXFileSystemSynchronizedRootGroup; path = ResponderPolicyTests; sourceTree = "<group>"; };
-		A00000000000000000000033 = { isa = PBXGroup; children = (A00000000000000000000031, A00000000000000000000032, A00000000000000000000034); sourceTree = "<group>"; };
+		A00000000000000000000033 = { isa = PBXGroup; children = (A00000000000000000000031, A00000000000000000000032, A00000000000000000000034, A00000000000000000000064); sourceTree = "<group>"; };
 		A00000000000000000000034 = { isa = PBXGroup; children = (A00000000000000000000041, A00000000000000000000042); name = Products; sourceTree = "<group>"; };
 		A00000000000000000000041 = { isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestsHostApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A00000000000000000000042 = { isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ResponderPolicyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,6 +71,7 @@
 		A00000000000000000000061 = { isa = XCSwiftPackageProductDependency; productName = UIKitNavigationTransitions; };
 		A00000000000000000000062 = { isa = PBXBuildFile; productRef = A00000000000000000000061; };
 		A00000000000000000000063 = { isa = XCLocalSwiftPackageReference; relativePath = ../..; };
+		A00000000000000000000064 = { isa = PBXFileReference; lastKnownFileType = folder; name = Library; path = ../..; sourceTree = SOURCE_ROOT; };
 		A00000000000000000000070 = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
