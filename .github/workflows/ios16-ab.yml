@@ -18,7 +18,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        test: [testBaseline, testWithoutReattachment]
+        test:
+          - testBaselineFocused
+          - testBaselineUnfocused
+          - testNativeUnfocused
+          - testWithoutReattachmentFocused
+          - testWithoutReattachmentUnfocused
     steps:
       - uses: actions/checkout@v5
         with:
