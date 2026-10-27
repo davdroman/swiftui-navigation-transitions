@@ -45,7 +45,13 @@ final class InteractiveFocusTests: XCTestCase {
 		await fulfillment(of: [cancelled], timeout: 3)
 		XCTAssertTrue(navigation.topViewController === source)
 		XCTAssertEqual(navigation.viewControllers.count, 2)
-		XCTAssertTrue(source.field.isFirstResponder)
+		// On iOS 16 and tvOS 16, the reattachment workaround restores responsiveness but causes the first responder to
+		// resign.
+		if #unavailable(iOS 17, tvOS 17, visionOS 1) {
+			XCTAssertFalse(source.field.isFirstResponder)
+		} else {
+			XCTAssertTrue(source.field.isFirstResponder)
+		}
 		XCTAssertTrue(source.view.isUserInteractionEnabled)
 		let center = source.field.convert(CGPoint(x: source.field.bounds.midX, y: source.field.bounds.midY), to: window)
 		let hit = try XCTUnwrap(window.hitTest(center, with: nil))
