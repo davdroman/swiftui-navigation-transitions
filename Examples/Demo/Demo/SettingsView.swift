@@ -16,7 +16,7 @@ struct SettingsView: View {
 					switch appState.animation {
 					case .none:
 						EmptyView()
-					case .linear, .easeInOut:
+					case .linear, .easeInOut, .smooth, .snappy, .bouncy:
 						picker("Duration", $appState.duration)
 					case .spring:
 						picker("Stiffness", $appState.stiffness)

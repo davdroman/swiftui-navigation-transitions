@@ -76,6 +76,9 @@ final class AppState: ObservableObject {
 		case linear
 		case easeInOut
 		case spring
+		case smooth
+		case snappy
+		case bouncy
 
 		var description: String {
 			switch self {
@@ -87,6 +90,12 @@ final class AppState: ObservableObject {
 				"Ease In Out"
 			case .spring:
 				"Spring"
+			case .smooth:
+				"Smooth"
+			case .snappy:
+				"Snappy"
+			case .bouncy:
+				"Bouncy"
 			}
 		}
 
@@ -105,6 +114,12 @@ final class AppState: ObservableObject {
 				.easeInOut(duration: duration())
 			case .spring:
 				.interpolatingSpring(stiffness: stiffness(), damping: damping())
+			case .smooth:
+				.smooth(duration: duration())
+			case .snappy:
+				.snappy(duration: duration())
+			case .bouncy:
+				.bouncy(duration: duration())
 			}
 		}
 	}
