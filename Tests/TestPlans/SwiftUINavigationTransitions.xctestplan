@@ -16,6 +16,13 @@
     {
       "target" : {
         "containerPath" : "container:",
+        "identifier" : "AnimationTests",
+        "name" : "AnimationTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
         "identifier" : "AnimatorTests",
         "name" : "AnimatorTests"
       }

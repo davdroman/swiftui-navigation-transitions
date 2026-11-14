@@ -74,7 +74,8 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 	}
 
 	func transitionDuration(using transitionContext: (any UIViewControllerContextTransitioning)?) -> TimeInterval {
-		animation.duration
+		// Springs run for their settling duration rather than the requested one.
+		UIViewPropertyAnimator(duration: animation.duration, timingParameters: animation.timingParameters).duration
 	}
 
 	func animateTransition(using transitionContext: any UIViewControllerContextTransitioning) {

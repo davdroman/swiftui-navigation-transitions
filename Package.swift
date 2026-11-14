@@ -16,6 +16,9 @@ let package = Package(
 	],
 	targets: [
 		.target(name: "Animation"),
+		.testTarget(name: "AnimationTests", dependencies: [
+			"Animation",
+		]),
 
 		.target(name: "Animator"),
 		.testTarget(name: "AnimatorTests", dependencies: [

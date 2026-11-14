@@ -11,10 +11,8 @@ extension Animation {
 	) -> Self {
 		.init(
 			duration: duration,
-			timingParameters: UICubicTimingParameters(
-				controlPoint1: CGPoint(x: c0x, y: c0y),
-				controlPoint2: CGPoint(x: c1x, y: c1y),
-			),
+			controlPoint1: CGPoint(x: c0x, y: c0y),
+			controlPoint2: CGPoint(x: c1x, y: c1y),
 		)
 	}
 
