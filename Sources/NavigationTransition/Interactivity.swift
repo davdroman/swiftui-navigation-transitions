@@ -1,5 +1,3 @@
-public import NavigationTransition
-
 extension CustomNavigationTransition {
 	public enum Interactivity {
 		/// Disables interactive pop gestures.

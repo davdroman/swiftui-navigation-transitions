@@ -1,6 +1,6 @@
 public import SwiftUI
-public import UIKitNavigationTransitions
 @_spi(Advanced) import SwiftUIIntrospect
+import UIKitNavigationTransitions
 
 extension View {
 	@MainActor

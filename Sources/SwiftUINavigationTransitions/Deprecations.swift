@@ -1,5 +1,4 @@
 public import SwiftUI
-public import UIKitNavigationTransitions
 
 extension View {
 	@MainActor
