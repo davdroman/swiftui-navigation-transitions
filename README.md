@@ -118,7 +118,7 @@ Add the package via Swift Package Manager:
 
 ``` swift
 dependencies: [
-    .package(url: "https://github.com/davdroman/swiftui-navigation-transitions", from: "0.19.0"),
+    .package(url: "https://github.com/davdroman/swiftui-navigation-transitions", from: "0.20.0"),
 ]
 ```
 
