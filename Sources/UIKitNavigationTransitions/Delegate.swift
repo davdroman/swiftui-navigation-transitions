@@ -13,6 +13,19 @@ final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelega
 		self.baseDelegate = baseDelegate
 	}
 
+	// UIKit disables its own interactive pop for delegates that provide transitions, so the system transition must look
+	// like it doesn't. UIKit reads this when the delegate is set.
+	override func responds(to selector: Selector!) -> Bool {
+		if
+			transition.isDefault,
+			selector == #selector(navigationController(_:animationControllerFor:from:to:))
+			|| selector == #selector(navigationController(_:interactionControllerFor:))
+		{
+			return false
+		}
+		return super.responds(to: selector)
+	}
+
 	func navigationController(
 		_ navigationController: UINavigationController,
 		willShow viewController: UIViewController,

@@ -71,6 +71,9 @@ extension UINavigationController {
 
 		if let customDelegate {
 			customDelegate.transition = transition
+			// Reassigning the delegate makes UIKit read again which methods it implements.
+			delegate = nil
+			delegate = customDelegate
 		} else {
 			customDelegate = NavigationTransitionDelegate(transition: transition, baseDelegate: defaultDelegate)
 		}
