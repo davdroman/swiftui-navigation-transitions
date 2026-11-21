@@ -20,6 +20,8 @@ public struct ZPosition: MirrorableAtomicTransition {
 	}
 }
 
+extension ZPosition: Hashable {}
+
 /// A transition that brings the view to the front, regardless of insertion or removal.
 public struct BringToFront: AtomicTransition {
 	public init() {}
