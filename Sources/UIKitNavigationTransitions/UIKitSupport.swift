@@ -79,6 +79,9 @@ extension UINavigationController {
 		}
 
 		#if !os(tvOS) && !os(visionOS)
+		// The system's pop gesture recognizers exist once the view loads.
+		loadViewIfNeeded()
+
 		if #unavailable(iOS 26, macCatalyst 26) {
 			if defaultEdgePanRecognizer.strongDelegate == nil {
 				defaultEdgePanRecognizer.strongDelegate = NavigationGestureRecognizerDelegate(controller: self)
