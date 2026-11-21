@@ -1,13 +1,13 @@
 {
-  "originHash" : "b671445540a142c534d0debef5c16c491bc222b4e889f7c29d836ac6f34216ef",
+  "originHash" : "401f137c0d2f84a5ebd2287dd2993d3a6c05a8995d8ce1b747a578254addf513",
   "pins" : [
     {
       "identity" : "objc-runtime-tools",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/davdroman/objc-runtime-tools",
       "state" : {
-        "revision" : "04715d0c98d366d7000be32c0c81b4ba87001910",
-        "version" : "0.5.1"
+        "revision" : "2c3831db66cda363c5d102c82e116b657a61d40c",
+        "version" : "0.6.0"
       }
     },
     {
@@ -15,8 +15,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-custom-dump",
       "state" : {
-        "revision" : "b9b59eb58c946236d6f16305c576ad194c36444e",
-        "version" : "1.6.0"
+        "revision" : "4fb9e7cbb4b8f5a7354005db39447f570d6b3e19",
+        "version" : "1.7.3"
+      }
+    },
+    {
+      "identity" : "swift-issue-reporting",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/swift-issue-reporting",
+      "state" : {
+        "revision" : "b23bb4493c439d3e05152bc167014235ba3d47fc",
+        "version" : "2.1.2"
       }
     },
     {
@@ -24,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/davdroman/swift-once-macro",
       "state" : {
-        "revision" : "5f9d4e77cd95335fe14b44064fcf7f96e8ed56a0",
-        "version" : "1.1.1"
+        "revision" : "4938908d9c9d7ad3d58a4b003868de8aa747aa2e",
+        "version" : "1.2.0"
       }
     },
     {
@@ -33,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swiftlang/swift-syntax",
       "state" : {
-        "revision" : "79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1",
-        "version" : "603.0.2"
+        "revision" : "050f1a346fbbac0ca2cfb15a95274f7bd1cf0ccf",
+        "version" : "604.0.0"
       }
     },
     {
@@ -42,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/siteline/swiftui-introspect",
       "state" : {
-        "revision" : "aead9358a55f635d62d885aeb9105752c0213aec",
-        "version" : "27.0.0-beta.1"
+        "revision" : "a2b5e92c15dbfe009b48df15cb830e868c723ed4",
+        "version" : "27.2.0"
       }
     },
     {
@@ -51,8 +60,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/xctest-dynamic-overlay",
       "state" : {
-        "revision" : "dfd70507def84cb5fb821278448a262c6ff2bbad",
-        "version" : "1.9.0"
+        "revision" : "d9308ad679143c26a30dec52daefe82f54af2b82",
+        "version" : "1.13.1"
       }
     }
   ],
