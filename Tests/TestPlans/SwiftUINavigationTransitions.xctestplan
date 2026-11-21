@@ -35,9 +35,10 @@
       }
     },
     {
+      "parallelizable" : false,
       "target" : {
-        "containerPath" : "container:",
-        "identifier" : "UIKitNavigationTransitionsTests",
+        "containerPath" : "container:Tests/Tests.xcodeproj",
+        "identifier" : "A00000000000000000000002",
         "name" : "UIKitNavigationTransitionsTests"
       }
     }
