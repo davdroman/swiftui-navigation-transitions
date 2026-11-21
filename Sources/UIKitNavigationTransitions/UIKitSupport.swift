@@ -235,7 +235,7 @@ extension UINavigationController {
 @available(tvOS, unavailable)
 extension UIGestureRecognizer {
 	@Associated(.retain(.nonatomic))
-	var strongDelegate: (any UIGestureRecognizerDelegate)? {
+	var strongDelegate: any UIGestureRecognizerDelegate? {
 		didSet {
 			delegate = strongDelegate
 		}

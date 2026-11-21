@@ -5,10 +5,10 @@ import UIKit
 
 final class NavigationTransitionDelegate: NSObject, UINavigationControllerDelegate {
 	var transition: CustomNavigationTransition
-	private weak var baseDelegate: (any UINavigationControllerDelegate)? = nil
+	private weak var baseDelegate: any UINavigationControllerDelegate? = nil
 	var interactionController: UIPercentDrivenInteractiveTransition? = nil
 
-	init(transition: CustomNavigationTransition, baseDelegate: (any UINavigationControllerDelegate)?) {
+	init(transition: CustomNavigationTransition, baseDelegate: any UINavigationControllerDelegate?) {
 		self.transition = transition
 		self.baseDelegate = baseDelegate
 	}
@@ -73,7 +73,7 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 		self.operation = operation
 	}
 
-	func transitionDuration(using transitionContext: (any UIViewControllerContextTransitioning)?) -> TimeInterval {
+	func transitionDuration(using transitionContext: any UIViewControllerContextTransitioning?) -> TimeInterval {
 		animatorTiming.duration
 	}
 
