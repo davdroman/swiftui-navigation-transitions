@@ -1,62 +1,72 @@
 package import UIKit
 
-public struct Animation {
+public struct Animation: Sendable {
 	static var defaultDuration: Double { 0.35 }
 
-	package var duration: Double
-	private var timing: Timing
+	/// The duration of animations that finish immediately. Animators given no duration run for a default one instead.
+	static var instantDuration: Double { .leastNormalMagnitude }
 
-	private enum Timing {
-		case curve(UIView.AnimationCurve)
-		case controlPoints(CGPoint, CGPoint)
-		case spring(mass: Double, stiffness: Double, damping: Double, initialVelocity: Double)
+	private(set) var timing: Timing
+
+	enum Timing: Sendable {
+		case curve(UIView.AnimationCurve, duration: Double)
+		case controlPoints(CGPoint, CGPoint, duration: Double)
+		case spring(SpringTiming)
 	}
 
 	init(duration: Double, curve: UIView.AnimationCurve) {
-		self.duration = duration
-		self.timing = .curve(curve)
+		self.timing = .curve(curve, duration: duration)
 	}
 
 	init(duration: Double, controlPoint1: CGPoint, controlPoint2: CGPoint) {
-		self.duration = duration
-		self.timing = .controlPoints(controlPoint1, controlPoint2)
+		self.timing = .controlPoints(controlPoint1, controlPoint2, duration: duration)
 	}
 
-	/// Animators ignore `duration` for springs and run them for their settling duration instead.
-	init(mass: Double, stiffness: Double, damping: Double, initialVelocity: Double) {
-		self.duration = Self.defaultDuration
-		self.timing = .spring(mass: mass, stiffness: stiffness, damping: damping, initialVelocity: initialVelocity)
+	init(spring: SpringTiming) {
+		self.timing = .spring(spring)
 	}
+
+	/// How long an animator runs this animation for, and its timing curve. Springs run for their settling duration.
+	@MainActor
+	package func animatorTiming() -> AnimatorTiming {
+		switch timing {
+		case let .curve(curve, duration):
+			AnimatorTiming(
+				duration: max(duration, Self.instantDuration),
+				parameters: UICubicTimingParameters(animationCurve: curve),
+			)
+		case let .controlPoints(controlPoint1, controlPoint2, duration):
+			AnimatorTiming(
+				duration: max(duration, Self.instantDuration),
+				parameters: UICubicTimingParameters(controlPoint1: controlPoint1, controlPoint2: controlPoint2),
+			)
+		case let .spring(spring):
+			spring.animatorTiming()
+		}
+	}
+}
+
+package struct AnimatorTiming {
+	package var duration: TimeInterval
+	package var parameters: any UITimingCurveProvider
 
 	@MainActor
-	package var timingParameters: any UITimingCurveProvider {
-		switch timing {
-		case let .curve(curve):
-			UICubicTimingParameters(animationCurve: curve)
-		case let .controlPoints(controlPoint1, controlPoint2):
-			UICubicTimingParameters(controlPoint1: controlPoint1, controlPoint2: controlPoint2)
-		case let .spring(mass, stiffness, damping, initialVelocity):
-			UISpringTimingParameters(
-				mass: mass,
-				stiffness: stiffness,
-				damping: damping,
-				initialVelocity: CGVector(dx: initialVelocity, dy: initialVelocity),
-			)
-		}
+	package func makeAnimator() -> UIViewPropertyAnimator {
+		UIViewPropertyAnimator(duration: duration, timingParameters: parameters)
 	}
 }
 
 extension Animation {
 	public func speed(_ speed: Double) -> Self {
+		precondition(speed > 0, "Animation speed must be greater than zero")
 		var copy = self
-		copy.duration /= speed
-		if case let .spring(mass, stiffness, damping, initialVelocity) = timing {
-			copy.timing = .spring(
-				mass: mass,
-				stiffness: stiffness * speed * speed,
-				damping: damping * speed,
-				initialVelocity: initialVelocity * speed,
-			)
+		switch timing {
+		case let .curve(curve, duration):
+			copy.timing = .curve(curve, duration: duration / speed)
+		case let .controlPoints(controlPoint1, controlPoint2, duration):
+			copy.timing = .controlPoints(controlPoint1, controlPoint2, duration: duration / speed)
+		case let .spring(spring):
+			copy.timing = .spring(spring.speed(speed))
 		}
 		return copy
 	}

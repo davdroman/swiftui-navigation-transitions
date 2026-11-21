@@ -1,4 +1,3 @@
-@MainActor
 extension Animation {
 	public static func interpolatingSpring(
 		mass: Double = 1.0,
@@ -6,7 +5,14 @@ extension Animation {
 		damping: Double,
 		initialVelocity: Double = 0.0,
 	) -> Self {
-		.init(mass: mass, stiffness: stiffness, damping: damping, initialVelocity: initialVelocity)
+		precondition(mass > 0, "Spring mass must be greater than zero")
+		precondition(stiffness > 0, "Spring stiffness must be greater than zero")
+		return .init(spring: SpringTiming(
+			mass: mass,
+			stiffness: stiffness,
+			damping: damping,
+			style: .interpolating(initialVelocity: initialVelocity),
+		))
 	}
 
 	public static func interpolatingSpring(
@@ -14,9 +20,10 @@ extension Animation {
 		bounce: Double = 0.0,
 		initialVelocity: Double = 0.0,
 	) -> Self {
-		.springTiming(
-			response: duration,
-			dampingFraction: springDampingFraction(bounce: bounce),
+		let stiffness = springStiffness(response: duration)
+		return .interpolatingSpring(
+			stiffness: stiffness,
+			damping: springDamping(fraction: springDampingFraction(bounce: bounce), stiffness: stiffness),
 			initialVelocity: initialVelocity,
 		)
 	}

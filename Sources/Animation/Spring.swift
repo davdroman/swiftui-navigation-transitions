@@ -1,14 +1,24 @@
-import UIKit
+import Foundation
 
-@MainActor
+// `blendDuration` has no effect: a navigation transition has no previous animation to blend with.
 extension Animation {
-	public static func spring(duration: Double = 0.5, bounce: Double = 0.0) -> Self {
-		.spring(response: duration, dampingFraction: springDampingFraction(bounce: bounce))
+	public static func spring(duration: Double = 0.5, bounce: Double = 0.0, blendDuration: Double = 0) -> Self {
+		.spring(response: duration, dampingFraction: springDampingFraction(bounce: bounce), blendDuration: blendDuration)
 	}
 
 	@_disfavoredOverload
-	public static func spring(response: Double = 0.5, dampingFraction: Double = 0.825) -> Self {
-		.springTiming(response: response, dampingFraction: dampingFraction, initialVelocity: 0)
+	public static func spring(
+		response: Double = 0.5,
+		dampingFraction: Double = 0.825,
+		blendDuration: Double = 0,
+	) -> Self {
+		let stiffness = springStiffness(response: response)
+		return .init(spring: SpringTiming(
+			mass: 1,
+			stiffness: stiffness,
+			damping: springDamping(fraction: dampingFraction, stiffness: stiffness),
+			style: .spring,
+		))
 	}
 
 	public static var spring: Self {
@@ -16,12 +26,20 @@ extension Animation {
 	}
 
 	@_disfavoredOverload
-	public static func interactiveSpring(response: Double = 0.15, dampingFraction: Double = 0.86) -> Self {
-		.spring(response: response, dampingFraction: dampingFraction)
+	public static func interactiveSpring(
+		response: Double = 0.15,
+		dampingFraction: Double = 0.86,
+		blendDuration: Double = 0.25,
+	) -> Self {
+		.spring(response: response, dampingFraction: dampingFraction, blendDuration: blendDuration)
 	}
 
-	public static func interactiveSpring(duration: Double = 0.15, extraBounce: Double = 0.0) -> Self {
-		.spring(duration: duration, bounce: 0.15 + extraBounce)
+	public static func interactiveSpring(
+		duration: Double = 0.15,
+		extraBounce: Double = 0.0,
+		blendDuration: Double = 0.25,
+	) -> Self {
+		.spring(duration: duration, bounce: 0.15 + extraBounce, blendDuration: blendDuration)
 	}
 
 	public static var interactiveSpring: Self {
@@ -53,24 +71,18 @@ extension Animation {
 	}
 }
 
+/// SwiftUI's conversions from a spring's response, damping fraction, and bounce, for a mass of 1.
 extension Animation {
-	/// A spring with SwiftUI's response and damping fraction semantics.
-	static func springTiming(response: Double, dampingFraction: Double, initialVelocity: Double) -> Self {
-		let stiffness = springStiffness(response: response)
-		return .init(
-			mass: 1,
-			stiffness: stiffness,
-			damping: 2 * stiffness.squareRoot() * dampingFraction,
-			initialVelocity: initialVelocity,
-		)
-	}
-
 	static func springStiffness(response: Double) -> Double {
 		if response <= 0 {
 			.infinity
 		} else {
 			pow(2 * .pi / response, 2)
 		}
+	}
+
+	static func springDamping(fraction: Double, stiffness: Double) -> Double {
+		2 * stiffness.squareRoot() * fraction
 	}
 
 	static func springDampingFraction(bounce: Double) -> Double {

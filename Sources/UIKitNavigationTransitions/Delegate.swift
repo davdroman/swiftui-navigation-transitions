@@ -74,9 +74,11 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 	}
 
 	func transitionDuration(using transitionContext: (any UIViewControllerContextTransitioning)?) -> TimeInterval {
-		// Springs run for their settling duration rather than the requested one.
-		UIViewPropertyAnimator(duration: animation.duration, timingParameters: animation.timingParameters).duration
+		animatorTiming.duration
 	}
+
+	/// Resolved once per transition, since resolving some springs takes a while.
+	private lazy var animatorTiming = animation.animatorTiming()
 
 	func animateTransition(using transitionContext: any UIViewControllerContextTransitioning) {
 		transitionAnimator(for: transitionContext).startAnimation()
@@ -100,10 +102,7 @@ final class NavigationTransitionAnimatorProvider: NSObject, UIViewControllerAnim
 		if let cached = cachedAnimators[ObjectIdentifier(transitionContext)] {
 			return cached
 		}
-		let animator = UIViewPropertyAnimator(
-			duration: transitionDuration(using: transitionContext),
-			timingParameters: animation.timingParameters,
-		)
+		let animator = animatorTiming.makeAnimator()
 		cachedAnimators[ObjectIdentifier(transitionContext)] = animator
 
 		let container = transitionContext.containerView
