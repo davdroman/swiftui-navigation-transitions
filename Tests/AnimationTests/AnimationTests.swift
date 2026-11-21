@@ -5,6 +5,7 @@ import XCTest
 @MainActor
 final class AnimationTests: XCTestCase {
 	func testZeroDurationAnimationsAreInstant() async throws {
+		try skipUnlessWindowsAreAvailable()
 		let animations: [Animation] = [
 			.linear(duration: 0),
 			.easeInOut(duration: 0),

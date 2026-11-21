@@ -39,6 +39,10 @@ let package = Package(
 			"AtomicTransition",
 			.product(name: "IssueReporting", package: "swift-issue-reporting"),
 		]),
+		.testTarget(name: "NavigationTransitionTests", dependencies: [
+			"NavigationTransition",
+			"TestUtils",
+		]),
 
 		.target(name: "UIKitNavigationTransitions", dependencies: [
 			.product(name: "IssueReporting", package: "swift-issue-reporting"),

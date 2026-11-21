@@ -33,3 +33,28 @@ extension AtomicTransitionOperation {
 		[.insertion, .removal].randomElement()!
 	}
 }
+
+/// A `Spy` that can be mirrored, and tells its handler whether it has been.
+public struct MirrorableSpy: MirrorableAtomicTransition {
+	public typealias Handler = (_ isMirrored: Bool, TransientView, TransitionOperation) -> Void
+
+	private let isMirrored: Bool
+	private let handler: Handler
+
+	public init(handler: @escaping Handler) {
+		self.init(isMirrored: false, handler: handler)
+	}
+
+	private init(isMirrored: Bool, handler: @escaping Handler) {
+		self.isMirrored = isMirrored
+		self.handler = handler
+	}
+
+	public func transition(_ view: TransientView, for operation: TransitionOperation, in container: Container) {
+		handler(isMirrored, view, operation)
+	}
+
+	public func mirrored() -> Self {
+		.init(isMirrored: !isMirrored, handler: handler)
+	}
+}

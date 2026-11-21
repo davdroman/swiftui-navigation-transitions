@@ -11,7 +11,7 @@ final class InteractiveFocusTests: XCTestCase {
 		let observer = NavigationObserver()
 		navigation.delegate = observer
 		navigation.setNavigationTransition(.slide, interactivity: .edgePan)
-		let host = try await TestWindow(rootViewController: navigation, test: self)
+		let host = try await TestWindow(rootViewController: navigation)
 		defer { host.restore() }
 		let window = host.window
 

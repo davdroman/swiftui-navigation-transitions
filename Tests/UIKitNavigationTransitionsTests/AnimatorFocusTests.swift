@@ -17,7 +17,7 @@ final class AnimatorFocusTests: XCTestCase {
 			throw XCTSkip("iOS 16 retains its legacy view-reattachment workaround")
 		}
 		let root = UIViewController()
-		let host = try await TestWindow(rootViewController: root, test: self)
+		let host = try await TestWindow(rootViewController: root)
 		defer { host.restore() }
 		let window = host.window
 		let context = FocusTransitionContext(cancelled: cancelled)

@@ -28,7 +28,7 @@ final class ZPositionTests: XCTestCase {
 	}
 
 	func testRemoval() {
-		ZPosition(2).transition(viewUsed, for: .insertion, in: containerUsed)
+		ZPosition(2).transition(viewUsed, for: .removal, in: containerUsed)
 
 		let initial = properties
 		expectNoDifference(viewUsed.initial, initial)

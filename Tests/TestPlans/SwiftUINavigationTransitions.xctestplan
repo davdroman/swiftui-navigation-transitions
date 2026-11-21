@@ -9,7 +9,7 @@
     }
   ],
   "defaultOptions" : {
-    "codeCoverage" : false,
+    "codeCoverage" : true,
     "testExecutionOrdering" : "random"
   },
   "testTargets" : [
@@ -35,9 +35,24 @@
       }
     },
     {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "NavigationTransitionTests",
+        "name" : "NavigationTransitionTests"
+      }
+    },
+    {
       "parallelizable" : false,
       "target" : {
-        "containerPath" : "container:Tests/Tests.xcodeproj",
+        "containerPath" : "container:Tests\/Tests.xcodeproj",
+        "identifier" : "A00000000000000000000004",
+        "name" : "SwiftUINavigationTransitionsTests"
+      }
+    },
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:Tests\/Tests.xcodeproj",
         "identifier" : "A00000000000000000000002",
         "name" : "UIKitNavigationTransitionsTests"
       }

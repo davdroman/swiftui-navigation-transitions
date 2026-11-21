@@ -44,7 +44,7 @@ final class SpringTests: XCTestCase {
 		for (animation, spring) in cases {
 			let animator = animation.animatorTiming().makeAnimator()
 			XCTAssertLessThanOrEqual(animator.duration, SpringTiming.maximumSettlingDuration)
-			for (time, progress) in sampleProgress(animator) {
+			for (time, progress) in try sampleProgress(animator) {
 				XCTAssertEqual(progress, spring.value(target: 1.0, time: time), accuracy: 0.025, "\(spring) at \(time)s")
 			}
 		}
@@ -56,7 +56,7 @@ final class SpringTests: XCTestCase {
 		}
 		let spring = Spring(mass: 1, stiffness: 246.74, damping: 62.83)
 		let animator = Animation.interpolatingSpring(stiffness: 246.74, damping: 62.83).animatorTiming().makeAnimator()
-		for (time, progress) in sampleProgress(animator) {
+		for (time, progress) in try sampleProgress(animator) {
 			XCTAssertEqual(progress, spring.value(target: 1.0, time: time), accuracy: 0.015, "at \(time)s")
 		}
 	}
@@ -126,7 +126,8 @@ final class SpringTests: XCTestCase {
 	}
 
 	/// The animator's progress at points throughout its run, read from a view it moves 100 points.
-	private func sampleProgress(_ animator: UIViewPropertyAnimator) -> [(time: Double, progress: Double)] {
+	private func sampleProgress(_ animator: UIViewPropertyAnimator) throws -> [(time: Double, progress: Double)] {
+		try skipUnlessWindowsAreAvailable()
 		let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 390, height: 844))
 		window.makeKeyAndVisible()
 		defer { window.isHidden = true }
