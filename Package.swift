@@ -37,11 +37,11 @@ let package = Package(
 		.target(name: "NavigationTransition", dependencies: [
 			"Animation",
 			"AtomicTransition",
-			.product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
+			.product(name: "IssueReporting", package: "swift-issue-reporting"),
 		]),
 
 		.target(name: "UIKitNavigationTransitions", dependencies: [
-			.product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
+			.product(name: "IssueReporting", package: "swift-issue-reporting"),
 			"NavigationTransition",
 			.product(name: "ObjCRuntimeTools", package: "objc-runtime-tools"),
 			.product(name: "Once", package: "swift-once-macro"),
@@ -57,7 +57,7 @@ let package = Package(
 
 		.target(name: "TestUtils", dependencies: [
 			.product(name: "CustomDump", package: "swift-custom-dump"),
-			.product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
+			.product(name: "IssueReporting", package: "swift-issue-reporting"),
 			"SwiftUINavigationTransitions",
 		]),
 	],
@@ -69,7 +69,7 @@ package.dependencies = [
 	.package(url: "https://github.com/davdroman/objc-runtime-tools", from: "0.1.0"),
 	.package(url: "https://github.com/davdroman/swift-once-macro", from: "1.0.0"),
 	.package(url: "https://github.com/pointfreeco/swift-custom-dump", from: "1.0.0"), // dev
-	.package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "1.0.0"),
+	.package(url: "https://github.com/pointfreeco/swift-issue-reporting", from: "2.0.0"),
 	.package(url: "https://github.com/siteline/swiftui-introspect", "26.0.0"..<"28.0.0-beta"),
 ]
 

@@ -1,5 +1,5 @@
 {
-  "originHash" : "401f137c0d2f84a5ebd2287dd2993d3a6c05a8995d8ce1b747a578254addf513",
+  "originHash" : "ae448683d8e6ed1216b281e9437fb4a0cddd2f31118b254bd22f23d42494fd6a",
   "pins" : [
     {
       "identity" : "objc-runtime-tools",
@@ -53,15 +53,6 @@
       "state" : {
         "revision" : "a2b5e92c15dbfe009b48df15cb830e868c723ed4",
         "version" : "27.2.0"
-      }
-    },
-    {
-      "identity" : "xctest-dynamic-overlay",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/pointfreeco/xctest-dynamic-overlay",
-      "state" : {
-        "revision" : "d9308ad679143c26a30dec52daefe82f54af2b82",
-        "version" : "1.13.1"
       }
     }
   ],
