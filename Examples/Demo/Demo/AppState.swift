@@ -251,4 +251,22 @@ final class AppState: ObservableObject {
 	@Published var interactivity: Interactivity = .contentPan
 
 	@Published var isPresentingSettings: Bool = false
+
+	/// Settings can be chosen at launch with arguments such as `-transition Slide`, naming an option as settings show it.
+	init() {
+		transition = .launchArgument("transition") ?? transition
+		animation = .launchArgument("animation") ?? animation
+		duration = .launchArgument("duration") ?? duration
+		stiffness = .launchArgument("stiffness") ?? stiffness
+		damping = .launchArgument("damping") ?? damping
+		interactivity = .launchArgument("interactivity") ?? interactivity
+	}
+}
+
+extension CaseIterable where Self: CustomStringConvertible {
+	fileprivate static func launchArgument(_ key: String) -> Self? {
+		UserDefaults.standard.string(forKey: key).flatMap { value in
+			allCases.first { $0.description == value }
+		}
+	}
 }

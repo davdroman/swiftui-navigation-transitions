@@ -48,7 +48,9 @@ struct PageView<Content: View, Link: View>: View {
 		#endif
 		.navigationBarItems(
 			trailing: Button(action: { appState.isPresentingSettings = true }) {
-				Image(systemName: "gearshape").font(.system(size: 16, weight: .semibold))
+				Image(systemName: "gearshape")
+					.font(.system(size: 16, weight: .semibold))
+					.accessibilityLabel("Settings")
 			},
 		)
 	}
