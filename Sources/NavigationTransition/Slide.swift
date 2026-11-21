@@ -1,21 +1,21 @@
 import AtomicTransition
 public import SwiftUI
 
+@MainActor
 extension CustomNavigationTransition {
 	/// A transition that moves both views in and out along the specified axis.
 	///
 	/// This transition:
 	/// - Pushes views right-to-left and pops views left-to-right when `axis` is `horizontal`.
 	/// - Pushes views bottom-to-top and pops views top-to-bottom when `axis` is `vertical`.
-	@MainActor
 	public static func slide(axis: Axis) -> Self {
 		.init(Slide(axis: axis))
 	}
 }
 
+@MainActor
 extension CustomNavigationTransition {
 	/// Equivalent to `slide(axis: .horizontal)`.
-	@MainActor
 	@inlinable
 	public static var slide: Self {
 		.slide(axis: .horizontal)

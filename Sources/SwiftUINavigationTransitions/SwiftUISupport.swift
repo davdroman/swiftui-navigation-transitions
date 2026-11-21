@@ -2,8 +2,8 @@ public import SwiftUI
 @_spi(Advanced) import SwiftUIIntrospect
 import UIKitNavigationTransitions
 
+@MainActor
 extension View {
-	@MainActor
 	public func customNavigationTransition(
 		_ transition: CustomNavigationTransition,
 		interactivity: CustomNavigationTransition.Interactivity = .default,

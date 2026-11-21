@@ -14,8 +14,8 @@ public struct Transform: Equatable, Sendable {
 	}
 }
 
+@MainActor
 extension OptionalWithDefault where Value == Transform {
-	@MainActor
 	func assign(to uiView: UIView, force: Bool) {
 		self.assign(force: force) {
 			if let transform = $0.transform.affineTransform {

@@ -55,10 +55,10 @@ public protocol NavigationTransitionProtocol {
 	var body: Body { get }
 }
 
+@MainActor
 extension NavigationTransitionProtocol where Body: NavigationTransitionProtocol {
 	/// Invokes ``body``'s implementation of ``transition(from:to:for:in:)-211yh``.
 	@inlinable
-	@MainActor
 	public func transition(
 		from fromView: TransientView,
 		to toView: TransientView,

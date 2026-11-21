@@ -1,3 +1,4 @@
+@MainActor
 extension CustomNavigationTransition {
 	/// The system-default transition.
 	///
@@ -12,7 +13,6 @@ extension CustomNavigationTransition {
 	///   ```
 	///
 	/// - Note: The animation for `default` cannot be customized via ``animation(_:)``.
-	@MainActor
 	public static var `default`: Self {
 		.init(Default())
 	}

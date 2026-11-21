@@ -205,10 +205,8 @@ extension UINavigationController {
 			panRecognizer,
 		].compactMap(\.self)
 
-		if #available(iOS 26, macCatalyst 26, *) {
-			if let interactiveContentPopGestureRecognizer {
-				gestureRecognizers.append(interactiveContentPopGestureRecognizer)
-			}
+		if #available(iOS 26, macCatalyst 26, *), let interactiveContentPopGestureRecognizer {
+			gestureRecognizers.append(interactiveContentPopGestureRecognizer)
 		}
 
 		for gestureRecognizer in gestureRecognizers {

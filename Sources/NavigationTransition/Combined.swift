@@ -1,9 +1,9 @@
 import IssueReporting
 
+@MainActor
 extension CustomNavigationTransition {
 	/// Combines this transition with another, returning a new transition that is the result of both transitions
 	/// being applied.
-	@MainActor
 	public func combined(with other: Self) -> Self {
 		switch (self.handler, other.handler) {
 		case let (.transient(lhsHandler), .transient(rhsHandler)):

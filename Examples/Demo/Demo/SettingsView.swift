@@ -50,7 +50,6 @@ struct SettingsView: View {
 		)
 	}
 
-	@ViewBuilder
 	func picker<Selection: CaseIterable & Hashable & CustomStringConvertible>(
 		_ label: String,
 		_ selection: Binding<Selection>,

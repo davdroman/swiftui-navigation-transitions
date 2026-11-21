@@ -2,8 +2,8 @@
 import IssueReporting
 import UIKit
 
+@MainActor
 extension AnimatorTransientView {
-	@MainActor
 	public static var unimplemented: AnimatorTransientView {
 		UnimplementedAnimatorTransientView()
 	}
