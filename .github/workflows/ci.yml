@@ -74,13 +74,28 @@ jobs:
         name: Initialize Simulator Service
         run: xcrun simctl list
 
-      - if: ${{ matrix.platform != 'mac-catalyst' }}
+      - if: ${{ matrix.platform != 'mac-catalyst' && matrix.runtime == 'latest' }}
         name: Download Runtime
         uses: nick-fields/retry@v3
         with:
           timeout_minutes: 15
           max_attempts: 3
-          command: xcodebuild -downloadPlatform ${{ matrix.platform }}${{ matrix.runtime != 'latest' && format(' -buildVersion {0}', matrix.runtime) || '' }}
+          command: xcodebuild -downloadPlatform ${{ matrix.platform }}
+
+      # Xcode only downloads the runtimes of its own OS versions.
+      - if: ${{ matrix.runtime != 'latest' }}
+        name: Install xcodes
+        run: |
+          brew uninstall xcodes || true
+          brew install xcodesorg/made/xcodes
+
+      - if: ${{ matrix.runtime != 'latest' }}
+        name: Install ${{ matrix.platform }} ${{ matrix.runtime }} Runtime
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 15
+          max_attempts: 3
+          command: sudo xcodes runtimes install "${{ matrix.platform }} ${{ matrix.runtime }}"
 
       - name: Run Tests
         uses: mxcl/xcodebuild@v3
@@ -92,6 +107,10 @@ jobs:
           workspace: SwiftUINavigationTransitions.xcworkspace
           scheme: SwiftUINavigationTransitions
           verbosity: xcbeautify
+
+      # Each test run writes the same result bundle path.
+      - name: Remove Test Results
+        run: rm -rf test.xcresult
 
       # The demo's UI tests swipe back through it on iOS. Other platforms build it.
       - name: ${{ matrix.platform == 'iOS' && 'Test' || 'Build' }} Demo
