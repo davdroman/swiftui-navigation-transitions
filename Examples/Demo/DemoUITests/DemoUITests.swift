@@ -51,7 +51,8 @@ final class DemoUITests: XCTestCase {
 		launch(transition: "Slide", interactivity: "Content Pan")
 		pushOverview()
 
-		swipeAcrossContent(by: 0.05, velocity: .slow, holding: 0.5)
+		// Moves a twentieth of the width, then rests before lifting.
+		drag(from: 0.4, to: 0.45, pressing: 0, velocity: .slow, holding: 0.5)
 		expectStaysOnOverview()
 
 		swipeAcrossContent()
@@ -122,19 +123,21 @@ final class DemoUITests: XCTestCase {
 		XCTAssertTrue(page("Welcome").waitForNonExistence(timeout: 5))
 	}
 
-	/// Swipes right from the leading edge of the screen. Edge recognizers only begin for a touch that rests on the edge
-	/// before moving.
+	/// Swipes right from the leading edge of the screen.
+	///
+	/// The system's edge recognizer begins only for some synthesized touches, and which ones depends on the iOS version:
+	/// iOS 17 needs a brief press and a fast drag, and later versions a touch that rests on the edge before moving.
 	private func swipeFromEdge() {
-		drag(from: 0, to: 0.6, pressing: 0.3, velocity: .default, holding: 0)
+		if #available(iOS 18, *) {
+			drag(from: 0, to: 0.6, pressing: 0.3, velocity: .default, holding: 0)
+		} else {
+			drag(from: 0, to: 0.6, pressing: 0.05, velocity: .fast, holding: 0)
+		}
 	}
 
-	/// Swipes right across `distance` of the screen's width, starting from its content.
-	private func swipeAcrossContent(
-		by distance: CGFloat = 0.5,
-		velocity: XCUIGestureVelocity = .default,
-		holding hold: TimeInterval = 0,
-	) {
-		drag(from: 0.4, to: 0.4 + distance, pressing: 0, velocity: velocity, holding: hold)
+	/// Swipes right across the middle of the screen.
+	private func swipeAcrossContent() {
+		app.swipeRight()
 	}
 
 	/// Drags horizontally across the middle of the screen, between fractions of its width.

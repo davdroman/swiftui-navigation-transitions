@@ -13,6 +13,9 @@ final class TestWindow {
 		window.makeKeyAndVisible()
 		window.layoutIfNeeded()
 		try await waitUntil { rootViewController.viewIfLoaded?.window != nil }
+		// UIKit calls `viewDidAppear(_:)` on the run loop's next turn, and on iOS 17 navigation controllers don't animate
+		// before it.
+		try await Task.sleep(for: .milliseconds(10))
 	}
 
 	func restore() {
