@@ -85,9 +85,7 @@ jobs:
       # Xcode only downloads the runtimes of its own OS versions.
       - if: ${{ matrix.runtime != 'latest' }}
         name: Install xcodes
-        run: |
-          brew uninstall xcodes || true
-          brew install xcodesorg/made/xcodes
+        run: command -v xcodes || brew install xcodes
 
       - if: ${{ matrix.runtime != 'latest' }}
         name: Install ${{ matrix.platform }} ${{ matrix.runtime }} Runtime
