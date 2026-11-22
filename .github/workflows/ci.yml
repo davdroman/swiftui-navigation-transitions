@@ -68,7 +68,7 @@ jobs:
         with:
           swift: ~${{ matrix.swift }}
           action: none
-          verbosity: xcbeautify
+          verbosity: verbose
 
       - if: ${{ matrix.platform != 'mac-catalyst' }}
         name: Initialize Simulator Service
@@ -106,7 +106,7 @@ jobs:
           action: test
           workspace: SwiftUINavigationTransitions.xcworkspace
           scheme: SwiftUINavigationTransitions
-          verbosity: xcbeautify
+          verbosity: verbose
 
       # Each test run writes the same result bundle path.
       - name: Remove Test Results
@@ -122,4 +122,4 @@ jobs:
           action: ${{ matrix.platform == 'iOS' && 'test' || 'build' }}
           workspace: SwiftUINavigationTransitions.xcworkspace
           scheme: Demo
-          verbosity: xcbeautify
+          verbosity: verbose
