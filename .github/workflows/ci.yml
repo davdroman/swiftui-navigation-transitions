@@ -35,7 +35,7 @@ jobs:
 
   apple:
     if: github.event_name != 'pull_request' || !contains(github.event.pull_request.title, '[skip ci]')
-    name: ${{ matrix.platform }}${{ matrix.runtime != 'latest' && format(' {0}', matrix.runtime) || '' }} (Swift ${{ matrix.swift }})
+    name: ${{ matrix.platform }} (Swift ${{ matrix.swift }})
     runs-on: xcode-27
     strategy:
       fail-fast: false
@@ -45,15 +45,8 @@ jobs:
           - mac-catalyst
           - tvOS
           - visionOS
-        runtime:
-          - latest
         swift:
           - "6.4"
-        include:
-          # Before iOS 26, the library sets up its own pop gesture recognizers.
-          - platform: iOS
-            runtime: "18.6"
-            swift: "6.4"
     steps:
       - name: Git Checkout
         uses: actions/checkout@v5
@@ -74,32 +67,18 @@ jobs:
         name: Initialize Simulator Service
         run: xcrun simctl list
 
-      - if: ${{ matrix.platform != 'mac-catalyst' && matrix.runtime == 'latest' }}
-        name: Download Runtime
+      - if: ${{ matrix.platform != 'mac-catalyst' }}
+        name: Download Default Runtime
         uses: nick-fields/retry@v3
         with:
           timeout_minutes: 15
           max_attempts: 3
           command: xcodebuild -downloadPlatform ${{ matrix.platform }}
 
-      # Xcode only downloads the runtimes of its own OS versions.
-      - if: ${{ matrix.runtime != 'latest' }}
-        name: Install xcodes
-        run: command -v xcodes || brew install xcodes
-
-      - if: ${{ matrix.runtime != 'latest' }}
-        name: Install ${{ matrix.platform }} ${{ matrix.runtime }} Runtime
-        uses: nick-fields/retry@v3
-        with:
-          timeout_minutes: 15
-          max_attempts: 3
-          command: sudo xcodes runtimes install "${{ matrix.platform }} ${{ matrix.runtime }}"
-
       - name: Run Tests
         uses: mxcl/xcodebuild@v3
         with:
           platform: ${{ matrix.platform }}
-          platform-version: ${{ matrix.runtime != 'latest' && format('~{0}', matrix.runtime) || '' }}
           swift: ~${{ matrix.swift }}
           action: test
           workspace: SwiftUINavigationTransitions.xcworkspace
@@ -115,7 +94,6 @@ jobs:
         uses: mxcl/xcodebuild@v3
         with:
           platform: ${{ matrix.platform }}
-          platform-version: ${{ matrix.runtime != 'latest' && format('~{0}', matrix.runtime) || '' }}
           swift: ~${{ matrix.swift }}
           action: ${{ matrix.platform == 'iOS' && 'test' || 'build' }}
           workspace: SwiftUINavigationTransitions.xcworkspace
