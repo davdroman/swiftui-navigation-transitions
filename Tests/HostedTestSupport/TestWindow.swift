@@ -41,17 +41,25 @@ func waitUntil(timeout: Duration = .seconds(3), _ condition: () -> Bool) async t
 }
 
 /// Waits until `value` returns a non-`nil` value, and returns it.
+///
+/// Each check counts at most 0.1 seconds toward `timeout`, so the time the main thread spends stalled, as it does on
+/// slow CI runners, doesn't count. A value that never appears still times out after `timeout` of the app running.
 @MainActor
 func waitUntilValue<Value>(timeout: Duration = .seconds(3), _ value: () -> Value?) async throws -> Value {
-	let deadline = ContinuousClock.now + timeout
+	let clock = ContinuousClock()
+	var elapsed = Duration.zero
+	var lastCheck = clock.now
 	while true {
 		if let value = value() {
 			return value
 		}
-		guard ContinuousClock.now < deadline else {
+		guard elapsed < timeout else {
 			throw TimeoutError()
 		}
 		try await Task.sleep(for: .milliseconds(10))
+		let now = clock.now
+		elapsed += min(now - lastCheck, .milliseconds(100))
+		lastCheck = now
 	}
 }
 

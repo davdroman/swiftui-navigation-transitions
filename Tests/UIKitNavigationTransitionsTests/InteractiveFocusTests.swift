@@ -15,12 +15,12 @@ final class InteractiveFocusTests: XCTestCase {
 		defer { host.restore() }
 		let window = host.window
 
-		let pushed = expectation(description: "push completed")
+		var pushed = false
 		observer.didShow = { controller in
-			if controller === source { pushed.fulfill() }
+			if controller === source { pushed = true }
 		}
 		navigation.pushViewController(source, animated: true)
-		await fulfillment(of: [pushed], timeout: 3)
+		try await waitUntil { pushed }
 		XCTAssertTrue(source.field.becomeFirstResponder())
 		XCTAssertTrue(source.field.isFirstResponder)
 
@@ -31,16 +31,16 @@ final class InteractiveFocusTests: XCTestCase {
 		navigation.popViewController(animated: true)
 		let coordinator = try XCTUnwrap(navigation.transitionCoordinator)
 		XCTAssertTrue(coordinator.isInteractive)
-		let started = expectation(description: "interactive pop started")
-		let cancelled = expectation(description: "interactive pop cancelled")
-		coordinator.animate(alongsideTransition: { _ in started.fulfill() }) { context in
-			XCTAssertTrue(context.isCancelled)
-			cancelled.fulfill()
+		var started = false
+		var wasCancelled: Bool? = nil
+		coordinator.animate(alongsideTransition: { _ in started = true }) { context in
+			wasCancelled = context.isCancelled
 		}
-		await fulfillment(of: [started], timeout: 3)
+		try await waitUntil { started }
 		interaction.update(0.3)
 		interaction.cancel()
-		await fulfillment(of: [cancelled], timeout: 3)
+		try await waitUntil { wasCancelled != nil }
+		XCTAssertEqual(wasCancelled, true)
 		XCTAssertTrue(navigation.topViewController === source)
 		XCTAssertEqual(navigation.viewControllers.count, 2)
 		XCTAssertTrue(source.field.isFirstResponder)
